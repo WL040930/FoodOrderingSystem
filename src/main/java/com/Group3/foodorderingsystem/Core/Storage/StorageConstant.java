@@ -1,4 +1,4 @@
-package com.mycompany.foodorderingsystem.Core.Storage;
+package com.Group3.foodorderingsystem.Core.Storage;
 
 import java.util.ArrayList;
 
@@ -22,5 +22,9 @@ public class StorageConstant {
             values.add(value);
         }
         return values;
+    }
+
+    static String getNewId() {
+        return java.util.UUID.randomUUID().toString();
     }
 }

@@ -1,4 +1,4 @@
-package com.mycompany.foodorderingsystem.Core.Util;
+package com.Group3.foodorderingsystem.Core.Util;
 
 import java.text.DecimalFormat;
 
