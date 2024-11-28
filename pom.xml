@@ -8,6 +8,24 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <exec.mainClass>com.mycompany.foodorderingsystem.FoodOrderingSystem</exec.mainClass>
+        <exec.mainClass>com.Group3.foodorderingsystem.FoodOrderingSystem</exec.mainClass>
     </properties>
+
+    <dependencies>
+        <dependency>  
+            <groupId>com.fasterxml.jackson.core</groupId>  
+            <artifactId>jackson-core</artifactId>  
+            <version>2.13.1</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>com.fasterxml.jackson.core</groupId>  
+            <artifactId>jackson-databind</artifactId>  
+            <version>2.13.1</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>com.fasterxml.jackson.core</groupId>  
+            <artifactId>jackson-annotations</artifactId>  
+            <version>2.13.1</version>  
+        </dependency>  
+    </dependencies>
 </project>
