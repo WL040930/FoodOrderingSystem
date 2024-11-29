@@ -8,4 +8,9 @@ public class NumberFormatUtil {
         DecimalFormat df = new DecimalFormat("#.00");
         return df.format(number);
     }
+
+    public static String toC2Dec(double number) {
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        return df.format(number);
+    }
 }
