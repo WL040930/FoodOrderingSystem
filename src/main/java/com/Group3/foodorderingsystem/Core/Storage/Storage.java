@@ -12,23 +12,15 @@ public class Storage {
             File directory = new File(DIRECTORY_PATH);
             if (!directory.exists()) {
                 directory.mkdirs();
-                System.out.println("Directory created: " + DIRECTORY_PATH);
             }
 
             for (StorageEnum storageEnum : StorageEnum.values()) {
                 File file = new File(DIRECTORY_PATH + "/" + storageEnum.name().toLowerCase() + ".txt");
-                if (file.createNewFile()) {
-                    System.out.println("File created: " + file.getAbsolutePath());
-                } else {
-                    System.out.println("File already exists: " + file.getAbsolutePath());
-                }
+                file.createNewFile();
             }
         } catch (IOException e) {
             System.err.println("An error occurred while initializing the storage: " + e.getMessage());
         }
     }
-
-    public static void main(String[] args) {
-       init();
-    }
+    
 }

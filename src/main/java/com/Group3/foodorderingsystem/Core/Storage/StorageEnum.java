@@ -2,21 +2,19 @@ package com.Group3.foodorderingsystem.Core.Storage;
 
 public enum StorageEnum {
     
-    USER(
-        "user.txt"
+    CUSTOMER(
+        "customer.txt"
     ), 
-    FOOD(
-        "food.txt"
+    RUNNER(
+        "runner.txt"
     ),
-    ORDER(
-        "order.txt"
+    VENDOR(
+        "vendor.txt"
     );
 
-    private final String fileName;
+    final String fileName;
 
     StorageEnum(String fileName) {
         this.fileName = fileName;
-    }
-
-    
+    }   
 }
