@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.Group3.foodorderingsystem.Module.Register;
+package com.Group3.foodorderingsystem.Module.Common.Register;
 
 /**
  *

@@ -1,16 +1,12 @@
 package com.Group3.foodorderingsystem.Core.Model.Entity;
 
 import com.Group3.foodorderingsystem.Core.Model.Abstract.User;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 
 public class CustomerModel extends User {
 
     public CustomerModel() {
-    }
-
-    public CustomerModel(String id, String name, String email, String password, double balance, String phoneNumber) {
-        super(id, name, email, password);
-        this.balance = balance;
-        this.phoneNumber = phoneNumber;
+        super(RoleEnum.CUSTOMER); 
     }
 
     private double balance;

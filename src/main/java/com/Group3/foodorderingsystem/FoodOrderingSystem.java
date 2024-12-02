@@ -1,7 +1,7 @@
 package com.Group3.foodorderingsystem;
 
 import com.Group3.foodorderingsystem.Core.Storage.Storage;
-import com.Group3.foodorderingsystem.Module.Register.RegisterRoleSelection;
+import com.Group3.foodorderingsystem.Module.Common.Register.RegisterRoleSelection;
 
 public class FoodOrderingSystem {
 
