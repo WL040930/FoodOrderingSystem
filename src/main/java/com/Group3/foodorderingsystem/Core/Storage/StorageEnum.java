@@ -17,4 +17,8 @@ public enum StorageEnum {
     StorageEnum(String fileName) {
         this.fileName = fileName;
     }   
+
+    public static String getFileName(StorageEnum storageEnum) {
+        return Storage.DIRECTORY_PATH + storageEnum.fileName;
+    }
 }
