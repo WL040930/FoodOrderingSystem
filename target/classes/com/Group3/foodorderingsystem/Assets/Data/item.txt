@@ -1,0 +1,1 @@
+{"itemId":"1","itemName":"Burger","itemDescription":"A delicious burger","itemPrice":10.0,"itemCategory":"Fast Food","itemImage":"burger.jpg","itemQuantity":"10","shopModel":null}
