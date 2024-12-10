@@ -1,20 +1,22 @@
 package com.Group3.foodorderingsystem.Core.Model.Entity;
 
+import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
+
 public class ItemModel {
     
     private String itemId; 
     private String itemName;
     private String itemDescription;
     private double itemPrice;
-    private String itemCategory;
+    private CategoryEnum itemCategory;
     private String itemImage;
-    private String itemQuantity; 
+    private int itemQuantity; 
     private ShopModel shopModel; 
 
     public ItemModel() {
     }
 
-    public ItemModel(String itemId, String itemName, String itemDescription, double itemPrice, String itemCategory, String itemImage, String itemQuantity, ShopModel shopModel) {
+    public ItemModel(String itemId, String itemName, String itemDescription, double itemPrice, CategoryEnum itemCategory, String itemImage, int itemQuantity, ShopModel shopModel) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -41,7 +43,7 @@ public class ItemModel {
         return itemPrice;
     }
 
-    public String getItemCategory() {
+    public CategoryEnum getItemCategory() {
         return itemCategory;
     }
 
@@ -49,7 +51,7 @@ public class ItemModel {
         return itemImage;
     }
 
-    public String getItemQuantity() {
+    public int getItemQuantity() {
         return itemQuantity;
     }
 
@@ -73,7 +75,7 @@ public class ItemModel {
         this.itemPrice = itemPrice;
     }
 
-    public void setItemCategory(String itemCategory) {
+    public void setItemCategory(CategoryEnum itemCategory) {
         this.itemCategory = itemCategory;
     }
 
@@ -81,7 +83,7 @@ public class ItemModel {
         this.itemImage = itemImage;
     }
 
-    public void setItemQuantity(String itemQuantity) {
+    public void setItemQuantity(int itemQuantity) {
         this.itemQuantity = itemQuantity;
     }
 

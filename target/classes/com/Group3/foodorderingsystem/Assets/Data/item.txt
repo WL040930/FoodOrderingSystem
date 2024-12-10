@@ -1,3 +1,1 @@
-{"itemId":"b643de57-5d1f-412b-b678-de01663f34e9","itemName":"Burger","itemDescription":"Burger with cheese and fries","itemPrice":100.0,"itemCategory":null,"itemImage":null,"itemQuantity":null,"shopModel":null}
-{"itemId":"5ec9df55-e8f0-4383-81f5-3fda0e2fae42","itemName":"Burger","itemDescription":"Burger with cheese and fries","itemPrice":100.0,"itemCategory":null,"itemImage":null,"itemQuantity":null,"shopModel":null}
-{"itemId":"32b36198-9696-40a2-9805-938ceaba754c","itemName":"Burger","itemDescription":"Burger with cheese and fries","itemPrice":100.0,"itemCategory":null,"itemImage":null,"itemQuantity":null,"shopModel":null}
+{"itemId":"66407ec9-60aa-42dc-9a21-db8428dc93c1","itemName":"Nasi Lemak","itemDescription":"Nasi Lemak with Sambal","itemPrice":5.0,"itemCategory":"FOOD","itemImage":"nasi_lemak.jpg","itemQuantity":"10","shopModel":null}
