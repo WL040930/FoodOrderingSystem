@@ -13,7 +13,8 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
      */
     public RegisterRoleSelection() {
         initComponents();
-    }
+        System.out.println("RegisterRoleSelection");
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
