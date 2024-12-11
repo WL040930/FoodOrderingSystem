@@ -4,12 +4,6 @@
  */
 package com.Group3.foodorderingsystem.Module.Common.Login;
 
-import java.awt.Image;
-import java.awt.MediaTracker;
-
-import javax.swing.ImageIcon;
-
-import com.Group3.foodorderingsystem.Core.Storage.Storage;
 import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 
@@ -31,14 +25,15 @@ public class Login extends javax.swing.JFrame {
 
     private void colorInitialize() {
         backgroundPanel.setBackground(Colors.blue_1);
+        titleText1.setForeground(Colors.dark_blue_2);
+        titleText2.setForeground(Colors.dark_blue_2);
     }
 
     private void setLogo() {
+        logoImage.setBorder(null);
         logoImage.setIcon(Images.getImage("logo.png", 180, 180));
     }
     
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,27 +45,49 @@ public class Login extends javax.swing.JFrame {
 
         backgroundPanel = new javax.swing.JPanel();
         logoImage = new javax.swing.JLabel();
+        titleText1 = new javax.swing.JLabel();
+        titleText2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         logoImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logoImage.setToolTipText("");
+        logoImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        titleText1.setFont(new java.awt.Font("Hoefler Text", 3, 48)); // NOI18N
+        titleText1.setText("Ocean");
+
+        titleText2.setFont(new java.awt.Font("Hoefler Text", 3, 48)); // NOI18N
+        titleText2.setText("Delivery");
 
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(logoImage, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(160, 160, 160))
+                .addContainerGap()
+                .addComponent(titleText1)
+                .addGap(182, 182, 182))
+            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(logoImage, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addGap(158, 158, 158)
+                        .addComponent(titleText2)))
+                .addGap(150, 150, 150))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(172, 172, 172)
+                .addGap(1, 1, 1)
                 .addComponent(logoImage, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(428, Short.MAX_VALUE))
+                .addGap(1, 1, 1)
+                .addComponent(titleText1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(titleText2)
+                .addContainerGap(535, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -125,5 +142,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JLabel logoImage;
+    private javax.swing.JLabel titleText1;
+    private javax.swing.JLabel titleText2;
     // End of variables declaration//GEN-END:variables
 }
