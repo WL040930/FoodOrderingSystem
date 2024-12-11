@@ -9,8 +9,8 @@ import java.util.UUID;
 
 public class Storage {
 
-    final static String DIRECTORY_PATH = "src/main/java/com/Group3/foodorderingsystem/Assets/Data";
-    final static String RESOURCE_PATH = "src/main/java/com/Group3/foodorderingsystem/Assets/Resource";
+    public final static String DIRECTORY_PATH = "src/main/java/com/Group3/foodorderingsystem/Assets/Data";
+    public final static String RESOURCE_PATH = "/com/Group3/foodorderingsystem/Assets/Resource";
 
     public static void init() {
         try {
