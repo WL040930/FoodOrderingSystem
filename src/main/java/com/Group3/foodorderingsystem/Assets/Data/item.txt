@@ -1,1 +1,0 @@
-{"itemId":"66407ec9-60aa-42dc-9a21-db8428dc93c1","itemName":"Nasi Lemak","itemDescription":"Nasi Lemak with Sambal","itemPrice":5.0,"itemCategory":"FOOD","itemImage":"nasi_lemak.jpg","itemQuantity":"10","shopModel":null}

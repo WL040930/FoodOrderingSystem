@@ -42,7 +42,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         itemCategoryField = new javax.swing.JComboBox<>();
@@ -51,7 +51,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
         itemNameField = new javax.swing.JTextField();
         itemDescriptionText = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        itemDescriptionField = new javax.swing.JTextArea();
         itemPriceText = new javax.swing.JLabel();
         itemPriceField = new javax.swing.JSpinner();
         itemCategoryText = new javax.swing.JLabel();
@@ -61,102 +61,90 @@ public class AddNewItemPanel extends javax.swing.JPanel {
         choosePictureButton = new javax.swing.JButton();
 
         itemCategoryField.setModel(new javax.swing.DefaultComboBoxModel<>(Arrays.stream(CategoryEnum.values())
-                .map(Enum::name)
-                .toArray(String[]::new)));
+            .map(Enum::name)
+            .toArray(String[]::new)));
 
-        titleText.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        titleText.setText("Add New Item/Menu");
+    titleText.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+    titleText.setText("Add New Item/Menu");
 
-        itemNameLabel.setText("Item Name");
+    itemNameLabel.setText("Item Name");
 
-        itemDescriptionText.setText("Item Description");
+    itemDescriptionText.setText("Item Description");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+    itemDescriptionField.setColumns(20);
+    itemDescriptionField.setRows(5);
+    jScrollPane1.setViewportView(itemDescriptionField);
 
-        itemPriceText.setText("Item Price");
+    itemPriceText.setText("Item Price");
 
-        itemCategoryText.setText("Item Category");
+    itemCategoryText.setText("Item Category");
 
-        jLabel1.setText("Item Quantity");
+    jLabel1.setText("Item Quantity");
 
-        jLabel2.setText("Food Picture");
+    jLabel2.setText("Food Picture");
 
-        choosePictureButton.setText("Select Picture");
-        choosePictureButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                choosePictureButtonActionPerformed(evt);
-            }
-        });
+    choosePictureButton.setText("Select Picture");
+    choosePictureButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            choosePictureButtonActionPerformed(evt);
+        }
+    });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(choosePictureButton)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel1)
-                                        .addComponent(itemCategoryText)
-                                        .addComponent(itemPriceText)
-                                        .addGroup(layout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(itemDescriptionText)
-                                                .addComponent(itemNameLabel)
-                                                .addComponent(titleText, javax.swing.GroupLayout.PREFERRED_SIZE, 217,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(itemNameField)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283,
-                                                        Short.MAX_VALUE))
-                                        .addGroup(layout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(itemQuantityField,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(itemCategoryField,
-                                                        javax.swing.GroupLayout.Alignment.LEADING, 0,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(itemPriceField, javax.swing.GroupLayout.Alignment.LEADING,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)))
-                                .addContainerGap(80, Short.MAX_VALUE)));
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(titleText, javax.swing.GroupLayout.PREFERRED_SIZE, 43,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(itemNameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(itemNameField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(itemDescriptionText)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38)
-                                .addComponent(itemPriceText)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(itemPriceField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
-                                .addComponent(itemCategoryText)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(itemCategoryField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(itemQuantityField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(choosePictureButton)
-                                .addContainerGap(43, Short.MAX_VALUE)));
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+    this.setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGap(37, 37, 37)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(choosePictureButton)
+                .addComponent(jLabel2)
+                .addComponent(jLabel1)
+                .addComponent(itemCategoryText)
+                .addComponent(itemPriceText)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(itemDescriptionText)
+                    .addComponent(itemNameLabel)
+                    .addComponent(titleText, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemNameField)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(itemQuantityField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(itemCategoryField, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(itemPriceField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)))
+            .addContainerGap(80, Short.MAX_VALUE))
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGap(28, 28, 28)
+            .addComponent(titleText, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(28, 28, 28)
+            .addComponent(itemNameLabel)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(itemNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(36, 36, 36)
+            .addComponent(itemDescriptionText)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(38, 38, 38)
+            .addComponent(itemPriceText)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(itemPriceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(32, 32, 32)
+            .addComponent(itemCategoryText)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(itemCategoryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(40, 40, 40)
+            .addComponent(jLabel1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(itemQuantityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(32, 32, 32)
+            .addComponent(jLabel2)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(choosePictureButton)
+            .addContainerGap(43, Short.MAX_VALUE))
+    );
     }// </editor-fold>//GEN-END:initComponents
 
     private void choosePictureButtonActionPerformed(java.awt.event.ActionEvent evt) { // GEN-FIRST:event_choosePictureButtonActionPerformed
@@ -182,8 +170,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 
         int returnValue = fileChooser.showOpenDialog(this);
         if (returnValue == javax.swing.JFileChooser.APPROVE_OPTION) {
-            java.io.File selectedFile = fileChooser.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            selectedFile = fileChooser.getSelectedFile();
         }
     }
 
@@ -191,6 +178,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
     private javax.swing.JButton choosePictureButton;
     public javax.swing.JComboBox<String> itemCategoryField;
     private javax.swing.JLabel itemCategoryText;
+    public javax.swing.JTextArea itemDescriptionField;
     private javax.swing.JLabel itemDescriptionText;
     public javax.swing.JTextField itemNameField;
     private javax.swing.JLabel itemNameLabel;
@@ -200,7 +188,8 @@ public class AddNewItemPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel titleText;
     // End of variables declaration//GEN-END:variables
+
+    public java.io.File selectedFile;
 }

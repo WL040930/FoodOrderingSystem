@@ -4,6 +4,10 @@
  */
 package com.Group3.foodorderingsystem.Module.Platform.Vendor;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.ItemModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
+import com.Group3.foodorderingsystem.Core.Services.ItemServices;
+
 /**
  *
  * @author wl
@@ -92,7 +96,7 @@ public class AddNewItem extends javax.swing.JFrame {
                 .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(addButton)
                 .addGap(18, 18, 18)
                 .addComponent(footer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -104,17 +108,20 @@ public class AddNewItem extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
             // Fetch the values from the fields
             String itemName = newItemPanel.itemNameField.getText();
-            String itemDescription = newItemPanel.jTextArea1.getText();
+            String itemDescription = newItemPanel.itemDescriptionField.getText();
             double itemPrice = (double) newItemPanel.itemPriceField.getValue();
             String itemCategory = (String) newItemPanel.itemCategoryField.getSelectedItem();
             int itemQuantity = (int) newItemPanel.itemQuantityField.getValue();
 
-            // Print the values to the console
-            System.out.println("Item Name: " + itemName);
-            System.out.println("Item Description: " + itemDescription);
-            System.out.println("Item Price: " + itemPrice);
-            System.out.println("Item Category: " + itemCategory);
-            System.out.println("Item Quantity: " + itemQuantity);
+            ItemModel newItem = new ItemModel(); 
+            newItem.setItemName(itemName);
+            newItem.setItemDescription(itemDescription);
+            newItem.setItemPrice(itemPrice);
+            newItem.setItemCategory(CategoryEnum.getCategory(itemCategory));
+            newItem.setItemQuantity(itemQuantity);
+
+            // Save the new item
+            ItemServices.saveItem(newItem, newItemPanel.selectedFile);
     }
 
     /**
