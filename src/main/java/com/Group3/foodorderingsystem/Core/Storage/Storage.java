@@ -44,10 +44,14 @@ public class Storage {
         }
     }
 
-    static String generateUniqueName(String originalFileName) {
+    private static String generateUniqueName(String originalFileName) {
         String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
         String uniqueID = UUID.randomUUID().toString();
         return uniqueID + fileExtension;
+    }
+
+    public static String generateNewId () {
+        return UUID.randomUUID().toString();
     }
 
 }

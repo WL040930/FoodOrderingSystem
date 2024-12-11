@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FileUtil {
@@ -21,15 +20,23 @@ public class FileUtil {
     // Save a list of object to a file
     public static <T> void saveFile(String filepath, List<T> list) {
         try {
+
+            // clear the file first before save
+            Files.write(
+                    Paths.get(filepath),
+                    new byte[0], 
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING);
+
+            // write the obj into the file
             for (T object : list) {
                 String json = objectMapper.writeValueAsString(object) + System.lineSeparator();
-    
+
                 Files.write(
-                    Paths.get(filepath),
-                    json.getBytes(),
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.APPEND
-                );
+                        Paths.get(filepath),
+                        json.getBytes(),
+                        StandardOpenOption.CREATE,
+                        StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,17 +64,16 @@ public class FileUtil {
     public static <T> void deleteRecord(String filePath, Class<T> type, Predicate<T> predicate) {
         List<T> allData = loadFile(filePath, type);
         allData.removeIf(predicate);
-    
+
         // Clear the file
         try {
             new PrintWriter(filePath).close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    
+
         // Save the modified list back to the file
         saveFile(filePath, allData);
     }
 
-    
 }

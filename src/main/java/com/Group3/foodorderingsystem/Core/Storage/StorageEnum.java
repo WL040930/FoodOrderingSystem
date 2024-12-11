@@ -10,6 +10,12 @@ public enum StorageEnum {
     ),
     VENDOR(
         "vendor.txt"
+    ),
+    ITEM(
+        "item.txt"
+    ), 
+    SHOP(
+        "shop.txt"
     );
 
     final String fileName;
@@ -19,6 +25,6 @@ public enum StorageEnum {
     }   
 
     public static String getFileName(StorageEnum storageEnum) {
-        return Storage.DIRECTORY_PATH + storageEnum.fileName;
+        return Storage.DIRECTORY_PATH + '/' + storageEnum.fileName;
     }
 }
