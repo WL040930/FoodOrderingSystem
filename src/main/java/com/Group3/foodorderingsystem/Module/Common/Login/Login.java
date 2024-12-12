@@ -6,11 +6,9 @@ package com.Group3.foodorderingsystem.Module.Common.Login;
 
 import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Images;
+import com.Group3.foodorderingsystem.Core.Util.Router;
+import com.Group3.foodorderingsystem.Module.Common.Register.RegisterRoleSelection;
 
-/**
- *
- * @author limweilun
- */
 public class Login extends javax.swing.JFrame {
 
     /**
@@ -26,7 +24,11 @@ public class Login extends javax.swing.JFrame {
     private void colorInitialize() {
         backgroundPanel.setBackground(Colors.blue_1);
         titleText1.setForeground(Colors.dark_blue_2);
-        titleText2.setForeground(Colors.dark_blue_2);
+        inputFieldBackground.setBackground(Colors.white);
+
+        clickHereButton.setText("<html><u>Click here</u></html>"); 
+        clickHereButton.setForeground(Colors.dark_blue_4); 
+        clickHereButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); 
     }
 
     private void setLogo() {
@@ -46,7 +48,14 @@ public class Login extends javax.swing.JFrame {
         backgroundPanel = new javax.swing.JPanel();
         logoImage = new javax.swing.JLabel();
         titleText1 = new javax.swing.JLabel();
-        titleText2 = new javax.swing.JLabel();
+        inputFieldBackground = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        emailField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
+        loginButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        clickHereButton = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,39 +64,96 @@ public class Login extends javax.swing.JFrame {
         logoImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         titleText1.setFont(new java.awt.Font("Hoefler Text", 3, 48)); // NOI18N
-        titleText1.setText("Ocean");
+        titleText1.setText("Ocean Delivery");
 
-        titleText2.setFont(new java.awt.Font("Hoefler Text", 3, 48)); // NOI18N
-        titleText2.setText("Delivery");
+        inputFieldBackground.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Login", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Hoefler Text", 1, 24))); // NOI18N
+
+        jLabel1.setText("Email Address");
+
+        jLabel2.setText("Password");
+
+        loginButton.setText("Login");
+
+        jLabel3.setText("Don't have account?");
+
+        clickHereButton.setText("Click here");
+        clickHereButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clickHereButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout inputFieldBackgroundLayout = new javax.swing.GroupLayout(inputFieldBackground);
+        inputFieldBackground.setLayout(inputFieldBackgroundLayout);
+        inputFieldBackgroundLayout.setHorizontalGroup(
+            inputFieldBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputFieldBackgroundLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(inputFieldBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(emailField)
+                    .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(inputFieldBackgroundLayout.createSequentialGroup()
+                .addGroup(inputFieldBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputFieldBackgroundLayout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(inputFieldBackgroundLayout.createSequentialGroup()
+                        .addGap(105, 105, 105)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(clickHereButton)))
+                .addContainerGap(122, Short.MAX_VALUE))
+        );
+        inputFieldBackgroundLayout.setVerticalGroup(
+            inputFieldBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputFieldBackgroundLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(loginButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(inputFieldBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(clickHereButton))
+                .addContainerGap(153, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(titleText1)
-                .addGap(182, 182, 182))
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addGap(150, 150, 150)
+                        .addGap(160, 160, 160)
                         .addComponent(logoImage, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addGap(158, 158, 158)
-                        .addComponent(titleText2)))
-                .addGap(150, 150, 150))
+                        .addGap(43, 43, 43)
+                        .addComponent(inputFieldBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                .addComponent(titleText1)
+                .addGap(100, 100, 100))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(1, 1, 1)
+                .addGap(40, 40, 40)
                 .addComponent(logoImage, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
+                .addGap(18, 18, 18)
                 .addComponent(titleText1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(titleText2)
-                .addContainerGap(535, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(inputFieldBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -103,6 +169,10 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void clickHereButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickHereButtonMouseClicked
+        Router.navigate(this, new RegisterRoleSelection());
+    }//GEN-LAST:event_clickHereButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -141,8 +211,15 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
+    private javax.swing.JLabel clickHereButton;
+    private javax.swing.JTextField emailField;
+    private javax.swing.JPanel inputFieldBackground;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton loginButton;
     private javax.swing.JLabel logoImage;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel titleText1;
-    private javax.swing.JLabel titleText2;
     // End of variables declaration//GEN-END:variables
 }
