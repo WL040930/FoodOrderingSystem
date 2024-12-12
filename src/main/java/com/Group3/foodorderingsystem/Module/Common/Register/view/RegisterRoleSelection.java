@@ -8,6 +8,7 @@ import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.Router;
 import com.Group3.foodorderingsystem.Core.Widget.Header;
+import com.Group3.foodorderingsystem.Module.Common.Login.Login;
 import com.Group3.foodorderingsystem.Module.Common.Register.viewmodel.RegisterViewModel;
 
 public class RegisterRoleSelection extends javax.swing.JFrame {
@@ -25,6 +26,9 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
 
     private void colorInitializer() {
         backgroundPanel.setBackground(Colors.blue_1);
+
+        loginButton.setText("<html><u>Click here to login</u></html>");
+        loginButton.setForeground(Colors.dark_blue_4);
     }
 
     private void roleController() {
@@ -58,6 +62,8 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
         roleField = new javax.swing.JLabel();
         descriptionField = new javax.swing.JLabel();
         nextButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        loginButton = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,6 +121,16 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Already have account? ");
+
+        loginButton.setText("Click here to login");
+        loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
@@ -138,7 +154,12 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
                                     .addComponent(roleField, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(36, 36, 36)
                                 .addComponent(rightIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(nextButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(nextButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(loginButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         backgroundPanelLayout.setVerticalGroup(
@@ -156,9 +177,13 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
                 .addComponent(roleField)
                 .addGap(18, 18, 18)
                 .addComponent(descriptionField, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
+                .addGap(41, 41, 41)
                 .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(loginButton))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -189,11 +214,17 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
         roleController();
     }//GEN-LAST:event_rightIconMouseClicked
 
+    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
+        Router.navigate(this, new Login());
+    }//GEN-LAST:event_loginButtonMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JLabel descriptionField;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel leftIcon;
+    private javax.swing.JLabel loginButton;
     private javax.swing.JButton nextButton;
     private javax.swing.JLabel rightIcon;
     private javax.swing.JLabel roleField;
