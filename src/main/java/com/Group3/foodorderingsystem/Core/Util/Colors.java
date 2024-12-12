@@ -5,22 +5,22 @@ import java.util.Map;
 import com.Group3.foodorderingsystem.Module.SetupViewModel;
 
 public class Colors {
-    
-    public static String black = "\u001B[30m";
-    public static String white = "\u001B[37m";
-    public static String lightBlue = "\u001B[34m";
 
-    static Map<String, String> colors = Map.of(
-        "black", black,
-        "white", white,
-        "lightBlue", lightBlue
-    );
+    public static final String black = "#000000";
+    public static final String white = "#FFFFFF";
+    
+    public static final String blue_1 = "#F8FAFC";
+    public static final String blue_2 = "#D9EAFD";
+    public static final String blue_3 = "#BCCCDC";
+    public static final String blue_4= "#9AA6B2"; 
+
+    public static final String dark_blue_1 = "#1A202C"; 
+    public static final String dark_blue_2 = "#223344"; 
+    public static final String dark_blue_3 = "#334E68"; 
+    public static final String dark_blue_4 = "#4A5568"; 
 
     public static String getColor(String color) {
-        SetupViewModel setupViewModel = new SetupViewModel();
-        if (setupViewModel.appearance.isDarkMode()) {
-            return colors.get(color);
-        }
+        // to do 
         return color;
     }
 }
