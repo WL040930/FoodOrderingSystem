@@ -1,6 +1,5 @@
 package com.Group3.foodorderingsystem.Core.Model.Entity;
 
-import com.Group3.foodorderingsystem.Core.Model.Abstract.User;
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 
