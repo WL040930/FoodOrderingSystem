@@ -6,13 +6,13 @@ package com.Group3.foodorderingsystem.Module.Common.Login;
 
 import javax.swing.JOptionPane;
 
-import com.Group3.foodorderingsystem.Core.Model.Entity.User;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.Router;
 import com.Group3.foodorderingsystem.Module.SetupViewModel;
-import com.Group3.foodorderingsystem.Module.Common.Register.RegisterRoleSelection;
+import com.Group3.foodorderingsystem.Module.Common.Register.view.RegisterRoleSelection;
 
 public class Login extends javax.swing.JFrame {
 

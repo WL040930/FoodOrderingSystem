@@ -4,7 +4,7 @@
  */
 package com.Group3.foodorderingsystem.Module.Platform.Vendor;
 
-import com.Group3.foodorderingsystem.Core.Model.Entity.ItemModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
 import com.Group3.foodorderingsystem.Core.Services.ItemServices;
 

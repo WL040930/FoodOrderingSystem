@@ -1,7 +1,7 @@
 package com.Group3.foodorderingsystem.Module;
 
-import com.Group3.foodorderingsystem.Core.Model.Entity.Appearance;
-import com.Group3.foodorderingsystem.Core.Model.Entity.User;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Config.Appearance;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 
 public class SetupViewModel {
     private static SetupViewModel instance; // Singleton instance

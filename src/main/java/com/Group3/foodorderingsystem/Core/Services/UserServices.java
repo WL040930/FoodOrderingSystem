@@ -3,9 +3,9 @@ package com.Group3.foodorderingsystem.Core.Services;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.Group3.foodorderingsystem.Core.Model.Entity.CustomerModel;
-import com.Group3.foodorderingsystem.Core.Model.Entity.RunnerModel;
-import com.Group3.foodorderingsystem.Core.Model.Entity.User;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
