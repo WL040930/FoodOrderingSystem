@@ -4,9 +4,14 @@
  */
 package com.Group3.foodorderingsystem.Module.Common.Login;
 
+import javax.swing.JOptionPane;
+
+import com.Group3.foodorderingsystem.Core.Model.Entity.User;
+import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.Router;
+import com.Group3.foodorderingsystem.Module.SetupViewModel;
 import com.Group3.foodorderingsystem.Module.Common.Register.RegisterRoleSelection;
 
 public class Login extends javax.swing.JFrame {
@@ -73,6 +78,11 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setText("Password");
 
         loginButton.setText("Login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Don't have account?");
 
@@ -173,6 +183,26 @@ public class Login extends javax.swing.JFrame {
     private void clickHereButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickHereButtonMouseClicked
         Router.navigate(this, new RegisterRoleSelection());
     }//GEN-LAST:event_clickHereButtonMouseClicked
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        String email = emailField.getText().trim();
+        String password = new String(passwordField.getPassword());
+
+        User user = UserServices.findUserByEmailAndPassword(email, password); 
+
+        if (user == null) {
+            JOptionPane.showMessageDialog(this, "Invalid email or password", "Error", JOptionPane.ERROR_MESSAGE);
+            return; 
+        }
+
+        SetupViewModel.getInstance().setUser(user);
+
+        // allocate here
+        switch (user.getRole()) {
+            default:
+                break;
+        }
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
      * @param args the command line arguments

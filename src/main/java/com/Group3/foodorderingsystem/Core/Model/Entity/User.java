@@ -1,8 +1,8 @@
-package com.Group3.foodorderingsystem.Core.Model.Abstract;
+package com.Group3.foodorderingsystem.Core.Model.Entity;
 
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 
-public abstract class User {
+public class User {
     private String id;
     private String name;
     private String email;
