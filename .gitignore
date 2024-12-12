@@ -1,0 +1,24 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Maven output directory
+target/
+
+# IDE settings
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Other files to ignore
+*.bak
+*.tmp
+
