@@ -11,7 +11,7 @@ public class VendorModel extends User {
 
     private double revenue; 
     private String address;
-    private StatusEnum status; // NOTE: CHECK NEED THIS OR NOT, ADMIN WILL NEED TO APPROVE THE VENDOR DOCS/LICENSE BEFORE APPROVAL
+    private StatusEnum status;
 
     public double getRevenue() {
         return revenue;
