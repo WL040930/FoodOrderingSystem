@@ -16,6 +16,9 @@ public enum StorageEnum {
     ), 
     SHOP(
         "shop.txt"
+    ),
+    ORDER(
+        "order.txt"
     );
 
     final String fileName;
