@@ -1,6 +1,7 @@
 package com.Group3.foodorderingsystem.Core.Services;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,6 +58,11 @@ public class CustomerOrderServices {
             .sum();
     }
 
+    //check if customer id same with session id
+    public boolean checkCustomerId(String customerId) {
+        return customerId.equals(SessionUtil.getCustomerFromSession().getId());
+    }
+
 
     // save order to file
     public void saveOrder() {
@@ -83,18 +89,91 @@ public class CustomerOrderServices {
 
     }
 
+    
+    // cancel order
+    public void cancelOrder(String orderId) {
+        List<OrderModel> orders = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
 
-    //TODO: cancel order
+        for (OrderModel order : orders) {
+            if (order.getOrderId().equals(orderId)) {
+                order.setStatus(StatusEnum.CANCELLED);
+                break;
+            }
+        }
 
-    //TODO: list pending order history
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ORDER), orders);
+    }
 
-    //TODO: list  active order history 
 
-    //TODO: list past order history
+    //list pending order history
+    public List<OrderModel> listPendingOrders() {
+        List<OrderModel> orders = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
+        List<OrderModel> pendingOrders = new ArrayList<>();
 
-    //TODO: list a specific order details
+        for (OrderModel order : orders) {
+            if (order.getStatus() == StatusEnum.PENDING && checkCustomerId(order.getCustomer().getId())) {
+                pendingOrders.add(order);
+            }
+        }
 
-    //TODO: Reorder previous order
+        return pendingOrders;
+    }
+
+    //list  active order history 
+    public List<OrderModel> listActiveOrders() {
+        List<OrderModel> orders = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
+        List<OrderModel> activeOrders = new ArrayList<>();
+
+        EnumSet<StatusEnum> validStatuses = EnumSet.of(
+            StatusEnum.PREPARING,
+            StatusEnum.READY_FOR_PICKUP,
+            StatusEnum.DELIVERING,
+            StatusEnum.DELIVERED
+        );
+
+        for (OrderModel order : orders) {
+            if (validStatuses.contains(order.getStatus()) && checkCustomerId(order.getCustomer().getId())) {
+                activeOrders.add(order);
+            }
+        }
+
+        return activeOrders;
+    }
+
+
+    //list past order history
+    public List<OrderModel> listPastOrders() {
+        List<OrderModel> orders = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
+        List<OrderModel> pastOrders = new ArrayList<>();
+
+        EnumSet<StatusEnum> validStatuses = EnumSet.of(
+            StatusEnum.DELIVERED,
+            StatusEnum.CANCELLED,
+            StatusEnum.REJECTED
+        );
+
+        for (OrderModel order : orders) {
+            if (validStatuses.contains(order.getStatus()) && checkCustomerId(order.getCustomer().getId())) {
+                pastOrders.add(order);
+            }
+        }
+
+        return pastOrders;
+    }
+
+
+    //list a specific order details
+    public OrderModel getOrderDetails(String orderId) {
+        List<OrderModel> orders = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
+
+        for (OrderModel order : orders) {
+            if(order.getOrderId().equals(orderId)) {
+                return order;
+            }
+        }
+
+        return null;
+    }
 
     //TODO: Generate receipt 
     

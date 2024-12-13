@@ -1,17 +1,20 @@
 package com.Group3.foodorderingsystem.Core.Model.Entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 
 public class OrderModel {
     private String orderId;
     private CustomerModel customer;
-    private ShopModel shopModel; 
+    private VendorModel vendor;
     private List<ItemModel> items;
     private double totalPrice;
     private StatusEnum status;
+    private LocalDateTime time;
 
     public OrderModel() {
+        this.time = LocalDateTime.now();
     }
 
     // getters and setters
@@ -21,6 +24,10 @@ public class OrderModel {
 
     public CustomerModel getCustomer() {
         return customer;
+    }
+
+    public VendorModel getVendor() {
+        return vendor;
     }
 
     public List<ItemModel> getItems() {
@@ -35,12 +42,20 @@ public class OrderModel {
         return status;
     }
 
+    public LocalDateTime getTime() {
+        return time;
+    }
+
     public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
     public void setCustomer(CustomerModel customer) {
         this.customer = customer;
+    }
+
+    public void setVendor(VendorModel vendor) {
+        this.vendor = vendor;
     }
 
     public void setItems(List<ItemModel> items) {
@@ -55,4 +70,8 @@ public class OrderModel {
         this.status = status;
     }
 
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
 }
