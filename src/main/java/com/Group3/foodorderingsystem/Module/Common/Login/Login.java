@@ -12,6 +12,7 @@ import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.Router;
 import com.Group3.foodorderingsystem.Module.SetupViewModel;
+import com.Group3.foodorderingsystem.Module.Common.Register.model.RegisterViewModel;
 import com.Group3.foodorderingsystem.Module.Common.Register.ui.RegisterRoleSelection;
 
 public class Login extends javax.swing.JFrame {
@@ -181,6 +182,9 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void clickHereButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickHereButtonMouseClicked
+        RegisterViewModel registerViewModel = new RegisterViewModel();
+        registerViewModel.init();
+        RegisterViewModel.instance = registerViewModel;
         Router.navigate(this, new RegisterRoleSelection());
     }//GEN-LAST:event_clickHereButtonMouseClicked
 

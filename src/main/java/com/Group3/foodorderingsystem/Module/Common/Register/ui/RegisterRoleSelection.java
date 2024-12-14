@@ -17,12 +17,9 @@ import com.Group3.foodorderingsystem.Module.Common.Register.widget.ProgressBarPa
 
 public class RegisterRoleSelection extends javax.swing.JFrame {
 
-    private RegisterViewModel registerViewModel = new RegisterViewModel();
     
     private int minVal = 1;
-    private int maxVal = 3;
     public RegisterRoleSelection() {
-        registerViewModel.init();
 
         initComponents();
         setResizable(false);
@@ -48,14 +45,13 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
         rightIcon.setIcon(Images.getImage("right_arrow.png", 40, 40));
         leftIcon.setIcon(Images.getImage("left_arrow.png", 40, 40));
 
-        rolePicture.setIcon(Images.getImage(registerViewModel.getSelectedRole().imagePath, 234, 234));
-        roleField.setText(registerViewModel.getSelectedRole().roleName);
-        descriptionField.setText("<html>" + registerViewModel.getSelectedRole().description + "</html>");
+        rolePicture.setIcon(Images.getImage(RegisterViewModel.instance.getSelectedRole().imagePath, 234, 234));
+        roleField.setText(RegisterViewModel.instance.getSelectedRole().roleName);
+        descriptionField.setText("<html>" + RegisterViewModel.instance.getSelectedRole().description + "</html>");
 
         minVal = 1; 
-        maxVal = registerViewModel.getSelectedRole().maxVal;
 
-        progressionPanel.setViewportView(new ProgressBarPanel(minVal, maxVal));
+        progressionPanel.setViewportView(new ProgressBarPanel(minVal, RegisterViewModel.instance.getSelectedRole().maxVal));
         progressionPanel = WidgetUtil.toEmptyPane(progressionPanel);
     }
 
@@ -245,17 +241,16 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_nextButtonActionPerformed
-        RegisterViewModel.instance = registerViewModel;
         Router.navigate(this, new RegisterInfo());
     }// GEN-LAST:event_nextButtonActionPerformed
 
     private void leftIconMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_leftIconMouseClicked
-        registerViewModel.reorderRoles(-1);
+        RegisterViewModel.instance.reorderRoles(-1);
         roleController();
     }// GEN-LAST:event_leftIconMouseClicked
 
     private void rightIconMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_rightIconMouseClicked
-        registerViewModel.reorderRoles(1);
+        RegisterViewModel.instance.reorderRoles(1);
         roleController();
     }// GEN-LAST:event_rightIconMouseClicked
 
