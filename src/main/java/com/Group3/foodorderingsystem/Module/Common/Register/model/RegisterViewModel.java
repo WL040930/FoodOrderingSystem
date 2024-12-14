@@ -1,10 +1,11 @@
-package com.Group3.foodorderingsystem.Module.Common.Register.viewmodel;
+package com.Group3.foodorderingsystem.Module.Common.Register.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterViewModel {
-    private List<RegisterRole> roles = new ArrayList<RegisterRole>();
+    public static RegisterViewModel instance;
+    private List<RegisterRole> roles = new ArrayList<>();
     private RegisterRole selectedRole; 
 
     public void init() {
@@ -12,15 +13,17 @@ public class RegisterViewModel {
             roles.add(role);
         }
 
-        selectedRole = roles.getFirst(); 
-    }
-
-    public List<RegisterRole> getRoles() {
-        return roles;
+        if (!roles.isEmpty()) {
+            selectedRole = roles.get(0);
+        }
     }
 
     public RegisterRole getSelectedRole() {
         return selectedRole;
+    }
+
+    public void setSelectedRole(RegisterRole role) {
+        selectedRole = role;
     }
 
     public void reorderRoles(int nextOrPrevious) {

@@ -13,6 +13,13 @@ public class VendorModel extends User {
     private String address;
     private StatusEnum status;
 
+    // for shop 
+    private String shopName;
+    private String shopDescription;
+    private String shopPhoneNumber;
+    private String shopImage;
+
+
     public double getRevenue() {
         return revenue;
     }
@@ -23,6 +30,38 @@ public class VendorModel extends User {
 
     public StatusEnum getStatus() {
         return status;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public String getShopDescription() {
+        return shopDescription;
+    }
+
+    public String getShopPhoneNumber() {
+        return shopPhoneNumber;
+    }
+
+    public String getShopImage() {
+        return shopImage;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public void setShopDescription(String shopDescription) {
+        this.shopDescription = shopDescription;
+    }
+
+    public void setShopPhoneNumber(String shopPhoneNumber) {
+        this.shopPhoneNumber = shopPhoneNumber;
+    }
+
+    public void setShopImage(String shopImage) {
+        this.shopImage = shopImage;
     }
 
     public void setRevenue(double revenue) {

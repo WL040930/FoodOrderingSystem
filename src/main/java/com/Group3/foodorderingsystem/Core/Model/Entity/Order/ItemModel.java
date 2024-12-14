@@ -1,5 +1,6 @@
 package com.Group3.foodorderingsystem.Core.Model.Entity.Order;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
 
 public class ItemModel {
@@ -11,12 +12,12 @@ public class ItemModel {
     private CategoryEnum itemCategory;
     private String itemImage;
     private int itemQuantity; 
-    private ShopModel shopModel; 
+    private VendorModel vendorModel; 
 
     public ItemModel() {
     }
 
-    public ItemModel(String itemId, String itemName, String itemDescription, double itemPrice, CategoryEnum itemCategory, String itemImage, int itemQuantity, ShopModel shopModel) {
+    public ItemModel(String itemId, String itemName, String itemDescription, double itemPrice, CategoryEnum itemCategory, String itemImage, int itemQuantity, VendorModel vendorModel) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -24,7 +25,7 @@ public class ItemModel {
         this.itemCategory = itemCategory;
         this.itemImage = itemImage;
         this.itemQuantity = itemQuantity;
-        this.shopModel = shopModel;
+        this.vendorModel = vendorModel;
     }
 
     public String getItemId() {
@@ -55,8 +56,8 @@ public class ItemModel {
         return itemQuantity;
     }
 
-    public ShopModel getShopModel() {
-        return shopModel;
+    public VendorModel getVendorModel() {
+        return vendorModel;
     }
 
     public void setItemId(String itemId) {
@@ -87,7 +88,7 @@ public class ItemModel {
         this.itemQuantity = itemQuantity;
     }
 
-    public void setShopModel(ShopModel shopModel) {
-        this.shopModel = shopModel;
+    public void setVendorModel(VendorModel vendorModel) {
+        this.vendorModel = vendorModel;
     }
 }

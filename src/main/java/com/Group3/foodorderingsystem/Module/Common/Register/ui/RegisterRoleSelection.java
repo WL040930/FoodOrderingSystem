@@ -2,19 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.Group3.foodorderingsystem.Module.Common.Register.view;
+package com.Group3.foodorderingsystem.Module.Common.Register.ui;
+
+import javax.swing.JScrollPane;
 
 import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.Router;
+import com.Group3.foodorderingsystem.Core.Util.WidgetUtil;
 import com.Group3.foodorderingsystem.Core.Widget.Header;
 import com.Group3.foodorderingsystem.Module.Common.Login.Login;
-import com.Group3.foodorderingsystem.Module.Common.Register.viewmodel.RegisterViewModel;
+import com.Group3.foodorderingsystem.Module.Common.Register.model.RegisterViewModel;
+import com.Group3.foodorderingsystem.Module.Common.Register.widget.ProgressBarPanel;
 
 public class RegisterRoleSelection extends javax.swing.JFrame {
 
     private RegisterViewModel registerViewModel = new RegisterViewModel();
-
+    
+    private int minVal = 1;
+    private int maxVal = 3;
     public RegisterRoleSelection() {
         registerViewModel.init();
 
@@ -22,6 +28,9 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
         setResizable(false);
         colorInitializer();
         roleController();
+
+        headerPanel.setViewportView(new Header());
+        headerPanel = WidgetUtil.toEmptyPane(headerPanel);
     }
 
     private void colorInitializer() {
@@ -42,6 +51,12 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
         rolePicture.setIcon(Images.getImage(registerViewModel.getSelectedRole().imagePath, 234, 234));
         roleField.setText(registerViewModel.getSelectedRole().roleName);
         descriptionField.setText("<html>" + registerViewModel.getSelectedRole().description + "</html>");
+
+        minVal = 1; 
+        maxVal = registerViewModel.getSelectedRole().maxVal;
+
+        progressionPanel.setViewportView(new ProgressBarPanel(minVal, maxVal));
+        progressionPanel = WidgetUtil.toEmptyPane(progressionPanel);
     }
 
     /**
@@ -51,11 +66,13 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         backgroundPanel = new javax.swing.JPanel();
-        javax.swing.JPanel header = new Header();
         leftIcon = new javax.swing.JLabel();
         rightIcon = new javax.swing.JLabel();
         rolePicture = new javax.swing.JLabel();
@@ -65,19 +82,12 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
         nextButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         loginButton = new javax.swing.JLabel();
+        headerPanel = new javax.swing.JScrollPane();
+        progressionPanel = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
-        header.setLayout(headerLayout);
-        headerLayout.setHorizontalGroup(
-                headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 500, Short.MAX_VALUE));
-        headerLayout.setVerticalGroup(
-                headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 80, Short.MAX_VALUE));
 
         leftIcon.setText("leftIcon");
         leftIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -130,78 +140,87 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
             }
         });
 
+        headerPanel.setBorder(null);
+
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
                 backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                         .addGroup(backgroundPanelLayout.createSequentialGroup()
                                 .addGroup(backgroundPanelLayout
                                         .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                                .addGap(162, 162, 162)
-                                                .addComponent(jLabel1))
-                                        .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                                .addGap(54, 54, 54)
-                                                .addGroup(backgroundPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
-                                                                false)
-                                                        .addComponent(descriptionField,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                                                .addGroup(backgroundPanelLayout.createParallelGroup(
-                                                                        javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                        .addGroup(backgroundPanelLayout
-                                                                                .createSequentialGroup()
-                                                                                .addComponent(leftIcon,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                        40,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addGap(34, 34, 34)
-                                                                                .addComponent(rolePicture,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                        234,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                        .addComponent(roleField,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                244,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGap(36, 36, 36)
-                                                                .addComponent(rightIcon,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addComponent(nextButton, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                        .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                                .addGap(109, 109, 109)
+                                                .addGap(136, 136, 136)
                                                 .addComponent(jLabel2)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(loginButton)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(loginButton))
+                                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                                .addGap(45, 45, 45)
+                                                .addComponent(leftIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(43, 43, 43)
+                                                .addGroup(backgroundPanelLayout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(roleField, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(rolePicture,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 234,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(progressionPanel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout
+                                .createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(backgroundPanelLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout
+                                                .createSequentialGroup()
+                                                .addGroup(backgroundPanelLayout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(descriptionField,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 422,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(nextButton,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 422,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(rightIcon, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(33, 33, 33))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                backgroundPanelLayout.createSequentialGroup()
+                                                        .addComponent(jLabel1)
+                                                        .addGap(169, 169, 169)))));
         backgroundPanelLayout.setVerticalGroup(
                 backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(93, 93, 93)
+                                .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 80,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(progressionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 60,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(backgroundPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(rolePicture, javax.swing.GroupLayout.PREFERRED_SIZE, 234,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(rightIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(leftIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(34, 34, 34)
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                                .addGap(143, 143, 143)
+                                                .addGroup(backgroundPanelLayout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(rightIcon, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(leftIcon, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                                .addGap(30, 30, 30)
+                                                .addComponent(rolePicture, javax.swing.GroupLayout.PREFERRED_SIZE, 234,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(roleField)
                                 .addGap(18, 18, 18)
                                 .addComponent(descriptionField, javax.swing.GroupLayout.PREFERRED_SIZE, 113,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(41, 41, 41)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -209,7 +228,7 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
                                         .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel2)
                                         .addComponent(loginButton))
-                                .addGap(0, 35, Short.MAX_VALUE)));
+                                .addGap(0, 88, Short.MAX_VALUE)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,7 +245,8 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_nextButtonActionPerformed
-        Router.navigate(this, new RegisterInfo(registerViewModel));
+        RegisterViewModel.instance = registerViewModel;
+        Router.navigate(this, new RegisterInfo());
     }// GEN-LAST:event_nextButtonActionPerformed
 
     private void leftIconMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_leftIconMouseClicked
@@ -246,11 +266,13 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JLabel descriptionField;
+    private javax.swing.JScrollPane headerPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel leftIcon;
     private javax.swing.JLabel loginButton;
     private javax.swing.JButton nextButton;
+    private javax.swing.JScrollPane progressionPanel;
     private javax.swing.JLabel rightIcon;
     private javax.swing.JLabel roleField;
     private javax.swing.JLabel rolePicture;

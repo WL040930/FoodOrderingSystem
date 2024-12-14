@@ -12,7 +12,7 @@ import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.Router;
 import com.Group3.foodorderingsystem.Module.SetupViewModel;
-import com.Group3.foodorderingsystem.Module.Common.Register.view.RegisterRoleSelection;
+import com.Group3.foodorderingsystem.Module.Common.Register.ui.RegisterRoleSelection;
 
 public class Login extends javax.swing.JFrame {
 

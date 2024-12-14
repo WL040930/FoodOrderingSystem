@@ -4,6 +4,8 @@
  */
 package com.Group3.foodorderingsystem.Core.Widget;
 
+import com.Group3.foodorderingsystem.Core.Util.Images;
+
 /**
  *
  * @author limweilun
@@ -15,6 +17,8 @@ public class Header extends javax.swing.JPanel {
      */
     public Header() {
         initComponents();
+
+        logo.setIcon(Images.getImage("logo.png", 40, 40));
     }
 
     /**
@@ -26,21 +30,32 @@ public class Header extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(51, 102, 0));
+        logo = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 51));
+
+        logo.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(440, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 }
