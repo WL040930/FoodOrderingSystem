@@ -11,9 +11,12 @@ import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.Router;
-import com.Group3.foodorderingsystem.Module.SetupViewModel;
+import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Common.Register.model.RegisterViewModel;
 import com.Group3.foodorderingsystem.Module.Common.Register.ui.RegisterRoleSelection;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminMainFrame;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminPanel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 
 public class Login extends javax.swing.JFrame {
 
@@ -199,10 +202,15 @@ public class Login extends javax.swing.JFrame {
             return; 
         }
 
-        SetupViewModel.getInstance().setUser(user);
-
         // allocate here
         switch (user.getRole()) {
+            case ADMIN:
+                AdminViewModel adminViewModel = new AdminViewModel();
+                adminViewModel.init();
+
+                Router.navigate(this, new AdminMainFrame());
+                SessionUtil.setAdminInSession(user);
+                break;
             default:
                 break;
         }

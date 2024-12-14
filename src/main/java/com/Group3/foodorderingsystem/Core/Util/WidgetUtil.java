@@ -10,4 +10,10 @@ public class WidgetUtil {
         pane.setBorder(null);
         return pane;
     }
+
+    public static JScrollPane toSingleScrollPane(JScrollPane pane) {
+        pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        return pane;
+    }
 }

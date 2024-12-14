@@ -1,0 +1,1 @@
+{"id":"4bfd23d6-861f-4140-abe8-f4c663647fb6","name":"admin","email":"1","password":"1","role":"ADMIN","vendor":false,"admin":true,"runner":false,"manager":false,"customer":false}

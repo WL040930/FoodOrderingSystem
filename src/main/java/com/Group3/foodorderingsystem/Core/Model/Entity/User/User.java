@@ -1,7 +1,9 @@
 package com.Group3.foodorderingsystem.Core.Model.Entity.User;
 
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
     private String id;
     private String name;
@@ -16,12 +18,12 @@ public class User {
         this.role = role;
     }
 
-    public User(String id, String name, String email, String password, RoleEnum role) {
+    public User(String id, String name, String email, String password, String role) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.role = RoleEnum.valueOf(role);
     }
 
     public String getId() {

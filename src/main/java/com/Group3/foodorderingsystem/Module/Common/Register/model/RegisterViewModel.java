@@ -3,10 +3,14 @@ package com.Group3.foodorderingsystem.Module.Common.Register.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Group3.foodorderingsystem.Module.Common.Register.widget.BasicInfoPanel;
+
 public class RegisterViewModel {
     public static RegisterViewModel instance;
+    public static BasicInfoPanel basicInfoPanel;
     private List<RegisterRole> roles = new ArrayList<>();
     private RegisterRole selectedRole; 
+    
 
     public void init() {
         for (RegisterRole role : RegisterRole.values()) {
@@ -16,6 +20,8 @@ public class RegisterViewModel {
         if (!roles.isEmpty()) {
             selectedRole = roles.get(0);
         }
+
+        basicInfoPanel = new BasicInfoPanel();
     }
 
     public RegisterRole getSelectedRole() {

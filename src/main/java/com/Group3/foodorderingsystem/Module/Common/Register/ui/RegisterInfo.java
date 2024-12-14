@@ -4,12 +4,16 @@
  */
 package com.Group3.foodorderingsystem.Module.Common.Register.ui;
 
+import java.awt.Component;
+
 import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Router;
 import com.Group3.foodorderingsystem.Core.Util.WidgetUtil;
 import com.Group3.foodorderingsystem.Core.Widget.Header;
 import com.Group3.foodorderingsystem.Module.Common.Register.model.RegisterViewModel;
+import com.Group3.foodorderingsystem.Module.Common.Register.widget.BasicInfoPanel;
 import com.Group3.foodorderingsystem.Module.Common.Register.widget.ProgressBarPanel;
+import com.Group3.foodorderingsystem.Module.Common.Register.widget.TopUpFrame;
 
 /**
  *
@@ -24,17 +28,25 @@ public class RegisterInfo extends javax.swing.JFrame {
         initComponents();
         setResizable(false);
         colorInitialize();
-        
+
         header.setViewportView(new Header());
         header = WidgetUtil.toEmptyPane(header);
 
-        progressionBarPanel.setViewportView(new ProgressBarPanel(2, 3));
+        progressionBarPanel
+                .setViewportView(new ProgressBarPanel(2, RegisterViewModel.instance.getSelectedRole().maxVal));
         progressionBarPanel = WidgetUtil.toEmptyPane(progressionBarPanel);
+
+        panelController(RegisterViewModel.basicInfoPanel);
     }
 
     private void colorInitialize() {
         backgroundPanel.setBackground(Colors.blue_1);
-        roleLabel.setText(RegisterViewModel.instance.getSelectedRole().roleName);
+        roleLabel.setText(RegisterViewModel.instance.getSelectedRole().roleName.toString());
+    }
+
+    private void panelController(Component panel) {
+        mainPanel.setViewportView(panel);
+        mainPanel = WidgetUtil.toSingleScrollPane(mainPanel);
     }
 
     /**
@@ -44,7 +56,8 @@ public class RegisterInfo extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         backgroundPanel = new javax.swing.JPanel();
@@ -54,6 +67,7 @@ public class RegisterInfo extends javax.swing.JFrame {
         progressionBarPanel = new javax.swing.JScrollPane();
         backButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
+        mainPanel = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,69 +92,86 @@ public class RegisterInfo extends javax.swing.JFrame {
             }
         });
 
+        mainPanel.setBorder(null);
+
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
-            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(header)
-            .addComponent(progressionBarPanel)
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(roleLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
-                .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
-        );
+                backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(header)
+                        .addComponent(progressionBarPanel)
+                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193,
+                                        Short.MAX_VALUE)
+                                .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45))
+                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(backgroundPanelLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(roleLabel))
+                                        .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 456,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         backgroundPanelLayout.setVerticalGroup(
-            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(progressionBarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(roleLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 522, Short.MAX_VALUE)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17))
-        );
+                backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 80,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(progressionBarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 60,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addGroup(backgroundPanelLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel1)
+                                        .addComponent(roleLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(backgroundPanelLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(17, 17, 17)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_backButtonActionPerformed
         Router.navigate(this, new RegisterRoleSelection());
-    }//GEN-LAST:event_backButtonActionPerformed
+    }// GEN-LAST:event_backButtonActionPerformed
 
-    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nextButtonActionPerformed
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_nextButtonActionPerformed
+        panelController(new TopUpFrame());
+    }// GEN-LAST:event_nextButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JScrollPane header;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane mainPanel;
     private javax.swing.JButton nextButton;
     private javax.swing.JScrollPane progressionBarPanel;
     private javax.swing.JLabel roleLabel;

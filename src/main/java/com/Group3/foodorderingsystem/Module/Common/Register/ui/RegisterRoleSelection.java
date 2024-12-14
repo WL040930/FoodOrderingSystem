@@ -46,7 +46,7 @@ public class RegisterRoleSelection extends javax.swing.JFrame {
         leftIcon.setIcon(Images.getImage("left_arrow.png", 40, 40));
 
         rolePicture.setIcon(Images.getImage(RegisterViewModel.instance.getSelectedRole().imagePath, 234, 234));
-        roleField.setText(RegisterViewModel.instance.getSelectedRole().roleName);
+        roleField.setText(RegisterViewModel.instance.getSelectedRole().roleName.toString());
         descriptionField.setText("<html>" + RegisterViewModel.instance.getSelectedRole().description + "</html>");
 
         minVal = 1; 
