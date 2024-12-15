@@ -8,7 +8,7 @@ public enum RegisterRole {
         "customer.png", 
         "Customer is the one who orders food from the shop",
         RoleEnum.CUSTOMER, 
-        2
+        3
     ), 
     Vendor(
         "vendor.png", 

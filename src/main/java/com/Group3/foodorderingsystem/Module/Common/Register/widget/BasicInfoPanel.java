@@ -4,8 +4,13 @@
  */
 package com.Group3.foodorderingsystem.Module.Common.Register.widget;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
+import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Images;
+import com.Group3.foodorderingsystem.Core.Util.WidgetUtil;
+import com.Group3.foodorderingsystem.Module.Common.Register.model.RegisterRole;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 
 /**
@@ -27,6 +32,13 @@ public class BasicInfoPanel extends javax.swing.JPanel {
     public void titleInitializer() {
         title.setText("<html>Role Selected <br> " + AdminViewModel.instance.registerViewModel.getSelectedRole().roleName + "</html>");
         backButton.setIcon(Images.getImage("left_arrow.png", 40, 40));
+
+        progressBarPanel.setViewportView(new ProgressBarPanel(2,
+                AdminViewModel.instance.registerViewModel.getSelectedRole().maxVal));
+        progressBarPanel = WidgetUtil.toEmptyPane(progressBarPanel);
+
+        errorMessageText.setText("");
+        errorMessageText.setForeground(Colors.red);
     }
 
     /**
@@ -50,6 +62,8 @@ public class BasicInfoPanel extends javax.swing.JPanel {
         progressBarPanel = new javax.swing.JScrollPane();
         backButton = new javax.swing.JLabel();
         title = new javax.swing.JLabel();
+        NextButton = new javax.swing.JButton();
+        errorMessageText = new javax.swing.JLabel();
 
         jLabel1.setText("Name");
 
@@ -68,6 +82,16 @@ public class BasicInfoPanel extends javax.swing.JPanel {
 
         title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         title.setText("<html>The role of the user you are creating for is: <br> </html>");
+
+        NextButton.setText("Next");
+        NextButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NextButtonActionPerformed(evt);
+            }
+        });
+
+        errorMessageText.setBackground(new java.awt.Color(255, 0, 51));
+        errorMessageText.setText("ERROR MESSAGE");
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
@@ -88,10 +112,14 @@ public class BasicInfoPanel extends javax.swing.JPanel {
                             .addComponent(emailField)
                             .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addComponent(title)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
-                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(errorMessageText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(NextButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
+                                .addComponent(title)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
+                                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(24, 24, 24))))
         );
         backgroundLayout.setVerticalGroup(
@@ -118,7 +146,11 @@ public class BasicInfoPanel extends javax.swing.JPanel {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(errorMessageText)
+                .addGap(18, 18, 18)
+                .addComponent(NextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -139,12 +171,58 @@ public class BasicInfoPanel extends javax.swing.JPanel {
         );
     }//GEN-LAST:event_backButtonMouseClicked
 
+    private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
+        if (nameField == null || nameField.getText().equals("")) {
+            errorMessageText.setText("Name cannot be empty");
+            return;
+        }
+
+        if (emailField == null || emailField.getText().equals("")) {
+            errorMessageText.setText("Email cannot be empty");
+            return;
+        }
+
+        if (passwordField == null || passwordField.getPassword().length == 0) {
+            errorMessageText.setText("Password cannot be empty");
+            return;
+        }
+
+        if (confirmPasswordField == null || confirmPasswordField.getPassword().length == 0) {
+            errorMessageText.setText("Confirm Password cannot be empty");
+            return;
+        }
+
+        if (!new String(passwordField.getPassword()).equals(new String(confirmPasswordField.getPassword()))) {
+            errorMessageText.setText("Password and Confirm Password do not match");
+            return;
+        }
+
+        if (UserServices.isEmailExist(emailField.getText()) != null) {
+            errorMessageText.setText("Email already exist");
+            return;
+        }
+
+        CustomerModel savedCustomer = UserServices.saveUser(
+                new CustomerModel()
+                        .setName(nameField.getText())
+                        .setEmail(emailField.getText())
+                        .setPassword(new String(passwordField.getPassword()))
+                        .setRole(RoleEnum.CUSTOMER));
+
+        if (savedCustomer == null) {
+            errorMessageText.setText("Error saving user");
+            return;
+        }
+    }//GEN-LAST:event_NextButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton NextButton;
     private javax.swing.JLabel backButton;
     private javax.swing.JPanel background;
     private javax.swing.JPasswordField confirmPasswordField;
     private javax.swing.JTextField emailField;
+    private javax.swing.JLabel errorMessageText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

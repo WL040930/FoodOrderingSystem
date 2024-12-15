@@ -8,6 +8,7 @@ import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.WidgetUtil;
 import com.Group3.foodorderingsystem.Module.Common.Register.model.RegisterViewModel;
+import com.Group3.foodorderingsystem.Module.Common.Register.widget.BasicInfoPanel;
 import com.Group3.foodorderingsystem.Module.Common.Register.widget.ProgressBarPanel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 
@@ -168,7 +169,7 @@ public class AccountRegistration extends javax.swing.JPanel {
     }// GEN-LAST:event_rightIconMouseClicked
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_nextButtonActionPerformed
-        AdminViewModel.instance.registerViewModel.basicInfoPanel.titleInitializer();
+        AdminViewModel.instance.registerViewModel.basicInfoPanel = new BasicInfoPanel();
         AdminViewModel.instance.refresh(AdminViewModel.instance.registerViewModel.basicInfoPanel);
     }// GEN-LAST:event_nextButtonActionPerformed
 

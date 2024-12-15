@@ -5,7 +5,6 @@
 package com.Group3.foodorderingsystem.Module.Platform.Admin.Account;
 
 import com.Group3.foodorderingsystem.Core.Util.Colors;
-import com.Group3.foodorderingsystem.Module.Common.Register.model.RegisterViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 
 public class AccountManagementPanel extends javax.swing.JPanel {

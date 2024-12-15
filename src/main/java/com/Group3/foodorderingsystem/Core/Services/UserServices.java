@@ -85,19 +85,30 @@ public class UserServices {
     }
 
     public static CustomerModel saveUser(CustomerModel customer) {
+        // Retrieve the current list of customers
         List<CustomerModel> customers = getCustomers();
 
+        // Check if the customer ID is null (indicating a new customer)
         if (customer.getId() == null) {
+            // Check if the email already exists
             if (isEmailExist(customer.getEmail()) != null) {
+                // Return null to indicate failure due to duplicate email
                 return null;
             }
+            // Generate a new ID for the customer
             customer.setId(Storage.generateNewId());
         } else {
+            // Remove the existing customer with the same ID (for updates)
             customers.removeIf(c -> c.getId().equals(customer.getId()));
         }
 
+        // Add the new or updated customer to the list
         customers.add(customer);
+
+        // Save the updated list to a file
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
+
+        // Return the saved customer model
         return customer;
     }
 
@@ -135,7 +146,7 @@ public class UserServices {
         return vendor;
     }
 
-    private static User isEmailExist(String email) {
+    public static User isEmailExist(String email) {
         for (User user : getUsers()) {
             if (user.getEmail().equals(email)) {
                 return user;

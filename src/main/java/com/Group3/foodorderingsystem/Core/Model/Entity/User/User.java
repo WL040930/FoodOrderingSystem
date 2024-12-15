@@ -46,43 +46,28 @@ public class User {
         return role;
     }
 
-    public void setId(String id) {
+    public User setId(String id) {
         this.id = id;
+        return this;
     }
 
-    public void setName(String name) {
+    public User setName(String name) {
         this.name = name;
+        return this;
     }
 
-    public void setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
-    public void setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
+        return this;
     }
 
-    public void setRole(RoleEnum role) {
+    public User setRole(RoleEnum role) {
         this.role = role;
-    }
-
-    public Boolean isCustomer() {
-        return role == RoleEnum.CUSTOMER;
-    }
-
-    public Boolean isRunner() {
-        return role == RoleEnum.RUNNER;
-    }
-
-    public Boolean isVendor() {
-        return role == RoleEnum.VENDOR;
-    }
-
-    public Boolean isAdmin() {
-        return role == RoleEnum.ADMIN;
-    }
-
-    public Boolean isManager() {
-        return role == RoleEnum.MANAGER;
+        return this;
     }
 }

@@ -24,15 +24,48 @@ public class CustomerModel extends User {
         return address;
     }
 
-    public void setBalance(double balance) {
+    public CustomerModel setBalance(double balance) {
         this.balance = balance;
+        return this;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public CustomerModel setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
 
-    public void setAddress(String address) {
+    public CustomerModel setAddress(String address) {
         this.address = address;
+        return this;
+    }
+
+    @Override
+    public CustomerModel setId (String id) {
+        super.setId(id);
+        return this;
+    }
+
+    @Override
+    public CustomerModel setName (String name) {
+        super.setName(name);
+        return this;
+    }
+
+    @Override
+    public CustomerModel setEmail (String email) {
+        super.setEmail(email);
+        return this;
+    }
+
+    @Override
+    public CustomerModel setPassword (String password) {
+        super.setPassword(password);
+        return this;
+    }
+
+    @Override
+    public CustomerModel setRole (RoleEnum role) {
+        super.setRole(role);
+        return this;
     }
 }
