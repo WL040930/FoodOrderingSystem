@@ -68,4 +68,9 @@ public class CustomerModel extends User {
         super.setRole(role);
         return this;
     }
+
+    public static Object builder() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'builder'");
+    }
 }

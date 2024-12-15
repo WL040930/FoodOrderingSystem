@@ -5,6 +5,8 @@ import com.Group3.foodorderingsystem.Module.Common.Register.model.RegisterViewMo
 import com.Group3.foodorderingsystem.Module.Common.Settings.SettingsPanel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Account.AccountManagementPanel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Account.Register.AccountRegistration;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Account.Register.Widget.CustomerRegistration;
+
 import java.awt.Component;
 
 public class AdminViewModel {
@@ -24,6 +26,7 @@ public class AdminViewModel {
     //// Account Registration 
     public AccountRegistration accountRegistrationPanel;
     public RegisterViewModel registerViewModel;
+    public CustomerRegistration customerRegistration;
     
     // Settings Panel
     public SettingsPanel settingsPanel;
