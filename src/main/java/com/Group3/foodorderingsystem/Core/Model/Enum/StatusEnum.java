@@ -8,5 +8,7 @@ public enum StatusEnum {
     READY_FOR_PICKUP,
     DELIVERING,
     DELIVERED,
+    PICKED_UP,
+    SERVED,
     CANCELLED;
 }

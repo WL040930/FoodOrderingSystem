@@ -49,7 +49,7 @@
                 <version>3.0.0</version>
                 <configuration>
                     <!-- Change to main java -->
-                    <mainClass>com.Group3.foodorderingsystem.Module.Ordering.Customer.Cart</mainClass>
+                    <mainClass>com.Group3.foodorderingsystem.Module.Ordering.Customer.OrderHistoryUI</mainClass>
                     <arguments>
                         <argument>--module-path</argument>
                         <argument>${java.home}/lib</argument>

@@ -23,10 +23,10 @@ public class CustomerOrderServices {
             orders = new ArrayList<>();
         }
 
-        String orderId = UUID.randomUUID().toString();
+        String orderId = UUID.randomUUID().toString().substring(0, 8);
         boolean isDuplicate;
         do {
-            orderId = UUID.randomUUID().toString();
+            orderId = UUID.randomUUID().toString().substring(0, 8);
             isDuplicate = false;
             for (OrderModel order : orders) {
                 if (order.getOrderId().equals(orderId)) {

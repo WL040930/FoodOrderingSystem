@@ -5,7 +5,8 @@ public enum SessionEnum {
     CUSTOMER("customer"),
     ADMIN("admin"),
     VENDOR("vendor"),
-    RIDER("rider");
+    RIDER("rider"),
+    SELECTED_ORDER("selected order");
 
     private final String key;
 
