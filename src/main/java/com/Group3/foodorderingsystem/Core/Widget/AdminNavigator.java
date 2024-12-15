@@ -55,7 +55,7 @@ public class AdminNavigator extends javax.swing.JPanel {
             default:
                 break;
         }
-        
+
     }
 
     /**
@@ -65,7 +65,8 @@ public class AdminNavigator extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         accountManagementIcon = new javax.swing.JLabel();
@@ -120,79 +121,92 @@ public class AdminNavigator extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(accountManagementIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(accountManagementText)))
-                .addGap(88, 88, 88)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(topUpText)
-                    .addComponent(topUpIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(receiptText)
-                    .addComponent(receiptIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(91, 91, 91)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(settingsIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(settingsText, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(23, 23, 23))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(21, 21, 21)
+                                                .addComponent(accountManagementIcon,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(accountManagementText)))
+                                .addGap(88, 88, 88)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(topUpText)
+                                        .addComponent(topUpIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104,
+                                        Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(receiptText)
+                                        .addComponent(receiptIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(91, 91, 91)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(settingsIcon, javax.swing.GroupLayout.Alignment.TRAILING,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(settingsText, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(23, 23, 23)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountManagementIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(settingsIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(topUpIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(receiptIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountManagementText)
-                    .addComponent(settingsText)
-                    .addComponent(topUpText)
-                    .addComponent(receiptText))
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(accountManagementIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(settingsIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(topUpIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(receiptIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(accountManagementText)
+                                        .addComponent(settingsText)
+                                        .addComponent(topUpText)
+                                        .addComponent(receiptText))
+                                .addContainerGap(12, Short.MAX_VALUE)));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void accountManagementIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountManagementIconMouseClicked
+    private void accountManagementIconMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_accountManagementIconMouseClicked
         if (AdminViewModel.instance.adminPanel == AdminPanel.ACCOUNT_MANAGEMENT) {
             return;
         }
         AdminViewModel.instance.adminPanel = AdminPanel.ACCOUNT_MANAGEMENT;
         styleInitializer();
-    }//GEN-LAST:event_accountManagementIconMouseClicked
+        AdminViewModel.instance.refresh();
+    }// GEN-LAST:event_accountManagementIconMouseClicked
 
-    private void topUpIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topUpIconMouseClicked
+    private void topUpIconMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_topUpIconMouseClicked
         if (AdminViewModel.instance.adminPanel == AdminPanel.TOP_UP) {
             return;
         }
         AdminViewModel.instance.adminPanel = AdminPanel.TOP_UP;
         styleInitializer();
-    }//GEN-LAST:event_topUpIconMouseClicked
+        AdminViewModel.instance.refresh();
+    }// GEN-LAST:event_topUpIconMouseClicked
 
-    private void receiptIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_receiptIconMouseClicked
+    private void receiptIconMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_receiptIconMouseClicked
         if (AdminViewModel.instance.adminPanel == AdminPanel.RECEIPT) {
             return;
         }
         AdminViewModel.instance.adminPanel = AdminPanel.RECEIPT;
         styleInitializer();
-    }//GEN-LAST:event_receiptIconMouseClicked
+        AdminViewModel.instance.refresh();
+    }// GEN-LAST:event_receiptIconMouseClicked
 
-    private void settingsIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsIconMouseClicked
+    private void settingsIconMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_settingsIconMouseClicked
         if (AdminViewModel.instance.adminPanel == AdminPanel.SETTINGS) {
             return;
         }
         AdminViewModel.instance.adminPanel = AdminPanel.SETTINGS;
         styleInitializer();
-    }//GEN-LAST:event_settingsIconMouseClicked
+        AdminViewModel.instance.refresh();
+    }// GEN-LAST:event_settingsIconMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountManagementIcon;

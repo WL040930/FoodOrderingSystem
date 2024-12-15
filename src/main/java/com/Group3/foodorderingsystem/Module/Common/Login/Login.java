@@ -13,7 +13,6 @@ import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.Router;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Common.Register.model.RegisterViewModel;
-import com.Group3.foodorderingsystem.Module.Common.Register.ui.RegisterRoleSelection;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminMainFrame;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminPanel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
@@ -188,7 +187,7 @@ public class Login extends javax.swing.JFrame {
         RegisterViewModel registerViewModel = new RegisterViewModel();
         registerViewModel.init();
         RegisterViewModel.instance = registerViewModel;
-        Router.navigate(this, new RegisterRoleSelection());
+        // Router.navigate(this, new RegisterRoleSelection());
     }//GEN-LAST:event_clickHereButtonMouseClicked
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
@@ -208,7 +207,7 @@ public class Login extends javax.swing.JFrame {
                 AdminViewModel adminViewModel = new AdminViewModel();
                 adminViewModel.init();
 
-                Router.navigate(this, new AdminMainFrame());
+                Router.navigate(this, AdminViewModel.instance.adminMainFrame);
                 SessionUtil.setAdminInSession(user);
                 break;
             default:

@@ -5,6 +5,8 @@
 package com.Group3.foodorderingsystem.Module.Common.Register.widget;
 
 import com.Group3.foodorderingsystem.Core.Util.Colors;
+import com.Group3.foodorderingsystem.Core.Util.Images;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 
 /**
  *
@@ -19,6 +21,12 @@ public class BasicInfoPanel extends javax.swing.JPanel {
         initComponents();
         
         background.setBackground(Colors.blue_1);
+        titleInitializer(); 
+    }
+
+    public void titleInitializer() {
+        title.setText("<html>Role Selected <br> " + AdminViewModel.instance.registerViewModel.getSelectedRole().roleName + "</html>");
+        backButton.setIcon(Images.getImage("left_arrow.png", 40, 40));
     }
 
     /**
@@ -39,6 +47,9 @@ public class BasicInfoPanel extends javax.swing.JPanel {
         passwordField = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         confirmPasswordField = new javax.swing.JPasswordField();
+        progressBarPanel = new javax.swing.JScrollPane();
+        backButton = new javax.swing.JLabel();
+        title = new javax.swing.JLabel();
 
         jLabel1.setText("Name");
 
@@ -48,27 +59,50 @@ public class BasicInfoPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Confirm Password");
 
+        backButton.setText("back");
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backButtonMouseClicked(evt);
+            }
+        });
+
+        title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        title.setText("<html>The role of the user you are creating for is: <br> </html>");
+
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
         backgroundLayout.setHorizontalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(progressBarPanel)
             .addGroup(backgroundLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(confirmPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                    .addComponent(passwordField)
-                    .addComponent(emailField)
-                    .addComponent(nameField))
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(confirmPasswordField)
+                            .addComponent(passwordField)
+                            .addComponent(emailField)
+                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addComponent(title)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))))
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
+                .addComponent(progressBarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(title)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -84,7 +118,7 @@ public class BasicInfoPanel extends javax.swing.JPanel {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -99,8 +133,15 @@ public class BasicInfoPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+        AdminViewModel.instance.refresh(
+            AdminViewModel.instance.accountRegistrationPanel
+        );
+    }//GEN-LAST:event_backButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel backButton;
     private javax.swing.JPanel background;
     private javax.swing.JPasswordField confirmPasswordField;
     private javax.swing.JTextField emailField;
@@ -110,5 +151,7 @@ public class BasicInfoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField nameField;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JScrollPane progressBarPanel;
+    private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }
