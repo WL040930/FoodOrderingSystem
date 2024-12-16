@@ -166,17 +166,17 @@ public class CustomerRegistration extends javax.swing.JPanel {
 
             if (newCustomerModel != null) {
                 errorMessageController(false);
-                AdminViewModel.instance.refresh(
+                AdminViewModel.navigate(
                         new Message(
                                 "success_icon.png",
                                 "Customer has been Created.",
-                                () -> AdminViewModel.instance.refresh(AdminViewModel.instance.accountManagementPanel)));
+                                () -> AdminViewModel.navigate(AdminViewModel.instance.accountManagementPanel)));
             }
         }
     }// GEN-LAST:event_createButtonActionPerformed
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_backButtonMouseClicked
-        AdminViewModel.instance.refresh(AdminViewModel.instance.registerViewModel.basicInfoPanel);
+        AdminViewModel.navigate(AdminViewModel.instance.registerViewModel.basicInfoPanel);
     }// GEN-LAST:event_backButtonMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

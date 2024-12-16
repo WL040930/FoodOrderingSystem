@@ -20,7 +20,7 @@ public enum RegisterRole {
         "runner.png", 
         "Runner is the one who delivers the food to the customer",
         RoleEnum.RUNNER, 
-        5
+        4
     ); 
 
     public String imagePath; 

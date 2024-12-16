@@ -3,7 +3,7 @@ package com.Group3.foodorderingsystem.Module.Common.Register.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.Group3.foodorderingsystem.Module.Common.Register.widget.BasicInfoPanel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Account.Register.Widget.BasicInfoPanel;
 
 public class RegisterViewModel {
     public static RegisterViewModel instance;

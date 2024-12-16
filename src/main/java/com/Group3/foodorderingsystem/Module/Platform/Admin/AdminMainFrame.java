@@ -6,9 +6,7 @@ package com.Group3.foodorderingsystem.Module.Platform.Admin;
 
 import com.Group3.foodorderingsystem.Core.Util.Colors;
 import com.Group3.foodorderingsystem.Core.Util.WidgetUtil;
-import com.Group3.foodorderingsystem.Core.Widget.AdminNavigator;
 import com.Group3.foodorderingsystem.Core.Widget.Header;
-import com.Group3.foodorderingsystem.Module.Common.Settings.SettingsPanel;
 import java.awt.Component;
 
 /**

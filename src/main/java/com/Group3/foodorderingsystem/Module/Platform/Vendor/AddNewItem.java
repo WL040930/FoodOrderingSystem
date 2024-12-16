@@ -7,6 +7,7 @@ package com.Group3.foodorderingsystem.Module.Platform.Vendor;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
 import com.Group3.foodorderingsystem.Core.Services.ItemServices;
+import com.Group3.foodorderingsystem.Core.Util.WidgetUtil;
 
 /**
  *
@@ -24,6 +25,7 @@ public class AddNewItem extends javax.swing.JFrame {
         initComponents();
         newItemPanel = new AddNewItemPanel(); // Create panel instance
         scrollPanel.setViewportView(newItemPanel); // Set panel into scroll
+        scrollPanel = WidgetUtil.toEmptyPane(scrollPanel);
     }
 
     /**

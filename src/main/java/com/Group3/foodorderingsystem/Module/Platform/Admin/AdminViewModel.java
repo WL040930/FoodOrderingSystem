@@ -6,6 +6,9 @@ import com.Group3.foodorderingsystem.Module.Common.Settings.SettingsPanel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Account.AccountManagementPanel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Account.Register.AccountRegistration;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Account.Register.Widget.CustomerRegistration;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Account.Register.Widget.VendorRegistration;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Account.Register.Widget.VendorShopRegistration;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Account.Register.Widget.VendorShopRegistrationField;
 
 import java.awt.Component;
 
@@ -24,9 +27,12 @@ public class AdminViewModel {
     public AccountManagementPanel accountManagementPanel;
 
     //// Account Registration 
-    public AccountRegistration accountRegistrationPanel;
+    public AccountRegistration accountRegistrationPanel; 
     public RegisterViewModel registerViewModel;
     public CustomerRegistration customerRegistration;
+    public VendorRegistration vendorRegistration;
+    public VendorShopRegistration vendorShopRegistration;
+    public VendorShopRegistrationField vendorShopRegistrationField;
     
     // Settings Panel
     public SettingsPanel settingsPanel;
@@ -54,7 +60,7 @@ public class AdminViewModel {
         adminMainFrame.panelController();
     }
 
-    public void refresh(Component panel) {
-        adminMainFrame.panelController(panel);
+    public static void navigate(Component panel) {
+        AdminViewModel.instance.adminMainFrame.panelController(panel);
     }
 }

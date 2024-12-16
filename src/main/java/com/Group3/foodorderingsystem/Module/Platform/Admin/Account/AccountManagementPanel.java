@@ -57,7 +57,7 @@ public class AccountManagementPanel extends javax.swing.JPanel {
 
     private void accountRegistrationButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_accountRegistrationButtonActionPerformed
         AdminViewModel.instance.initAccountRegistration();
-        AdminViewModel.instance.refresh(AdminViewModel.instance.accountRegistrationPanel);
+        AdminViewModel.navigate(AdminViewModel.instance.accountRegistrationPanel);
     }// GEN-LAST:event_accountRegistrationButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
