@@ -1,15 +1,29 @@
 package com.Group3.foodorderingsystem.Core.Services;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
+import com.itextpdf.layout.Document;
+import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.awt.Desktop;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
+
+
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.OrderModel;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.element.Paragraph;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 
@@ -52,7 +66,7 @@ public class CustomerOrderServices {
 
 
     //calculate total price
-    public double calculateTotalPrice(List<ItemModel> items) {
+    public double calculatePrice(List<ItemModel> items) {
         return items.stream()
             .mapToDouble(item -> item.getItemPrice() * item.getItemQuantity())
             .sum();
@@ -70,7 +84,7 @@ public class CustomerOrderServices {
         CustomerModel customer = SessionUtil.getCustomerFromSession();
 
         // Calculate total price
-        double totalPrice = calculateTotalPrice(items);
+        double totalPrice = calculatePrice(items);
 
         // Create order object
         OrderModel order = new OrderModel();
@@ -176,5 +190,78 @@ public class CustomerOrderServices {
     }
 
     //TODO: Generate receipt 
+
+    public void generateReceipt() {
+        OrderModel order = (OrderModel) SessionUtil.getSelectedOrderFromSession();
+    
+        if (order == null) {
+            System.out.println("No order selected.");
+            return;
+        }
+    
+        String pdfPath = "receipt_" + order.getOrderId() + ".pdf";
+        try {
+            PdfWriter writer = new PdfWriter(pdfPath);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+    
+            // Company Name on the top right
+            Paragraph companyName = new Paragraph("Food Orbit")
+                .setBold()
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setFontSize(12);
+            document.add(companyName);
+    
+            // Title
+            document.add(new Paragraph("Receipt").setBold().setTextAlignment(TextAlignment.CENTER).setFontSize(24));
+    
+            // Order Details Section
+            document.add(new Paragraph("Order ID: " + order.getOrderId()).setFontSize(10));
+            document.add(new Paragraph("Customer Name: " + order.getCustomer().getName()).setFontSize(10));
+            document.add(new Paragraph("Order Date: " + order.getTime().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))).setFontSize(10));
+            document.add(new Paragraph("Shop Name: " + order.getVendor().getShopName()).setFontSize(10));
+            document.add(new Paragraph("Order Method: " + order.getOrderMethod()).setFontSize(10));
+    
+            // Pre-table Text
+            document.add(new Paragraph("RM" + order.getTotalPrice() + " paid on " + order.getTime().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))).setBold().setFontSize(15));
+    
+            // Items Table
+            Table table = new Table(UnitValue.createPercentArray(new float[]{1, 5, 2, 2})).useAllAvailableWidth();  // Adjusted column widths
+            table.addHeaderCell("Qty");
+            table.addHeaderCell("Item");
+            table.addHeaderCell("Price");
+            table.addHeaderCell("Total");
+    
+            order.getItems().forEach(item -> {
+                table.addCell(String.valueOf(item.getItemQuantity()));
+                table.addCell(item.getItemName());
+                table.addCell(String.format("$%.2f", item.getItemPrice()));
+                table.addCell(String.format("$%.2f", item.getItemPrice() * item.getItemQuantity()));
+            });
+            document.add(table);
+    
+            // Total
+            document.add(new Paragraph("Amount Paid: $" + order.getTotalPrice()).setBold().setTextAlignment(TextAlignment.RIGHT).setFontSize(15));
+    
+            // Footer
+            document.add(new Paragraph("Thank you for your purchase!").setTextAlignment(TextAlignment.CENTER));
+            document.add(new Paragraph("If you have any questions about your order, please contact us.").setTextAlignment(TextAlignment.CENTER));
+    
+            document.close();
+            System.out.println("Receipt generated: " + pdfPath);
+    
+            // Automatically open the PDF
+            File pdfFile = new File(pdfPath);
+            if (pdfFile.exists()) {
+                Desktop.getDesktop().open(pdfFile);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     
 }

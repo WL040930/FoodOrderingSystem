@@ -63,6 +63,15 @@ public class SessionUtil {
         return session.get(SessionEnum.SELECTED_ORDER.getKey());
     }
 
+    public static void setSelectedOrderTabInSession(String orderTab) {
+        session.put(SessionEnum.SELECTED_ORDER_TAB.getKey(), orderTab);
+    }
+
+    public static String getSelectedOrderTabFromSession() {
+        return (String) session.get(SessionEnum.SELECTED_ORDER_TAB.getKey());
+    }
+
+
     public static void clearSession() {
         session.clear();
     }

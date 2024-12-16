@@ -1,16 +1,22 @@
 package com.Group3.foodorderingsystem.Module.Ordering.Customer;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.OrderModel;
+
+import java.util.Optional;
+
 import com.Group3.foodorderingsystem.Core.Model.Entity.ItemModel;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
+import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
@@ -23,6 +29,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Separator;
 
 public class OrderDetailsUI extends Application {
+
+    CustomerOrderServices customerOrderServices = new CustomerOrderServices();
 
     @Override
     public void start(Stage primaryStage) {
@@ -48,7 +56,12 @@ public class OrderDetailsUI extends Application {
         // Create a back button
         Button backButton = new Button("Back");
         backButton.setStyle("-fx-font-size: 14px;");
-        backButton.setOnAction(event -> primaryStage.close());
+        backButton.setOnAction(e -> {
+            SessionUtil.setSelectedOrderInSession(null);
+            primaryStage.close();
+            openOrderHistoryUI();
+
+        });
 
         // Create a VBox for the "Cancel Order" button
         VBox fixedVBox = new VBox(10);
@@ -59,12 +72,52 @@ public class OrderDetailsUI extends Application {
         if (selectedOrder.getStatus().equals(StatusEnum.PENDING)) {
             Button cancelOrderButton = new Button("Cancel Order");
             cancelOrderButton.getStyleClass().add("cancel-order-button");
+            cancelOrderButton.setOnAction(e -> {
+                // Create a confirmation alert
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Cancel Order");
+                alert.setHeaderText("Are you sure you want to cancel this order?");
+
+                // Show the alert and wait for the user's response
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    //pop out a message to inform user that order is cancelled
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setTitle("Order Cancelled");
+                    alert2.setHeaderText(null);
+                    alert2.setContentText("Order cancelled.");
+                    alert2.showAndWait();
+
+                    //TODO: implement the logic after database is implemented
+                    //cancel the order
+                    // customerOrderServices.cancelOrder(selectedOrder.getOrderId());
+
+
+                    // Close the window
+                    SessionUtil.setSelectedOrderInSession(null);
+                    primaryStage.close();
+                    openOrderHistoryUI();
+
+                }
+            });
+
+
             fixedVBox.getChildren().add(cancelOrderButton);
+
         } else {
             Button reorderButton = new Button("Reorder");
             reorderButton.getStyleClass().add("reorder-button");
+            reorderButton.setOnAction(e -> {
+                //save items in order into session
+                SessionUtil.setItemsInSession(selectedOrder.getItems());
+                OrderSummaryUI orderSummaryUI = new OrderSummaryUI();
+                orderSummaryUI.start(new Stage());
+            });     
             Button generateReceiptButton = new Button("Generate Receipt");
             generateReceiptButton.getStyleClass().add("generate-receipt-button");
+            generateReceiptButton.setOnAction(e -> {
+                customerOrderServices.generateReceipt();
+            });
             fixedVBox.getChildren().addAll(reorderButton, generateReceiptButton);
         }
 
@@ -96,6 +149,14 @@ public class OrderDetailsUI extends Application {
             itemsUI.getItemsDetails(),
             paymentUI.getPaymentDetails()
         );
+    }
+
+    //create a method to open the ordrehistoryui, it accept pending, active and past to direct to the respective page
+    public void openOrderHistoryUI() {
+        String orderStatus = SessionUtil.getSelectedOrderTabFromSession();
+        OrderHistoryUI orderHistoryUI = new OrderHistoryUI(orderStatus);
+        orderHistoryUI.start(new Stage());
+
     }
 
     public static void main(String[] args) {
@@ -132,7 +193,7 @@ public class OrderDetailsUI extends Application {
             try {
                 image = new Image(path, 50, 50, true, true);
             } catch (Exception e) {
-                image = new Image("file:C:/Users/jack8/OneDrive - Asia Pacific University/Documents/Assignment Diploma/Java/food-ordering-system/FoodOrderingSystem/src/main/java/com/Group3/foodorderingsystem/Assets/Resource/logo.png", 50, 50, true, true); // Default image if loading fails
+                image = new Image("/com/Group3/foodorderingsystem/Assets/Resource/logo.png", 50, 50, true, true); // Default image if loading fails
             }
             return new ImageView(image);
         }
@@ -291,7 +352,7 @@ public class OrderDetailsUI extends Application {
 
             //add 100px empty space
             Label emptySpace = new Label("");
-            emptySpace.setPrefHeight(80);
+            emptySpace.setPrefHeight(70);
 
     
             paymentBox.getChildren().addAll(separator1, subtotalBox, deliveryFeeBox, totalPriceBox, emptySpace);

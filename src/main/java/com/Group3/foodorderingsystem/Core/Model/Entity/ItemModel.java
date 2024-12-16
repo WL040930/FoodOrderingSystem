@@ -11,12 +11,12 @@ public class ItemModel {
     private CategoryEnum itemCategory;
     private String itemImage;
     private int itemQuantity; 
-    private ShopModel shopModel; 
+    private VendorModel shopModel; 
 
     public ItemModel() {
     }
 
-    public ItemModel(String itemId, String itemName, String itemDescription, double itemPrice, CategoryEnum itemCategory, String itemImage, int itemQuantity, ShopModel shopModel) {
+    public ItemModel(String itemId, String itemName, String itemDescription, double itemPrice, CategoryEnum itemCategory, String itemImage, int itemQuantity, VendorModel shopModel) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -55,7 +55,7 @@ public class ItemModel {
         return itemQuantity;
     }
 
-    public ShopModel getShopModel() {
+    public VendorModel getShopModel() {
         return shopModel;
     }
 
@@ -87,7 +87,7 @@ public class ItemModel {
         this.itemQuantity = itemQuantity;
     }
 
-    public void setShopModel(ShopModel shopModel) {
+    public void setShopModel(VendorModel shopModel) {
         this.shopModel = shopModel;
     }
 }

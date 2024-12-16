@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.VendorModel;
@@ -29,10 +30,16 @@ import javafx.scene.control.Button;
 
 public class OrderHistoryUI extends Application {
 
-
+    private String selectedTab = "  Active";
     private List<OrderModel> pendingOrders;
     private List<OrderModel> activeOrders;
     private List<OrderModel> pastOrders;
+
+
+    public OrderHistoryUI(String selectedTab) {
+        this();
+        this.selectedTab = selectedTab;
+    }
 
 
     @Override
@@ -62,6 +69,7 @@ public class OrderHistoryUI extends Application {
 
     private void addTabs(VBox root) {
         TabPane tabPane = new TabPane();
+        tabPane.setId("tabPane");
         Tab allTab = new Tab("Pending");
         Tab activeTab = new Tab("  Active");
         Tab pastTab = new Tab("   Past");
@@ -75,6 +83,17 @@ public class OrderHistoryUI extends Application {
         pastTab.setContent(createOrdersContent(pastOrders, "No past orders"));
 
         tabPane.getTabs().addAll(allTab, activeTab, pastTab);
+
+        
+        // Select the specified tab
+        if ("  Active".equals(selectedTab)) {
+            tabPane.getSelectionModel().select(activeTab);
+        } else if ("   Past".equals(selectedTab)) {
+            tabPane.getSelectionModel().select(pastTab);
+        } else {
+            tabPane.getSelectionModel().select(allTab);
+        }
+
         root.getChildren().add(tabPane);
     }
     
@@ -147,9 +166,17 @@ public class OrderHistoryUI extends Application {
 
         viewDetailsButton.setOnAction(e -> {
             SessionUtil.setSelectedOrderInSession(order);
+            
+            
+            // set the selected order tab to the session
+            //get the current tab selected
+            TabPane tabPane = (TabPane) viewDetailsButton.getScene().lookup("#tabPane");
+            Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+            SessionUtil.setSelectedOrderTabInSession(selectedTab.getText());
 
             OrderDetailsUI orderDetailsUI = new OrderDetailsUI();
             orderDetailsUI.start(new Stage());
+            ((Stage) viewDetailsButton.getScene().getWindow()).close();
 
         });
 
@@ -173,7 +200,7 @@ public class OrderHistoryUI extends Application {
         try {
             image = new Image(path, 50, 50, true, true);
         } catch (Exception e) {
-            image = new Image("file:C:/Users/jack8/OneDrive - Asia Pacific University/Documents/Assignment Diploma/Java/food-ordering-system/FoodOrderingSystem/src/main/java/com/Group3/foodorderingsystem/Assets/Resource/logo.png", 50, 50, true, true); // Default image if loading fails
+            image = new Image("/com/Group3/foodorderingsystem/Assets/Resource/logo.png", 50, 50, true, true); // Default image if loading fails
         }
         return new ImageView(image);
     }
@@ -209,6 +236,7 @@ public class OrderHistoryUI extends Application {
 
 
         public OrderHistoryUI() {
+
             pendingOrders = new ArrayList<>();
     
             VendorModel vendor1 = new VendorModel();
@@ -226,7 +254,7 @@ public class OrderHistoryUI extends Application {
             OrderModel order1 = new OrderModel();
             order1.setOrderId("f47ac10b");
             order1.setTime(LocalDateTime.parse("2024-12-14T10:00:00"));
-            order1.setTotalPrice(20.0);
+            order1.setTotalPrice(2000.0);
             order1.setVendor(vendor1);
             order1.setStatus(StatusEnum.PENDING); // Set status
             order1.setOrderMethod(OrderMethodEnum.DELIVERY); // Set order method
@@ -288,7 +316,10 @@ public class OrderHistoryUI extends Application {
             items2.add(item4);
 
             order2.setItems(items2);
-                
+            
+            //items in order2 to session
+            SessionUtil.setItemsInSession(items2);
+
             OrderModel order3 = new OrderModel();
             order3.setOrderId("123e4567");
             order3.setTime(LocalDateTime.parse("2024-12-14T12:00:00"));
@@ -296,7 +327,9 @@ public class OrderHistoryUI extends Application {
             order3.setVendor(vendor3);
             order3.setStatus(StatusEnum.DELIVERED); // Set status
             order3.setOrderMethod(OrderMethodEnum.DINE_IN); // Set order method
-
+            CustomerModel customer = new CustomerModel();
+            customer.setName("John Doe");
+            order3.setCustomer(customer);
 
             order3.setItems(items2);
             
@@ -310,6 +343,7 @@ public class OrderHistoryUI extends Application {
 
             activeOrders = new ArrayList<>();
             activeOrders.add(order1);
+            activeOrders.add(order3);
 
             pastOrders = new ArrayList<>();
 

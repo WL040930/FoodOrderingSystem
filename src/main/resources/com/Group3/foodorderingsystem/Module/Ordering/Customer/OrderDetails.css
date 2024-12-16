@@ -55,22 +55,22 @@
 }
 .status-label {
     -fx-font-size: 14px;
-    -fx-preferred-width: 300px;
-    -fx-max-width: 300px;
-    -fx-min-width: 300px;
+    -fx-preferred-width: 320px;
+    -fx-max-width: 320px;
+    -fx-min-width: 320px;
 }
 
 .order-status-label {
     -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-preferred-width: 300px;
-    -fx-max-width: 300px;
-    -fx-min-width: 300px;
+    -fx-preferred-width: 320px;
+    -fx-max-width: 320px;
+    -fx-min-width: 320px;
 }
 
 
 .status-value-label {
     -fx-font-size: 14px;
+    -fx-font-weight: bold;
     -fx-preferred-width: 185px;
     -fx-max-width: 185px;
     -fx-min-width: 185px;
@@ -94,9 +94,9 @@
 .item-label {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-preferred-width: 325px;
-    -fx-max-width: 325px;
-    -fx-min-width: 325px;
+    -fx-preferred-width: 300px;
+    -fx-max-width: 300px;
+    -fx-min-width: 300px;
     -fx-text-alignment: left;
     -fx-wrap-text: true;
 }
@@ -110,9 +110,9 @@
 
 .subtotal-label {
     -fx-font-size: 14px;
-    -fx-preferred-width: 385px;
-    -fx-max-width: 385px;
-    -fx-min-width: 385px;
+    -fx-preferred-width: 360px;
+    -fx-max-width: 360px;
+    -fx-min-width: 360px;
 }
 
 .subtotal-amount-label {
@@ -126,9 +126,9 @@
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-text-fill: #334e68;
-    -fx-preferred-width: 385px;
-    -fx-max-width: 385px;
-    -fx-min-width: 385px;
+    -fx-preferred-width: 360px;
+    -fx-max-width: 360px;
+    -fx-min-width: 360px;
 }
 
 .total-price-amount-label {
