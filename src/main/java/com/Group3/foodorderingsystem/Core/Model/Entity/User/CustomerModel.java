@@ -1,7 +1,9 @@
 package com.Group3.foodorderingsystem.Core.Model.Entity.User;
 
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomerModel extends User {
 
     public CustomerModel() {

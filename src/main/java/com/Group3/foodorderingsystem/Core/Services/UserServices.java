@@ -154,4 +154,10 @@ public class UserServices {
         }
         return null;
     }
+
+    public static void main(String[] args) {
+        for (VendorModel vendors : getVendors()) {
+            System.out.println(vendors.getShopName());
+        }
+    }
 }

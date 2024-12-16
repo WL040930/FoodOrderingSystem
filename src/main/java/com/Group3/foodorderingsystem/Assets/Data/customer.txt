@@ -6,3 +6,5 @@
 {"id":"b9dbfae6-e8e1-4817-9544-0408abb1bba9","name":"11","email":"121212123333231","password":"1","role":"CUSTOMER","balance":0.0,"phoneNumber":"1","address":"1"}
 {"id":"4eff241e-d6a6-4a8d-920f-193262374903","name":"1212","email":"22","password":"22","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
 {"id":"f99249bd-a871-4ff4-9d6c-4d026d4e0400","name":"1","email":"121212221","password":"111","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"123"}
+{"id":"9d67931d-4170-48df-83ba-42be884fd4d8","name":"12","email":"2222","password":"2","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
+{"id":"f8d0d16f-977a-43b4-8deb-6067e7b1e50e","name":"1212","email":"123","password":"2","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
