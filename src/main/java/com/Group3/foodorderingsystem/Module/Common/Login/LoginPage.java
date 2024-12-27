@@ -1,6 +1,13 @@
 package com.Group3.foodorderingsystem.Module.Common.Login;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
+import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Util.Images;
+import com.Group3.foodorderingsystem.Core.Util.Router;
+import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,11 +27,14 @@ import javafx.stage.Stage;
 
 public class LoginPage extends Application {
 
+    private TextField userTextField;
+    private PasswordField pwBox;
+
     @Override
     public void start(Stage primaryStage) {
-        VBox root = new VBox(20); // Add spacing between components
+        VBox root = new VBox(20);
         root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(20)); // Add padding around the layout
+        root.setPadding(new Insets(20));
 
         root.getChildren().addAll(_buildLogo(), _buildFormField(), _buildLoginButton());
 
@@ -50,16 +60,16 @@ public class LoginPage extends Application {
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
-        Label userName = new Label("User Name:");
+        Label userName = new Label("Email:");
         grid.add(userName, 0, 1);
 
-        TextField userTextField = new TextField();
+        userTextField = new TextField();
         grid.add(userTextField, 1, 1);
 
         Label pw = new Label("Password:");
         grid.add(pw, 0, 2);
 
-        PasswordField pwBox = new PasswordField();
+        pwBox = new PasswordField();
         grid.add(pwBox, 1, 2);
 
         return grid;
@@ -67,21 +77,48 @@ public class LoginPage extends Application {
 
     private Node _buildLoginButton() {
         VBox buttonContainer = new VBox(10);
-        buttonContainer.setAlignment(Pos.CENTER); // Align the button to the center
+        buttonContainer.setAlignment(Pos.CENTER);
         buttonContainer.setPadding(new Insets(10));
-
-        Button btn = new Button("Sign in");
 
         final Text actiontarget = new Text();
         actiontarget.setId("actiontarget");
 
+        Button btn = new Button("Sign in");
+
         btn.setOnAction(e -> {
-            actiontarget.setFill(Color.FIREBRICK);
-            actiontarget.setText("Sign in button pressed");
+            String email = userTextField.getText();
+            String password = pwBox.getText();
+
+            if (email.isEmpty() || password.isEmpty()) {
+                actiontarget.setFill(Color.RED);
+                actiontarget.setText("Please enter both email and password.");
+            } else {
+                User user = UserServices.findUserByEmailAndPassword(email, password);
+                if (user != null) {
+                    actiontarget.setFill(Color.GREEN);
+                    actiontarget.setText("Login successful!");
+
+                    openMainAppWindow(user);
+                } else {
+                    actiontarget.setFill(Color.RED);
+                    actiontarget.setText("Invalid email or password. Please try again.");
+                }
+            }
         });
 
-        buttonContainer.getChildren().addAll(btn, actiontarget); // Add the button and action message
+        buttonContainer.getChildren().addAll(actiontarget, btn);
         return buttonContainer;
+    }
+
+    private void openMainAppWindow(User user) {
+        if (user.getRole() == RoleEnum.ADMIN) {
+            SessionUtil.setAdminInSession(user);
+
+            AdminViewModel adminViewModel = new AdminViewModel();
+            Router.navigate(this, adminViewModel.adminMainFrame);
+        }
+
+        System.out.println("Navigating to the main application window...");
     }
 
     public static void main(String[] args) {

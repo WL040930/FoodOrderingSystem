@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AdminMainFrame",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.Module.Platform.Admin.AdminMainFrame",
+            "projectName": "FoodOrderingSystem"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

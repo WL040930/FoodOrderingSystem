@@ -6,6 +6,6 @@ public class FoodOrderingSystem {
 
     public static void main(String[] args) {
         Storage.init();
-
+        
     }
 }
