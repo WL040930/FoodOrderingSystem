@@ -25,6 +25,7 @@ public class AdminViewModel {
 
     // Account Management Panel
     public AccountManagementPanel accountManagementPanel;
+    public NewFeaturePanel newFeaturePanel;
 
     //// Account Registration 
     public AccountRegistration accountRegistrationPanel; 
@@ -43,6 +44,7 @@ public class AdminViewModel {
 
         adminNavigator = new AdminNavigator();
         accountManagementPanel = new AccountManagementPanel();
+        newFeaturePanel = new NewFeaturePanel();
         settingsPanel = new SettingsPanel();
         adminMainFrame = new AdminMainFrame();
 

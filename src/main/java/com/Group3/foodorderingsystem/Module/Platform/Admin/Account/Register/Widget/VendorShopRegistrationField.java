@@ -181,7 +181,7 @@ public class VendorShopRegistrationField extends javax.swing.JPanel {
         vendor.setShopPhoneNumber(phoneNumberField.getText());
         vendor.setShopImage(file == null ? "shop.png" : Storage.saveFile(file));
         vendor.setRevenue(0);
-        vendor.setStatus(StatusEnum.ACCEPTED);
+        vendor.setStatus(StatusEnum.PENDING);
 
         UserServices.saveUser(vendor);
 
