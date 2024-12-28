@@ -4,8 +4,8 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Util.Images;
-import com.Group3.foodorderingsystem.Core.Util.Router;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminMainFrame;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 
 import javafx.application.Application;
@@ -115,10 +115,18 @@ public class LoginPage extends Application {
             SessionUtil.setAdminInSession(user);
 
             AdminViewModel adminViewModel = new AdminViewModel();
-            Router.navigate(this, adminViewModel.adminMainFrame);
-        }
 
-        System.out.println("Navigating to the main application window...");
+            Stage adminStage = new Stage();
+            adminViewModel.getAdminMainFrame().start(adminStage);
+
+
+            Stage currentStage = (Stage) userTextField.getScene().getWindow();
+            currentStage.close(); 
+
+            adminStage.show();
+        } else {
+            System.out.println("User is not an admin.");
+        }
     }
 
     public static void main(String[] args) {

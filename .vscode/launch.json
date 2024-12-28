@@ -41,9 +41,9 @@
         },
         {
             "type": "java",
-            "name": "AddNewItem",
+            "name": "AdminMainFrame",
             "request": "launch",
-            "mainClass": "com.Group3.foodorderingsystem.Module.Platform.Vendor.AddNewItem",
+            "mainClass": "com.Group3.foodorderingsystem.Module.Platform.Admin.AdminMainFrame",
             "projectName": "FoodOrderingSystem",
             "vmArgs": "--module-path C:/Users/limwe/javafx-sdk-21.0.5/lib --add-modules javafx.controls,javafx.fxml"
         }

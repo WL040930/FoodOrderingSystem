@@ -1,74 +1,109 @@
 package com.Group3.foodorderingsystem.Module.Platform.Admin;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.Group3.foodorderingsystem.Core.Model.Entity.Config.BottomNavigationClass;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Config.HeaderClass;
+import com.Group3.foodorderingsystem.Core.Widgets.BottomNavigation;
+import com.Group3.foodorderingsystem.Core.Widgets.Header;
+import com.Group3.foodorderingsystem.Module.Common.settings.SettingsPage;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminNavigationEnum;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.AdminDatabase;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.AdminRegister;
+
 import javafx.application.Application;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 import javafx.scene.control.ScrollPane;
+import javafx.stage.Stage;
 
 public class AdminMainFrame extends Application {
 
+    private ScrollPane currentPane;
+    private BorderPane layout;
+
+    public void setCurrentPane(Node pane) {
+        if (currentPane.getContent() != null) {
+            currentPane.setContent(null);
+        }
+        currentPane.setContent(pane);
+    }
+
     @Override
     public void start(Stage primaryStage) {
-        // Create the header
-        Label header = new Label("Admin Dashboard");
-        header.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        header.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10px;");
+        // Main Pane
+        currentPane = new ScrollPane(AdminViewModel.getAdminRegister());
+        currentPane.setFitToWidth(true);
+        currentPane.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 
-        // Create some content for the middle (this will be scrollable)
-        VBox middleContent = new VBox(20);
-        middleContent.setAlignment(Pos.CENTER);
-        middleContent.setStyle("-fx-padding: 20px; -fx-background-color: #f0f0f0;");
+        currentPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        currentPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        // Add some sample content to middleContent (You can replace this with your
-        // actual content)
-        for (int i = 0; i < 20; i++) {
-            Button contentItem = new Button("Content Item " + (i + 1));
-            contentItem.setStyle("-fx-font-size: 14px; -fx-padding: 10px;");
-            middleContent.getChildren().add(contentItem);
-        }
+        // Layout
+        layout = new BorderPane();
+        layout.setTop(buildHeader());
+        layout.setCenter(currentPane);
+        layout.setBottom(buildBottomNavigator());
 
-        // Wrap the middle content in a ScrollPane to make it scrollable
-        ScrollPane scrollView = new ScrollPane();
-        scrollView.setContent(middleContent);
-        scrollView.setFitToWidth(true); // Make the content fit to width
-
-        // Create the bottom navigator (a simple HBox with buttons)
-        HBox bottomNavigator = new HBox(15);
-        bottomNavigator.setAlignment(Pos.CENTER);
-        bottomNavigator.setStyle("-fx-background-color: #333; -fx-padding: 10px;");
-
-        Button homeButton = new Button("Home");
-        Button settingsButton = new Button("Settings");
-        Button logoutButton = new Button("Logout");
-
-        // Add buttons to the bottom navigator
-        bottomNavigator.getChildren().addAll(homeButton, settingsButton, logoutButton);
-
-        // Create the main layout using BorderPane
-        BorderPane layout = new BorderPane();
-        layout.setTop(header);
-        layout.setCenter(scrollView);
-        layout.setBottom(bottomNavigator);
-
-        // Set fixed height for header and bottom navigator
         layout.setPrefHeight(600);
-        layout.setTop(header);
-        layout.setBottom(bottomNavigator);
 
-        // Create and set the scene
         Scene scene = new Scene(layout, 500, 780);
         primaryStage.setTitle("Admin Dashboard");
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private Node buildHeader() {
+        AdminNavigationEnum navigationList = AdminViewModel.getSelectedNavigation();
+        Header header = new Header(
+                navigationList.getTopNavigationItem().stream()
+                        .map(e -> new HeaderClass(
+                                e.getTitle(),
+                                AdminViewModel.getSelectedTopNavigation() == e,
+                                () -> {
+                                    AdminViewModel.setSelectedTopNavigation(e);
+
+                                    layout.setTop(buildHeader());
+
+                                    e.getAction().run();
+                                }))
+                        .collect(Collectors.toList()));
+
+        return header;
+    }
+
+    private Node buildBottomNavigator() {
+        List<BottomNavigationClass> config = new ArrayList<>();
+
+        for (AdminNavigationEnum component : AdminViewModel.getNavigationList()) {
+            config.add(new BottomNavigationClass(
+                    component.getTitle(),
+                    component.getIcon(),
+                    () -> handleNavigation(component),
+                    AdminViewModel.getSelectedNavigation() == component));
+        }
+
+        BottomNavigation bottomNavigation = new BottomNavigation(config);
+        bottomNavigation.setStyle(
+                "-fx-background-color: #4CAF50; -fx-padding: 10px; -fx-min-height: 80px; -fx-max-height: 80px;");
+        return bottomNavigation;
+    }
+
+    private void handleNavigation(AdminNavigationEnum selectedComponent) {
+        AdminViewModel.setSelectedNavigation(selectedComponent);
+
+        AdminViewModel.reset(selectedComponent);
+
+        layout.setBottom(buildBottomNavigator());
+        layout.setTop(buildHeader());
+    }
+
+    public void updateHeader() {
+        layout.setTop(buildHeader());
     }
 
     public static void main(String[] args) {

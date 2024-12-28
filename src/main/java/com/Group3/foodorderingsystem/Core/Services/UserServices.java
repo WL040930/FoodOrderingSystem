@@ -14,23 +14,51 @@ import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 
 public class UserServices {
 
-    // read file
+    /**
+     * Retrieves a list of all customers.
+     * 
+     * @return List<CustomerModel> - List of CustomerModel objects representing all
+     *         customers.
+     */
     public static List<CustomerModel> getCustomers() {
         return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), CustomerModel.class);
     }
 
+    /**
+     * Retrieves a list of all runners.
+     * 
+     * @return List<RunnerModel> - List of RunnerModel objects representing all
+     *         runners.
+     */
     public static List<RunnerModel> getRunners() {
         return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.RUNNER), RunnerModel.class);
     }
 
+    /**
+     * Retrieves a list of all vendors.
+     * 
+     * @return List<VendorModel> - List of VendorModel objects representing all
+     *         vendors.
+     */
     public static List<VendorModel> getVendors() {
         return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class);
     }
 
+    /**
+     * Retrieves a list of all users with the role of Admin.
+     * 
+     * @return List<User> - List of User objects representing all admins.
+     */
     public static List<User> getAdmins() {
         return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.USER), User.class);
     }
 
+    /**
+     * Retrieves a combined list of all users, including customers, runners,
+     * vendors, and admins.
+     * 
+     * @return List<User> - List of User objects representing all types of users.
+     */
     public static List<User> getUsers() {
         List<User> returnList = new ArrayList<>();
 
@@ -53,7 +81,13 @@ public class UserServices {
         return returnList;
     }
 
-    // for login use
+    /**
+     * Finds and returns a user by email and password.
+     * 
+     * @param email    - The email of the user to be found.
+     * @param password - The password of the user to be found.
+     * @return User - The User object if found, or null if not found.
+     */
     public static User findUserByEmailAndPassword(String email, String password) {
         for (User user : getUsers()) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
@@ -63,6 +97,14 @@ public class UserServices {
         return null;
     }
 
+    /**
+     * Saves or updates a User object, specifically for users with ADMIN or MANAGER
+     * roles.
+     * 
+     * @param user - The User object to be saved or updated.
+     * @return User - The saved User object if successful, or null if the email
+     *         already exists.
+     */
     public static User saveUser(User user) {
         if (user.getRole() == RoleEnum.ADMIN || user.getRole() == RoleEnum.MANAGER) {
             List<User> users = getUsers();
@@ -84,34 +126,37 @@ public class UserServices {
         return null;
     }
 
+    /**
+     * Saves or updates a CustomerModel object.
+     * 
+     * @param customer - The CustomerModel object to be saved or updated.
+     * @return CustomerModel - The saved CustomerModel object if successful, or null
+     *         if the email already exists.
+     */
     public static CustomerModel saveUser(CustomerModel customer) {
-        // Retrieve the current list of customers
         List<CustomerModel> customers = getCustomers();
 
-        // Check if the customer ID is null (indicating a new customer)
         if (customer.getId() == null) {
-            // Check if the email already exists
             if (isEmailExist(customer.getEmail()) != null) {
-                // Return null to indicate failure due to duplicate email
                 return null;
             }
-            // Generate a new ID for the customer
             customer.setId(Storage.generateNewId());
         } else {
-            // Remove the existing customer with the same ID (for updates)
             customers.removeIf(c -> c.getId().equals(customer.getId()));
         }
 
-        // Add the new or updated customer to the list
         customers.add(customer);
-
-        // Save the updated list to a file
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
-
-        // Return the saved customer model
         return customer;
     }
 
+    /**
+     * Saves or updates a RunnerModel object.
+     * 
+     * @param runner - The RunnerModel object to be saved or updated.
+     * @return RunnerModel - The saved RunnerModel object if successful, or null if
+     *         the email already exists.
+     */
     public static RunnerModel saveUser(RunnerModel runner) {
         List<RunnerModel> runners = getRunners();
 
@@ -129,6 +174,13 @@ public class UserServices {
         return runner;
     }
 
+    /**
+     * Saves or updates a VendorModel object.
+     * 
+     * @param vendor - The VendorModel object to be saved or updated.
+     * @return VendorModel - The saved VendorModel object if successful, or null if
+     *         the email already exists.
+     */
     public static VendorModel saveUser(VendorModel vendor) {
         List<VendorModel> vendors = getVendors();
 
@@ -146,6 +198,13 @@ public class UserServices {
         return vendor;
     }
 
+    /**
+     * Checks if an email already exists in the system across all user types.
+     * 
+     * @param email - The email to be checked.
+     * @return User - The User object if the email exists, or null if it does not
+     *         exist.
+     */
     public static User isEmailExist(String email) {
         for (User user : getUsers()) {
             if (user.getEmail().equals(email)) {
@@ -155,9 +214,4 @@ public class UserServices {
         return null;
     }
 
-    public static void main(String[] args) {
-        for (VendorModel vendors : getVendors()) {
-            System.out.println(vendors.getShopName());
-        }
-    }
 }
