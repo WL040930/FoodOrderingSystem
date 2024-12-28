@@ -29,8 +29,9 @@ public class RegisterRoleSelection extends VBox {
         accountSettingsButton.setOnAction(e -> {
             AdminViewModel.getRegisterViewModel().setBasicInfoForm(new BasicInfoForm());
             AdminViewModel.navigate(
-                AdminViewModel.getRegisterViewModel().getBasicInfoForm()
-            );
+                    AdminViewModel.getRegisterViewModel().getBasicInfoForm());
+            AdminViewModel.getRegisterViewModel().setNode(
+                    AdminViewModel.getRegisterViewModel().getBasicInfoForm());
         });
 
         // Add components to the VBox

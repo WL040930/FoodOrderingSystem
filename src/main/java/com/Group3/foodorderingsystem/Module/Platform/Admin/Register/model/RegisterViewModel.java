@@ -5,31 +5,29 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.BasicInfo
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.RegisterRoleSelection;
 
 public class RegisterViewModel extends ViewModelConfig {
-    
-    private static RegisterViewModel instance; 
 
     public RegisterViewModel() {
-        instance = this;
         setRegisterRoleSelection(new RegisterRoleSelection());
+        setNode(registerRoleSelection);
     }
 
     private RegisterRoleSelection registerRoleSelection;
 
-    public static RegisterRoleSelection getRegisterRoleSelection() {
-        return instance.registerRoleSelection;
+    public  RegisterRoleSelection getRegisterRoleSelection() {
+        return registerRoleSelection;
     }
 
-    public static void setRegisterRoleSelection(RegisterRoleSelection registerRoleSelection) {
-        instance.registerRoleSelection = registerRoleSelection;
+    public  void setRegisterRoleSelection(RegisterRoleSelection registerRoleSelection) {
+        this.registerRoleSelection = registerRoleSelection;
     }
 
-    private BasicInfoForm basicInfoForm; 
+    private BasicInfoForm basicInfoForm;
 
-    public static BasicInfoForm getBasicInfoForm() {
-        return instance.basicInfoForm;
+    public BasicInfoForm getBasicInfoForm() {
+        return this.basicInfoForm;
     }
 
-    public static void setBasicInfoForm(BasicInfoForm basicInfoForm) {
-        instance.basicInfoForm = basicInfoForm;
+    public void setBasicInfoForm(BasicInfoForm basicInfoForm) {
+        this.basicInfoForm = basicInfoForm;
     }
 }

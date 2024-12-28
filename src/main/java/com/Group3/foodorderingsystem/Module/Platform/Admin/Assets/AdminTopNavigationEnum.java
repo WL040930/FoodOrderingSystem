@@ -7,7 +7,7 @@ public enum AdminTopNavigationEnum {
     Register(
             "Register",
             () -> {
-                AdminViewModel.navigate(AdminViewModel.getRegisterViewModel().getRegisterRoleSelection());
+                AdminViewModel.navigate(AdminViewModel.getRegisterViewModel().getNode());
             }),
     UserDatabase(
             "User Database",

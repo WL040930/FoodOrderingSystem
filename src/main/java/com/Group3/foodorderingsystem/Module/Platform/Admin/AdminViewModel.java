@@ -7,9 +7,7 @@ import com.Group3.foodorderingsystem.Module.Common.settings.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.AdminDatabase;
-import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.AdminRegister;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.model.RegisterViewModel;
-import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.RegisterRoleSelection;
 
 import javafx.application.Platform;
 import javafx.scene.Node;

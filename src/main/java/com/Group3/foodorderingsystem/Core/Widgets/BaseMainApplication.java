@@ -23,7 +23,7 @@ public abstract class BaseMainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        currentPane = new ScrollPane(RegisterViewModel.getRegisterRoleSelection());
+        currentPane = new ScrollPane(AdminViewModel.getRegisterViewModel().getRegisterRoleSelection());
         currentPane.setFitToWidth(true);
         currentPane.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 
