@@ -14,7 +14,7 @@ public enum AdminNavigationEnum {
             Arrays.asList(
                     AdminTopNavigationEnum.Register,
                     AdminTopNavigationEnum.UserDatabase),
-            () -> AdminViewModel.navigate(AdminViewModel.getAdminRegister())),
+            () -> AdminViewModel.navigate(AdminViewModel.getRegisterViewModel().getRegisterRoleSelection())),
     Finance(
             "Finance",
             "logo.png",

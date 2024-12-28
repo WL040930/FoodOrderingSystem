@@ -1,6 +1,7 @@
 package com.Group3.foodorderingsystem.Core.Widgets;
 
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.model.RegisterViewModel;
 
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -22,7 +23,7 @@ public abstract class BaseMainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        currentPane = new ScrollPane(AdminViewModel.getAdminRegister());
+        currentPane = new ScrollPane(RegisterViewModel.getRegisterRoleSelection());
         currentPane.setFitToWidth(true);
         currentPane.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 

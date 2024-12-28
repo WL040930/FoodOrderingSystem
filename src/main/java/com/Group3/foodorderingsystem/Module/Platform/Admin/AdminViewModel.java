@@ -8,6 +8,8 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminNavigatio
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.AdminDatabase;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.AdminRegister;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.model.RegisterViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.RegisterRoleSelection;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -27,7 +29,7 @@ public class AdminViewModel {
         instance.adminMainFrame = new AdminMainFrame();
         instance.selectedNavigation = AdminNavigationEnum.User;
 
-        instance.adminRegister = new AdminRegister();
+        instance.registerViewModel = new RegisterViewModel();
         instance.adminDatabase = new AdminDatabase();
         instance.settingsPage = new SettingsPage();
 
@@ -166,20 +168,33 @@ public class AdminViewModel {
 
     // User section methods
 
-    // TODO: CONVERT IT INTO SINGLE VIEW MODEL
-    private AdminRegister adminRegister;
+    /**
+     * @var registerViewModel - RegisterViewModel instance  
+     */
+    private RegisterViewModel registerViewModel;
+
+    /**
+     * Get the RegisterViewModel instance
+     * 
+     * @return RegisterViewModel
+     */
+    public static RegisterViewModel getRegisterViewModel() {
+        return instance.registerViewModel;
+    }
+
+    /**
+     * Set the RegisterViewModel instance
+     * 
+     * @param registerViewModel
+     */
+    public static void setRegisterViewModel(RegisterViewModel registerViewModel) {
+        instance.registerViewModel = registerViewModel;
+    }     
+    
     private AdminDatabase adminDatabase;
 
     // TODO: CONVERT IT INTO SINGLE VIEW MODEL
     private SettingsPage settingsPage;
-
-    public static AdminRegister getAdminRegister() {
-        return instance.adminRegister;
-    }
-
-    public static void setAdminRegister(AdminRegister adminRegister) {
-        instance.adminRegister = adminRegister;
-    }
 
     public static AdminDatabase getAdminDatabase() {
         return instance.adminDatabase;
