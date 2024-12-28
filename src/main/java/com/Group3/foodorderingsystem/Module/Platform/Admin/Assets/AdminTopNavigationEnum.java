@@ -17,17 +17,16 @@ public enum AdminTopNavigationEnum {
     Finance(
             "Finance",
             () -> {
-                System.out.println(" finance ");
+
             }),
     Noti(
             "Notification",
             () -> {
-                System.out.println("Noti");
+
             }),
     SendNoti(
             "semd noti",
             () -> {
-                System.out.println("send noti");
             }),
     SelfSettings(
             "Self Settings",

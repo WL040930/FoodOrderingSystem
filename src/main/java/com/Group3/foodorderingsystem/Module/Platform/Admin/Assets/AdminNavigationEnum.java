@@ -20,14 +20,18 @@ public enum AdminNavigationEnum {
             "logo.png",
             Arrays.asList(
                     AdminTopNavigationEnum.Finance),
-            () -> System.out.println("Finance")),
+            () -> {
+                
+            }),
     Notification(
             "Notification",
             "logo.png",
             Arrays.asList(
                     AdminTopNavigationEnum.Noti, 
                     AdminTopNavigationEnum.SendNoti),
-            () -> System.out.println("Notification")),
+            () -> {
+                
+            }),
     Settings(
             "Settings",
             "logo.png",
