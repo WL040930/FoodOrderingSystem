@@ -214,4 +214,18 @@ public class UserServices {
         return null;
     }
 
+    /**
+     * 
+     * @param Id 
+     * @return CustomerModel
+     * 
+     */
+    public static CustomerModel findCustomerById(String Id) {
+        for (CustomerModel customer : getCustomers()) {
+            if (customer.getId().equals(Id)) {
+                return customer;
+            }
+        }
+        return null;
+    }
 }

@@ -8,7 +8,15 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.assets.Regis
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.BasicInfoForm;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.RegisterRoleSelection;
 
+import javafx.scene.Node;
+
 public class RegisterViewModel extends ViewModelConfig {
+
+    public void navigate(Node node) {
+        setNode(node);
+
+        AdminViewModel.navigate(node);
+    }
 
     /**
      * Constructor

@@ -20,9 +20,11 @@ public abstract class BaseMainApplication extends Application {
 
     protected abstract String sceneHeader(); 
 
+    protected abstract Node defaultContent(); 
+
     @Override
     public void start(Stage primaryStage) {
-        currentPane = new ScrollPane(AdminViewModel.getRegisterViewModel().getRegisterRoleSelection());
+        currentPane = new ScrollPane(defaultContent());
         currentPane.setFitToWidth(true);
         currentPane.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 

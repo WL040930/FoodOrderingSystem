@@ -94,7 +94,8 @@ public class RegisterRoleSelection extends VBox {
     }
 
     private void handleRegisterAction() {
-        System.out.println("Register button clicked");
+        AdminViewModel.getRegisterViewModel().setBasicInfoForm(new BasicInfoForm());
+        AdminViewModel.getRegisterViewModel().navigate(AdminViewModel.getRegisterViewModel().getBasicInfoForm());
     }
 
     private void refreshRoleSelection() {
