@@ -24,14 +24,16 @@ public class AdminViewModel {
      */
     public AdminViewModel() {
         instance = this;
+
         instance.adminMainFrame = new AdminMainFrame();
         instance.selectedNavigation = AdminNavigationEnum.User;
 
-        instance.registerViewModel = new RegisterViewModel();
         instance.adminDatabase = new AdminDatabase();
         instance.settingsPage = new SettingsPage();
 
         init();
+
+        initRegisterViewModel();
     }
 
     /**
@@ -188,6 +190,15 @@ public class AdminViewModel {
     public static void setRegisterViewModel(RegisterViewModel registerViewModel) {
         instance.registerViewModel = registerViewModel;
     }     
+
+    /**
+     * Generate new instance of the AdminViewModel
+     */
+
+    public static void initRegisterViewModel() {
+        instance.registerViewModel = new RegisterViewModel();
+        instance.registerViewModel.init();
+    }
     
     private AdminDatabase adminDatabase;
 
