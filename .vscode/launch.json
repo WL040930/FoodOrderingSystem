@@ -1,0 +1,51 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "AdminMainFrame",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.Module.Platform.Admin.AdminMainFrame",
+            "projectName": "FoodOrderingSystem"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "UserServices",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.Core.Services.UserServices",
+            "projectName": "FoodOrderingSystem"
+        },
+        {
+            "type": "java",
+            "name": "FoodOrderingSystem",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.FoodOrderingSystem",
+            "projectName": "FoodOrderingSystem"
+        },
+        {
+            "type": "java",
+            "name": "LoginPage",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.Module.Common.Login.LoginPage",
+            "projectName": "FoodOrderingSystem",
+            "vmArgs": "--module-path C:/Users/limwe/javafx-sdk-21.0.5/lib --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "AdminMainFrame",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.Module.Platform.Admin.AdminMainFrame",
+            "projectName": "FoodOrderingSystem",
+            "vmArgs": "--module-path C:/Users/limwe/javafx-sdk-21.0.5/lib --add-modules javafx.controls,javafx.fxml"
+        }
+    ]
+}

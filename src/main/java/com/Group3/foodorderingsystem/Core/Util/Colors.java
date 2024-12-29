@@ -6,6 +6,7 @@ public class Colors {
 
     public static final Color black = new Color(0, 0, 0);
     public static final Color white = new Color(255, 255, 255);
+    public static final Color red = new Color(255, 0, 0);
     
     public static final Color blue_1 = new Color(248, 250, 252);
     public static final Color blue_2 = new Color(217, 234, 253);

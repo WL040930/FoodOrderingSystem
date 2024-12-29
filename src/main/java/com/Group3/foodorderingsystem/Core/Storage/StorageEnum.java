@@ -14,8 +14,8 @@ public enum StorageEnum {
     ITEM(
         "item.txt"
     ), 
-    SHOP(
-        "shop.txt"
+    USER(
+        "user.txt"
     );
 
     final String fileName;

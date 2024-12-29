@@ -1,8 +1,8 @@
 package com.Group3.foodorderingsystem.Core.Util;
 
-import com.Group3.foodorderingsystem.Core.Model.Entity.CustomerModel;
-import com.Group3.foodorderingsystem.Core.Model.Entity.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.SessionEnum;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class SessionUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<ItemModel> getItemsFromSession() {
+    public static List<com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel> getItemsFromSession() {
         return (List<ItemModel>) session.getOrDefault(SessionEnum.ITEMS.getKey(), new ArrayList<>());
     }
 
