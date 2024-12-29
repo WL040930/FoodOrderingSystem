@@ -43,7 +43,9 @@ public class AdminMainFrame extends javax.swing.JFrame {
                                 mainPanel.setViewportView(AdminViewModel.instance.settingsPanel);
                                 break;
                         case ACCOUNT_MANAGEMENT:
-                                mainPanel.setViewportView(AdminViewModel.instance.newFeaturePanel);               
+                                // Re-initialize NewFeaturePanel
+                                AdminViewModel.instance.newFeaturePanel = new NewFeaturePanel();
+                                mainPanel.setViewportView(AdminViewModel.instance.newFeaturePanel);           
                                 break;
                         default:
                                 break;
