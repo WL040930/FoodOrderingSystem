@@ -17,7 +17,7 @@ public enum AdminTopNavigationEnum {
     Finance(
             "Finance",
             () -> {
-
+                AdminViewModel.navigate(AdminViewModel.getOrderHistoryUI());
             }),
     Noti(
             "Notification",

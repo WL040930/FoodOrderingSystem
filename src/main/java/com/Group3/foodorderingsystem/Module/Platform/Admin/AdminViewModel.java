@@ -8,6 +8,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminNavigatio
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.AdminDatabase;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.model.RegisterViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.OrderHistoryUI;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -34,6 +35,7 @@ public class AdminViewModel {
         init();
 
         initRegisterViewModel();
+        initOrderHistoryUI();
     }
 
     /**
@@ -201,6 +203,16 @@ public class AdminViewModel {
     }
     
     private AdminDatabase adminDatabase;
+
+    private OrderHistoryUI orderHistoryUI;
+
+    public static OrderHistoryUI getOrderHistoryUI() {
+        return instance.orderHistoryUI;
+    }
+
+    public static void initOrderHistoryUI() {
+        instance.orderHistoryUI = new OrderHistoryUI();
+    }
 
     // TODO: CONVERT IT INTO SINGLE VIEW MODEL
     private SettingsPage settingsPage;
