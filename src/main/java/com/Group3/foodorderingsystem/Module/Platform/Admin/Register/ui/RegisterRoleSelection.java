@@ -4,6 +4,7 @@ import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.BottomButton;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -30,24 +31,7 @@ public class RegisterRoleSelection extends BaseContentPanel {
     }
 
     protected Node footer() {
-        Button actionButton = new Button("Register");
-        actionButton.setMaxWidth(Double.MAX_VALUE);
-
-        actionButton.setStyle(
-                "-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; "
-                        + "-fx-padding: 10px 30px 10px 30px; -fx-border-radius: 5px;");
-
-        actionButton.setOnMouseClicked(event -> handleRegisterAction());
-
-        actionButton.setOnMouseEntered((MouseEvent e) -> actionButton.setStyle(
-                "-fx-background-color: #45a049; -fx-text-fill: white; -fx-font-size: 16px; "
-                        + "-fx-padding: 10px 30px 10px 30px; -fx-border-radius: 5px;"));
-
-        actionButton.setOnMouseExited((MouseEvent e) -> actionButton.setStyle(
-                "-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; "
-                        + "-fx-padding: 10px 30px 10px 30px; -fx-border-radius: 5px;"));
-
-        return actionButton;
+        return new BottomButton("Next", this::handleRegisterAction);
     }
 
     protected Node content() {

@@ -1,6 +1,7 @@
 package com.Group3.foodorderingsystem.Core.Widgets;
 
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -12,8 +13,8 @@ public class BaseContentPanel extends BorderPane {
     protected Node content;
 
     private double headerHeight = 50;
-    private double footerHeight = 30;
-    private double contentHeight = 500; 
+    private double footerHeight = 50;
+    private double contentHeight = 500;
 
     public BaseContentPanel() {
         super();
@@ -22,7 +23,7 @@ public class BaseContentPanel extends BorderPane {
     public void setHeader(Node header) {
         this.header = header;
         this.setTop(header);
-        setSectionHeights(); 
+        setSectionHeights();
     }
 
     public void setFooter(Node footer) {
@@ -31,26 +32,35 @@ public class BaseContentPanel extends BorderPane {
         this.setBottom(footerBox);
 
         footerBox.setStyle("-fx-padding: 10px;");
-        setSectionHeights(); 
+        setSectionHeights();
     }
 
     public void setContent(Node content) {
-        this.content = content;
-        this.setCenter(content);
+        ScrollPane scrollPane = new ScrollPane(content);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
+        scrollPane.setStyle("-fx-border-color: transparent; -fx-background-color:transparent;");
+
+        this.content = scrollPane;
+        this.setCenter(scrollPane);
         setSectionHeights();
     }
 
     private void setSectionHeights() {
         if (header instanceof Region) {
-            ((Region) header).setPrefHeight(headerHeight); 
+            ((Region) header).setMaxHeight(headerHeight);
+            ((Region) header).setMinHeight(headerHeight);
         }
 
         if (footer instanceof Region) {
-            ((Region) footer).setPrefHeight(footerHeight);
+            ((Region) footer).setMaxHeight((footerHeight));
+            ((Region) footer).setMinHeight(footerHeight);
         }
 
         if (content instanceof Region) {
-            ((Region) content).setPrefHeight(contentHeight);
+            ((Region) content).setMaxHeight(contentHeight);
+            ((Region) content).setMinHeight(contentHeight);
         }
     }
 

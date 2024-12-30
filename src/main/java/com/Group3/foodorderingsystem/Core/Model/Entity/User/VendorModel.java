@@ -1,23 +1,21 @@
 package com.Group3.foodorderingsystem.Core.Model.Entity.User;
 
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
-import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 
 public class VendorModel extends User {
-    
+
     public VendorModel() {
         super(RoleEnum.VENDOR);
     }
 
-    private double revenue; 
-    private String address;
+    private double revenue;
 
-    // for shop 
+    // for shop
     private String shopName;
     private String shopDescription;
     private String shopPhoneNumber;
     private String shopImage;
-
+    private String address;
 
     public double getRevenue() {
         return revenue;

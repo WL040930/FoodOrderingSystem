@@ -2,8 +2,10 @@ package com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;
+import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.BottomButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextField;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextFieldEnum;
 
@@ -13,30 +15,30 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-public class BasicInfoForm extends VBox {
+public class BasicInfoForm extends BaseContentPanel {
 
     private TitleTextField fullNameField;
     private TitleTextField emailField;
     private TitleTextField passwordField;
     private TitleTextField confirmPasswordField;
 
+    private Label errorMessageLabel = new Label();
+
     public BasicInfoForm() {
         super();
-        init();
+        setHeader(header());
+        setContent(content());
+        setFooter(footer());
     }
 
-    private void init() {
-        this.getChildren().addAll(buildHeader(), buildContent(), buildSubmitButton());
-    }
-
-    private Node buildHeader() {
+    private Node header() {
         return new TitleBackButton(
                 "Register as " + AdminViewModel.getRegisterViewModel().getSelectedRole().getRole(),
                 () -> AdminViewModel.getRegisterViewModel()
                         .navigate(AdminViewModel.getRegisterViewModel().getRegisterRoleSelection()));
     }
 
-    private Node buildContent() {
+    private Node content() {
         VBox content = new VBox(10);
         content.setStyle("-fx-padding: 10px;");
 
@@ -46,6 +48,8 @@ public class BasicInfoForm extends VBox {
         passwordField = new TitleTextField("Password", "Enter your password", TitleTextFieldEnum.PasswordField);
         confirmPasswordField = new TitleTextField("Confirm Password", "Re-enter your password",
                 TitleTextFieldEnum.PasswordField);
+        
+        errorMessageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
 
         // Add fields to the content
         content.getChildren().addAll(
@@ -53,36 +57,17 @@ public class BasicInfoForm extends VBox {
                 fullNameField,
                 emailField,
                 passwordField,
-                confirmPasswordField);
+                confirmPasswordField, 
+                errorMessageLabel);
 
         return content;
     }
 
-    private Node buildSubmitButton() {
-        Label errorMessageLabel = new Label();
-        errorMessageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
-        errorMessageLabel.setVisible(false);
-
-        Button submitButton = new Button("Submit");
-
-        // Style the button
-        submitButton.setStyle(
-                "-fx-padding: 10px; " +
-                        "-fx-font-size: 14px; " +
-                        "-fx-background-color: #0078D7; " +
-                        "-fx-text-fill: white; ");
-
-        submitButton.setMaxWidth(Double.MAX_VALUE);
-
-        VBox container = new VBox(5);
-        container.setStyle("-fx-padding: 10px;");
-        container.getChildren().addAll(errorMessageLabel, submitButton);
-
-        submitButton.setOnAction(event -> handleSubmit(errorMessageLabel));
-        return container;
+    private Node footer() {
+        return new BottomButton("Next", () -> handleSubmit());
     }
 
-    private void handleSubmit(Label errorMessageLabel) {
+    private void handleSubmit() {
         String fullName = ((TextField) fullNameField.getChildren().get(1)).getText();
         String email = ((TextField) emailField.getChildren().get(1)).getText();
         String password = ((TextField) passwordField.getChildren().get(1)).getText();
@@ -123,13 +108,18 @@ public class BasicInfoForm extends VBox {
         switch (AdminViewModel.getRegisterViewModel().getSelectedRole()) {
             case Customer:
                 AdminViewModel.getRegisterViewModel().setCustomerRegistration(new CustomerRegistration(user));
-                AdminViewModel.getRegisterViewModel().navigate(AdminViewModel.getRegisterViewModel().getCustomerRegistration());
+                AdminViewModel.getRegisterViewModel()
+                        .navigate(AdminViewModel.getRegisterViewModel().getCustomerRegistration());
                 break;
             case Vendor:
-                
+                AdminViewModel.getRegisterViewModel().setVendorRegistration(new VendorRegistration(user));
+                AdminViewModel.getRegisterViewModel()
+                        .navigate(AdminViewModel.getRegisterViewModel().getVendorRegistration());
                 break;
             case Runner:
-                
+                AdminViewModel.getRegisterViewModel().setRunnerRegistration(new RunnerRegistration(user));
+                AdminViewModel.getRegisterViewModel()
+                        .navigate(AdminViewModel.getRegisterViewModel().getRunnerRegistration());
                 break;
             default:
                 break;

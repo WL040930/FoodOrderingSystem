@@ -8,6 +8,8 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.assets.Regis
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.BasicInfoForm;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.CustomerRegistration;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.RegisterRoleSelection;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.RunnerRegistration;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui.VendorRegistration;
 
 import javafx.scene.Node;
 
@@ -83,5 +85,25 @@ public class RegisterViewModel extends ViewModelConfig {
 
     public void setCustomerRegistration(CustomerRegistration customerRegistration) {
         this.customerRegistration = customerRegistration;
+    }
+
+    private VendorRegistration vendorRegistration;
+
+    public VendorRegistration getVendorRegistration() {
+        return this.vendorRegistration;
+    }
+
+    public void setVendorRegistration(VendorRegistration vendorRegistration) {
+        this.vendorRegistration = vendorRegistration;
+    }
+
+    private RunnerRegistration runnerRegistration;
+
+    public RunnerRegistration getRunnerRegistration() {
+        return this.runnerRegistration;
+    }
+
+    public void setRunnerRegistration(RunnerRegistration runnerRegistration) {
+        this.runnerRegistration = runnerRegistration;
     }
 }

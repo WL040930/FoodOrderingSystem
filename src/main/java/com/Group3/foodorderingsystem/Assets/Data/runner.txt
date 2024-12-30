@@ -1,0 +1,1 @@
+{"id":"a69cb539-5919-400e-9c82-4da12c648623","name":"Runner","email":"runner@gmail.com","password":"1","role":"RUNNER","phoneNumber":"1231212","revenue":0.0}

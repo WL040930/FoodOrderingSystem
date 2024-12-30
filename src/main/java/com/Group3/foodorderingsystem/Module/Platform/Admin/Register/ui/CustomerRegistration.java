@@ -5,6 +5,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.BottomButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.PopupMessage;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextField;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextFieldEnum;
@@ -51,7 +52,7 @@ public class CustomerRegistration extends VBox {
 
         errorMessageLabel = new Label();
         errorMessageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
-        errorMessageLabel.setVisible(false); 
+        errorMessageLabel.setVisible(false);
 
         content.getChildren().addAll(
                 new Label("Customer Information"),
@@ -66,25 +67,8 @@ public class CustomerRegistration extends VBox {
     }
 
     private Node buildSubmitButton() {
-        Button submitButton = new Button("Submit");
-
-        submitButton.setStyle(
-                "-fx-padding: 10px; " +
-                        "-fx-font-size: 14px; " +
-                        "-fx-background-color: #0078D7; " +
-                        "-fx-text-fill: white;");
-
-        submitButton.setMaxWidth(Double.MAX_VALUE);
-
-        submitButton.setOnAction(e -> {
-            submitForm();
-        });
-
-        VBox container = new VBox(10);
-        container.setStyle("-fx-padding: 10px;");
-        container.getChildren().add(submitButton);
-
-        return container;
+        return new BottomButton("Register",
+                () -> submitForm());
     }
 
     private void submitForm() {
@@ -108,7 +92,7 @@ public class CustomerRegistration extends VBox {
         customer.setPhoneNumber(phoneNumber);
         customer.setAddress(address);
 
-        CustomerModel registerCustomer = UserServices.saveUser(customer); 
+        CustomerModel registerCustomer = UserServices.saveUser(customer);
 
         if (registerCustomer != null) {
             PopupMessage.showMessage("Customer registered successfully!", "success", () -> {
@@ -116,7 +100,8 @@ public class CustomerRegistration extends VBox {
                 AdminViewModel.getRegisterViewModel().navigate(AdminViewModel.getRegisterViewModel().getNode());
             });
         } else {
-            PopupMessage.showMessage("An error occured, please try again", "error", ()->{});
+            PopupMessage.showMessage("An error occured, please try again", "error", () -> {
+            });
         }
     }
 }
