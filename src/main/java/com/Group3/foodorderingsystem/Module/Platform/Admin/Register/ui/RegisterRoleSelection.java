@@ -62,7 +62,7 @@ public class RegisterRoleSelection extends VBox {
     }
 
     private Node showRoleDetails() {
-        VBox roleDetailsBox = new VBox(15); // Increased spacing
+        VBox roleDetailsBox = new VBox(15); 
         roleDetailsBox.setAlignment(Pos.CENTER);
 
         Label roleName = new Label(AdminViewModel.getRegisterViewModel().getSelectedRole().getRole());

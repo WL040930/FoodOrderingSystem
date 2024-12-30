@@ -8,3 +8,9 @@
 {"id":"f99249bd-a871-4ff4-9d6c-4d026d4e0400","name":"1","email":"121212221","password":"111","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"123"}
 {"id":"9d67931d-4170-48df-83ba-42be884fd4d8","name":"12","email":"2222","password":"2","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
 {"id":"f8d0d16f-977a-43b4-8deb-6067e7b1e50e","name":"1212","email":"123","password":"2","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
+{"id":"96d28847-27f4-4e23-95f7-2c07415401a3","name":"12","email":"122@gmail.com","password":"12","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
+{"id":"5f3afe9f-e5a5-452a-94f0-4653bb304901","name":"12","email":"222@gmail.com","password":"11","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
+{"id":"01903863-a480-4361-af3f-5147f83a748f","name":"12","email":"12222@gmail.com","password":"12","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
+{"id":"ff7358cc-f513-480b-980d-114d7dd112c4","name":"1","email":"2222@gmail.com","password":"11","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
+{"id":"da1a6793-f748-42a1-a9f1-01df69f6b073","name":"12","email":"222222@gmail.com","password":"11","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
+{"id":"ef5945e3-0193-4266-ab90-c11209d432ed","name":"22","email":"32@gmail.com","password":"1","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}

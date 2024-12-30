@@ -12,7 +12,6 @@ public class RunnerModel extends User {
 
     private String phoneNumber;
     private String revenue; 
-    private StatusEnum status; // NOTE: CHECK NEED THIS OR NOT, ADMIN WILL NEED TO APPROVE THE RUNNER DOCS/LICENSE BEFORE APPROVAL
 
     public String getPhoneNumber() {
         return phoneNumber;

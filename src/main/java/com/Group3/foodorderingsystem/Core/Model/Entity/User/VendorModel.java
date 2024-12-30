@@ -11,7 +11,6 @@ public class VendorModel extends User {
 
     private double revenue; 
     private String address;
-    private StatusEnum status;
 
     // for shop 
     private String shopName;
@@ -26,10 +25,6 @@ public class VendorModel extends User {
 
     public String getAddress() {
         return address;
-    }
-
-    public StatusEnum getStatus() {
-        return status;
     }
 
     public String getShopName() {
@@ -70,10 +65,6 @@ public class VendorModel extends User {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public void setStatus(StatusEnum status) {
-        this.status = status;
     }
 
 }
