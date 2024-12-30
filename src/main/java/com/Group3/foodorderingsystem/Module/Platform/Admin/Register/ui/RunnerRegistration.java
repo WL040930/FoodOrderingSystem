@@ -52,6 +52,7 @@ public class RunnerRegistration extends BaseContentPanel {
             runner.setName(user.getName());
             runner.setEmail(user.getEmail());
             runner.setPassword(user.getPassword());
+            runner.setProfilePicture(user.getProfilePicture());
             runner.setPhoneNumber(phoneNumberField.getInputValue());
             runner.setRevenue(0.0);
 

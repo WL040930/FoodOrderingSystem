@@ -40,39 +40,4 @@ public class CustomerModel extends User {
         this.address = address;
         return this;
     }
-
-    @Override
-    public CustomerModel setId (String id) {
-        super.setId(id);
-        return this;
-    }
-
-    @Override
-    public CustomerModel setName (String name) {
-        super.setName(name);
-        return this;
-    }
-
-    @Override
-    public CustomerModel setEmail (String email) {
-        super.setEmail(email);
-        return this;
-    }
-
-    @Override
-    public CustomerModel setPassword (String password) {
-        super.setPassword(password);
-        return this;
-    }
-
-    @Override
-    public CustomerModel setRole (RoleEnum role) {
-        super.setRole(role);
-        return this;
-    }
-
-    public static Object builder() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'builder'");
-    }
 }

@@ -1,11 +1,16 @@
 package com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;
+import com.Group3.foodorderingsystem.Core.Storage.Storage;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.assets.RegisterAssets;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.BottomButton;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.FileUploadType;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.FileUploadWidget;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextField;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextFieldEnum;
 
@@ -21,6 +26,9 @@ public class BasicInfoForm extends BaseContentPanel {
     private TitleTextField emailField;
     private TitleTextField passwordField;
     private TitleTextField confirmPasswordField;
+    private FileUploadWidget profileImageField;
+
+    Boolean isImageUploaded = false;
 
     private Label errorMessageLabel = new Label();
 
@@ -43,21 +51,26 @@ public class BasicInfoForm extends BaseContentPanel {
         content.setStyle("-fx-padding: 10px;");
 
         // Initialize form fields
+        profileImageField = new FileUploadWidget(FileUploadType.CIRCLE_AVATAR, User.getDefaultProfilePicture(
+                getRoleEnum(AdminViewModel.getRegisterViewModel().getSelectedRole())));
+        profileImageField.setOnFileSelectedCallback(selectedFile -> {
+            isImageUploaded = false;
+        });
         fullNameField = new TitleTextField("Full Name", "Enter your full name", TitleTextFieldEnum.TextField);
         emailField = new TitleTextField("Email Address", "Enter your email", TitleTextFieldEnum.EmailField);
         passwordField = new TitleTextField("Password", "Enter your password", TitleTextFieldEnum.PasswordField);
         confirmPasswordField = new TitleTextField("Confirm Password", "Re-enter your password",
                 TitleTextFieldEnum.PasswordField);
-        
+
         errorMessageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
 
         // Add fields to the content
         content.getChildren().addAll(
-                new Label("Basic Information"),
+                profileImageField,
                 fullNameField,
                 emailField,
                 passwordField,
-                confirmPasswordField, 
+                confirmPasswordField,
                 errorMessageLabel);
 
         return content;
@@ -105,6 +118,11 @@ public class BasicInfoForm extends BaseContentPanel {
         user.setEmail(email);
         user.setPassword(password);
 
+        if (profileImageField.getSelectedFile() != null && !isImageUploaded) {
+            user.setProfilePicture(Storage.saveFile(profileImageField.getSelectedFile()));
+            isImageUploaded = true;
+        }
+
         switch (AdminViewModel.getRegisterViewModel().getSelectedRole()) {
             case Customer:
                 AdminViewModel.getRegisterViewModel().setCustomerRegistration(new CustomerRegistration(user));
@@ -129,6 +147,19 @@ public class BasicInfoForm extends BaseContentPanel {
     private boolean isValidEmail(String email) {
         String emailRegex = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
         return email.matches(emailRegex);
+    }
+
+    private RoleEnum getRoleEnum(RegisterAssets registerAssets) {
+        switch (registerAssets) {
+            case Customer:
+                return RoleEnum.CUSTOMER;
+            case Vendor:
+                return RoleEnum.VENDOR;
+            case Runner:
+                return RoleEnum.RUNNER;
+            default:
+                return RoleEnum.CUSTOMER;
+        }
     }
 
 }

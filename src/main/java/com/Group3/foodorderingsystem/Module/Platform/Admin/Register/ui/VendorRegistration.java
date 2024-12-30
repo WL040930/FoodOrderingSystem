@@ -4,15 +4,28 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.BottomButton;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.FileUploadType;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.FileUploadWidget;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextField;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextFieldEnum;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 
 public class VendorRegistration extends BaseContentPanel {
 
     private User user; 
+
+    private TitleTextField shopName; 
+    private TitleTextField shopDescription; 
+    private TitleTextField shopPhoneNumber;
+    private TitleTextField shopAddress;
+    private FileUploadWidget shopImage; 
+
     public VendorRegistration(User user) {
         super();
 
@@ -20,8 +33,6 @@ public class VendorRegistration extends BaseContentPanel {
         setHeader(header());
         setContent(content());
         setFooter(footer());
-
-        setContentHeight(480);
     }
 
     private Node header() {
@@ -34,31 +45,31 @@ public class VendorRegistration extends BaseContentPanel {
     }
 
     private Node content() {
-        return new Label(
-                "Vendor Registration Form");
+        VBox content = new VBox(10);
+
+        VBox container = new VBox(); 
+
+        shopName = new TitleTextField("Shop Name", "Enter your shop name", TitleTextFieldEnum.TextField);
+        shopDescription = new TitleTextField("Shop Description", "Enter your shop description", TitleTextFieldEnum.TextArea);
+        shopPhoneNumber = new TitleTextField("Shop Phone Number", "Enter your shop phone number", TitleTextFieldEnum.TextField);
+        shopAddress = new TitleTextField("Shop Address", "Enter your shop address", TitleTextFieldEnum.TextArea);
+        // shopImage = new FileUploadWidget(FileUploadType.BUTTON, ); 
+
+        content.getChildren().addAll(
+                shopName,
+                shopDescription,
+                shopPhoneNumber,
+                shopAddress
+                // shopImage
+        );
+
+        return content;
     }
 
     private Node footer() {
-        Button actionButton = new Button("Register");
-        actionButton.setMaxWidth(Double.MAX_VALUE);
-
-        actionButton.setStyle(
-                "-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; "
-                        + "-fx-padding: 10px 30px 10px 30px; -fx-border-radius: 5px;");
-
-        actionButton.setOnMouseClicked(event -> {
-            System.out.println("Register as Vendor");
+        return new BottomButton("Register", () -> {
+            System.out.println("Registering Vendor");
         });
-
-        actionButton.setOnMouseEntered((MouseEvent e) -> actionButton.setStyle(
-                "-fx-background-color: #45a049; -fx-text-fill: white; -fx-font-size: 16px; "
-                        + "-fx-padding: 10px 30px 10px 30px; -fx-border-radius: 5px;"));
-
-        actionButton.setOnMouseExited((MouseEvent e) -> actionButton.setStyle(
-                "-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; "
-                        + "-fx-padding: 10px 30px 10px 30px; -fx-border-radius: 5px;"));
-
-        return actionButton;
     }
 
 }

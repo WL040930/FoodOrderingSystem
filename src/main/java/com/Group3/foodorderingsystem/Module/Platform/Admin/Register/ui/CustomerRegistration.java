@@ -91,6 +91,7 @@ public class CustomerRegistration extends VBox {
         customer.setPassword(user.getPassword());
         customer.setPhoneNumber(phoneNumber);
         customer.setAddress(address);
+        customer.setProfilePicture(user.getProfilePicture());
 
         CustomerModel registerCustomer = UserServices.saveUser(customer);
 
