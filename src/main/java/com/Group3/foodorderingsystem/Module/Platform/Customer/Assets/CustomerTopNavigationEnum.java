@@ -1,6 +1,5 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Assets;
 
-import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 
 public enum CustomerTopNavigationEnum {

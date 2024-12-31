@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.Group3.foodorderingsystem.Module.Common.settings.SettingsPage;
-import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminNavigationEnum;
-import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.model.RegisterViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.model.HomeViewModel;

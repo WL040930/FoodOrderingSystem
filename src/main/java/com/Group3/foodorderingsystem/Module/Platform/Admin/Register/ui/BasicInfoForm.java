@@ -15,7 +15,6 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.Titl
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextFieldEnum;
 
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;

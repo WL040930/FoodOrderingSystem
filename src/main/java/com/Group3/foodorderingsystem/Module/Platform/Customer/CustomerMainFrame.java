@@ -12,7 +12,6 @@ import com.Group3.foodorderingsystem.Core.Widgets.Header;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
 
 import javafx.scene.Node;
-import javafx.scene.layout.HBox;
 
 public class CustomerMainFrame extends BaseMainApplication {
     

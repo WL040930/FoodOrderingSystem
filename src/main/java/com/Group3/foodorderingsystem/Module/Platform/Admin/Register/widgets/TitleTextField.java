@@ -1,6 +1,7 @@
 package com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets;
 
 import javafx.scene.control.TextField;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
@@ -89,6 +90,17 @@ public class TitleTextField extends VBox {
         } else if (inputField instanceof TextArea) {
             return ((TextArea) inputField).getText();
         }
-        return ""; 
+        return "";
+    }
+
+    public StringProperty textProperty() {
+        if (inputField instanceof TextField) {
+            return ((TextField) inputField).textProperty();
+        } else if (inputField instanceof PasswordField) {
+            return ((PasswordField) inputField).textProperty();
+        } else if (inputField instanceof TextArea) {
+            return ((TextArea) inputField).textProperty();
+        }
+        return null;
     }
 }
