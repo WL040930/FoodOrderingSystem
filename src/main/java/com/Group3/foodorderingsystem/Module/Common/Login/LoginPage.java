@@ -2,12 +2,14 @@ package com.Group3.foodorderingsystem.Module.Common.Login;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -120,9 +122,8 @@ public class LoginPage extends Application {
             Stage adminStage = new Stage();
             adminViewModel.getAdminMainFrame().start(adminStage);
 
-
             Stage currentStage = (Stage) userTextField.getScene().getWindow();
-            currentStage.close(); 
+            currentStage.close();
 
             adminStage.show();
         } else if (user.getRole() == RoleEnum.CUSTOMER) {
@@ -133,6 +134,18 @@ public class LoginPage extends Application {
             CustomerViewModel customerViewModel = new CustomerViewModel();
             Stage customerStage = new Stage();
             customerViewModel.getCustomerMainFrame().start(customerStage);
+
+            Stage currentStage = (Stage) userTextField.getScene().getWindow();
+            currentStage.close();
+
+            customerStage.show();
+        } else if (user.getRole() == RoleEnum.VENDOR) {
+            System.out.println("Customer login");
+            SessionUtil.setVendorInSession(user); 
+
+            VendorViewModel vendorViewModel = new VendorViewModel();
+            Stage customerStage = new Stage();
+            vendorViewModel.getMainFrame().start(customerStage);
 
             Stage currentStage = (Stage) userTextField.getScene().getWindow();
             currentStage.close();
