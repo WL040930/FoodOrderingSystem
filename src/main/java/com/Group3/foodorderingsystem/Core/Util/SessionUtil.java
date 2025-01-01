@@ -17,7 +17,7 @@ public class SessionUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel> getItemsFromSession() {
+    public static List<ItemModel> getItemsFromSession() {
         return (List<ItemModel>) session.getOrDefault(SessionEnum.ITEMS.getKey(), new ArrayList<>());
     }
 
