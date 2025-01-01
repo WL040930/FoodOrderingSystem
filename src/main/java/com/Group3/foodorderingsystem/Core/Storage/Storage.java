@@ -11,6 +11,7 @@ public class Storage {
 
     public final static String DIRECTORY_PATH = "src/main/java/com/Group3/foodorderingsystem/Assets/Data";
     public final static String RESOURCE_PATH = "/com/Group3/foodorderingsystem/Assets/Resource";
+    public final static String SAVING_PATH = "src/main/java/com/Group3/foodorderingsystem/Assets/Resource";
 
     public static void init() {
         try {
@@ -34,7 +35,7 @@ public class Storage {
 
         try {
             Path sourcePath = sourceFile.toPath();
-            Path destinationPath = Path.of(RESOURCE_PATH, uniqueName);
+            Path destinationPath = Path.of(SAVING_PATH, uniqueName);
 
             Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
             return uniqueName;

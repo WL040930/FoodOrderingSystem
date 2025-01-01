@@ -10,6 +10,7 @@ public class User {
     private String email;
     private String password;
     private RoleEnum role;
+    private String profilePicture; 
 
     public User() {
     }
@@ -24,6 +25,15 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = RoleEnum.valueOf(role);
+    }
+
+    public User(String id, String name, String email, String password, String role, String fileName) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = RoleEnum.valueOf(role);
+        this.profilePicture = fileName;
     }
 
     public String getId() {
@@ -44,6 +54,11 @@ public class User {
 
     public RoleEnum getRole() {
         return role;
+    }
+
+    public User setProfilePicture(String fileName) {
+        this.profilePicture = fileName;
+        return this;
     }
 
     public User setId(String id) {
@@ -69,5 +84,25 @@ public class User {
     public User setRole(RoleEnum role) {
         this.role = role;
         return this;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public static String getDefaultProfilePicture(RoleEnum role) {
+        switch (role) {
+            case CUSTOMER:
+                return "customer.png";
+            case VENDOR:
+                return "vendor.png";
+            case RUNNER:
+                return "runner.png";
+            case ADMIN:
+            case MANAGER:
+                return "admin.png";
+            default:
+                return "customer.png";
+        }
     }
 }

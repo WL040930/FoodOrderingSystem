@@ -1,0 +1,2 @@
+{"id":"de5ee8bc-6786-470d-86d0-976673e64c72","name":"12","email":"22","password":"1","role":"VENDOR","profilePicture":"vendor.png","revenue":0.0,"shopName":"12","shopDescription":"22","shopPhoneNumber":"12","shopImage":"admin.png","address":"12"}
+{"id":"f8d5b3ea-f377-41c1-b713-7a36e7346e8c","name":"12","email":"2223@gmail.sa","password":"1","role":"VENDOR","profilePicture":"vendor.png","revenue":0.0,"shopName":"12","shopDescription":"22","shopPhoneNumber":"21","shopImage":"9691dfb8-6471-4629-9302-e21ebb2d8bd4.png","address":"21"}
