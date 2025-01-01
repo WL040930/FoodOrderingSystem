@@ -1,7 +1,9 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Order.ui;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
@@ -26,6 +28,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 
 
 public class OrderHistoryUI extends VBox {
@@ -68,7 +71,8 @@ public class OrderHistoryUI extends VBox {
     
             OrderModel order1 = new OrderModel();
             order1.setOrderId("f47ac10b");
-            order1.setTime(LocalDateTime.parse("2024-12-14T10:00:00"));
+            //random set the time, use Date type
+            order1.setTime(Date.from(LocalDateTime.parse("2024-12-14T10:00:00").toInstant(ZoneOffset.UTC)));
             order1.setTotalPrice(2000.0);
             order1.setVendor(vendor1);
             order1.setStatus(StatusEnum.PENDING); // Set status
@@ -103,7 +107,7 @@ public class OrderHistoryUI extends VBox {
     
             OrderModel order2 = new OrderModel();
             order2.setOrderId("9b2e3c7d");
-            order2.setTime(LocalDateTime.parse("2024-12-14T11:00:00"));
+            order2.setTime(Date.from(LocalDateTime.parse("2024-12-14T11:00:00").toInstant(ZoneOffset.UTC)));
             order2.setTotalPrice(30.0);
             order2.setVendor(vendor2);
             order2.setStatus(StatusEnum.PENDING); // Set status
@@ -130,14 +134,20 @@ public class OrderHistoryUI extends VBox {
             item4.setItemQuantity(1);
             items2.add(item4);
 
+            List<ItemModel> items3 = new ArrayList<>();
+
+            items3.addAll(items2);
+            items3.addAll(items2);
+            items3.addAll(items2);
+            items3.addAll(items2);
+
             order2.setItems(items2);
+
             
-            //items in order2 to session
-            SessionUtil.setItemsInSession(items2);
 
             OrderModel order3 = new OrderModel();
             order3.setOrderId("123e4567");
-            order3.setTime(LocalDateTime.parse("2024-12-14T12:00:00"));
+            order3.setTime(Date.from(LocalDateTime.parse("2024-12-14T12:00:00").toInstant(ZoneOffset.UTC)));
             order3.setTotalPrice(40.0);
             order3.setVendor(vendor3);
             order3.setStatus(StatusEnum.DELIVERED); // Set status
@@ -146,7 +156,8 @@ public class OrderHistoryUI extends VBox {
             customer.setName("John Doe");
             order3.setCustomer(customer);
 
-            order3.setItems(items2);
+            order3.setItems(items3);
+
             
 
             OrderModel order4 = order1;
@@ -184,23 +195,23 @@ public class OrderHistoryUI extends VBox {
             tabPane.getSelectionModel().select(activeTab);
         } else if ("   Past".equals(selectedTab)) {
             tabPane.getSelectionModel().select(pastTab);
-        } else {
+        } else if ("Pending".equals(selectedTab)) {
             tabPane.getSelectionModel().select(allTab);
         }
 
         root.getChildren().add(tabPane);
     }
 
-    private ScrollPane createOrdersContent(List<OrderModel> orders, String emptyMessage) {
+    private Node createOrdersContent(List<OrderModel> orders, String emptyMessage) {
         VBox allOrders = new VBox(15);
         allOrders.setPadding(new Insets(30, 0, 0, 15));
         allOrders.setStyle("-fx-background-color: #f8fafc;");
-
+    
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(allOrders);
         scrollPane.setFitToWidth(true);
         scrollPane.setStyle("-fx-background: #f8fafc; -fx-background-color: transparent;");
-
+    
         if (orders.isEmpty()) {
             Label noOrdersLabel = new Label(emptyMessage);
             noOrdersLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #666;");
@@ -211,7 +222,7 @@ public class OrderHistoryUI extends VBox {
                 allOrders.getChildren().add(orderBox);
             }
         }
-
+    
         return scrollPane;
     }
 
@@ -256,10 +267,16 @@ public class OrderHistoryUI extends VBox {
         Button viewDetailsButton = new Button("View Details");
         viewDetailsButton.getStyleClass().add("view-details-button");
 
-        // Add action to the button
+
+    //     AdminViewModel.getRegisterViewModel().setBasicInfoForm(new BasicInfoForm());
+    //     AdminViewModel.getRegisterViewModel().navigate(AdminViewModel.getRegisterViewModel().getBasicInfoForm());
+    // }
+
+
         viewDetailsButton.setOnAction(e -> {
             SessionUtil.setSelectedOrderInSession(order);
-            CustomerViewModel.navigate(CustomerViewModel.getOrderViewModel().getOrderDetailsUI());
+            CustomerViewModel.getOrderViewModel().setOrderDetailsUI(new OrderDetailsUI());
+            CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderDetailsUI());
         });
 
 

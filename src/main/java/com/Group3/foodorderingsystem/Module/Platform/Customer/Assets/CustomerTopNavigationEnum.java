@@ -17,7 +17,7 @@ public enum CustomerTopNavigationEnum {
     Order(
             "Order",
             () -> {
-                CustomerViewModel.navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
+                CustomerViewModel.navigate(CustomerViewModel.getOrderViewModel().getNode());
             }),
 
     Notification(

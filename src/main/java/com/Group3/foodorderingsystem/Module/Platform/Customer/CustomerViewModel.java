@@ -3,6 +3,7 @@ package com.Group3.foodorderingsystem.Module.Platform.Customer;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import com.Group3.foodorderingsystem.Module.Common.settings.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerTopNavigationEnum;
@@ -25,6 +26,7 @@ public class CustomerViewModel {
 
         instance.settingsPage = new SettingsPage();
         instance.orderViewModel = new OrderViewModel();
+        instance.orderViewModel.init();
 
         init();
         initHomeViewModel();

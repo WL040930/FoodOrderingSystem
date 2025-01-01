@@ -19,11 +19,13 @@ import com.itextpdf.layout.property.UnitValue;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.element.Paragraph;
+import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 
@@ -66,7 +68,7 @@ public class CustomerOrderServices {
 
 
     //calculate total price
-    public double calculatePrice(List<ItemModel> items) {
+    public static double calculatePrice(List<ItemModel> items) {
         return items.stream()
             .mapToDouble(item -> item.getItemPrice() * item.getItemQuantity())
             .sum();
@@ -78,10 +80,11 @@ public class CustomerOrderServices {
     }
 
 
-    // save order to file
-    public void saveOrder() {
+    // place order. it will accept order method, delivery address (but not required)
+    public static void placeOrder(OrderMethodEnum orderMethod, String deliveryAddress) {
         List<ItemModel> items = SessionUtil.getItemsFromSession();
         CustomerModel customer = SessionUtil.getCustomerFromSession();
+        VendorModel vendor = items.get(0).getVendorModel();
 
         // Calculate total price
         double totalPrice = calculatePrice(items);
@@ -93,15 +96,21 @@ public class CustomerOrderServices {
         order.setCustomer(customer);
         order.setTotalPrice(totalPrice);
         order.setStatus(StatusEnum.PENDING);
+        order.setOrderMethod(orderMethod);
+        order.setDeliveryAddress(deliveryAddress);
+        order.setVendor(vendor);
 
         // Save order to file
         saveOrderToFile(order);
 
+        //deduct the balance from customer
+        customer.setBalance(customer.getBalance() - totalPrice);
 
         // Clear only item from session
         SessionUtil.setItemsInSession(null);
 
     }
+
 
     
     // cancel order
@@ -217,12 +226,12 @@ public class CustomerOrderServices {
             // Order Details Section
             document.add(new Paragraph("Order ID: " + order.getOrderId()).setFontSize(10));
             document.add(new Paragraph("Customer Name: " + order.getCustomer().getName()).setFontSize(10));
-            document.add(new Paragraph("Order Date: " + order.getTime().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))).setFontSize(10));
+            //TODO: add date
             document.add(new Paragraph("Shop Name: " + order.getVendor().getShopName()).setFontSize(10));
             document.add(new Paragraph("Order Method: " + order.getOrderMethod()).setFontSize(10));
     
-            // Pre-table Text
-            document.add(new Paragraph("RM" + order.getTotalPrice() + " paid on " + order.getTime().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))).setBold().setFontSize(15));
+            // TODO:Pre-table Text
+            
     
             // Items Table
             Table table = new Table(UnitValue.createPercentArray(new float[]{1, 5, 2, 2})).useAllAvailableWidth();  // Adjusted column widths

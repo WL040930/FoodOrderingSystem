@@ -1,6 +1,7 @@
 package com.Group3.foodorderingsystem.Core.Model.Entity.Order;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
@@ -17,10 +18,11 @@ public class OrderModel {
     private String deliveryAddress;
     private StatusEnum status;
     private OrderMethodEnum orderMethod;
-    private LocalDateTime time;
+    private Date time;
 
     public OrderModel() {
-        this.time = LocalDateTime.now();
+        //get current time
+        this.time = new Date();
     }
 
     // getters and setters
@@ -56,7 +58,7 @@ public class OrderModel {
         return orderMethod;
     }
 
-    public LocalDateTime getTime() {
+    public Date getTime() {
         return time;
     }
 
@@ -93,7 +95,7 @@ public class OrderModel {
     }
 
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 }

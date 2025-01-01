@@ -1,24 +1,28 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Order.ui;
 
+
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
+import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -26,26 +30,26 @@ import java.util.Optional;
 
 public class OrderSummaryUI extends VBox {
 
+    List<ItemModel> items = SessionUtil.getItemsFromSession();
+    CustomerModel customer = SessionUtil.getCustomerFromSession();
+
+    Double totalPrice;
+
     public OrderSummaryUI() {
-        this.setSpacing(15);
         this.setPadding(new Insets(20));
         this.setStyle("-fx-background-color: #f8fafc;");
 
-        List<ItemModel> items = SessionUtil.getItemsFromSession();
+        VBox mainVBox = new VBox(10);
+
+
 
         if (!items.isEmpty()) {
-            displayOrderSummary(this, items);
+            mainVBox.getChildren().add(displayOrderSummary());
         } else {
             Label noItemsLabel = new Label("No items in the order.");
             noItemsLabel.getStyleClass().add("no-items-label");
             this.getChildren().add(noItemsLabel);
         }
-
-        // Create a ScrollPane for the main content
-        ScrollPane scrollPane = new ScrollPane(this);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setStyle("-fx-background: #f8fafc; -fx-background-color: transparent;");
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         // Create a top fixed HBox (header)
         HBox topFixedHBox = createTopFixedHBox();
@@ -53,49 +57,31 @@ public class OrderSummaryUI extends VBox {
         // Create a bottom fixed VBox (footer)
         VBox bottomFixedVBox = createBottomFixedVBox(items);
 
-        // Create a StackPane to hold the ScrollPane and the fixed HBoxes/VBoxes
-        StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(scrollPane, topFixedHBox, bottomFixedVBox);
-        StackPane.setAlignment(topFixedHBox, Pos.TOP_CENTER);
-        StackPane.setAlignment(bottomFixedVBox, Pos.BOTTOM_CENTER);
+        this.getChildren().addAll(topFixedHBox, mainVBox, bottomFixedVBox);
 
         // Apply CSS
-        //this.getStylesheets().add(getClass().getResource("/com/Group3/foodorderingsystem/Module/Ordering/Customer/OrderSummary.css").toExternalForm());
+        this.getStylesheets().add(getClass().getResource("/com/Group3/foodorderingsystem/Module/Platform/Customer/Order/ui/OrderSummaryUI.css").toExternalForm());
     }
 
-    private void displayOrderSummary(VBox root, List<ItemModel> items) {
-        OrderItemsUI itemsUI = new OrderItemsUI(items);
+    private VBox displayOrderSummary() {
 
-        // Add empty space to the top
-        VBox emptySpace = new VBox();
-        emptySpace.getStyleClass().add("empty-space");
+        VBox itemsList = getItemsDetails();
 
         // Create order option section
         VBox orderOptionSection = createOrderOptionSection();
 
-        // Add 70px empty space
-        Region emptySpace1 = new Region();
-        emptySpace1.setPrefHeight(70);
-        VBox.setVgrow(emptySpace1, Priority.ALWAYS);
-
-        root.getChildren().addAll(emptySpace, itemsUI.getItemsDetails(), orderOptionSection, emptySpace1);
+        return new VBox(itemsList, orderOptionSection);
     }
 
     private HBox createTopFixedHBox() {
         HBox topFixedHBox = new HBox(10);
         topFixedHBox.getStyleClass().add("top-fixed-hbox");
-        topFixedHBox.setAlignment(Pos.CENTER_LEFT);
-        topFixedHBox.setPadding(new Insets(10));
 
         // Create a back button with an icon
         Button backButton = new Button();
+        backButton.setGraphic(Images.getImageView("left_arrow.png", 20, 20));
         backButton.getStyleClass().add("back-button");
-        ImageView backIcon = Images.getImageView("cancel_icon", 0, 0);
-        backIcon.getStyleClass().add("back-icon");
-        backIcon.setFitWidth(25);
-        backIcon.setFitHeight(25);
-        backButton.setGraphic(backIcon);
-        // backButton.setOnAction(e -> handleBackAction());
+        //TODO: backButton.setOnAction(e -> handleBackAction());
 
         // Create a shop name label, retrieve the shop name from the item list in the session
         Label shopNameLabel = new Label("Shop Name");
@@ -108,7 +94,7 @@ public class OrderSummaryUI extends VBox {
     private VBox createBottomFixedVBox(List<ItemModel> items) {
         VBox bottomFixedVBox = new VBox(10);
         bottomFixedVBox.getStyleClass().add("bottom-fixed-vbox");
-        bottomFixedVBox.setAlignment(Pos.CENTER);
+        // bottomFixedVBox.setAlignment(Pos.CENTER);
 
         // Create a HBox to hold the total price label and the total price
         HBox totalPriceBox = new HBox(10);
@@ -121,7 +107,7 @@ public class OrderSummaryUI extends VBox {
         totalPriceLabel.getStyleClass().add("total-price-label");
 
         // Calculate total price
-        double totalPrice = items.stream()
+        totalPrice = items.stream()
                 .mapToDouble(item -> item.getItemPrice() * item.getItemQuantity())
                 .sum();
 
@@ -134,7 +120,7 @@ public class OrderSummaryUI extends VBox {
         // Create a button to place order
         Button placeOrderButton = new Button("Place Order");
         placeOrderButton.getStyleClass().add("place-order-button");
-        // placeOrderButton.setOnAction(e -> handlePlaceOrder());
+        placeOrderButton.setOnAction(e -> handlePlaceOrder());
 
         bottomFixedVBox.getChildren().addAll(totalPriceBox, placeOrderButton);
         return bottomFixedVBox;
@@ -167,9 +153,14 @@ public class OrderSummaryUI extends VBox {
         // Show address input field if "Delivery" is selected
         orderOptionComboBox.setOnAction(e -> {
             if ("Delivery".equals(orderOptionComboBox.getValue())) {
+                addressBox.setMaxHeight(200);
+                addressBox.setMinHeight(200);
                 addressBox.setVisible(true);
             } else {
+                addressBox.setMaxHeight(0);
+                addressBox.setMinHeight(0);
                 addressBox.setVisible(false);
+
             }
         });
 
@@ -180,7 +171,7 @@ public class OrderSummaryUI extends VBox {
         return orderOptionSection;
     }
 
-    // private void handleBackAction() {
+    // TODO:private void handleBackAction() {
     //     // Define the action when the back button is clicked
     //     // For example, close the current window or navigate to the previous UI
     //     Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to cancel the order?", ButtonType.YES, ButtonType.NO);
@@ -193,62 +184,137 @@ public class OrderSummaryUI extends VBox {
     //     }
     // }
 
-    // private void handlePlaceOrder() {
-    //     // Implement the logic to place the order
-    //     // For example, validate inputs, send data to the server, etc.
-    //     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Order placed successfully!", ButtonType.OK);
-    //     alert.showAndWait();
+    private void handlePlaceOrder() {
+        Double balance = customer.getBalance();
+        OrderMethodEnum orderMethod;
+        String deliveryAddress = null;
 
-    //     // Clear session items
-    //     SessionUtil.setItemsInSession(null);
+        // Get tthe order method from the value of the order option combo box
+        ComboBox<String> orderOptionComboBox = (ComboBox<String>) this.lookup(".order-option-combobox");
+        if ("Dine In".equals(orderOptionComboBox.getValue())) {
+            orderMethod = OrderMethodEnum.DINE_IN;
+        } else if ("Takeaway".equals(orderOptionComboBox.getValue())) {
+            orderMethod = OrderMethodEnum.TAKEAWAY;
+        } else {
+            orderMethod = OrderMethodEnum.DELIVERY;
+            TextArea addressTextArea = (TextArea) this.lookup(".address-textarea");
+            deliveryAddress = addressTextArea.getText();
+        }
+    
+        // Check if the customer has enough balance to place the order
+        if (balance < totalPrice) {
+            showDialog("Insufficient Balance", "Unable to place order", "You do not have enough balance to complete this order.");
+        } else {
+            // Ask for confirmation to place the order
+            boolean confirmationResult = showConfirmationDialog("Confirm Order", balance, totalPrice);
+            if (confirmationResult) {
+                //TODO: Place the order logic here
+                showDialog("Order Placed", null, "Your order has been successfully placed.");
+                CustomerOrderServices.placeOrder(orderMethod, deliveryAddress);
+                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Pending"));
 
-    //     // Close the current window or navigate to another UI
-    //     ((Stage) this.getScene().getWindow()).close();
-    // }
+                // Clear session items after placing the order
+                SessionUtil.setItemsInSession(null);
+            }
+        }
+    }
+    
+    private boolean showConfirmationDialog(String title, double balance, double totalPrice) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle(title);
+        dialog.setHeaderText("Confirm Order Placement");
+    
+        // Set the custom content for the dialog
+        VBox contentBox = new VBox(10);
+        contentBox.setPadding(new Insets(20, 150, 10, 10));
+        contentBox.getStyleClass().add("content-box");
+    
+
+
+        Label balanceLabel = new Label("Current Balance:");
+        balanceLabel.getStyleClass().add("balance-label");
+        Label balanceValue = new Label(String.format("RM%.2f", balance));
+        balanceValue.getStyleClass().add("balance-value");
+
+        Label priceLabel = new Label("Total Price:");
+        priceLabel.getStyleClass().add("price-label");
+        Label priceValue = new Label(String.format("RM%.2f", totalPrice));
+        priceValue.getStyleClass().add("price-value");
+
+        Label newBalanceLabel = new Label("Balance After Order:");
+        newBalanceLabel.getStyleClass().add("new-balance-label");
+        Label newBalanceValue = new Label(String.format("RM%.2f", balance - totalPrice));
+        newBalanceValue.getStyleClass().add("new-balance-value");
+    
+        contentBox.getChildren().addAll(
+            new HBox(10, balanceLabel, balanceValue),
+            new HBox(10, priceLabel, priceValue),
+            new HBox(10, newBalanceLabel, newBalanceValue)
+        );
+    
+        dialog.getDialogPane().setContent(contentBox);
+    
+        // Setup buttons
+        ButtonType confirmButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().setAll(confirmButtonType, cancelButtonType);
+        dialog.getDialogPane().getStyleClass().add("confirmation-dialog");
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/com/Group3/foodorderingsystem/Module/Platform/Customer/Order/ui/OrderSummaryUI.css").toExternalForm());
+    
+        // Show the dialog and wait for the user to respond
+        Optional<ButtonType> result = dialog.showAndWait();
+        return result.isPresent() && result.get() == confirmButtonType;
+    }
+    
+    
+    private void showDialog(String title, String header, String content) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle(title);
+        dialog.setHeaderText(header);
+        dialog.setContentText(content);
+    
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(okButtonType);
+        dialog.showAndWait();
+    }
+    
 
     /**
      * Inner class to display order items
      */
-    public static class OrderItemsUI {
-        private List<ItemModel> items;
 
-        public OrderItemsUI(List<ItemModel> items) {
-            this.items = items;
+    public VBox getItemsDetails() {
+        VBox itemsBox = new VBox(10);
+        itemsBox.setPadding(new Insets(10, 0, 0, 0));
+
+        // Order summary label
+        Label orderSummaryLabel = new Label("Order Summary");
+        orderSummaryLabel.getStyleClass().add("order-summary-label");
+        Separator separator = new Separator();
+        separator.getStyleClass().add("separator");
+        itemsBox.getChildren().addAll(orderSummaryLabel, separator);
+
+        for (ItemModel item : items) {
+            HBox itemBox = new HBox(10);
+            itemBox.setPadding(new Insets(5, 0, 5, 0));
+            itemBox.setPrefWidth(450);
+            itemBox.setMaxWidth(Double.MAX_VALUE); // Allow items to expand horizontally
+
+            Label itemQuantityLabel = new Label(item.getItemQuantity() + "x");
+            itemQuantityLabel.getStyleClass().add("item-quantity-label");
+
+            Label itemLabel = new Label(item.getItemName());
+            itemLabel.getStyleClass().add("item-label");
+            HBox.setHgrow(itemLabel, Priority.ALWAYS);
+
+            Label priceLabel = new Label("$" + String.format("%.2f", item.getItemPrice() * item.getItemQuantity()));
+            priceLabel.getStyleClass().add("price-label");
+
+            itemBox.getChildren().addAll(itemQuantityLabel, itemLabel, priceLabel);
+            itemsBox.getChildren().add(itemBox);
         }
 
-        public VBox getItemsDetails() {
-            VBox itemsBox = new VBox(10);
-            itemsBox.setPadding(new Insets(10, 0, 0, 0));
-
-            // Order summary label
-            Label orderSummaryLabel = new Label("Order Summary");
-            orderSummaryLabel.getStyleClass().add("order-summary-label");
-            Separator separator = new Separator();
-            separator.getStyleClass().add("separator");
-            itemsBox.getChildren().addAll(orderSummaryLabel, separator);
-
-            for (ItemModel item : items) {
-                HBox itemBox = new HBox(10);
-                itemBox.setPadding(new Insets(5, 0, 5, 0));
-                itemBox.setPrefWidth(450);
-                itemBox.setMaxWidth(Double.MAX_VALUE); // Allow items to expand horizontally
-
-                Label itemQuantityLabel = new Label(item.getItemQuantity() + "x");
-                itemQuantityLabel.getStyleClass().add("item-quantity-label");
-
-                Label itemLabel = new Label(item.getItemName());
-                itemLabel.getStyleClass().add("item-label");
-                HBox.setHgrow(itemLabel, Priority.ALWAYS);
-
-                Label priceLabel = new Label("$" + String.format("%.2f", item.getItemPrice() * item.getItemQuantity()));
-                priceLabel.getStyleClass().add("price-label");
-
-                itemBox.getChildren().addAll(itemQuantityLabel, itemLabel, priceLabel);
-                itemsBox.getChildren().add(itemBox);
-            }
-
-            return itemsBox;
-        }
+        return itemsBox;
     }
 }
 

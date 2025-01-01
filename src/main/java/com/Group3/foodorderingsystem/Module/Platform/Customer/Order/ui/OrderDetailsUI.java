@@ -7,6 +7,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
+import com.Group3.foodorderingsystem.Core.Util.Images;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,111 +15,119 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.Region;
 
-import java.util.Optional;
 
-public class OrderDetailsUI extends VBox {
+public class OrderDetailsUI extends BorderPane {
 
     CustomerOrderServices customerOrderServices = new CustomerOrderServices();
 
     public OrderDetailsUI() {
-        this.setSpacing(15);
-        this.setPadding(new Insets(20));
         this.setStyle("-fx-background-color: #f8fafc;");
 
-        //get the selected order from session
+        // Get the selected order from session
         OrderModel selectedOrder = (OrderModel) SessionUtil.getSelectedOrderFromSession();
-        
+        System.out.println("Order retrieved from session: " + (selectedOrder != null ? selectedOrder.getOrderId() : "null"));
+
+        VBox contentBox = new VBox(15);
+        contentBox.setPadding(new Insets(20));
+        contentBox.setStyle("-fx-background-color: #f8fafc;");
+
         if (selectedOrder != null) {
-            displayOrderDetails(this, selectedOrder);
+            displayOrderDetails(contentBox, selectedOrder);
         } else {
             Label noOrderLabel = new Label("No order selected.");
             noOrderLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #666666;");
-            this.getChildren().add(noOrderLabel);
+            contentBox.getChildren().add(noOrderLabel);
         }
 
+        // Wrap the main content in a ScrollPane
+        ScrollPane scrollPane = new ScrollPane(contentBox);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background: #f8fafc; -fx-background-color: transparent;");
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        // Create a VBox for the "Cancel Order" button
+        VBox fixedVBox = createBottomButtonContainer(selectedOrder);
 
         // Create a back button
-        Button backButton = new Button("Back");
-        backButton.setStyle("-fx-font-size: 14px;");
+        Button backButton = new Button();
+        backButton.setStyle("-fx-background-color: transparent;");
+        backButton.setGraphic(Images.getImageView("left_arrow.png", 20, 20));
         backButton.setOnAction(e -> {
             SessionUtil.setSelectedOrderInSession(null);
             // Navigate back to OrderHistoryUI
-            CustomerViewModel.navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
+            CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("  Active"));
         });
 
-        VBox bottomContainer = new VBox(10); // Container for bottom buttons
-        bottomContainer.setAlignment(Pos.BOTTOM_CENTER);
+        // Create a label for the shop name
+        Label shopNameLabel = new Label(selectedOrder != null ? selectedOrder.getVendor().getShopName() : "Shop Name");
+        shopNameLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
-        // Create a VBox for the "Cancel Order" button
-        VBox fixedVBox = new VBox(10);
-        fixedVBox.getStyleClass().add("fixed-vbox");
+        // Create a VBox for the top section
+        HBox topContainer = new HBox(10);
+        topContainer.getChildren().addAll(backButton, shopNameLabel);
+        topContainer.setAlignment(Pos.CENTER_LEFT);
 
-        // If order status is pending, display cancel order button, else create two buttons, reorder and generate receipt
-        if (selectedOrder != null && selectedOrder.getStatus().equals(StatusEnum.PENDING)) {
-            Button cancelOrderButton = new Button("Cancel Order");
-            cancelOrderButton.getStyleClass().add("cancel-order-button");
-            cancelOrderButton.setOnAction(e -> {
-                // Create a confirmation alert
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Cancel Order");
-                alert.setHeaderText("Are you sure you want to cancel this order?");
+        // Create a container for the back button and fixedVBox
+        VBox bottomContainer = new VBox(10);
+        bottomContainer.getChildren().addAll(fixedVBox);
+        bottomContainer.setAlignment(Pos.CENTER);
 
-                // Show the alert and wait for the user's response
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.OK) {
-                    // Pop out a message to inform user that order is cancelled
-                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                    alert2.setTitle("Order Cancelled");
-                    alert2.setHeaderText(null);
-                    alert2.setContentText("Order cancelled.");
-                    alert2.showAndWait();
-
-                    // TODO: Implement the logic after database is implemented
-                    // Cancel the order
-                    // customerOrderServices.cancelOrder(selectedOrder.getOrderId());
-
-                    // Navigate back to OrderHistoryUI
-                    SessionUtil.setSelectedOrderInSession(null);
-                    CustomerViewModel.navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
-                }
-            });
-
-            fixedVBox.getChildren().add(cancelOrderButton);
-        } else {
-            Button reorderButton = new Button("Reorder");
-            reorderButton.getStyleClass().add("reorder-button");
-            //TODO: reorder button logic
-            reorderButton.setOnAction(e -> {
-                // Save items in order into session
-                SessionUtil.setItemsInSession(selectedOrder.getItems());
-                CustomerViewModel.navigate(CustomerViewModel.getOrderViewModel().getOrderSummaryUI());
-            });
-
-            Button generateReceiptButton = new Button("Generate Receipt");
-            generateReceiptButton.getStyleClass().add("generate-receipt-button");
-            generateReceiptButton.setOnAction(e -> {
-                customerOrderServices.generateReceipt();
-            });
-
-            fixedVBox.getChildren().addAll(reorderButton, generateReceiptButton);
-        }
-
-        // Spacer to push everything else up
-        Region spacer = new Region();
-        VBox.setVgrow(spacer, Priority.ALWAYS);
-
-        bottomContainer.getChildren().addAll(backButton, fixedVBox);
-        this.getChildren().addAll(spacer, bottomContainer);
+        // Set the topContainer at the top, ScrollPane in the center, and bottomContainer at the bottom
+        this.setTop(topContainer);
+        this.setCenter(scrollPane);
+        this.setBottom(bottomContainer);
 
         this.getStylesheets().add("/com/Group3/foodorderingsystem/Module/Platform/Customer/Order/ui/OrderDetailsUI.css");
+    }
+
+    private VBox createBottomButtonContainer(OrderModel selectedOrder) {
+        // Button container fixed at the bottom
+        VBox bottomContainer = new VBox(10);
+        bottomContainer.setPadding(new Insets(10));
+        bottomContainer.setAlignment(Pos.CENTER);
+
+        // Decide button based on order status
+        if (selectedOrder != null && selectedOrder.getStatus().equals(StatusEnum.PENDING)) {
+            Button cancelOrderButton = new Button("Cancel Order");
+            
+            cancelOrderButton.setOnAction(e -> cancelOrderAction(selectedOrder));
+            bottomContainer.getChildren().add(cancelOrderButton);
+        } else {
+            Button reorderButton = new Button("Reorder");
+            Button generateReceiptButton = new Button("Generate Receipt");
+            reorderButton.getStyleClass().add("reorder-button");
+            generateReceiptButton.getStyleClass().add("generate-receipt-button");
+            reorderButton.setOnAction(e -> {
+                SessionUtil.setItemsInSession(selectedOrder.getItems());
+                CustomerViewModel.getOrderViewModel().setOrderSummaryUI(new OrderSummaryUI());
+                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderSummaryUI());
+            });
+            generateReceiptButton.setOnAction(e -> customerOrderServices.generateReceipt());
+            bottomContainer.getChildren().addAll(reorderButton, generateReceiptButton);
+        }
+
+        return bottomContainer;
+    }
+
+    private void cancelOrderAction(OrderModel selectedOrder) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to cancel this order?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                Alert infoAlert = new Alert(Alert.AlertType.INFORMATION, "Order cancelled successfully.");
+                infoAlert.showAndWait();
+                // TODO:Logic to cancel the order
+                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
+            }
+        });
     }
 
     private void displayOrderDetails(VBox root, OrderModel order) {
@@ -146,14 +155,13 @@ public class OrderDetailsUI extends VBox {
             VBox vendorBox = new VBox(10);
             vendorBox.setAlignment(Pos.CENTER);
 
-            // Load and style the shop image
             ImageView shopImageView = loadShopImage("path/to/logo.png");
-            shopImageView.setFitHeight(200); // Adjust size as necessary
+            shopImageView.setFitHeight(200);
             shopImageView.setFitWidth(450);
 
             Label vendorLabel = new Label(order.getVendor().getShopName());
             vendorLabel.getStyleClass().add("vendor-label");
-            vendorLabel.setAlignment(Pos.CENTER); // Center the text within the Label
+            vendorLabel.setAlignment(Pos.CENTER);
             vendorBox.getChildren().addAll(shopImageView, vendorLabel);
             return vendorBox;
         }
@@ -180,7 +188,6 @@ public class OrderDetailsUI extends VBox {
             VBox orderBox = new VBox(10);
             orderBox.setPadding(new Insets(10, 0, 0, 0));
 
-            // Order Status
             HBox orderStatusBox = new HBox(10);
             Label orderStatusLabel = new Label("Order Status:");
             orderStatusLabel.getStyleClass().add("order-status-label");
@@ -188,7 +195,6 @@ public class OrderDetailsUI extends VBox {
             orderStatusValueLabel.getStyleClass().add("status-value-label");
             orderStatusBox.getChildren().addAll(orderStatusLabel, orderStatusValueLabel);
 
-            // Order ID
             HBox orderIdBox = new HBox(10);
             Label orderIdLabel = new Label("Order ID:");
             orderIdLabel.getStyleClass().add("status-label");
@@ -196,7 +202,6 @@ public class OrderDetailsUI extends VBox {
             orderIdValueLabel.getStyleClass().add("status-value-label");
             orderIdBox.getChildren().addAll(orderIdLabel, orderIdValueLabel);
 
-            // Order Time
             HBox orderTimeBox = new HBox(10);
             Label orderTimeLabel = new Label("Order Time:");
             orderTimeLabel.getStyleClass().add("status-label");
@@ -204,7 +209,6 @@ public class OrderDetailsUI extends VBox {
             orderTimeValueLabel.getStyleClass().add("status-value-label");
             orderTimeBox.getChildren().addAll(orderTimeLabel, orderTimeValueLabel);
 
-            // Order Method
             HBox orderMethodBox = new HBox(10);
             Label orderMethodLabel = new Label("Order Method:");
             orderMethodLabel.getStyleClass().add("status-label");
@@ -214,7 +218,6 @@ public class OrderDetailsUI extends VBox {
 
             orderBox.getChildren().addAll(orderStatusBox, orderIdBox, orderTimeBox, orderMethodBox);
 
-            // If order is delivery, display delivery address
             if (order.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
                 VBox deliveryAddressBox = new VBox(10);
                 Label deliveryAddressLabel = new Label("Delivery Address:");
@@ -275,7 +278,6 @@ public class OrderDetailsUI extends VBox {
         }
 
         public VBox getPaymentDetails() {
-            // Check if the order method is delivery
             Double deliveryFee = 0.0;
             if (order.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
                 deliveryFee = 5.0;
@@ -291,7 +293,6 @@ public class OrderDetailsUI extends VBox {
             VBox paymentBox = new VBox(10);
             paymentBox.setPadding(new Insets(10, 0, 0, 0));
 
-            // Subtotal
             HBox subtotalBox = new HBox(10);
             Label subtotalLabel = new Label("Subtotal:");
             subtotalLabel.getStyleClass().add("subtotal-label");
@@ -299,7 +300,6 @@ public class OrderDetailsUI extends VBox {
             subtotalAmountLabel.getStyleClass().add("subtotal-amount-label");
             subtotalBox.getChildren().addAll(subtotalLabel, subtotalAmountLabel);
 
-            // Delivery Fee
             HBox deliveryFeeBox = new HBox(10);
             Label deliveryFeeLabel = new Label("Delivery Fee:");
             deliveryFeeLabel.getStyleClass().add("subtotal-label");
@@ -307,7 +307,6 @@ public class OrderDetailsUI extends VBox {
             deliveryFeeAmountLabel.getStyleClass().add("subtotal-amount-label");
             deliveryFeeBox.getChildren().addAll(deliveryFeeLabel, deliveryFeeAmountLabel);
 
-            // Total Price
             HBox totalPriceBox = new HBox(10);
             Label totalPriceLabel = new Label("Total Price:");
             totalPriceLabel.getStyleClass().add("total-price-label");
@@ -315,11 +314,8 @@ public class OrderDetailsUI extends VBox {
             totalPriceAmountLabel.getStyleClass().add("total-price-amount-label");
             totalPriceBox.getChildren().addAll(totalPriceLabel, totalPriceAmountLabel);
 
-            // Add 100px empty space
-            Label emptySpace = new Label("");
-            emptySpace.setPrefHeight(70);
 
-            paymentBox.getChildren().addAll(separator1, subtotalBox, deliveryFeeBox, totalPriceBox, emptySpace);
+            paymentBox.getChildren().addAll(separator1, subtotalBox, deliveryFeeBox, totalPriceBox);
 
             return paymentBox;
         }
