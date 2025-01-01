@@ -244,4 +244,19 @@ public class UserServices {
         }
         return null;
     }
+
+    /**
+     * 
+     * @param Id 
+     * @return RunnerModel
+     * 
+     */
+    public static User findUserById(String Id) {
+        for (User user : getUsers()) {
+            if (user.getId().equals(Id)) {
+                return user;
+            }
+        }
+        return null;
+    }
 }

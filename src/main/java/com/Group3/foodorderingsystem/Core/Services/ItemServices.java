@@ -1,6 +1,5 @@
 package com.Group3.foodorderingsystem.Core.Services;
 
-import java.io.File;
 import java.util.List;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
@@ -14,32 +13,28 @@ public class ItemServices {
         return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ITEM), ItemModel.class);
     }
 
-    // save new or modify existing, use this
     public static ItemModel saveItem(ItemModel itemModel) {
         List<ItemModel> items = getItems();
 
-        if (itemModel.getItemId() == null)
+        if (itemModel.getItemId() == null) {
             itemModel.setItemId(Storage.generateNewId());
-        else
-            items.removeIf(item -> item.getItemId().equals(itemModel.getItemId()));
+            items.add(itemModel); // Add new item
+        } else {
+            // Find the index of the existing item
+            int index = -1;
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i).getItemId().equals(itemModel.getItemId())) {
+                    index = i;
+                    break;
+                }
+            }
 
-        items.add(itemModel);
-
-        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ITEM), items);
-        return itemModel;
-    }
-
-    public static ItemModel saveItem(ItemModel itemModel, File file) {
-        List<ItemModel> items = getItems();
-
-        itemModel.setItemImage(Storage.saveFile(file));
-
-        if (itemModel.getItemId() == null)
-            itemModel.setItemId(Storage.generateNewId());
-        else
-            items.removeIf(item -> item.getItemId().equals(itemModel.getItemId()));
-
-        items.add(itemModel);
+            if (index != -1) {
+                items.set(index, itemModel); // Replace existing item
+            } else {
+                items.add(itemModel); // If item not found, add as new
+            }
+        }
 
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ITEM), items);
         return itemModel;

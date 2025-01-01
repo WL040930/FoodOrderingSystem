@@ -3,10 +3,14 @@ package com.Group3.foodorderingsystem.Module.Platform.Vendor;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.Group3.foodorderingsystem.Module.Common.settings.SettingsPage;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
+import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
+import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Home.model.HomeViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.model.MenuViewModel;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -21,10 +25,14 @@ public class VendorViewModel {
         instance.mainFrame = new VendorMainFrame();
         instance.selectedNavigation = VendorNavigationEnum.Home;
 
-        instance.settingsPage = new SettingsPage();
-
         init();
         initHomeViewModel();
+        initMenuViewModel();
+        initSettingsViewModel();
+    }
+
+    public static void clear() {
+        instance = null;
     }
 
     /**
@@ -36,7 +44,7 @@ public class VendorViewModel {
         instance.mainFrame.setCurrentPane(node);
     }
 
-    private VendorMainFrame mainFrame; 
+    private VendorMainFrame mainFrame;
 
     public static VendorMainFrame getMainFrame() {
         return instance.mainFrame;
@@ -159,13 +167,39 @@ public class VendorViewModel {
         instance.homeViewModel.init();
     }
 
-    private SettingsPage settingsPage;
+    private MenuViewModel menuViewModel;
 
-    public static SettingsPage getSettingsPage() {
-        return instance.settingsPage;
+    public static MenuViewModel getMenuViewModel() {
+        return instance.menuViewModel;
     }
 
-    public static void setSettingsPage(SettingsPage settingsPage) {
-        instance.settingsPage = settingsPage;
+    public static void setMenuViewModel(MenuViewModel menuViewModel) {
+        instance.menuViewModel = menuViewModel;
+    }
+
+    public static void initMenuViewModel() {
+        instance.menuViewModel = new MenuViewModel();
+        instance.menuViewModel.init();
+    }
+
+    private SettingsViewModel settingsViewModel;
+
+    public static SettingsViewModel getSettingsViewModel() {
+        return instance.settingsViewModel;
+    }
+
+    public static void setSettingsViewModel(SettingsViewModel settingsViewModel) {
+        instance.settingsViewModel = settingsViewModel;
+    }
+
+    public static void initSettingsViewModel() {
+        Object vendorFromSession = SessionUtil.getVendorFromSession();
+        if (vendorFromSession instanceof User) {
+            User user = (User) vendorFromSession;
+            instance.settingsViewModel = new SettingsViewModel(user.getId());
+        } else {
+            throw new IllegalStateException("Vendor from session is not a User instance.");
+        }
+        instance.settingsViewModel.init();
     }
 }

@@ -3,7 +3,7 @@ package com.Group3.foodorderingsystem.Module.Platform.Admin;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.Group3.foodorderingsystem.Module.Common.settings.SettingsPage;
+import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.AdminDatabase;

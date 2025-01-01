@@ -79,21 +79,24 @@ public class BaseContentPanel extends BorderPane {
     public void setHeaderHeight(double height) {
         this.headerHeight = height;
         if (header instanceof Region) {
-            ((Region) header).setPrefHeight(headerHeight);
+            ((Region) header).setMinHeight(headerHeight);
+            ((Region) header).setMaxHeight(headerHeight);
         }
     }
 
     public void setFooterHeight(double height) {
         this.footerHeight = height;
         if (footer instanceof Region) {
-            ((Region) footer).setPrefHeight(footerHeight);
+            ((Region) footer).setMinHeight(footerHeight);
+            ((Region) footer).setMaxHeight(footerHeight);
         }
     }
 
     public void setContentHeight(double height) {
         this.contentHeight = height;
         if (content instanceof Region) {
-            ((Region) content).setPrefHeight(contentHeight);
+            ((Region) content).setMinHeight(contentHeight);
+            ((Region) content).setMaxHeight(contentHeight);
         }
     }
 }

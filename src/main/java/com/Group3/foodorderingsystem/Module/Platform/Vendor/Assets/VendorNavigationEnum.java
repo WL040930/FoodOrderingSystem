@@ -9,13 +9,13 @@ public enum VendorNavigationEnum {
             "Home",
             "logo.png",
             Arrays.asList(
-                    VendorTopNavigationEnum.Home,
                     VendorTopNavigationEnum.CurrentOrder)),
-    Order(
-            "Order",
+    Shop(
+            "Shop",
             "logo.png",
             Arrays.asList(
-                    VendorTopNavigationEnum.Order)),
+                    VendorTopNavigationEnum.Menu, 
+                    VendorTopNavigationEnum.Review)),
     Notification(
             "Notification",
             "logo.png",
@@ -25,7 +25,8 @@ public enum VendorNavigationEnum {
             "Settings",
             "logo.png",
             Arrays.asList(
-                    VendorTopNavigationEnum.Settings));
+                    VendorTopNavigationEnum.Settings, 
+                    VendorTopNavigationEnum.Revenue));
 
     private final String title;
     private final String icon;
