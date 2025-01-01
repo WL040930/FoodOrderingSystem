@@ -1,10 +1,2 @@
-{"id":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","name":"1","email":"11","password":"1","role":"CUSTOMER","balance":0.0,"phoneNumber":null,"address":null}
-{"id":"0ab34608-eafe-438e-8cd3-82bffcafd014","name":"12","email":"121","password":"1212","role":"CUSTOMER","balance":0.0,"phoneNumber":null,"address":null}
-{"id":"798a4788-b54e-42ff-b3fb-b66c641dc390","name":"11","email":"12121","password":"111","role":"CUSTOMER","balance":0.0,"phoneNumber":"112","address":"212121"}
-{"id":"c2300d5e-07a1-4f38-8da7-7ac9d71655eb","name":"121","email":"1212121","password":"11","role":"CUSTOMER","balance":0.0,"phoneNumber":"1212","address":"2121"}
-{"id":"cfd78a4b-e749-4956-badb-af9cb78f7d5e","name":"11","email":"121212133","password":"1","role":"CUSTOMER","balance":0.0,"phoneNumber":"1","address":"1"}
-{"id":"b9dbfae6-e8e1-4817-9544-0408abb1bba9","name":"11","email":"121212123333231","password":"1","role":"CUSTOMER","balance":0.0,"phoneNumber":"1","address":"1"}
-{"id":"4eff241e-d6a6-4a8d-920f-193262374903","name":"1212","email":"22","password":"22","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
-{"id":"f99249bd-a871-4ff4-9d6c-4d026d4e0400","name":"1","email":"121212221","password":"111","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"123"}
-{"id":"9d67931d-4170-48df-83ba-42be884fd4d8","name":"12","email":"2222","password":"2","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
-{"id":"f8d0d16f-977a-43b4-8deb-6067e7b1e50e","name":"1212","email":"123","password":"2","role":"CUSTOMER","balance":0.0,"phoneNumber":"12","address":"12"}
+{"id":"f617bf0e-ee06-444c-ac5c-31f0415acca1","name":"12","email":"cus@gmail.com","password":"1","role":"CUSTOMER","profilePicture":"customer.png","balance":0.0,"phoneNumber":"11","address":"11"}
+{"id":"47c3b310-a6c9-4320-830a-0ab0171cdcb5","name":"12","email":"222@gmaail.com","password":"1","role":"CUSTOMER","profilePicture":"bc8bf151-842d-4c81-9079-dfdf4f09c20e.png","balance":0.0,"phoneNumber":"22","address":"22"}

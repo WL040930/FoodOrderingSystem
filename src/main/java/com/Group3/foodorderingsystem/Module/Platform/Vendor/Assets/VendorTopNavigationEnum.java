@@ -1,13 +1,14 @@
-package com.Group3.foodorderingsystem.Module.Platform.Customer.Assets;
+package com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets;
 
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
-public enum CustomerTopNavigationEnum {
+public enum VendorTopNavigationEnum {
 
     Home(
             "Home",
             () -> {
-                CustomerViewModel.navigate(CustomerViewModel.getHomeViewModel().getNode());
+                VendorViewModel.navigate(VendorViewModel.getHomeViewModel().getNode());
             }),
     CurrentOrder(
             "Current Order",
@@ -25,13 +26,13 @@ public enum CustomerTopNavigationEnum {
     Settings(
             "Settings",
             () -> {
-                CustomerViewModel.navigate(CustomerViewModel.getSettingsPage());
+                VendorViewModel.navigate(VendorViewModel.getSettingsPage());
             });
 
     private String title;
     private Runnable action;
 
-    private CustomerTopNavigationEnum(String title, Runnable action) {
+    private VendorTopNavigationEnum(String title, Runnable action) {
         this.title = title;
         this.action = action;
     }

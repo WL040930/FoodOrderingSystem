@@ -1,25 +1,25 @@
-package com.Group3.foodorderingsystem.Module.Platform.Customer;
+package com.Group3.foodorderingsystem.Module.Platform.Vendor;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.Group3.foodorderingsystem.Module.Common.settings.SettingsPage;
-import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
-import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerTopNavigationEnum;
-import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.model.HomeViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorNavigationEnum;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorTopNavigationEnum;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Home.model.HomeViewModel;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
 
-public class CustomerViewModel {
+public class VendorViewModel {
 
-    private static CustomerViewModel instance;
+    private static VendorViewModel instance;
 
-    public CustomerViewModel() {
+    public VendorViewModel() {
         instance = this;
 
-        instance.customerMainFrame = new CustomerMainFrame();
-        instance.selectedNavigation = CustomerNavigationEnum.Home;
+        instance.mainFrame = new VendorMainFrame();
+        instance.selectedNavigation = VendorNavigationEnum.Home;
 
         instance.settingsPage = new SettingsPage();
 
@@ -33,17 +33,17 @@ public class CustomerViewModel {
      * @param node
      */
     public static void navigate(Node node) {
-        instance.customerMainFrame.setCurrentPane(node);
+        instance.mainFrame.setCurrentPane(node);
     }
 
-    private CustomerMainFrame customerMainFrame;
+    private VendorMainFrame mainFrame; 
 
-    public static CustomerMainFrame getCustomerMainFrame() {
-        return instance.customerMainFrame;
+    public static VendorMainFrame getMainFrame() {
+        return instance.mainFrame;
     }
 
-    public static void setCustomerMainFrame(CustomerMainFrame customerMainFrame) {
-        instance.customerMainFrame = customerMainFrame;
+    public static void setMainFrame(VendorMainFrame mainFrame) {
+        instance.mainFrame = mainFrame;
     }
 
     /**
@@ -51,15 +51,15 @@ public class CustomerViewModel {
      * @var selectedNavigation - Selected navigation item - control which one is
      *      highlighted
      */
-    private CustomerNavigationEnum[] navigationList = CustomerNavigationEnum.values();
-    private CustomerNavigationEnum selectedNavigation; 
+    private VendorNavigationEnum[] navigationList = VendorNavigationEnum.values();
+    private VendorNavigationEnum selectedNavigation;
 
     /**
      * Get the navigation list - bottom one
      * 
      * @return CustomerNavigationEnum[]
      */
-    public static CustomerNavigationEnum[] getNavigationList() {
+    public static VendorNavigationEnum[] getNavigationList() {
         return instance.navigationList;
     }
 
@@ -77,7 +77,7 @@ public class CustomerViewModel {
      * 
      *      and so on ..
      */
-    private Map<CustomerNavigationEnum, CustomerTopNavigationEnum> selectedTopNavigation = new HashMap<>();
+    private Map<VendorNavigationEnum, VendorTopNavigationEnum> selectedTopNavigation = new HashMap<>();
 
     /**
      * Initialize the top navigation
@@ -89,7 +89,7 @@ public class CustomerViewModel {
             selectedTopNavigation = new HashMap<>();
         }
 
-        for (CustomerNavigationEnum navigation : getNavigationList()) {
+        for (VendorNavigationEnum navigation : getNavigationList()) {
             selectedTopNavigation.put(navigation, navigation.getTopNavigationItem().get(0));
         }
     }
@@ -106,19 +106,19 @@ public class CustomerViewModel {
      *                          Modify the CustomerTopNavigationEnum to adjust the
      *                          entry point
      */
-    public static void setSelectedNavigation(CustomerNavigationEnum navigationEnum) {
+    public static void setSelectedNavigation(VendorNavigationEnum navigationEnum) {
         instance.selectedNavigation = navigationEnum;
 
         getSelectedTopNavigation().getAction().run();
     }
 
-    public static void setSelectedNavigation(CustomerTopNavigationEnum topNavigationEnum) {
+    public static void setSelectedNavigation(VendorTopNavigationEnum topNavigationEnum) {
         instance.selectedTopNavigation.put(getSelectedNavigation(), topNavigationEnum);
         topNavigationEnum.getAction().run();
 
         Platform.runLater(() -> {
-            if (instance.customerMainFrame != null) {
-                instance.customerMainFrame.updateHeader();
+            if (instance.mainFrame != null) {
+                instance.mainFrame.updateHeader();
             }
         });
     }
@@ -128,7 +128,7 @@ public class CustomerViewModel {
      * 
      * @return CustomerNavigationEnum
      */
-    public static CustomerNavigationEnum getSelectedNavigation() {
+    public static VendorNavigationEnum getSelectedNavigation() {
         return instance.selectedNavigation;
     }
 
@@ -140,7 +140,7 @@ public class CustomerViewModel {
      *         For example, if u provide [User]
      *         it will return [Register] as the default entry point
      */
-    public static CustomerTopNavigationEnum getSelectedTopNavigation() {
+    public static VendorTopNavigationEnum getSelectedTopNavigation() {
         return instance.selectedTopNavigation.get(getSelectedNavigation());
     }
 
