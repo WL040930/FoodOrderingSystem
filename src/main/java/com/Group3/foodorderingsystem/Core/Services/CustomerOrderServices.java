@@ -236,7 +236,7 @@ public class CustomerOrderServices {
             return;
         }
     
-        String pdfPath = "receipt_" + order.getOrderId() + ".pdf";
+        String pdfPath = "src/main/resources/receipts/receipt_" + order.getOrderId() + ".pdf";
         try {
             PdfWriter writer = new PdfWriter(pdfPath);
             PdfDocument pdf = new PdfDocument(writer);
@@ -280,26 +280,26 @@ public class CustomerOrderServices {
             order.getItems().forEach(item -> {
                 table.addCell(String.valueOf(item.getItemQuantity()));
                 table.addCell(item.getItemName());
-                table.addCell(String.format("$%.2f", item.getItemPrice()));
-                table.addCell(String.format("$%.2f", item.getItemPrice() * item.getItemQuantity()));
+                table.addCell(String.format("RM%.2f", item.getItemPrice()));
+                table.addCell(String.format("RM%.2f", item.getItemPrice() * item.getItemQuantity()));
             });
             document.add(table);
     
             // Total
-            document.add(new Paragraph("Amount Paid: $" + order.getTotalPrice()).setBold().setTextAlignment(TextAlignment.RIGHT).setFontSize(15));
+            document.add(new Paragraph("Amount Paid: RM" + order.getTotalPrice()).setBold().setTextAlignment(TextAlignment.RIGHT).setFontSize(15));
     
             // Footer
             document.add(new Paragraph("Thank you for your purchase!").setTextAlignment(TextAlignment.CENTER));
             document.add(new Paragraph("If you have any questions about your order, please contact us.").setTextAlignment(TextAlignment.CENTER));
     
             document.close();
-            System.out.println("Receipt generated: " + pdfPath);
     
             // Automatically open the PDF
             File pdfFile = new File(pdfPath);
             if (pdfFile.exists()) {
                 Desktop.getDesktop().open(pdfFile);
             }
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
@@ -41,6 +43,7 @@ public class OrderHistoryUI extends VBox {
     private List<OrderModel> activeOrders = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getCustomer().equals(customer.getId()) && (order.getStatus().equals(StatusEnum.PREPARING) || order.getStatus().equals(StatusEnum.READY_FOR_PICKUP) || order.getStatus().equals(StatusEnum.DELIVERING)));;
     private List<OrderModel> pastOrders = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getCustomer().equals(customer.getId()) && (order.getStatus().equals(StatusEnum.DELIVERED) || order.getStatus().equals(StatusEnum.PICKED_UP) || order.getStatus().equals(StatusEnum.SERVED) || order.getStatus().equals(StatusEnum.CANCELLED)));
 
+    
 
 
     public OrderHistoryUI(String selectedTab) {
@@ -50,6 +53,11 @@ public class OrderHistoryUI extends VBox {
 
 
     private void initUI() {
+        Collections.sort(pendingOrders, Comparator.comparing(OrderModel::getTime).reversed());
+        Collections.sort(activeOrders, Comparator.comparing(OrderModel::getTime).reversed());
+        Collections.sort(pastOrders, Comparator.comparing(OrderModel::getTime).reversed());
+
+
         this.setStyle("-fx-background-color: #f8fafc;");
         this.setPadding(new Insets(10)); // Adjust padding as needed
         addTabs(this);
