@@ -3,10 +3,12 @@ package com.Group3.foodorderingsystem.Module.Platform.Customer;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import com.Group3.foodorderingsystem.Module.Common.settings.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.model.HomeViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Order.model.OrderViewModel;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -14,6 +16,7 @@ import javafx.scene.Node;
 public class CustomerViewModel {
 
     private static CustomerViewModel instance;
+    private OrderViewModel orderViewModel;
 
     public CustomerViewModel() {
         instance = this;
@@ -22,6 +25,8 @@ public class CustomerViewModel {
         instance.selectedNavigation = CustomerNavigationEnum.Home;
 
         instance.settingsPage = new SettingsPage();
+        instance.orderViewModel = new OrderViewModel();
+        instance.orderViewModel.init();
 
         init();
         initHomeViewModel();
@@ -62,6 +67,15 @@ public class CustomerViewModel {
     public static CustomerNavigationEnum[] getNavigationList() {
         return instance.navigationList;
     }
+
+
+    // TODO: add comment
+    public static OrderViewModel getOrderViewModel() {
+        return instance.orderViewModel;
+    }
+
+    
+
 
     /**
      * @var selectedTopNavigation - Selected top navigation item - control which one

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class SessionUtil {
     private static Map<String, Object> session = new HashMap<>();
 
@@ -17,7 +18,7 @@ public class SessionUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel> getItemsFromSession() {
+    public static List<ItemModel> getItemsFromSession() {
         return (List<ItemModel>) session.getOrDefault(SessionEnum.ITEMS.getKey(), new ArrayList<>());
     }
 
@@ -51,6 +52,22 @@ public class SessionUtil {
 
     public static Object getRiderFromSession() {
         return session.get(SessionEnum.RIDER.getKey());
+    }
+
+    public static void setSelectedOrderInSession(Object order) {
+        session.put(SessionEnum.SELECTED_ORDER.getKey(), order);
+    }
+
+    public static Object getSelectedOrderFromSession() {
+        return session.get(SessionEnum.SELECTED_ORDER.getKey());
+    }
+
+    public static void setOrderSummaryEntryInSession(String orderSummaryEntry) {
+        session.put(SessionEnum.ORDER_SUMMARY_ENTRY.getKey(), orderSummaryEntry);
+    }
+
+    public static String getOrderSummaryEntryFromSession() {
+        return (String) session.get(SessionEnum.ORDER_SUMMARY_ENTRY.getKey());
     }
 
     public static void clearSession() {
