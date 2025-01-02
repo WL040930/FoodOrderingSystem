@@ -76,4 +76,11 @@ public class FileUtil {
         saveFile(filePath, allData);
     }
 
+
+    // get model through selected field
+    public static <T> T getModelByField(String filePath, Class<T> type, Predicate<T> predicate) {
+        List<T> allData = loadFile(filePath, type);
+        return allData.stream().filter(predicate).findFirst().orElse(null);
+    }
+
 }

@@ -1,12 +1,15 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Order.ui;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
+import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
+import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 
 import javafx.geometry.Insets;
@@ -28,13 +31,11 @@ import javafx.scene.control.Separator;
 public class OrderDetailsUI extends BorderPane {
 
     CustomerOrderServices customerOrderServices = new CustomerOrderServices();
+    OrderModel selectedOrder = (OrderModel) SessionUtil.getSelectedOrderFromSession();
+    VendorModel vendor = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(selectedOrder.getVendor()));
 
     public OrderDetailsUI() {
         this.setStyle("-fx-background-color: #f8fafc;");
-
-        // Get the selected order from session
-        OrderModel selectedOrder = (OrderModel) SessionUtil.getSelectedOrderFromSession();
-        System.out.println("Order retrieved from session: " + (selectedOrder != null ? selectedOrder.getOrderId() : "null"));
 
         VBox contentBox = new VBox(15);
         contentBox.setPadding(new Insets(20));
@@ -68,7 +69,7 @@ public class OrderDetailsUI extends BorderPane {
         });
 
         // Create a label for the shop name
-        Label shopNameLabel = new Label(selectedOrder != null ? selectedOrder.getVendor().getShopName() : "Shop Name");
+        Label shopNameLabel = new Label(selectedOrder != null ? vendor.getShopName() : "Shop Name");
         shopNameLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         // Create a VBox for the top section
@@ -146,6 +147,7 @@ public class OrderDetailsUI extends BorderPane {
 
     public static class OrderVendorUI {
         private OrderModel order;
+        VendorModel vendor = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(order.getVendor()));
 
         public OrderVendorUI(OrderModel order) {
             this.order = order;
@@ -159,7 +161,7 @@ public class OrderDetailsUI extends BorderPane {
             shopImageView.setFitHeight(200);
             shopImageView.setFitWidth(450);
 
-            Label vendorLabel = new Label(order.getVendor().getShopName());
+            Label vendorLabel = new Label(vendor.getShopName());
             vendorLabel.getStyleClass().add("vendor-label");
             vendorLabel.setAlignment(Pos.CENTER);
             vendorBox.getChildren().addAll(shopImageView, vendorLabel);

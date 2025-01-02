@@ -93,12 +93,12 @@ public class CustomerOrderServices {
         OrderModel order = new OrderModel();
         order.setOrderId(generateUniqueOrderId());
         order.setItems(items);
-        order.setCustomer(customer);
+        order.setCustomer(customer.getId());
         order.setTotalPrice(totalPrice);
         order.setStatus(StatusEnum.PENDING);
         order.setOrderMethod(orderMethod);
         order.setDeliveryAddress(deliveryAddress);
-        order.setVendor(vendor);
+        order.setVendor(vendor.getId());
 
         // Save order to file
         saveOrderToFile(order);
@@ -134,7 +134,7 @@ public class CustomerOrderServices {
         List<OrderModel> pendingOrders = new ArrayList<>();
 
         for (OrderModel order : orders) {
-            if (order.getStatus() == StatusEnum.PENDING && checkCustomerId(order.getCustomer().getId())) {
+            if (order.getStatus() == StatusEnum.PENDING && checkCustomerId(order.getCustomer())) {
                 pendingOrders.add(order);
             }
         }
@@ -155,7 +155,7 @@ public class CustomerOrderServices {
         );
 
         for (OrderModel order : orders) {
-            if (validStatuses.contains(order.getStatus()) && checkCustomerId(order.getCustomer().getId())) {
+            if (validStatuses.contains(order.getStatus()) && checkCustomerId(order.getCustomer())) {
                 activeOrders.add(order);
             }
         }
@@ -176,7 +176,7 @@ public class CustomerOrderServices {
         );
 
         for (OrderModel order : orders) {
-            if (validStatuses.contains(order.getStatus()) && checkCustomerId(order.getCustomer().getId())) {
+            if (validStatuses.contains(order.getStatus()) && checkCustomerId(order.getCustomer())) {
                 pastOrders.add(order);
             }
         }
@@ -199,8 +199,23 @@ public class CustomerOrderServices {
     }
 
 
+    //get vendor model through id
+    public VendorModel getVendorModel(String vendorId) {
+        List<VendorModel> vendors = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class);
+
+        for (VendorModel vendor : vendors) {
+            if (vendor.getId().equals(vendorId)) {
+                return vendor;
+            }
+        }
+
+        return null;
+    }
+
     public void generateReceipt() {
         OrderModel order = (OrderModel) SessionUtil.getSelectedOrderFromSession();
+        CustomerModel customer = SessionUtil.getCustomerFromSession();
+        
     
         if (order == null) {
             System.out.println("No order selected.");
@@ -225,9 +240,10 @@ public class CustomerOrderServices {
     
             // Order Details Section
             document.add(new Paragraph("Order ID: " + order.getOrderId()).setFontSize(10));
-            document.add(new Paragraph("Customer Name: " + order.getCustomer().getName()).setFontSize(10));
+            document.add(new Paragraph("Customer Name: " + customer.getName()).setFontSize(10));
             //TODO: add date
-            document.add(new Paragraph("Shop Name: " + order.getVendor().getShopName()).setFontSize(10));
+            String shopName = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(order.getVendor())).getShopName();
+            document.add(new Paragraph("Shop Name: " + shopName).setFontSize(10));
             document.add(new Paragraph("Order Method: " + order.getOrderMethod()).setFontSize(10));
     
             // TODO:Pre-table Text

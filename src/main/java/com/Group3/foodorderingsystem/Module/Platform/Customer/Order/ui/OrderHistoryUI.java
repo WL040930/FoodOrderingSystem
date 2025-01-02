@@ -11,6 +11,8 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
+import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
+import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
@@ -74,7 +76,7 @@ public class OrderHistoryUI extends VBox {
             //random set the time, use Date type
             order1.setTime(Date.from(LocalDateTime.parse("2024-12-14T10:00:00").toInstant(ZoneOffset.UTC)));
             order1.setTotalPrice(2000.0);
-            order1.setVendor(vendor1);
+            order1.setVendor("vendor1");
             order1.setStatus(StatusEnum.PENDING); // Set status
             order1.setOrderMethod(OrderMethodEnum.DELIVERY); // Set order method
             order1.setDeliveryAddress("123, Jalan ABC, 12345, Kuala Lumpur");
@@ -109,7 +111,7 @@ public class OrderHistoryUI extends VBox {
             order2.setOrderId("9b2e3c7d");
             order2.setTime(Date.from(LocalDateTime.parse("2024-12-14T11:00:00").toInstant(ZoneOffset.UTC)));
             order2.setTotalPrice(30.0);
-            order2.setVendor(vendor2);
+            order2.setVendor("vendor2");
             order2.setStatus(StatusEnum.PENDING); // Set status
             order2.setOrderMethod(OrderMethodEnum.TAKEAWAY); // Set order method
 
@@ -149,12 +151,12 @@ public class OrderHistoryUI extends VBox {
             order3.setOrderId("123e4567");
             order3.setTime(Date.from(LocalDateTime.parse("2024-12-14T12:00:00").toInstant(ZoneOffset.UTC)));
             order3.setTotalPrice(40.0);
-            order3.setVendor(vendor3);
+            order3.setVendor("vendor3");
             order3.setStatus(StatusEnum.DELIVERED); // Set status
             order3.setOrderMethod(OrderMethodEnum.DINE_IN); // Set order method
             CustomerModel customer = new CustomerModel();
             customer.setName("John Doe");
-            order3.setCustomer(customer);
+            order3.setCustomer("11111");
 
             order3.setItems(items3);
 
@@ -249,7 +251,8 @@ public class OrderHistoryUI extends VBox {
 
         // VBox for the text details next to the image
         VBox detailsVBox = new VBox(1);
-        Label shopNameLabel = new Label(order.getVendor().getShopName());
+        String shopName = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(order.getVendor())).getShopName();
+        Label shopNameLabel = new Label(shopName);
         Label orderTimeLabel = new Label(order.getTime().toString());
         Label orderPriceLabel = new Label(String.format("$%.2f", order.getTotalPrice()));
         Label orderStatusLabel = new Label("Status: " + order.getStatus().toString());

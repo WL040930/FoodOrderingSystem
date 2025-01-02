@@ -1,18 +1,17 @@
 package com.Group3.foodorderingsystem.Core.Model.Entity.Order;
 
-import java.time.LocalDateTime;
+
 import java.util.Date;
 import java.util.List;
 
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
-import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 
 public class OrderModel {
     private String orderId;
-    private CustomerModel customer;
-    private VendorModel vendor;
+    private String customer;
+    private String vendor;
     private List<ItemModel> items;
     private double totalPrice;
     private String deliveryAddress;
@@ -30,11 +29,11 @@ public class OrderModel {
         return orderId;
     }
 
-    public CustomerModel getCustomer() {
+    public String getCustomer() {
         return customer;
     }
 
-    public VendorModel getVendor() {
+    public String getVendor() {
         return vendor;
     }
 
@@ -66,11 +65,11 @@ public class OrderModel {
         this.orderId = orderId;
     }
 
-    public void setCustomer(CustomerModel customer) {
+    public void setCustomer(String customer) {
         this.customer = customer;
     }
 
-    public void setVendor(VendorModel vendor) {
+    public void setVendor(String vendor) {
         this.vendor = vendor;
     }
 
