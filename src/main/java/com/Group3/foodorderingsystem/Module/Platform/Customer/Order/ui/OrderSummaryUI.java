@@ -10,9 +10,6 @@ import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -81,7 +78,14 @@ public class OrderSummaryUI extends VBox {
         Button backButton = new Button();
         backButton.setGraphic(Images.getImageView("left_arrow.png", 20, 20));
         backButton.getStyleClass().add("back-button");
-        //TODO: backButton.setOnAction(e -> handleBackAction());
+        //TODO: back button action if enter from cart
+        backButton.setOnAction(e -> {
+            String entryPoint = SessionUtil.getOrderSummaryEntryFromSession();
+            if (entryPoint == "Reorder") {
+                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderDetailsUI());
+                SessionUtil.setOrderSummaryEntryInSession(null);
+            }
+        });
 
         // Create a shop name label, retrieve the shop name from the item list in the session
         Label shopNameLabel = new Label("Shop Name");
@@ -99,7 +103,6 @@ public class OrderSummaryUI extends VBox {
         // Create a HBox to hold the total price label and the total price
         HBox totalPriceBox = new HBox(10);
         totalPriceBox.getStyleClass().add("total-price-box");
-        totalPriceBox.setAlignment(Pos.CENTER_RIGHT);
         totalPriceBox.setPadding(new Insets(10));
 
         // Create a label to display the total price
@@ -171,18 +174,7 @@ public class OrderSummaryUI extends VBox {
         return orderOptionSection;
     }
 
-    // TODO:private void handleBackAction() {
-    //     // Define the action when the back button is clicked
-    //     // For example, close the current window or navigate to the previous UI
-    //     Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to cancel the order?", ButtonType.YES, ButtonType.NO);
-    //     Optional<ButtonType> result = alert.showAndWait();
-    //     if (result.isPresent() && result.get() == ButtonType.YES) {
-    //         // Clear session items if necessary
-    //         SessionUtil.setItemsInSession(null);
-    //         // Close the current window
-    //         ((Stage) this.getScene().getWindow()).close();
-    //     }
-    // }
+
 
     private void handlePlaceOrder() {
         Double balance = customer.getBalance();
@@ -208,7 +200,6 @@ public class OrderSummaryUI extends VBox {
             // Ask for confirmation to place the order
             boolean confirmationResult = showConfirmationDialog("Confirm Order", balance, totalPrice);
             if (confirmationResult) {
-                //TODO: Place the order logic here
                 showDialog("Order Placed", null, "Your order has been successfully placed.");
                 CustomerOrderServices.placeOrder(orderMethod, deliveryAddress);
                 CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Pending"));

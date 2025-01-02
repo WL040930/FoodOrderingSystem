@@ -110,7 +110,7 @@
 }
 
 .status-cancelled {
-    -fx-text-fill: #A9A9A9;  
+    -fx-text-fill: #FF0000;  
 }
 
 

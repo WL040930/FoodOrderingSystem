@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.UUID;
 import com.itextpdf.layout.Document;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.awt.Desktop;
 import com.itextpdf.layout.element.Table;
@@ -106,6 +109,17 @@ public class CustomerOrderServices {
         //deduct the balance from customer
         customer.setBalance(customer.getBalance() - totalPrice);
 
+        // Save customer to file
+        List<CustomerModel> customers = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), CustomerModel.class);
+        for (CustomerModel c : customers) {
+            if (c.getId().equals(customer.getId())) {
+                c.setBalance(customer.getBalance());
+                break;
+            }
+        }
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
+
+
         // Clear only item from session
         SessionUtil.setItemsInSession(null);
 
@@ -114,7 +128,7 @@ public class CustomerOrderServices {
 
     
     // cancel order
-    public void cancelOrder(String orderId) {
+    public static  void cancelOrder(String orderId) {
         List<OrderModel> orders = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
 
         for (OrderModel order : orders) {
@@ -212,7 +226,7 @@ public class CustomerOrderServices {
         return null;
     }
 
-    public void generateReceipt() {
+    public static void generateReceipt() {
         OrderModel order = (OrderModel) SessionUtil.getSelectedOrderFromSession();
         CustomerModel customer = SessionUtil.getCustomerFromSession();
         
@@ -241,12 +255,19 @@ public class CustomerOrderServices {
             // Order Details Section
             document.add(new Paragraph("Order ID: " + order.getOrderId()).setFontSize(10));
             document.add(new Paragraph("Customer Name: " + customer.getName()).setFontSize(10));
-            //TODO: add date
-            String shopName = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(order.getVendor())).getShopName();
+            // Convert Date to LocalDateTime
+            LocalDateTime orderDateTime = Instant.ofEpochMilli(order.getTime().getTime())
+                                        .atZone(ZoneId.systemDefault())
+                                        .toLocalDateTime();
+
+            // Format LocalDateTime
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm");
+            String formattedDate = orderDateTime.format(formatter);
+            document.add(new Paragraph("Order Date: " + formattedDate).setFontSize(10));
+            String shopName = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(order.getVendor())).get(0).getShopName();
             document.add(new Paragraph("Shop Name: " + shopName).setFontSize(10));
             document.add(new Paragraph("Order Method: " + order.getOrderMethod()).setFontSize(10));
-    
-            // TODO:Pre-table Text
+            document.add(new Paragraph("RM" + order.getTotalPrice() + " paid on " + formattedDate).setBold().setFontSize(15));
             
     
             // Items Table

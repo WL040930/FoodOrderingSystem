@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
-import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 
 public class OrderModel {
     private String orderId;

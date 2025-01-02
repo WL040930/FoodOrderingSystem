@@ -62,6 +62,14 @@ public class SessionUtil {
         return session.get(SessionEnum.SELECTED_ORDER.getKey());
     }
 
+    public static void setOrderSummaryEntryInSession(String orderSummaryEntry) {
+        session.put(SessionEnum.ORDER_SUMMARY_ENTRY.getKey(), orderSummaryEntry);
+    }
+
+    public static String getOrderSummaryEntryFromSession() {
+        return (String) session.get(SessionEnum.ORDER_SUMMARY_ENTRY.getKey());
+    }
+
     public static void clearSession() {
         session.clear();
     }

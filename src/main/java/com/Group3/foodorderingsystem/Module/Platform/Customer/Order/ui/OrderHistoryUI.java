@@ -1,15 +1,14 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Order.ui;
 
+
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
+
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
-import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
-import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
@@ -36,145 +35,27 @@ import javafx.scene.Node;
 public class OrderHistoryUI extends VBox {
 
     private String selectedTab = "  Active";
-    private List<OrderModel> pendingOrders;
-    private List<OrderModel> activeOrders;
-    private List<OrderModel> pastOrders;
+    CustomerModel customer = SessionUtil.getCustomerFromSession();
+
+    private List<OrderModel> pendingOrders = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getCustomer().equals(customer.getId()) && order.getStatus().equals(StatusEnum.PENDING));
+    private List<OrderModel> activeOrders = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getCustomer().equals(customer.getId()) && (order.getStatus().equals(StatusEnum.PREPARING) || order.getStatus().equals(StatusEnum.READY_FOR_PICKUP) || order.getStatus().equals(StatusEnum.DELIVERING)));;
+    private List<OrderModel> pastOrders = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getCustomer().equals(customer.getId()) && (order.getStatus().equals(StatusEnum.DELIVERED) || order.getStatus().equals(StatusEnum.PICKED_UP) || order.getStatus().equals(StatusEnum.SERVED) || order.getStatus().equals(StatusEnum.CANCELLED)));
+
+
 
     public OrderHistoryUI(String selectedTab) {
         this.selectedTab = selectedTab;
         initUI();
     }
 
+
     private void initUI() {
         this.setStyle("-fx-background-color: #f8fafc;");
         this.setPadding(new Insets(10)); // Adjust padding as needed
-        initializeData();
         addTabs(this);
 
         //Load and apply css
         this.getStylesheets().add(getClass().getResource("/com/Group3/foodorderingsystem/Module/Platform/Customer/Order/ui/OrderHistoryUI.css").toExternalForm());
-    }
-
-    private void initializeData() {
-        // Initialization of data here (for demonstration, using hardcoded values)
-            pendingOrders = new ArrayList<>();
-    
-            VendorModel vendor1 = new VendorModel();
-            vendor1.setShopImage("shop1.png");
-            vendor1.setShopName("Shop 1");
-    
-            VendorModel vendor2 = new VendorModel();
-            vendor2.setShopImage("shop2.png");
-            vendor2.setShopName("Shop 2 Shop 2 Shop 2 Shop 2 Shop 2 Shop 2 Shop 2");
-    
-            VendorModel vendor3 = new VendorModel();
-            vendor3.setShopImage("shop3.png");
-            vendor3.setShopName("Shop 3");
-    
-            OrderModel order1 = new OrderModel();
-            order1.setOrderId("f47ac10b");
-            //random set the time, use Date type
-            order1.setTime(Date.from(LocalDateTime.parse("2024-12-14T10:00:00").toInstant(ZoneOffset.UTC)));
-            order1.setTotalPrice(2000.0);
-            order1.setVendor("vendor1");
-            order1.setStatus(StatusEnum.PENDING); // Set status
-            order1.setOrderMethod(OrderMethodEnum.DELIVERY); // Set order method
-            order1.setDeliveryAddress("123, Jalan ABC, 12345, Kuala Lumpur");
-
-            List<ItemModel> items1 = new ArrayList<>();
-            ItemModel item1 = new ItemModel();
-            item1.setItemId("item1");
-            item1.setItemName("Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1 Item 1");
-            item1.setItemDescription("Description 1");
-            item1.setItemPrice(10.0);
-            item1.setItemCategory(CategoryEnum.FOOD);
-            item1.setItemImage("item1.png");
-            item1.setItemQuantity(200);
-            items1.add(item1);
-
-            ItemModel item2 = new ItemModel();
-            item2.setItemId("item2");
-            item2.setItemName("Item 2");
-            item2.setItemDescription("Description 2");
-            item2.setItemPrice(5.0);
-            item2.setItemCategory(CategoryEnum.FOOD);
-            item2.setItemImage("item2.png");
-            item2.setItemQuantity(1);
-            items1.add(item2);
-            items1.add(item2);
-            items1.add(item2);
-
-            order1.setItems(items1);
-
-    
-            OrderModel order2 = new OrderModel();
-            order2.setOrderId("9b2e3c7d");
-            order2.setTime(Date.from(LocalDateTime.parse("2024-12-14T11:00:00").toInstant(ZoneOffset.UTC)));
-            order2.setTotalPrice(30.0);
-            order2.setVendor("vendor2");
-            order2.setStatus(StatusEnum.PENDING); // Set status
-            order2.setOrderMethod(OrderMethodEnum.TAKEAWAY); // Set order method
-
-            List<ItemModel> items2 = new ArrayList<>();
-            ItemModel item3 = new ItemModel();
-            item3.setItemId("item3");
-            item3.setItemName("Item");
-            item3.setItemDescription("Description 3");
-            item3.setItemPrice(15.0);
-            item3.setItemCategory(CategoryEnum.FOOD);
-            item3.setItemImage("item3.png");
-            item3.setItemQuantity(2);
-            items2.add(item3);
-
-            ItemModel item4 = new ItemModel();
-            item4.setItemId("item4");
-            item4.setItemName("Item 4");
-            item4.setItemDescription("Description 4");
-            item4.setItemPrice(10.0);
-            item4.setItemCategory(CategoryEnum.FOOD);
-            item4.setItemImage("item4.png");
-            item4.setItemQuantity(1);
-            items2.add(item4);
-
-            List<ItemModel> items3 = new ArrayList<>();
-
-            items3.addAll(items2);
-            items3.addAll(items2);
-            items3.addAll(items2);
-            items3.addAll(items2);
-
-            order2.setItems(items2);
-
-            
-
-            OrderModel order3 = new OrderModel();
-            order3.setOrderId("123e4567");
-            order3.setTime(Date.from(LocalDateTime.parse("2024-12-14T12:00:00").toInstant(ZoneOffset.UTC)));
-            order3.setTotalPrice(40.0);
-            order3.setVendor("vendor3");
-            order3.setStatus(StatusEnum.DELIVERED); // Set status
-            order3.setOrderMethod(OrderMethodEnum.DINE_IN); // Set order method
-            CustomerModel customer = new CustomerModel();
-            customer.setName("John Doe");
-            order3.setCustomer("11111");
-
-            order3.setItems(items3);
-
-            
-
-            OrderModel order4 = order1;
-    
-            pendingOrders.add(order1);
-            pendingOrders.add(order2);
-            pendingOrders.add(order3);
-            pendingOrders.add(order4);
-
-            activeOrders = new ArrayList<>();
-            activeOrders.add(order1);
-            activeOrders.add(order3);
-
-            pastOrders = new ArrayList<>();
-
     }
 
     private void addTabs(VBox root) {
@@ -243,17 +124,29 @@ public class OrderHistoryUI extends VBox {
         contentBox.setAlignment(Pos.CENTER_LEFT);
 
         // Load and style the shop image
-        //TODO: add correct path for image
-        ImageView shopImageView = loadShopImage("logo.png");
+        VendorModel vendors = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, v -> v.getId().equals(order.getVendor())).get(0);
+
+        ImageView shopImageView = loadShopImage(vendors.getShopImage());
         shopImageView.setFitHeight(50); // Adjust size as necessary
         shopImageView.setFitWidth(50);
         shopImageView.setPreserveRatio(true);
 
+
+        // Convert Date to LocalDateTime
+        LocalDateTime orderDateTime = Instant.ofEpochMilli(order.getTime().getTime())
+                                     .atZone(ZoneId.systemDefault())
+                                     .toLocalDateTime();
+
+        // Format LocalDateTime
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm");
+        String formattedDate = orderDateTime.format(formatter);
+
+
         // VBox for the text details next to the image
         VBox detailsVBox = new VBox(1);
-        String shopName = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(order.getVendor())).getShopName();
+        String shopName = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(order.getVendor())).get(0).getShopName();
         Label shopNameLabel = new Label(shopName);
-        Label orderTimeLabel = new Label(order.getTime().toString());
+        Label orderTimeLabel = new Label(formattedDate);
         Label orderPriceLabel = new Label(String.format("$%.2f", order.getTotalPrice()));
         Label orderStatusLabel = new Label("Status: " + order.getStatus().toString());
         applyStatusClass(orderStatusLabel, order.getStatus());

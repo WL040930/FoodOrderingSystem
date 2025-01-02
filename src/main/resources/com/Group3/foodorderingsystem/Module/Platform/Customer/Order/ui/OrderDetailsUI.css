@@ -56,15 +56,15 @@
 .status-label {
     -fx-font-size: 14px;
     -fx-preferred-width: 320px;
-    -fx-max-width: 320px;
-    -fx-min-width: 320px;
+    -fx-max-width: 275px;
+    -fx-min-width: 275px;
 }
 
 .order-status-label {
     -fx-font-size: 16px;
     -fx-preferred-width: 320px;
-    -fx-max-width: 320px;
-    -fx-min-width: 320px;
+    -fx-max-width: 275px;
+    -fx-min-width: 275px;
 }
 
 

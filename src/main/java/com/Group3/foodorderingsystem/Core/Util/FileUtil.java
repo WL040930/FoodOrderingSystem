@@ -77,10 +77,18 @@ public class FileUtil {
     }
 
 
-    // get model through selected field
-    public static <T> T getModelByField(String filePath, Class<T> type, Predicate<T> predicate) {
+    // get model list through selected field
+    public static <T> List<T> getModelByField(String filePath, Class<T> type, Predicate<T> predicate) {
         List<T> allData = loadFile(filePath, type);
-        return allData.stream().filter(predicate).findFirst().orElse(null);
+        List<T> result = new ArrayList<>();
+        for (T data : allData) {
+            if (predicate.test(data)) {
+                result.add(data);
+            }
+        }
+        return result;
     }
+    
+
 
 }
