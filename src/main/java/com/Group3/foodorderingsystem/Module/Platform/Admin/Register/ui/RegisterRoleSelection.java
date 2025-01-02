@@ -1,41 +1,48 @@
 package com.Group3.foodorderingsystem.Module.Platform.Admin.Register.ui;
 
 import com.Group3.foodorderingsystem.Core.Util.Images;
+import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.BottomButton;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.application.Platform;
-import javafx.scene.input.MouseEvent;
 
-public class RegisterRoleSelection extends VBox {
+public class RegisterRoleSelection extends BaseContentPanel {
 
     public RegisterRoleSelection() {
-
-        init();
+        super();
+        setHeader(header());
+        setContent(content());
+        setFooter(footer());
     }
 
-    public void init() {
-        this.setSpacing(20); // Add some spacing between components
-        this.setAlignment(Pos.CENTER);
-        this.setStyle("-fx-background-color: #f9f9f9; -fx-padding: 20px;");
-
-        // Add all components to the layout
-        this.getChildren().addAll(buildTitle(), showRoleSelectionModel(), showRoleDetails(), buildActionButton());
-    }
-
-    private Node buildTitle() {
+    protected Node header() {
         return new TitleBackButton("Choose The Role To Register");
     }
 
-    private Node showRoleSelectionModel() {
+    protected Node footer() {
+        return new BottomButton("Next", this::handleRegisterAction);
+    }
+
+    protected Node content() {
+        VBox contentBox = new VBox(20);
+        contentBox.setAlignment(Pos.CENTER);
+        contentBox.setStyle("-fx-background-color: #f9f9f9; -fx-padding: 20px;");
+
+        contentBox.getChildren().addAll(buildRoleSelectionModel(), buildRoleDetails());
+
+        return contentBox;
+    }
+
+    private Node buildRoleSelectionModel() {
         HBox roleSelectionBox = new HBox(20);
         roleSelectionBox.setAlignment(Pos.CENTER);
 
@@ -61,8 +68,8 @@ public class RegisterRoleSelection extends VBox {
         return roleSelectionBox;
     }
 
-    private Node showRoleDetails() {
-        VBox roleDetailsBox = new VBox(15); // Increased spacing
+    private Node buildRoleDetails() {
+        VBox roleDetailsBox = new VBox(15);
         roleDetailsBox.setAlignment(Pos.CENTER);
 
         Label roleName = new Label(AdminViewModel.getRegisterViewModel().getSelectedRole().getRole());
@@ -79,20 +86,6 @@ public class RegisterRoleSelection extends VBox {
         return roleDetailsBox;
     }
 
-    private Node buildActionButton() {
-        Button actionButton = new Button("Register");
-        actionButton.setStyle(
-                "-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-border-radius: 5px;");
-        actionButton.setOnMouseClicked(event -> handleRegisterAction());
-
-        actionButton.setOnMouseEntered((MouseEvent e) -> actionButton.setStyle(
-                "-fx-background-color: #45a049; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-border-radius: 5px;"));
-        actionButton.setOnMouseExited((MouseEvent e) -> actionButton.setStyle(
-                "-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-border-radius: 5px;"));
-
-        return actionButton;
-    }
-
     private void handleRegisterAction() {
         AdminViewModel.getRegisterViewModel().setBasicInfoForm(new BasicInfoForm());
         AdminViewModel.getRegisterViewModel().navigate(AdminViewModel.getRegisterViewModel().getBasicInfoForm());
@@ -100,8 +93,7 @@ public class RegisterRoleSelection extends VBox {
 
     private void refreshRoleSelection() {
         Platform.runLater(() -> {
-            this.getChildren().clear();
-            this.getChildren().addAll(buildTitle(), showRoleSelectionModel(), showRoleDetails(), buildActionButton());
+            setContent(content());
         });
     }
 }

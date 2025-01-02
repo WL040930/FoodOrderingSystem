@@ -1,4 +1,4 @@
-package com.Group3.foodorderingsystem.Module.Platform.Customer;
+package com.Group3.foodorderingsystem.Module.Platform.Vendor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,31 +10,32 @@ import com.Group3.foodorderingsystem.Core.Widgets.BaseMainApplication;
 import com.Group3.foodorderingsystem.Core.Widgets.BottomNavigation;
 import com.Group3.foodorderingsystem.Core.Widgets.Header;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorNavigationEnum;
 
 import javafx.scene.Node;
 
-public class CustomerMainFrame extends BaseMainApplication {
-    
+public class VendorMainFrame extends BaseMainApplication {
+
     @Override
     protected String sceneHeader() {
-        return "Customer Panel";
+        return "Vendor Panel";
     }
 
     @Override
     protected Node defaultContent() {
-        return CustomerViewModel.getHomeViewModel().getNode(); 
+        return VendorViewModel.getHomeViewModel().getNode();
     }
 
     @Override
     protected Header buildHeader() {
-        CustomerNavigationEnum navigationList = CustomerViewModel.getSelectedNavigation();
+        VendorNavigationEnum navigationList = VendorViewModel.getSelectedNavigation();
         Header header = new Header(
                 navigationList.getTopNavigationItem().stream()
                         .map(e -> new HeaderClass(
                                 e.getTitle(),
-                                CustomerViewModel.getSelectedTopNavigation() == e,
+                                VendorViewModel.getSelectedTopNavigation() == e,
                                 () -> {
-                                    CustomerViewModel.setSelectedNavigation(e);
+                                    VendorViewModel.setSelectedNavigation(e);
                                     updateHeader();
                                     e.getAction().run();
                                 }))
@@ -47,12 +48,12 @@ public class CustomerMainFrame extends BaseMainApplication {
     protected BottomNavigation buildBottomNavigator() {
         List<BottomNavigationClass> config = new ArrayList<>();
 
-        for (CustomerNavigationEnum component : CustomerViewModel.getNavigationList()) {
+        for (VendorNavigationEnum component : VendorViewModel.getNavigationList()) {
             config.add(new BottomNavigationClass(
                     component.getTitle(),
                     component.getIcon(),
                     () -> handleNavigation(component),
-                    CustomerViewModel.getSelectedNavigation() == component));
+                    VendorViewModel.getSelectedNavigation() == component));
         }
 
         BottomNavigation bottomNavigation = new BottomNavigation(config);
@@ -61,8 +62,8 @@ public class CustomerMainFrame extends BaseMainApplication {
         return bottomNavigation;
     }
 
-    private void handleNavigation(CustomerNavigationEnum selectedComponent) {
-        CustomerViewModel.setSelectedNavigation(selectedComponent);
+    private void handleNavigation(VendorNavigationEnum selectedComponent) {
+        VendorViewModel.setSelectedNavigation(selectedComponent);
         layout.setBottom(buildBottomNavigator());
         layout.setTop(buildHeader());
     }

@@ -1,7 +1,5 @@
 package com.Group3.foodorderingsystem.Core.Widgets;
 
-import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
-
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;

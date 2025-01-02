@@ -118,6 +118,10 @@ public class UserServices {
                 users.removeIf(u -> u.getId().equals(user.getId()));
             }
 
+            if (user.getProfilePicture() == null) {
+                user.setProfilePicture(User.getDefaultProfilePicture(user.getRole())); 
+            }
+
             users.add(user);
             FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.USER), users);
             return user;
@@ -145,6 +149,10 @@ public class UserServices {
             customers.removeIf(c -> c.getId().equals(customer.getId()));
         }
 
+        if (customer.getProfilePicture() == null) {
+            customer.setProfilePicture(User.getDefaultProfilePicture(RoleEnum.CUSTOMER));
+        }
+
         customers.add(customer);
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
         return customer;
@@ -169,6 +177,10 @@ public class UserServices {
             runners.removeIf(r -> r.getId().equals(runner.getId()));
         }
 
+        if (runner.getProfilePicture() == null) {
+            runner.setProfilePicture(User.getDefaultProfilePicture(RoleEnum.RUNNER));
+        }
+
         runners.add(runner);
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.RUNNER), runners);
         return runner;
@@ -191,6 +203,10 @@ public class UserServices {
             vendor.setId(Storage.generateNewId());
         } else {
             vendors.removeIf(v -> v.getId().equals(vendor.getId()));
+        }
+
+        if (vendor.getProfilePicture() == null) {
+            vendor.setProfilePicture(User.getDefaultProfilePicture(RoleEnum.VENDOR));
         }
 
         vendors.add(vendor);
