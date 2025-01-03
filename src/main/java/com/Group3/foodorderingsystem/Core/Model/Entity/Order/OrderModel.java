@@ -11,6 +11,7 @@ public class OrderModel {
     private String orderId;
     private String customer;
     private String vendor;
+    private String rider;
     private List<ItemModel> items;
     private double totalPrice;
     private String deliveryAddress;
@@ -34,6 +35,10 @@ public class OrderModel {
 
     public String getVendor() {
         return vendor;
+    }
+
+    public String getRider() {
+        return rider;
     }
 
     public List<ItemModel> getItems() {
@@ -70,6 +75,10 @@ public class OrderModel {
 
     public void setVendor(String vendor) {
         this.vendor = vendor;
+    }
+
+    public void setRider(String rider) {
+        this.rider = rider;
     }
 
     public void setItems(List<ItemModel> items) {
