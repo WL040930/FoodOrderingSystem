@@ -10,6 +10,7 @@ import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Common.Login.LoginPage;
+import com.Group3.foodorderingsystem.Module.Common.settings.widgets.IconLabelContainer;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
 import javafx.geometry.Pos;
@@ -33,45 +34,20 @@ public class SettingsPage extends BaseContentPanel {
         UserCard userCard = new UserCard("f617bf0e-ee06-444c-ac5c-31f0415acca1");
 
         VBox settingsOptions = new VBox(10);
-        settingsOptions.setAlignment(Pos.TOP_CENTER); // Change alignment to start from top
+        settingsOptions.setAlignment(Pos.TOP_CENTER);
 
-        Label titleLabel = new Label("Settings");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;");
+        IconLabelContainer labelContainer = new IconLabelContainer();
+        labelContainer.addOption("Account Settings", "manage_profile.png", () -> {
+            System.out.println("Account Settings");
+        });
 
-        Button accountSettingsButton = new Button("Account Settings");
-        Button notificationSettingsButton = new Button("Notification Settings");
-        Button privacySettingsButton = new Button("Logout");
+        labelContainer.addOption("Logout", "logout.png", () -> {
+            SessionUtil.clearSession();
+            LoginPage loginPage = new LoginPage();
+            
+        });
 
-        accountSettingsButton.setStyle("-fx-font-size: 14px; -fx-padding: 10px;");
-        notificationSettingsButton.setStyle("-fx-font-size: 14px; -fx-padding: 10px;");
-        privacySettingsButton.setStyle("-fx-font-size: 14px; -fx-padding: 10px;");
-
-        // Add action handlers for buttons
-        accountSettingsButton.setOnAction(e -> System.out.println("Account Settings clicked"));
-        notificationSettingsButton.setOnAction(e -> System.out.println("Notification Settings clicked"));
-        privacySettingsButton.setOnAction(
-                e -> {
-                    SessionUtil.setAdminInSession(null);
-                    SessionUtil.setCustomerInSession(null);
-                    SessionUtil.setVendorInSession(null);
-                    SessionUtil.setRiderInSession(null);
-
-                    try {
-                        LoginPage loginPage = new LoginPage();
-                        Stage loginStage = new Stage();
-                        loginPage.start(loginStage);
-                        VendorViewModel.getMainFrame().dispose();
-                        VendorViewModel.clear();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                });
-
-        // Add components to the VBox
-        settingsOptions.getChildren().addAll(userCard, titleLabel,
-                accountSettingsButton,
-                notificationSettingsButton,
-                privacySettingsButton);
+        settingsOptions.getChildren().addAll(userCard, labelContainer);
 
         return settingsOptions;
     }
