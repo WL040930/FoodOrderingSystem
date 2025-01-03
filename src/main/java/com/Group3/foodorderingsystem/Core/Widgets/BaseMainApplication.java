@@ -11,17 +11,19 @@ public abstract class BaseMainApplication extends Application {
 
     protected ScrollPane currentPane;
     protected BorderPane layout;
+    private Stage primaryStage;
 
     protected abstract Header buildHeader();
 
     protected abstract BottomNavigation buildBottomNavigator();
 
-    protected abstract String sceneHeader(); 
+    protected abstract String sceneHeader();
 
-    protected abstract Node defaultContent(); 
+    protected abstract Node defaultContent();
 
     @Override
     public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         currentPane = new ScrollPane(defaultContent());
         currentPane.setFitToWidth(true);
         currentPane.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
@@ -47,11 +49,17 @@ public abstract class BaseMainApplication extends Application {
         if (currentPane.getContent() != null) {
             currentPane.setContent(null);
         }
-        currentPane.setContent(pane); 
+        currentPane.setContent(pane);
     }
 
     public void updateHeader() {
         layout.setTop(buildHeader());
+    }
+
+    public void dispose() {
+        if (primaryStage != null) {
+            primaryStage.close(); 
+        }
     }
 
 }

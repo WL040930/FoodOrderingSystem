@@ -2,7 +2,9 @@ package com.Group3.foodorderingsystem.Core.Model.Entity.Order;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ItemModel {
     
     private String itemId; 
@@ -11,20 +13,19 @@ public class ItemModel {
     private double itemPrice;
     private CategoryEnum itemCategory;
     private String itemImage;
-    private int itemQuantity; 
+    private int itemQuantity;
     private VendorModel vendorModel; 
 
     public ItemModel() {
     }
 
-    public ItemModel(String itemId, String itemName, String itemDescription, double itemPrice, CategoryEnum itemCategory, String itemImage, int itemQuantity, VendorModel vendorModel) {
+    public ItemModel(String itemId, String itemName, String itemDescription, double itemPrice, CategoryEnum itemCategory, String itemImage, VendorModel vendorModel) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemPrice = itemPrice;
         this.itemCategory = itemCategory;
         this.itemImage = itemImage;
-        this.itemQuantity = itemQuantity;
         this.vendorModel = vendorModel;
     }
 
@@ -50,10 +51,6 @@ public class ItemModel {
 
     public String getItemImage() {
         return itemImage;
-    }
-
-    public int getItemQuantity() {
-        return itemQuantity;
     }
 
     public VendorModel getVendorModel() {
@@ -84,11 +81,15 @@ public class ItemModel {
         this.itemImage = itemImage;
     }
 
-    public void setItemQuantity(int itemQuantity) {
-        this.itemQuantity = itemQuantity;
-    }
-
     public void setVendorModel(VendorModel vendorModel) {
         this.vendorModel = vendorModel;
+    }
+
+    public int getItemQuantity() {
+        return itemQuantity;
+    }
+
+    public void setItemQuantity(int itemQuantity) {
+        this.itemQuantity = itemQuantity;
     }
 }

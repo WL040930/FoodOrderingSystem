@@ -23,7 +23,7 @@ public enum CustomerNavigationEnum {
                     CustomerTopNavigationEnum.Notification)),
     Settings(
             "Settings",
-            "logo.png",
+            "settings.png",
             Arrays.asList(
                     CustomerTopNavigationEnum.Settings));
 

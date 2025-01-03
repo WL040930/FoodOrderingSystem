@@ -107,7 +107,7 @@ public class UserServices {
      */
     public static User saveUser(User user) {
         if (user.getRole() == RoleEnum.ADMIN || user.getRole() == RoleEnum.MANAGER) {
-            List<User> users = getUsers();
+            List<User> users = getAdmins();
 
             if (user.getId() == null) {
                 if (isEmailExist(user.getEmail()) != null) {
@@ -115,14 +115,26 @@ public class UserServices {
                 }
                 user.setId(Storage.generateNewId());
             } else {
-                users.removeIf(u -> u.getId().equals(user.getId()));
+                int index = -1;
+                for (int i = 0; i < users.size(); i++) {
+                    if (users.get(i).getId().equals(user.getId())) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index != -1) {
+                    users.set(index, user); // Replace at the specific index
+                }
             }
 
             if (user.getProfilePicture() == null) {
-                user.setProfilePicture(User.getDefaultProfilePicture(user.getRole())); 
+                user.setProfilePicture(User.getDefaultProfilePicture(user.getRole()));
             }
 
-            users.add(user);
+            if (!users.contains(user)) {
+                users.add(user); // Add new user
+            }
+
             FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.USER), users);
             return user;
         }
@@ -146,14 +158,26 @@ public class UserServices {
             }
             customer.setId(Storage.generateNewId());
         } else {
-            customers.removeIf(c -> c.getId().equals(customer.getId()));
+            int index = -1;
+            for (int i = 0; i < customers.size(); i++) {
+                if (customers.get(i).getId().equals(customer.getId())) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index != -1) {
+                customers.set(index, customer); // Replace at the specific index
+            }
         }
 
         if (customer.getProfilePicture() == null) {
             customer.setProfilePicture(User.getDefaultProfilePicture(RoleEnum.CUSTOMER));
         }
 
-        customers.add(customer);
+        if (!customers.contains(customer)) {
+            customers.add(customer); // Add new customer
+        }
+
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
         return customer;
     }
@@ -174,14 +198,26 @@ public class UserServices {
             }
             runner.setId(Storage.generateNewId());
         } else {
-            runners.removeIf(r -> r.getId().equals(runner.getId()));
+            int index = -1;
+            for (int i = 0; i < runners.size(); i++) {
+                if (runners.get(i).getId().equals(runner.getId())) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index != -1) {
+                runners.set(index, runner); // Replace at the specific index
+            }
         }
 
         if (runner.getProfilePicture() == null) {
             runner.setProfilePicture(User.getDefaultProfilePicture(RoleEnum.RUNNER));
         }
 
-        runners.add(runner);
+        if (!runners.contains(runner)) {
+            runners.add(runner); // Add new runner
+        }
+
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.RUNNER), runners);
         return runner;
     }
@@ -202,14 +238,26 @@ public class UserServices {
             }
             vendor.setId(Storage.generateNewId());
         } else {
-            vendors.removeIf(v -> v.getId().equals(vendor.getId()));
+            int index = -1;
+            for (int i = 0; i < vendors.size(); i++) {
+                if (vendors.get(i).getId().equals(vendor.getId())) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index != -1) {
+                vendors.set(index, vendor); // Replace at the specific index
+            }
         }
 
         if (vendor.getProfilePicture() == null) {
             vendor.setProfilePicture(User.getDefaultProfilePicture(RoleEnum.VENDOR));
         }
 
-        vendors.add(vendor);
+        if (!vendors.contains(vendor)) {
+            vendors.add(vendor); // Add new vendor
+        }
+
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.VENDOR), vendors);
         return vendor;
     }
@@ -232,7 +280,7 @@ public class UserServices {
 
     /**
      * 
-     * @param Id 
+     * @param Id
      * @return CustomerModel
      * 
      */
@@ -240,6 +288,50 @@ public class UserServices {
         for (CustomerModel customer : getCustomers()) {
             if (customer.getId().equals(Id)) {
                 return customer;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 
+     * @param Id
+     * @return VendorModel
+     * 
+     */
+    public static VendorModel findVendorById(String Id) {
+        for (VendorModel vendor : getVendors()) {
+            if (vendor.getId().equals(Id)) {
+                return vendor;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 
+     * @param Id
+     * @return RunnerModel
+     */
+    public static RunnerModel findRunnerById(String Id) {
+        for (RunnerModel runner : getRunners()) {
+            if (runner.getId().equals(Id)) {
+                return runner;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 
+     * @param Id
+     * @return User
+     * 
+     */
+    public static User findUserById(String Id) {
+        for (User user : getUsers()) {
+            if (user.getId().equals(Id)) {
+                return user;
             }
         }
         return null;

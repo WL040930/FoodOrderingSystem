@@ -15,6 +15,7 @@ import javafx.scene.Node;
 
 public class RegisterViewModel extends ViewModelConfig {
 
+    @Override
     public void navigate(Node node) {
         setNode(node);
 

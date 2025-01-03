@@ -2,8 +2,10 @@ package com.Group3.foodorderingsystem.Core.Model.Entity.Config;
 
 import javafx.scene.Node;
 
-public class ViewModelConfig {
+public abstract class ViewModelConfig {
     
+    protected abstract void navigate(Node node); 
+
     private Node node;
 
     public ViewModelConfig() {

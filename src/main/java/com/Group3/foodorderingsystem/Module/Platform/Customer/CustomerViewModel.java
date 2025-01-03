@@ -3,8 +3,11 @@ package com.Group3.foodorderingsystem.Module.Platform.Customer;
 import java.util.HashMap;
 import java.util.Map;
 
-
-import com.Group3.foodorderingsystem.Module.Common.settings.SettingsPage;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
+import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
+import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.model.HomeViewModel;
@@ -18,18 +21,22 @@ public class CustomerViewModel {
     private static CustomerViewModel instance;
     private OrderViewModel orderViewModel;
 
+    public static CustomerViewModel setInstance(CustomerViewModel instance) {
+        return CustomerViewModel.instance = instance;
+    }
+
     public CustomerViewModel() {
         instance = this;
 
         instance.customerMainFrame = new CustomerMainFrame();
         instance.selectedNavigation = CustomerNavigationEnum.Home;
 
-        instance.settingsPage = new SettingsPage();
         instance.orderViewModel = new OrderViewModel();
         instance.orderViewModel.init();
 
         init();
         initHomeViewModel();
+        initSettingsViewModel();
     }
 
     /**
@@ -57,7 +64,7 @@ public class CustomerViewModel {
      *      highlighted
      */
     private CustomerNavigationEnum[] navigationList = CustomerNavigationEnum.values();
-    private CustomerNavigationEnum selectedNavigation; 
+    private CustomerNavigationEnum selectedNavigation;
 
     /**
      * Get the navigation list - bottom one
@@ -173,13 +180,19 @@ public class CustomerViewModel {
         instance.homeViewModel.init();
     }
 
-    private SettingsPage settingsPage;
+    private SettingsViewModel settingsViewModel;
 
-    public static SettingsPage getSettingsPage() {
-        return instance.settingsPage;
+    public static void initSettingsViewModel() {
+        CustomerModel vendorFromSession = SessionUtil.getCustomerFromSession();
+        instance.settingsViewModel = new SettingsViewModel(vendorFromSession.getId());
+        instance.settingsViewModel.init();
     }
 
-    public static void setSettingsPage(SettingsPage settingsPage) {
-        instance.settingsPage = settingsPage;
+    public static SettingsViewModel getSettingsViewModel() {
+        return instance.settingsViewModel;
+    }
+
+    public static void setSettingsViewModel(SettingsViewModel settingsViewModel) {
+        instance.settingsViewModel = settingsViewModel;
     }
 }

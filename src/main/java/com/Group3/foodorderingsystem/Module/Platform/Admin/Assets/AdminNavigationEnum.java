@@ -24,7 +24,7 @@ public enum AdminNavigationEnum {
                                         AdminTopNavigationEnum.SendNoti)),
         Settings(
                         "Settings",
-                        "logo.png",
+                        "settings.png",
                         Arrays.asList(
                                         AdminTopNavigationEnum.SelfSettings));
 

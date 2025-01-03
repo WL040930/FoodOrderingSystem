@@ -31,7 +31,7 @@ public enum AdminTopNavigationEnum {
     SelfSettings(
             "Self Settings",
             () -> {
-                AdminViewModel.navigate(AdminViewModel.getSettingsPage());
+                AdminViewModel.navigate(AdminViewModel.getSettingsViewModel().getNode());
             });
 
     private String title;
