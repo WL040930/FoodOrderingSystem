@@ -12,7 +12,7 @@ public enum VendorNavigationEnum {
                     VendorTopNavigationEnum.CurrentOrder)),
     Shop(
             "Shop",
-            "logo.png",
+            "shop_icon.png",
             Arrays.asList(
                     VendorTopNavigationEnum.Menu, 
                     VendorTopNavigationEnum.Review)),

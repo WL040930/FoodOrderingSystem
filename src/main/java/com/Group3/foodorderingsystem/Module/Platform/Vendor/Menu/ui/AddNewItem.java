@@ -2,11 +2,11 @@ package com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.ui;
 
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.BottomButton;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class AddNewItem extends BaseContentPanel {
@@ -30,6 +30,8 @@ public class AddNewItem extends BaseContentPanel {
     }
 
     public Node footer() {
-        return new Button("Add Item");
+        return new BottomButton("Create", () -> {
+            // Handle create button click
+        });
     }
 }
