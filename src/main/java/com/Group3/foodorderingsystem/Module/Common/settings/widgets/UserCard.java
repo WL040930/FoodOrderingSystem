@@ -1,4 +1,4 @@
-package com.Group3.foodorderingsystem.Module.Common.settings.ui;
+package com.Group3.foodorderingsystem.Module.Common.settings.widgets;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;

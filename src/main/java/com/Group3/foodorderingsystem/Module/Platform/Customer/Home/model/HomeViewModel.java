@@ -3,7 +3,14 @@ package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.model;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Config.ViewModelConfig;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.HomeUI;
 
+import javafx.scene.Node;
+
 public class HomeViewModel extends ViewModelConfig {
+
+    @Override
+    protected void navigate(Node node) {
+        // TODO Auto-generated method stub
+    }
     
     public HomeViewModel() {
         super();

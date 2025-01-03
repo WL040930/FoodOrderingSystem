@@ -12,6 +12,7 @@ import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Common.Login.LoginPage;
 import com.Group3.foodorderingsystem.Module.Common.settings.widgets.IconLabelContainer;
+import com.Group3.foodorderingsystem.Module.Common.settings.widgets.UserCard;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
@@ -44,7 +45,22 @@ public class SettingsPage extends BaseContentPanel {
 
         IconLabelContainer labelContainer = new IconLabelContainer();
         labelContainer.addOption("Account Settings", "manage_profile.png", () -> {
-            System.out.println("Account Settings");
+            switch (user.getRole()) {
+                case ADMIN:
+                    AdminViewModel.getSettingsViewModel().setSettingsProfileManagement(new SettingsProfileManagement(user));
+                    AdminViewModel.getSettingsViewModel().navigate(AdminViewModel.getSettingsViewModel().getSettingsProfileManagement());
+                    break;
+                case CUSTOMER: 
+                    CustomerViewModel.getSettingsViewModel().setSettingsProfileManagement(new SettingsProfileManagement(user));
+                    CustomerViewModel.getSettingsViewModel().navigate(CustomerViewModel.getSettingsViewModel().getSettingsProfileManagement());
+                    break;
+                case VENDOR:
+                    VendorViewModel.getSettingsViewModel().setSettingsProfileManagement(new SettingsProfileManagement(user));
+                    VendorViewModel.getSettingsViewModel().navigate(VendorViewModel.getSettingsViewModel().getSettingsProfileManagement());
+                    break;
+                default:
+                    break;
+            }
         });
 
         labelContainer.addOption("Logout", "logout.png", () -> {
