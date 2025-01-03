@@ -25,7 +25,7 @@ public enum CustomerTopNavigationEnum {
     Settings(
             "Settings",
             () -> {
-                CustomerViewModel.navigate(CustomerViewModel.getSettingsPage());
+                CustomerViewModel.navigate(CustomerViewModel.getSettingsViewModel().getNode());
             });
 
     private String title;

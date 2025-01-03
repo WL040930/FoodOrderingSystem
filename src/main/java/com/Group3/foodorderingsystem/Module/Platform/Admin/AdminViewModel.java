@@ -3,6 +3,9 @@ package com.Group3.foodorderingsystem.Module.Platform.Admin;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
+import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
 import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminTopNavigationEnum;
@@ -19,6 +22,10 @@ public class AdminViewModel {
      */
     private static AdminViewModel instance;
 
+    public static AdminViewModel setInstance(AdminViewModel instance) {
+        return AdminViewModel.instance = instance;
+    }
+
     /**
      * Constructor
      */
@@ -29,11 +36,10 @@ public class AdminViewModel {
         instance.selectedNavigation = AdminNavigationEnum.User;
 
         instance.adminDatabase = new AdminDatabase();
-        instance.settingsPage = new SettingsPage();
 
         init();
-
         initRegisterViewModel();
+        initSettingsViewModel();
     }
 
     /**
@@ -169,7 +175,7 @@ public class AdminViewModel {
     // User section methods
 
     /**
-     * @var registerViewModel - RegisterViewModel instance  
+     * @var registerViewModel - RegisterViewModel instance
      */
     private RegisterViewModel registerViewModel;
 
@@ -189,7 +195,7 @@ public class AdminViewModel {
      */
     public static void setRegisterViewModel(RegisterViewModel registerViewModel) {
         instance.registerViewModel = registerViewModel;
-    }     
+    }
 
     /**
      * Generate new instance of the AdminViewModel
@@ -199,11 +205,8 @@ public class AdminViewModel {
         instance.registerViewModel = new RegisterViewModel();
         instance.registerViewModel.init();
     }
-    
-    private AdminDatabase adminDatabase;
 
-    // TODO: CONVERT IT INTO SINGLE VIEW MODEL
-    private SettingsPage settingsPage;
+    private AdminDatabase adminDatabase;
 
     public static AdminDatabase getAdminDatabase() {
         return instance.adminDatabase;
@@ -213,13 +216,25 @@ public class AdminViewModel {
         instance.adminDatabase = adminDatabase;
     }
 
-    // Settings section methods
-    public static SettingsPage getSettingsPage() {
-        return instance.settingsPage;
+    private SettingsViewModel settingsViewModel;
+
+    public static void initSettingsViewModel() {
+        Object adminFromSession = SessionUtil.getAdminFromSession();
+        if (adminFromSession instanceof User) {
+            User user = (User) adminFromSession;
+            instance.settingsViewModel = new SettingsViewModel(user.getId());
+        } else {
+            throw new IllegalStateException("Admin from session is not a User instance.");
+        }
+        instance.settingsViewModel.init();
     }
 
-    public static void setSettingsPage(SettingsPage settingsPage) {
-        instance.settingsPage = settingsPage;
+    public static SettingsViewModel getSettingsViewModel() {
+        return instance.settingsViewModel;
+    }
+
+    public static void setSettingsViewModel(SettingsViewModel settingsViewModel) {
+        instance.settingsViewModel = settingsViewModel;
     }
 
 }

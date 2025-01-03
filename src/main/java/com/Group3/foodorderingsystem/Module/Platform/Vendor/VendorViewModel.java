@@ -6,7 +6,6 @@ import java.util.Map;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
-import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Home.model.HomeViewModel;
@@ -18,6 +17,10 @@ import javafx.scene.Node;
 public class VendorViewModel {
 
     private static VendorViewModel instance;
+
+    public static VendorViewModel setInstance(VendorViewModel instance) {
+        return VendorViewModel.instance = instance;
+    }
 
     public VendorViewModel() {
         instance = this;

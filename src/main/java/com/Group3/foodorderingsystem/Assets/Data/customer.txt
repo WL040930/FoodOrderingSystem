@@ -1,2 +1,2 @@
 {"id":"f617bf0e-ee06-444c-ac5c-31f0415acca1","name":"12","email":"cus@gmail.com","password":"1","role":"CUSTOMER","profilePicture":"customer.png","balance":0.0,"phoneNumber":"11","address":"11"}
-{"id":"47c3b310-a6c9-4320-830a-0ab0171cdcb5","name":"12","email":"222@gmaail.com","password":"1","role":"CUSTOMER","profilePicture":"bc8bf151-842d-4c81-9079-dfdf4f09c20e.png","balance":0.0,"phoneNumber":"22","address":"22"}
+{"id":"47c3b310-a6c9-4320-830a-0ab0171cdcb5","name":"1","email":"33","password":"1","role":"CUSTOMER","profilePicture":"bc8bf151-842d-4c81-9079-dfdf4f09c20e.png","balance":0.0,"phoneNumber":"22","address":"22"}

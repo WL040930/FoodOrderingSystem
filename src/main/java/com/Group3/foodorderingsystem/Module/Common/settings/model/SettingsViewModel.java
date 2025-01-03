@@ -9,11 +9,12 @@ public class SettingsViewModel extends ViewModelConfig {
     
     private User user; 
     public SettingsViewModel(String userId) {
-        super();        
+        super();
+        this.user = UserServices.findUserById(userId);
     }
 
     public void init() {
-        this.settingsPage = new SettingsPage();
+        this.settingsPage = new SettingsPage(user);
         setNode(settingsPage);
     }
 

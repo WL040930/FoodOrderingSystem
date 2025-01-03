@@ -6,19 +6,25 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Common.Login.LoginPage;
 import com.Group3.foodorderingsystem.Module.Common.settings.widgets.IconLabelContainer;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
 import javafx.geometry.Pos;
 
 public class SettingsPage extends BaseContentPanel {
 
-    public SettingsPage() {
+    private User user; 
+    public SettingsPage(User user) {
         super();
+
+        this.user = user;
 
         setFooterHeight(0);
         setContentHeight(550);
@@ -31,7 +37,7 @@ public class SettingsPage extends BaseContentPanel {
     }
 
     public Node content() {
-        UserCard userCard = new UserCard("f617bf0e-ee06-444c-ac5c-31f0415acca1");
+        UserCard userCard = new UserCard(user.getId());
 
         VBox settingsOptions = new VBox(10);
         settingsOptions.setAlignment(Pos.TOP_CENTER);
@@ -44,7 +50,26 @@ public class SettingsPage extends BaseContentPanel {
         labelContainer.addOption("Logout", "logout.png", () -> {
             SessionUtil.clearSession();
             LoginPage loginPage = new LoginPage();
-            
+            Stage stage = new Stage(); 
+            loginPage.start(stage);
+
+            switch (user.getRole()) {
+                case ADMIN:
+                    AdminViewModel.getAdminMainFrame().dispose();
+                    AdminViewModel.setInstance(null);
+                    break;
+
+                case VENDOR:
+                    VendorViewModel.getMainFrame().dispose();
+                    VendorViewModel.setInstance(null);
+                    break;
+
+                case CUSTOMER: 
+                    CustomerViewModel.getCustomerMainFrame().dispose();
+                    CustomerViewModel.setInstance(null);
+                default:
+                    break;
+            }
         });
 
         settingsOptions.getChildren().addAll(userCard, labelContainer);
