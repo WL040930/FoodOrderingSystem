@@ -11,6 +11,7 @@ import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.model.HomeViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Order.model.OrderViewModel;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -18,6 +19,7 @@ import javafx.scene.Node;
 public class CustomerViewModel {
 
     private static CustomerViewModel instance;
+    private OrderViewModel orderViewModel;
 
     public static CustomerViewModel setInstance(CustomerViewModel instance) {
         return CustomerViewModel.instance = instance;
@@ -28,6 +30,9 @@ public class CustomerViewModel {
 
         instance.customerMainFrame = new CustomerMainFrame();
         instance.selectedNavigation = CustomerNavigationEnum.Home;
+
+        instance.orderViewModel = new OrderViewModel();
+        instance.orderViewModel.init();
 
         init();
         initHomeViewModel();
@@ -69,6 +74,15 @@ public class CustomerViewModel {
     public static CustomerNavigationEnum[] getNavigationList() {
         return instance.navigationList;
     }
+
+
+    // TODO: add comment
+    public static OrderViewModel getOrderViewModel() {
+        return instance.orderViewModel;
+    }
+
+    
+
 
     /**
      * @var selectedTopNavigation - Selected top navigation item - control which one

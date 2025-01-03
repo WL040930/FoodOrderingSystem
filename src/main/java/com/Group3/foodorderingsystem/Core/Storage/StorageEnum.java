@@ -16,7 +16,10 @@ public enum StorageEnum {
     ), 
     USER(
         "user.txt"
-    );
+    ),
+    ORDER(
+        "order.txt"
+    ),;
 
     final String fileName;
 

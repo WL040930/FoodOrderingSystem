@@ -13,6 +13,7 @@ public class ItemModel {
     private double itemPrice;
     private CategoryEnum itemCategory;
     private String itemImage;
+    private int itemQuantity;
     private VendorModel vendorModel; 
 
     public ItemModel() {
@@ -82,5 +83,13 @@ public class ItemModel {
 
     public void setVendorModel(VendorModel vendorModel) {
         this.vendorModel = vendorModel;
+    }
+
+    public int getItemQuantity() {
+        return itemQuantity;
+    }
+
+    public void setItemQuantity(int itemQuantity) {
+        this.itemQuantity = itemQuantity;
     }
 }

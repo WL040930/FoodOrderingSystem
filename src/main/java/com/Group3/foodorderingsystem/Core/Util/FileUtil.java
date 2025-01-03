@@ -76,4 +76,19 @@ public class FileUtil {
         saveFile(filePath, allData);
     }
 
+
+    // get model list through selected field
+    public static <T> List<T> getModelByField(String filePath, Class<T> type, Predicate<T> predicate) {
+        List<T> allData = loadFile(filePath, type);
+        List<T> result = new ArrayList<>();
+        for (T data : allData) {
+            if (predicate.test(data)) {
+                result.add(data);
+            }
+        }
+        return result;
+    }
+    
+
+
 }
