@@ -10,10 +10,6 @@ public enum VendorTopNavigationEnum {
             () -> {
                 VendorViewModel.navigate(VendorViewModel.getHomeViewModel().getNode());
             }),
-    CurrentOrder(
-            "Current Order",
-            () -> {
-            }),
     Order(
             "Order",
             () -> {

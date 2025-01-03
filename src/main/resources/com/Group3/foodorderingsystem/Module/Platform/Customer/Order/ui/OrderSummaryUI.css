@@ -48,8 +48,10 @@
     -fx-wrap-text: true;
 }
 
-.price-label {
+.item-price-label {
     -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #555;
     -fx-preferred-width: 100px;
     -fx-max-width: 100px;
     -fx-min-width: 100px;

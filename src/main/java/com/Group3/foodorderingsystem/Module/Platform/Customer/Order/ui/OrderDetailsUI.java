@@ -28,10 +28,12 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextArea;
 
 
 public class OrderDetailsUI extends BorderPane {
@@ -61,7 +63,7 @@ public class OrderDetailsUI extends BorderPane {
         scrollPane.setStyle("-fx-background: #f8fafc; -fx-background-color: transparent;");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        // Create a VBox for the "Cancel Order" button
+        // Create a VBox for the "Cancel Order" or "reorder" button
         VBox fixedVBox = createBottomButtonContainer(selectedOrder);
 
         // Create a back button
@@ -71,7 +73,7 @@ public class OrderDetailsUI extends BorderPane {
         backButton.setOnAction(e -> {
             SessionUtil.setSelectedOrderInSession(null);
             // Navigate back to OrderHistoryUI
-            CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("  Active"));
+            CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
         });
 
         // Create a label for the shop name
@@ -108,6 +110,19 @@ public class OrderDetailsUI extends BorderPane {
             cancelOrderButton.getStyleClass().add("cancel-order-button");
             cancelOrderButton.setOnAction(e -> cancelOrderAction(selectedOrder));
             bottomContainer.getChildren().add(cancelOrderButton);
+        } else if (selectedOrder != null && (selectedOrder.getStatus().equals(StatusEnum.CANCELLED) || selectedOrder.getStatus().equals(StatusEnum.REJECTED))) {
+            Button reorderButton = new Button("Reorder");
+            reorderButton.getStyleClass().add("reorder-button");
+
+            // Set actions for the buttons
+            reorderButton.setOnAction(e -> {
+                SessionUtil.setItemsInSession(selectedOrder.getItems());
+                SessionUtil.setOrderSummaryEntryInSession("Reorder");
+                CustomerViewModel.getOrderViewModel().setOrderSummaryUI(new OrderSummaryUI());
+                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderSummaryUI());
+            });
+            bottomContainer.getChildren().addAll(reorderButton);
+
         } else {
             Button reorderButton = new Button("Reorder");
             Button generateReceiptButton = new Button("Generate Receipt");
@@ -148,6 +163,12 @@ public class OrderDetailsUI extends BorderPane {
         VBox paymentUI = getPaymentDetails();
 
         root.getChildren().addAll(vendorUI, statusUI, itemsUI, paymentUI);
+
+        //check if the order is delivered, served or picked up, if yes, show rating section
+        if (order.getStatus().equals(StatusEnum.DELIVERED) || order.getStatus().equals(StatusEnum.SERVED) || order.getStatus().equals(StatusEnum.PICKED_UP)) {
+            VBox ratingUI = getRatingUI();
+            root.getChildren().add(ratingUI);
+        }
     }
 
     public VBox getVendorDetails() {
@@ -181,9 +202,13 @@ public class OrderDetailsUI extends BorderPane {
         VBox orderBox = new VBox(10);
         orderBox.setPadding(new Insets(10, 0, 0, 0));
 
+        // Order Details Label
+        Label detailsLabel = new Label("Order Details");
+        detailsLabel.getStyleClass().add("detail-title-label");
+
         HBox orderStatusBox = new HBox(10);
         Label orderStatusLabel = new Label("Order Status:");
-        orderStatusLabel.getStyleClass().add("order-status-label");
+        orderStatusLabel.getStyleClass().add("status-label");
         Label orderStatusValueLabel = new Label(selectedOrder.getStatus().toString());
         orderStatusValueLabel.getStyleClass().add("status-value-label");
         orderStatusBox.getChildren().addAll(orderStatusLabel, orderStatusValueLabel);
@@ -219,7 +244,7 @@ public class OrderDetailsUI extends BorderPane {
         orderMethodValueLabel.getStyleClass().add("status-value-label");
         orderMethodBox.getChildren().addAll(orderMethodLabel, orderMethodValueLabel);
 
-        orderBox.getChildren().addAll(orderStatusBox, orderIdBox, orderTimeBox, orderMethodBox);
+        orderBox.getChildren().addAll(detailsLabel, orderStatusBox, orderIdBox, orderTimeBox, orderMethodBox);
 
         if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
             VBox deliveryAddressBox = new VBox(10);
@@ -240,8 +265,14 @@ public class OrderDetailsUI extends BorderPane {
         VBox itemsBox = new VBox(10);
         itemsBox.setPadding(new Insets(10, 0, 0, 0));
         Separator separator = new Separator();
+
+        // Order Details Label
+        Label detailsLabel = new Label("Items Details");
+        detailsLabel.getStyleClass().add("detail-title-label");
+
+
         separator.getStyleClass().add("separator");
-        itemsBox.getChildren().addAll(separator);
+        itemsBox.getChildren().addAll(separator, detailsLabel);
 
         for (ItemModel item : selectedOrder.getItems()) {
             HBox itemBox = new HBox(10);
@@ -255,7 +286,7 @@ public class OrderDetailsUI extends BorderPane {
             itemLabel.getStyleClass().add("item-label");
             HBox.setHgrow(itemLabel, Priority.ALWAYS);
 
-            Label priceLabel = new Label("$" + String.format("%.2f", item.getItemPrice() * item.getItemQuantity()));
+            Label priceLabel = new Label("RM" + String.format("%.2f", item.getItemPrice() * item.getItemQuantity()));
             priceLabel.getStyleClass().add("price-label");
 
             itemBox.getChildren().addAll(itemQuantityLabel, itemLabel, priceLabel);
@@ -284,21 +315,21 @@ public class OrderDetailsUI extends BorderPane {
         HBox subtotalBox = new HBox(10);
         Label subtotalLabel = new Label("Subtotal:");
         subtotalLabel.getStyleClass().add("subtotal-label");
-        Label subtotalAmountLabel = new Label("$" + String.format("%.2f", subtotal));
+        Label subtotalAmountLabel = new Label("RM" + String.format("%.2f", subtotal));
         subtotalAmountLabel.getStyleClass().add("subtotal-amount-label");
         subtotalBox.getChildren().addAll(subtotalLabel, subtotalAmountLabel);
 
         HBox deliveryFeeBox = new HBox(10);
         Label deliveryFeeLabel = new Label("Delivery Fee:");
         deliveryFeeLabel.getStyleClass().add("subtotal-label");
-        Label deliveryFeeAmountLabel = new Label("$" + String.format("%.2f", deliveryFee));
+        Label deliveryFeeAmountLabel = new Label("RM" + String.format("%.2f", deliveryFee));
         deliveryFeeAmountLabel.getStyleClass().add("subtotal-amount-label");
         deliveryFeeBox.getChildren().addAll(deliveryFeeLabel, deliveryFeeAmountLabel);
 
         HBox totalPriceBox = new HBox(10);
         Label totalPriceLabel = new Label("Total Price:");
         totalPriceLabel.getStyleClass().add("total-price-label");
-        Label totalPriceAmountLabel = new Label("$" + String.format("%.2f", totalPrice));
+        Label totalPriceAmountLabel = new Label("RM" + String.format("%.2f", totalPrice));
         totalPriceAmountLabel.getStyleClass().add("total-price-amount-label");
         totalPriceBox.getChildren().addAll(totalPriceLabel, totalPriceAmountLabel);
 
@@ -307,4 +338,87 @@ public class OrderDetailsUI extends BorderPane {
 
         return paymentBox;
     }
-}
+
+    private int ratingStars = 0;
+
+    public VBox getRatingUI() {
+        VBox ratingBox = new VBox(10);
+        ratingBox.setPadding(new Insets(0)); // Adjust padding as needed
+
+        // Title
+        Label ratingLabel = new Label("Rate Your Experience");
+        ratingLabel.getStyleClass().add("detail-title-label");
+       
+
+        // Stars for rating
+        HBox starsBox = new HBox(5);
+        ImageView[] stars = new ImageView[5];
+
+
+        for (int i = 0; i < stars.length; i++) {
+            ImageView star = Images.getImageView("star_empty.png", 30, 30);
+            StackPane starPane = new StackPane(star);
+            starPane.setStyle("-fx-background-color: transparent; -fx-padding: 5px;");
+            int finalI = i;
+            starPane.setOnMouseClicked(event -> {
+                updateStars(stars, finalI);
+                ratingStars = finalI + 1;
+            });
+            stars[i] = star;
+            starsBox.getChildren().add(starPane);
+        }
+
+
+        // Text area for feedback
+        TextArea feedbackArea = new TextArea();
+        feedbackArea.setPromptText("Write your feedback here...");
+        feedbackArea.setWrapText(true);
+
+        // Check if there is existing rating and feedback
+        if (selectedOrder.getRating() > 0) {
+            updateStars(stars, selectedOrder.getRating() - 1); // Subtract 1 because rating index starts at 0
+            feedbackArea.setText(selectedOrder.getReview());
+        }
+
+        // Submit button
+        Button submitButton = new Button("Submit");
+        submitButton.getStyleClass().add("submit-button");
+        submitButton.setOnAction(event -> {
+            if (ratingStars == 0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please provide star rating.");
+                alert.showAndWait();
+                return;
+            } else {
+                submitRatingFeedback(ratingStars, feedbackArea.getText());
+            }
+            
+
+        });
+
+        Separator separator = new Separator();
+        separator.getStyleClass().add("separator");
+
+        ratingBox.getChildren().addAll(separator, ratingLabel, starsBox, feedbackArea, submitButton);
+        return ratingBox;
+    }
+
+    private void updateStars(ImageView[] stars, int rating) {
+        Image emptyStar = Images.getImageView("star_empty.png", 30, 30).getImage();
+        Image filledStar = Images.getImageView("star_filled.png", 30, 30).getImage();
+        for (int i = 0; i < stars.length; i++) {
+            stars[i].setImage(i <= rating ? filledStar : emptyStar);
+        }
+    }
+    
+    private void submitRatingFeedback(int rating, String feedback) {
+
+        // Show success message
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Rating submitted successfully.");
+        alert.showAndWait();
+
+        CustomerOrderServices.updateRatingAndFeedback(selectedOrder.getOrderId(), rating, feedback);
+        CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI());
+        CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Past"));
+        
+    }
+} 

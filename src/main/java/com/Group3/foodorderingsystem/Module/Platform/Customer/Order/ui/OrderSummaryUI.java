@@ -115,7 +115,7 @@ public class OrderSummaryUI extends VBox {
                 .sum();
 
         // Create a label to display the total price value
-        Label totalPriceValueLabel = new Label(String.format("$%.2f", totalPrice));
+        Label totalPriceValueLabel = new Label(String.format("RM%.2f", totalPrice));
         totalPriceValueLabel.getStyleClass().add("total-price-value-label");
 
         totalPriceBox.getChildren().addAll(totalPriceLabel, totalPriceValueLabel);
@@ -302,8 +302,8 @@ public class OrderSummaryUI extends VBox {
             itemLabel.getStyleClass().add("item-label");
             HBox.setHgrow(itemLabel, Priority.ALWAYS);
 
-            Label priceLabel = new Label("$" + String.format("%.2f", item.getItemPrice() * item.getItemQuantity()));
-            priceLabel.getStyleClass().add("price-label");
+            Label priceLabel = new Label("RM" + String.format("%.2f", item.getItemPrice() * item.getItemQuantity()));
+            priceLabel.getStyleClass().add("item-price-label");
 
             itemBox.getChildren().addAll(itemQuantityLabel, itemLabel, priceLabel);
             itemsBox.getChildren().add(itemBox);

@@ -9,8 +9,7 @@ public enum VendorNavigationEnum {
             "Home",
             "logo.png",
             Arrays.asList(
-                    VendorTopNavigationEnum.Home,
-                    VendorTopNavigationEnum.CurrentOrder)),
+                    VendorTopNavigationEnum.Home)),
     Order(
             "Order",
             "logo.png",

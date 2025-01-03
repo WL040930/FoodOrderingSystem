@@ -8,16 +8,23 @@
     -fx-border-width: 3px 0 0 0; /* Set border width for top */
 }
 
-.cancel-order-button {
+.reject-order-button, .accept-order-button{
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
-    -fx-background-color: #ff0000;
     -fx-pref-width: 430px;
     -fx-max-width: 430px;
     -fx-min-width: 430px;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
+}
+
+.accept-order-button {
+    -fx-background-color: #4CAF50;
+}
+
+.reject-order-button {
+    -fx-background-color: #C62828;
 }
 
 .reorder-button {
@@ -44,12 +51,6 @@
     -fx-background-radius: 20px;
 }
 
-.detail-title-label {
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-border-radius: 5px; /* Rounded corners for a softer look */
-}
-
 .vendor-label {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
@@ -59,15 +60,16 @@
     -fx-min-width: 350px;
 
 }
-.status-label {
-    -fx-font-size: 14px;
-    -fx-preferred-width: 320px;
-    -fx-max-width: 275px;
-    -fx-min-width: 275px;
+
+.detail-title-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px; /* Rounded corners for a softer look */
 }
 
-.order-status-label {
-    -fx-font-size: 16px;
+
+.status-label {
+    -fx-font-size: 14px;
     -fx-preferred-width: 320px;
     -fx-max-width: 275px;
     -fx-min-width: 275px;
@@ -76,10 +78,10 @@
 
 .status-value-label {
     -fx-font-size: 14px;
-    -fx-font-weight: bold;
     -fx-preferred-width: 185px;
     -fx-max-width: 185px;
     -fx-min-width: 185px;
+    -fx-font-weight: bold;
 }
 
 .delivery-address-label {
@@ -93,24 +95,22 @@
 .item-quantity-label {
     -fx-font-size: 14px;
     -fx-preferred-width: 50px;
-    -fx-max-width: 40px;
-    -fx-min-width: 40px;
+    -fx-max-width: 50px;
+    -fx-min-width: 50px;
 }
 
 .item-label {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-preferred-width: 300px;
-    -fx-max-width: 270px;
-    -fx-min-width: 270px;
+    -fx-max-width: 300px;
+    -fx-min-width: 300px;
     -fx-text-alignment: left;
     -fx-wrap-text: true;
 }
 
 .price-label {
     -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #555;
     -fx-preferred-width: 100px;
     -fx-max-width: 100px;
     -fx-min-width: 100px;
@@ -119,8 +119,8 @@
 .subtotal-label {
     -fx-font-size: 14px;
     -fx-preferred-width: 360px;
-    -fx-max-width: 320px;
-    -fx-min-width: 320px;
+    -fx-max-width: 360px;
+    -fx-min-width: 360px;
 }
 
 .subtotal-amount-label {
@@ -131,20 +131,15 @@
 }
 
 .total-price-label {
-    -fx-font-size: 18px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #334e68;
-    -fx-preferred-width: 360px;
-    -fx-max-width: 320px;
-    -fx-min-width: 320px;
 }
 
 .total-price-amount-label {
-    -fx-font-size: 18px;
+    -fx-font-size: 28px;
     -fx-font-weight: bold;
     -fx-text-fill: #334e68;
-    -fx-max-width: 120px;
-    -fx-min-width: 120px;
 }
 
 .separator {
@@ -158,21 +153,14 @@
 }
 
 .text-area {
-    -fx-font-size: 16px;
+    -fx-font-size: 15px;
     -fx-max-width: 450px;
     -fx-min-width: 450px;
-    -fx-max-height: 100px;
-    -fx-min-height: 100px;
+    -fx-max-height: 120px;
+    -fx-min-height: 120px;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
     -fx-wrap-text: true;
 }
 
-.submit-button {
-    -fx-background-color: #4A5568;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-padding: 10px 20px;
-}
 
