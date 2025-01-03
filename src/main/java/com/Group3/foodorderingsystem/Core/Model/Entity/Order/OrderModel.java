@@ -18,6 +18,8 @@ public class OrderModel {
     private StatusEnum status;
     private OrderMethodEnum orderMethod;
     private Date time;
+    private int rating;
+    private String review;
 
     public OrderModel() {
         //get current time
@@ -65,6 +67,14 @@ public class OrderModel {
         return time;
     }
 
+    public int getRating() {
+        return rating;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
     public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
@@ -101,8 +111,15 @@ public class OrderModel {
         this.orderMethod = orderMethod;
     }
 
-
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
     }
 }

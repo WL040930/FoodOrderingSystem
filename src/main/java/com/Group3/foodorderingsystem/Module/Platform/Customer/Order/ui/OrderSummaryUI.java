@@ -170,7 +170,10 @@ public class OrderSummaryUI extends VBox {
         Separator separator = new Separator();
         separator.getStyleClass().add("separator");
 
-        orderOptionSection.getChildren().addAll(separator, orderOptionLabel, orderOptionComboBox, addressBox);
+        Separator separator1 = new Separator();
+        separator1.getStyleClass().add("separator");
+
+        orderOptionSection.getChildren().addAll(separator, orderOptionLabel, orderOptionComboBox, addressBox, separator1);
         return orderOptionSection;
     }
 
@@ -201,11 +204,12 @@ public class OrderSummaryUI extends VBox {
             boolean confirmationResult = showConfirmationDialog("Confirm Order", balance, totalPrice);
             if (confirmationResult) {
                 showDialog("Order Placed", null, "Your order has been successfully placed.");
+                // Clear session items after placing the order
+                SessionUtil.setItemsInSession(null);
                 CustomerOrderServices.placeOrder(orderMethod, deliveryAddress);
                 CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Pending"));
 
-                // Clear session items after placing the order
-                SessionUtil.setItemsInSession(null);
+
             }
         }
     }
