@@ -8,7 +8,6 @@ public class BottomButton extends Button {
         public BottomButton(String text, Runnable action) {
                 super();
 
-                // Load external CSS file
                 try {
                         String cssPath = "/com/Group3/foodorderingsystem/Module/Common/HeaderCSS.css";
                         String cssResource = getClass().getResource(cssPath).toExternalForm();
@@ -21,17 +20,13 @@ public class BottomButton extends Button {
                         System.err.println("Error loading CSS: " + e.getMessage());
                 }
 
-                // Set the button text
                 this.setText(text);
-                this.setMaxWidth(Double.MAX_VALUE); // Allow button to stretch to full width
+                this.setMaxWidth(Double.MAX_VALUE); 
 
-                // Add default button style class
                 this.getStyleClass().add("selected-button");
 
-                // Set action for button click
                 this.setOnMouseClicked(event -> action.run());
 
-                // Hover effect using style class
                 this.setOnMouseEntered((MouseEvent e) -> {
                         if (!this.getStyleClass().contains("hover-button")) {
                                 this.getStyleClass().remove("selected-button");

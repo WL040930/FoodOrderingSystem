@@ -1,8 +1,12 @@
 package com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.ui;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
+import com.Group3.foodorderingsystem.Core.Services.ItemServices;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.widgets.ItemDisplay;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 public class MenuList extends BaseContentPanel {
 
@@ -18,33 +23,40 @@ public class MenuList extends BaseContentPanel {
         super();
 
         setHeader(header());
+        setContent(content());
     }
 
     private Node header() {
-        // Create the HBox for the header
         HBox header = new HBox();
-        header.setAlignment(Pos.CENTER); // Aligns items vertically and horizontally in the center
+        header.setAlignment(Pos.CENTER);
 
-        // Create the back button
         TitleBackButton backButton = new TitleBackButton("Menu");
 
-        // Create a spacer
         Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS); // Makes the spacer take up all available space
+        HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // Create the "Add New Item" button
         Button addNewItemButton = new Button("Add New Item");
         addNewItemButton.setOnAction(event -> {
             VendorViewModel.getMenuViewModel().setAddNewItem(new AddNewItem());
             VendorViewModel.getMenuViewModel().navigate(VendorViewModel.getMenuViewModel().getAddNewItem());
         });
 
-        // Add right padding to the button
-        HBox.setMargin(addNewItemButton, new Insets(0, 10, 0, 0)); 
+        HBox.setMargin(addNewItemButton, new Insets(0, 10, 0, 0));
 
-        // Add the components to the header
         header.getChildren().addAll(backButton, spacer, addNewItemButton);
 
         return header;
+    }
+
+    private Node content() {
+        VBox resultContainer = new VBox();
+
+        ItemDisplay displayTemplate = new ItemDisplay(resultContainer);
+
+        SearchBarWithData<ItemModel> searchBar = new SearchBarWithData<>(ItemServices.getItems(), ItemModel.class,
+                displayTemplate,
+                "itemName");
+
+        return new VBox(searchBar, resultContainer);
     }
 }
