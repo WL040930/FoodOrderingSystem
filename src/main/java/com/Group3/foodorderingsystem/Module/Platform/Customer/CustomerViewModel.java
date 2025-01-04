@@ -75,8 +75,7 @@ public class CustomerViewModel {
         return instance.navigationList;
     }
 
-
-    // TODO: add comment
+    
     public static OrderViewModel getOrderViewModel() {
         return instance.orderViewModel;
     }
