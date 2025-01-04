@@ -21,24 +21,14 @@ public class BottomButton extends Button {
                 }
 
                 this.setText(text);
-                this.setMaxWidth(Double.MAX_VALUE); 
+                this.setMaxWidth(Double.MAX_VALUE);
 
                 this.getStyleClass().add("selected-button");
 
                 this.setOnMouseClicked(event -> action.run());
 
-                this.setOnMouseEntered((MouseEvent e) -> {
-                        if (!this.getStyleClass().contains("hover-button")) {
-                                this.getStyleClass().remove("selected-button");
-                                this.getStyleClass().add("hover-button");
-                        }
-                });
+                this.setStyle("-fx-cursor: hand;"); 
 
-                this.setOnMouseExited((MouseEvent e) -> {
-                        if (!this.getStyleClass().contains("selected-button")) {
-                                this.getStyleClass().remove("hover-button");
-                                this.getStyleClass().add("selected-button");
-                        }
-                });
         }
+
 }

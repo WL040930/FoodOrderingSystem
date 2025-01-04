@@ -1,8 +1,12 @@
 package com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.ui;
 
+import java.util.ArrayList;
+
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
 import com.Group3.foodorderingsystem.Core.Services.ItemServices;
+import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
@@ -52,11 +56,22 @@ public class MenuList extends BaseContentPanel {
         VBox resultContainer = new VBox();
 
         ItemDisplay displayTemplate = new ItemDisplay(resultContainer);
+        SearchBarWithData<ItemModel> searchBarWithData = null;
 
-        SearchBarWithData<ItemModel> searchBar = new SearchBarWithData<>(ItemServices.getItems(), ItemModel.class,
-                displayTemplate,
-                "itemName");
+        Object vendor = SessionUtil.getVendorFromSession();
+        if (vendor instanceof VendorModel) {
+            VendorModel vendorModel = (VendorModel) vendor;
+            searchBarWithData = new SearchBarWithData<>(ItemServices.getItemByVendor(vendorModel),
+                    ItemModel.class,
+                    displayTemplate,
+                    "itemName");
+        } else {
+            searchBarWithData = new SearchBarWithData<>(new ArrayList<>(),
+                    ItemModel.class,
+                    displayTemplate,
+                    "itemName");
+        }
 
-        return new VBox(searchBar, resultContainer);
+        return new VBox(searchBarWithData, resultContainer);
     }
 }

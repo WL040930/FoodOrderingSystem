@@ -3,6 +3,7 @@ package com.Group3.foodorderingsystem.Core.Services;
 import java.util.List;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Storage.Storage;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
@@ -40,5 +41,9 @@ public class ItemServices {
         return itemModel;
     }
 
-    
+    public static List<ItemModel> getItemByVendor(VendorModel vendorModel) {
+        return getItems().stream().filter(item -> item.getVendorModel().getId().equals(vendorModel.getId()))
+                .collect(java.util.stream.Collectors.toList());
+    }
+
 }

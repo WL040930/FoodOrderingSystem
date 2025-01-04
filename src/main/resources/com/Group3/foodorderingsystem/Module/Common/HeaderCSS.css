@@ -43,18 +43,3 @@
     -fx-background-insets: 0; /* Prevent overlapping insets */
     -fx-border-insets: 0; /* Ensure border is clear and uniform */
 }
-
-.hover-button {
-    -fx-background-color: #7089a2; /* Tab background color */
-    -fx-padding: 5px 20px; /* Padding */
-    -fx-border-radius: 20px; /* Rounded corners */
-    -fx-background-radius: 20px; /* Rounded background */
-    -fx-font-size: 14px; /* Font size */
-    -fx-font-weight: 700; /* Font weight */
-    -fx-text-fill: #BCCCDC; /* Tab label text color */
-    -fx-border-color: #D9EAFD; /* Single border color */
-    -fx-border-width: 1px; /* Uniform border width */
-    -fx-border-insets: 0; /* No additional insets */
-    -fx-pref-height: 40px; /* Set preferred height to keep consistent */
-    -fx-cursor: hand; /* Pointer cursor */
-}

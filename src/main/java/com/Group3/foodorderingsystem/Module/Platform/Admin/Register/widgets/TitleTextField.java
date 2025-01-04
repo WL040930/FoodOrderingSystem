@@ -58,11 +58,12 @@ public class TitleTextField extends VBox {
                 TextField decimalField = new TextField();
                 decimalField.setPromptText(promptText);
                 decimalField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!newValue.matches("\\d*(\\.\\d*)?")) {
-                        decimalField.setText(newValue.replaceAll("[^\\d.]", ""));
+                    if (!newValue.matches("\\d*(\\.\\d{0,2})?")) {
+                        decimalField.setText(oldValue); // Revert to the last valid input
                     }
                 });
                 return decimalField;
+
             case EmailField:
                 TextField emailField = new TextField();
                 emailField.setPromptText(promptText);
