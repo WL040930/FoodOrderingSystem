@@ -30,15 +30,16 @@ public class BottomNavigation extends HBox {
     private void init(List<BottomNavigationClass> config) {
         this.setAlignment(Pos.CENTER);
         this.setSpacing(0);
-        this.setStyle("-fx-padding: 10px; -fx-background-color: #4CAF50;");
+        this.getStylesheets().add(getClass()
+                .getResource("/com/Group3/foodorderingsystem/Module/Common/BottomNavCSS.css")
+                .toExternalForm()); // Load the CSS stylesheet
 
         for (BottomNavigationClass navItem : config) {
             VBox button = createButtonWithIcon(
                     navItem.getTitle(),
                     navItem.getIconName(),
                     navItem.getAction(),
-                    navItem.getIsSelected()
-            );
+                    navItem.getIsSelected());
 
             HBox.setHgrow(button, Priority.ALWAYS);
             button.setMaxWidth(Double.MAX_VALUE);
@@ -59,15 +60,16 @@ public class BottomNavigation extends HBox {
         label.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
         label.setTextFill(Color.WHITE);
 
-        // Set button style based on selection
+        // Apply the CSS class for the button box
+        buttonBox.getStyleClass().add("button-box");
+
+        // Apply selected class if the button is selected
         if (isSelected) {
-            buttonBox.setStyle("-fx-padding: 10px; -fx-background-color: #2E7D32;"); // Selected background color
-        } else {
-            buttonBox.setStyle("-fx-padding: 10px; -fx-background-color: transparent;"); // Default background color
+            buttonBox.getStyleClass().add("selected");
         }
 
         // Set button hover and click styles/actions
-        buttonBox.setOnMouseEntered(e -> buttonBox.setStyle("-fx-cursor: hand; -fx-background-color: #3E8E41;"));
+        buttonBox.setOnMouseEntered(e -> buttonBox.setStyle("-fx-cursor: hand; -fx-background-color: #2563EB;"));
         buttonBox.setOnMouseExited(e -> {
             if (!isSelected) {
                 buttonBox.setStyle("-fx-background-color: transparent;");

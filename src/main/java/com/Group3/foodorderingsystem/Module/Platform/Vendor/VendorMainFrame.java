@@ -56,8 +56,11 @@ public class VendorMainFrame extends BaseMainApplication {
         }
 
         BottomNavigation bottomNavigation = new BottomNavigation(config);
-        bottomNavigation.setStyle(
-                "-fx-background-color: #4CAF50; -fx-padding: 10px; -fx-min-height: 80px; -fx-max-height: 80px;");
+
+        bottomNavigation.getStylesheets().add(
+                getClass().getResource("/com/Group3/foodorderingsystem/Module/Common/BottomNavCSS.css")
+                        .toExternalForm());
+        bottomNavigation.getStyleClass().add("bottom-navigation");
         return bottomNavigation;
     }
 

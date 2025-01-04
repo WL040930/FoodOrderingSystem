@@ -1,0 +1,45 @@
+/* Base Button Style */
+.default-button, .selected-button {
+    -fx-background-color: #f8fafc; /* Tab background color */
+    -fx-padding: 5px 20px; /* Padding */
+    -fx-border-radius: 20px; /* Rounded corners */
+    -fx-background-radius: 20px; /* Rounded background */
+    -fx-font-size: 14px; /* Font size */
+    -fx-font-weight: 700; /* Font weight */
+    -fx-text-fill: #BCCCDC; /* Tab label text color */
+    -fx-border-color: #D9EAFD; /* Single border color */
+    -fx-border-width: 1px; /* Uniform border width */
+    -fx-border-insets: 0; /* No additional insets */
+    -fx-pref-height: 40px; /* Set preferred height to keep consistent */
+    -fx-cursor: hand; /* Pointer cursor */
+}
+
+/* Hover State */
+.default-button:hover {
+    -fx-background-color: #e6f0fa; /* Slightly darker hover background */
+    -fx-border-color: #B0D4F8; /* Slightly darker border on hover */
+}
+
+/* Selected Button Style */
+.selected-button {
+    -fx-background-color: #334e68; /* Tab selected background color */
+    -fx-text-fill: #FFFFFF; /* White text for selected tab */
+    -fx-border-color: transparent; /* No visible border for selected button */
+}
+
+/* Focused and Pressed States */
+.default-button:focused, .selected-button:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.default-button:pressed, .selected-button:pressed {
+    -fx-background-color: #2b3c50; /* Darker shade when pressed */
+}
+
+/* Remove any shadowing or double-border effects */
+.default-button, .selected-button {
+    -fx-effect: null; /* Ensure no shadows or effects are applied */
+    -fx-background-insets: 0; /* Prevent overlapping insets */
+    -fx-border-insets: 0; /* Ensure border is clear and uniform */
+}

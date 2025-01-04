@@ -36,11 +36,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 
-
 public class OrderDetailsUI extends BorderPane {
 
     OrderModel selectedOrder = (OrderModel) SessionUtil.getSelectedOrderFromSession();
-    VendorModel vendor = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(selectedOrder.getVendor())).get(0);
+    VendorModel vendor = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class,
+            vendor -> vendor.getId().equals(selectedOrder.getVendor())).get(0);
 
     public OrderDetailsUI() {
 
@@ -88,12 +88,14 @@ public class OrderDetailsUI extends BorderPane {
         bottomContainer.getChildren().addAll(fixedVBox);
         bottomContainer.setAlignment(Pos.CENTER);
 
-        // Set the topContainer at the top, ScrollPane in the center, and bottomContainer at the bottom
+        // Set the topContainer at the top, ScrollPane in the center, and
+        // bottomContainer at the bottom
         this.setTop(topContainer);
         this.setCenter(scrollPane);
         this.setBottom(bottomContainer);
 
-        this.getStylesheets().add("/com/Group3/foodorderingsystem/Module/Platform/Customer/Order/ui/OrderDetailsUI.css");
+        this.getStylesheets()
+                .add("/com/Group3/foodorderingsystem/Module/Platform/Customer/Order/ui/OrderDetailsUI.css");
     }
 
     private VBox createBottomButtonContainer(OrderModel selectedOrder) {
@@ -132,7 +134,8 @@ public class OrderDetailsUI extends BorderPane {
                 SessionUtil.setItemsInSession(selectedOrder.getItems());
                 SessionUtil.setOrderSummaryEntryInSession("Reorder");
                 CustomerViewModel.getOrderViewModel().setOrderSummaryUI(new OrderSummaryUI());
-                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderSummaryUI());
+                CustomerViewModel.getOrderViewModel()
+                        .navigate(CustomerViewModel.getOrderViewModel().getOrderSummaryUI());
             });
             generateReceiptButton.setOnAction(e -> CustomerOrderServices.generateReceipt());
             bottomContainer.getChildren().addAll(reorderButton, generateReceiptButton);
@@ -142,14 +145,16 @@ public class OrderDetailsUI extends BorderPane {
     }
 
     private void cancelOrderAction(OrderModel selectedOrder) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to cancel this order?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to cancel this order?",
+                ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 Alert infoAlert = new Alert(Alert.AlertType.INFORMATION, "Order cancelled successfully.");
                 infoAlert.showAndWait();
                 CustomerOrderServices.cancelOrder(selectedOrder.getOrderId());
                 CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI());
-                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
+                CustomerViewModel.getOrderViewModel()
+                        .navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
             }
         });
     }
@@ -189,12 +194,14 @@ public class OrderDetailsUI extends BorderPane {
         try {
             image = new Image(path, 50, 50, true, true);
         } catch (Exception e) {
-            image = new Image("/com/Group3/foodorderingsystem/Assets/Resource/logo.png", 50, 50, true, true); // Default image if loading fails
+            image = new Image("/com/Group3/foodorderingsystem/Assets/Resource/logo.png", 50, 50, true, true); // Default
+                                                                                                              // image
+                                                                                                              // if
+                                                                                                              // loading
+                                                                                                              // fails
         }
         return new ImageView(image);
     }
-
-
 
     public VBox getOrderDetails() {
         VBox orderBox = new VBox(10);
@@ -220,13 +227,12 @@ public class OrderDetailsUI extends BorderPane {
 
         // Convert Date to LocalDateTime
         LocalDateTime orderDateTime = Instant.ofEpochMilli(selectedOrder.getTime().getTime())
-                                     .atZone(ZoneId.systemDefault())
-                                     .toLocalDateTime();
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
 
         // Format LocalDateTime
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm");
         String formattedDate = orderDateTime.format(formatter);
-
 
         HBox orderTimeBox = new HBox(10);
         Label orderTimeLabel = new Label("Order Time:");
@@ -257,7 +263,6 @@ public class OrderDetailsUI extends BorderPane {
 
         return orderBox;
     }
-    
 
     public VBox getItemsDetails() {
         VBox itemsBox = new VBox(10);
@@ -330,7 +335,6 @@ public class OrderDetailsUI extends BorderPane {
         Label totalPriceAmountLabel = new Label("RM" + String.format("%.2f", totalPrice));
         totalPriceAmountLabel.getStyleClass().add("total-price-amount-label");
         totalPriceBox.getChildren().addAll(totalPriceLabel, totalPriceAmountLabel);
-
 
         paymentBox.getChildren().addAll(separator1, subtotalBox, deliveryFeeBox, totalPriceBox);
 

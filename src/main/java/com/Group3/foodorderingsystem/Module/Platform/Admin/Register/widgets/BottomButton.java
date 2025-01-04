@@ -3,28 +3,32 @@ package com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
-public class BottomButton extends Button{
-    
-    public BottomButton(String text, Runnable action) {
-        super(); 
+public class BottomButton extends Button {
 
-        this.setText(text);
-        this.setMaxWidth(Double.MAX_VALUE);
+        public BottomButton(String text, Runnable action) {
+                super();
 
-        this.setStyle(
-                "-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; "
-                        + "-fx-padding: 10px 30px 10px 30px; -fx-border-radius: 5px;");
+                try {
+                        String cssPath = "/com/Group3/foodorderingsystem/Module/Common/HeaderCSS.css";
+                        String cssResource = getClass().getResource(cssPath).toExternalForm();
+                        if (cssResource != null) {
+                                this.getStylesheets().add(cssResource);
+                        } else {
+                                System.err.println("CSS file not found: " + cssPath);
+                        }
+                } catch (Exception e) {
+                        System.err.println("Error loading CSS: " + e.getMessage());
+                }
 
-        this.setOnMouseClicked(event -> {
-            action.run();
-        });
+                this.setText(text);
+                this.setMaxWidth(Double.MAX_VALUE);
 
-        this.setOnMouseEntered((MouseEvent e) -> this.setStyle(
-                "-fx-background-color: #45a049; -fx-text-fill: white; -fx-font-size: 16px; "
-                        + "-fx-padding: 10px 30px 10px 30px; -fx-border-radius: 5px;"));
+                this.getStyleClass().add("selected-button");
 
-        this.setOnMouseExited((MouseEvent e) -> this.setStyle(
-                "-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; "
-                        + "-fx-padding: 10px 30px 10px 30px; -fx-border-radius: 5px;"));
-    }
+                this.setOnMouseClicked(event -> action.run());
+
+                this.setStyle("-fx-cursor: hand;"); 
+
+        }
+
 }

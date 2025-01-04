@@ -1,0 +1,45 @@
+/* BottomNavigation Bar Styles */
+.bottom-navigation {
+    -fx-padding: 5px;
+    -fx-background-color: #1E3A8A;
+    /* Blue background color */
+}
+
+/* Button Styles */
+.bottom-navigation .button-box {
+    -fx-padding: 5px;
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+    -fx-hgrow: ALWAYS;  /* Ensure each button takes equal width */
+}
+
+/* Hover effect for inactive buttons */
+.bottom-navigation .button-box:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #2563EB;
+    /* Hover background color in blue */
+}
+
+/* Selected Button Style */
+.bottom-navigation .button-box.selected {
+    -fx-background-color: #1E40AF;
+    /* Selected button color */
+}
+
+/* Label Style */
+.bottom-navigation .button-box .label {
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+    /* Bold text for better visibility */
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    /* White text for all buttons */
+}
+
+/* Icon Style */
+.bottom-navigation .button-box .icon {
+    -fx-fit-height: 30px;
+    /* Reduced icon size */
+    -fx-fit-width: 30px;
+    /* Reduced icon size */
+}

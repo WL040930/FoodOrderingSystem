@@ -20,7 +20,7 @@ public class TitleBackButton extends HBox {
 
     public void init(String title) {
         Label titleLabel = new Label(title);
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-padding: 10px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;");
+        titleLabel.setStyle("-fx-font-size: 24px; -fx-padding: 10px; -fx-font-weight: bold; -fx-text-fill:rgb(0, 0, 0);");
 
         this.setAlignment(Pos.CENTER_LEFT);
         this.getChildren().addAll(titleLabel);
@@ -39,7 +39,7 @@ public class TitleBackButton extends HBox {
         });
 
         Label titleLabel = new Label(title);
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;");
+        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill:rgb(0, 0, 0);");
 
         this.setAlignment(Pos.CENTER_LEFT);
         this.getChildren().addAll(backLabel, titleLabel);
