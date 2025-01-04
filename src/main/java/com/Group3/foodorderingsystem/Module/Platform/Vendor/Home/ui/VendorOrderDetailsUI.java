@@ -14,6 +14,7 @@ import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
@@ -70,14 +71,11 @@ public class VendorOrderDetailsUI extends BorderPane {
 
 
         // Create a back button
-        Button backButton = new Button();
-        backButton.setStyle("-fx-background-color: transparent;");
-        backButton.setGraphic(Images.getImageView("left_arrow.png", 20, 20));
-        backButton.setOnAction(e -> {
-            SessionUtil.setSelectedOrderInSession(null);
-            // Navigate back to OrderHistoryUI
-            VendorViewModel.getHomeViewModel().navigate(VendorViewModel.getHomeViewModel().getVendorOrderListUI());
-        });
+        TitleBackButton backButton = new TitleBackButton("", () -> {
+                SessionUtil.setSelectedOrderInSession(null);
+                // Navigate back to OrderHistoryUI
+                VendorViewModel.getHomeViewModel().navigate(VendorViewModel.getHomeViewModel().getVendorOrderListUI());
+            });
  
         // Create a label for the shop name
         Label orderIDLabel = new Label(selectedOrder.getOrderMethod() + " - " + selectedOrder.getOrderId());
@@ -333,7 +331,7 @@ public class VendorOrderDetailsUI extends BorderPane {
             ImageView imageView = Images.getImageView("preparing_order.png", 150, 150);
             VBox.setMargin(imageView, new Insets(0, 0, 20, 0));
 
-            Button readyButton = new Button("Order ready");
+            Button readyButton = new Button("Press when order is ready");
             readyButton.getStyleClass().add("reorder-button");
             readyButton.setOnAction(e -> buttonAction(selectedOrder, "Ready"));
             
@@ -347,7 +345,7 @@ public class VendorOrderDetailsUI extends BorderPane {
             ImageView imageView = Images.getImageView("ready_for_pick_up_icon.png", 150, 150);
             VBox.setMargin(imageView, new Insets(0, 0, 20, 0));
 
-            Button pickUpButton = new Button("Order has been picked up");
+            Button pickUpButton = new Button("Press when order is picked up");
             pickUpButton.getStyleClass().add("reorder-button");
             pickUpButton.setOnAction(e -> buttonAction(selectedOrder, "ReadyForPickup"));
             
@@ -374,7 +372,7 @@ public class VendorOrderDetailsUI extends BorderPane {
 
 
             //add a title
-            Label reviewTitleLabel = new Label("Customer Review");
+            Label reviewTitleLabel = new Label("Customer Rating");
             reviewTitleLabel.getStyleClass().add("detail-title-label");
             VBox reviewBox = new VBox(10);
 

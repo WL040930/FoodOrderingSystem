@@ -1,3 +1,7 @@
+.button {
+    -fx-cursor: hand;
+}
+
 /* General styling for the TabPane */
 .tab-pane {
     -fx-background-color: transparent; /* Remove any background from the tab pane */
@@ -36,6 +40,7 @@
     -fx-border-color: transparent, #D9EAFD; /* Two-color border: red and blue */
     -fx-border-width: 15px, 1px; /* Border widths for the two colors */
     -fx-border-insets: 0, 2px; /* Insets for the two borders */
+    -fx-cursor: hand;
     
 }
 

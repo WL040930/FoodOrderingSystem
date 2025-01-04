@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
@@ -67,14 +68,11 @@ public class OrderDetailsUI extends BorderPane {
         VBox fixedVBox = createBottomButtonContainer(selectedOrder);
 
         // Create a back button
-        Button backButton = new Button();
-        backButton.setStyle("-fx-background-color: transparent;");
-        backButton.setGraphic(Images.getImageView("left_arrow.png", 20, 20));
-        backButton.setOnAction(e -> {
-            SessionUtil.setSelectedOrderInSession(null);
-            // Navigate back to OrderHistoryUI
-            CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
-        });
+        TitleBackButton backButton = new TitleBackButton("", () -> {
+                SessionUtil.setSelectedOrderInSession(null);
+                // Navigate back to OrderHistoryUI
+                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
+            });
 
         // Create a label for the shop name
         Label shopNameLabel = new Label(selectedOrder != null ? vendor.getShopName() : "Shop Name");

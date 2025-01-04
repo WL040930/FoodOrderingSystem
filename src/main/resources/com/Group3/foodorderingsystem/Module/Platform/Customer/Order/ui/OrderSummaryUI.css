@@ -1,3 +1,7 @@
+.button {
+    -fx-cursor: hand;
+}
+
 .top-fixed-hbox {
     -fx-background-color: #f8fafc;
     -fx-alignment: CENTER_LEFT;
@@ -102,8 +106,8 @@
 .address-box {
     -fx-max-width: 450px;
     -fx-min-width: 450px;
-    -fx-max-height: 0px;
-    -fx-min-height: 0px;
+    -fx-max-height: 200px;
+    -fx-min-height: 200px;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
 }

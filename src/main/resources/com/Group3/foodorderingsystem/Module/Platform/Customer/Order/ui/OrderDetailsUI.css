@@ -1,3 +1,7 @@
+.button {
+    -fx-cursor: hand;
+}
+
 .fixed-vbox {
     -fx-padding: 10px;
     -fx-alignment: center;
@@ -174,5 +178,9 @@
     -fx-font-weight: bold;
     -fx-font-size: 14px;
     -fx-padding: 10px 20px;
+}
+
+.button {
+    -fx-cursor: hand;
 }
 
