@@ -7,7 +7,7 @@ public enum CustomerNavigationEnum {
 
     Home(
             "Home",
-            "logo.png",
+            "home.png",
             Arrays.asList(
                     CustomerTopNavigationEnum.Home, 
                     CustomerTopNavigationEnum.CurrentOrder)),

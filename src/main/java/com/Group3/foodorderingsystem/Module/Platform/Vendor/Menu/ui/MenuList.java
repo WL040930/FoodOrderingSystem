@@ -9,13 +9,16 @@ import com.Group3.foodorderingsystem.Core.Services.ItemServices;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.DynamicSearchBarUI;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.widgets.ItemDisplay;
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Dynamic;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -55,21 +58,18 @@ public class MenuList extends BaseContentPanel {
     private Node content() {
         VBox resultContainer = new VBox();
 
-        ItemDisplay displayTemplate = new ItemDisplay(resultContainer);
-        SearchBarWithData<ItemModel> searchBarWithData = null;
+        DynamicSearchBarUI.RenderTemplate<ItemModel> displayTemplate = new ItemDisplay(resultContainer);
+        DynamicSearchBarUI<ItemModel> searchBarWithData = null;
 
         Object vendor = SessionUtil.getVendorFromSession();
         if (vendor instanceof VendorModel) {
             VendorModel vendorModel = (VendorModel) vendor;
-            searchBarWithData = new SearchBarWithData<>(ItemServices.getItemByVendor(vendorModel),
-                    ItemModel.class,
-                    displayTemplate,
-                    "itemName");
+            searchBarWithData = new DynamicSearchBarUI<ItemModel>(ItemServices.getItemByVendor(vendorModel),
+                    "itemName",
+                    null,
+                    displayTemplate);
         } else {
-            searchBarWithData = new SearchBarWithData<>(new ArrayList<>(),
-                    ItemModel.class,
-                    displayTemplate,
-                    "itemName");
+            searchBarWithData = new DynamicSearchBarUI<ItemModel>(new ArrayList<>(), "itemName", null, displayTemplate);
         }
 
         return new VBox(searchBarWithData, resultContainer);
