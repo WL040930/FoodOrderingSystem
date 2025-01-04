@@ -39,10 +39,13 @@ public abstract class BaseMainApplication extends Application {
         layout.setPrefHeight(600);
 
         Scene scene = new Scene(layout, 500, 780);
+        scene.getStylesheets().add(
+                getClass().getResource("/com/Group3/foodorderingsystem/Module/Common/MainFrame.css").toExternalForm());
         primaryStage.setTitle(sceneHeader());
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
     public void setCurrentPane(Node pane) {
@@ -58,7 +61,7 @@ public abstract class BaseMainApplication extends Application {
 
     public void dispose() {
         if (primaryStage != null) {
-            primaryStage.close(); 
+            primaryStage.close();
         }
     }
 

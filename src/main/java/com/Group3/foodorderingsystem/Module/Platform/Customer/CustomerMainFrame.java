@@ -14,7 +14,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNav
 import javafx.scene.Node;
 
 public class CustomerMainFrame extends BaseMainApplication {
-    
+
     @Override
     protected String sceneHeader() {
         return "Customer Panel";
@@ -22,7 +22,7 @@ public class CustomerMainFrame extends BaseMainApplication {
 
     @Override
     protected Node defaultContent() {
-        return CustomerViewModel.getHomeViewModel().getNode(); 
+        return CustomerViewModel.getHomeViewModel().getNode();
     }
 
     @Override
@@ -56,8 +56,11 @@ public class CustomerMainFrame extends BaseMainApplication {
         }
 
         BottomNavigation bottomNavigation = new BottomNavigation(config);
-        bottomNavigation.setStyle(
-                "-fx-background-color: #4CAF50; -fx-padding: 10px; -fx-min-height: 80px; -fx-max-height: 80px;");
+
+        bottomNavigation.getStylesheets().add(
+                getClass().getResource("/com/Group3/foodorderingsystem/Module/Common/BottomNavCSS.css")
+                        .toExternalForm());
+        bottomNavigation.getStyleClass().add("bottom-navigation");
         return bottomNavigation;
     }
 
