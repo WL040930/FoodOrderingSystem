@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ItemServices",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.Core.Services.ItemServices",
+            "projectName": "FoodOrderingSystem"
+        },
+        {
+            "type": "java",
             "name": "AdminMainFrame",
             "request": "launch",
             "mainClass": "com.Group3.foodorderingsystem.Module.Platform.Admin.AdminMainFrame",

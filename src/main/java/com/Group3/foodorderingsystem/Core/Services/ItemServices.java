@@ -1,9 +1,15 @@
 package com.Group3.foodorderingsystem.Core.Services;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
 import com.Group3.foodorderingsystem.Core.Storage.Storage;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
@@ -44,6 +50,29 @@ public class ItemServices {
     public static List<ItemModel> getItemByVendor(VendorModel vendorModel) {
         return getItems().stream().filter(item -> item.getVendorModel().getId().equals(vendorModel.getId()))
                 .collect(java.util.stream.Collectors.toList());
+    }
+
+    public static Map<CategoryEnum, List<VendorModel>> getVendorByItemCategory() {
+        Map<CategoryEnum, List<VendorModel>> vendorsByCategory = new HashMap<>();
+
+        for (CategoryEnum i : CategoryEnum.values()) {
+            vendorsByCategory.put(i, new ArrayList<>());
+        }
+
+        for (VendorModel vendor : UserServices.getVendors()) {
+            List<ItemModel> items = getItemByVendor(vendor);
+
+            long foodCount = items.stream().filter(item -> item.getItemCategory() == CategoryEnum.FOOD).count();
+            long drinkCount = items.stream().filter(item -> item.getItemCategory() == CategoryEnum.DRINK).count();
+
+            if (foodCount > drinkCount) {
+                vendorsByCategory.get(CategoryEnum.FOOD).add(vendor);
+            } else {
+                vendorsByCategory.get(CategoryEnum.DRINK).add(vendor);
+            }
+        }
+
+        return vendorsByCategory;
     }
 
 }

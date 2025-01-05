@@ -1,10 +1,13 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Services.ItemServices;
+import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.DynamicSearchBarUI;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.VendorCard;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -23,20 +26,17 @@ public class HomeUI extends BaseContentPanel {
     }
 
     private Node content() {
-        List<ItemModel> items = ItemServices.getItems();
+        List<VendorModel> vendor = UserServices.getVendors();
         VBox presetUI = new VBox(new Label("No search input. Start typing to search..."));
 
         // Define the custom render template
-        DynamicSearchBarUI.RenderTemplate<ItemModel> renderTemplate = item -> {
-            HBox itemBox = new HBox(10);
-            Label itemName = new Label(item.getItemName());
-            Button itemButton = new Button("Select");
-            itemBox.getChildren().addAll(itemName, itemButton);
-            return itemBox;
+        DynamicSearchBarUI.RenderTemplate<VendorModel> renderTemplate = item -> {
+            return new VendorCard().render(item);
         };
 
         // Create the search widget with the custom render template
-        DynamicSearchBarUI<ItemModel> searchWidget = new DynamicSearchBarUI<>(items, "itemName", presetUI, renderTemplate);
+        DynamicSearchBarUI<VendorModel> searchWidget = new DynamicSearchBarUI<>(
+                vendor, "shopName", presetUI, renderTemplate);
 
         return searchWidget; // Return the complete search widget
     }
