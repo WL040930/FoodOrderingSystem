@@ -1,7 +1,7 @@
 package com.Group3.foodorderingsystem.Module.Platform.Vendor.Home.model;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Config.ViewModelConfig;
-import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.HomeUI;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Home.ui.HomeUI;
 
 import javafx.scene.Node;
 
