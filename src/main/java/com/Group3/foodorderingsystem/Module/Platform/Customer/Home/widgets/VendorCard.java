@@ -3,6 +3,7 @@ package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -64,6 +65,7 @@ public class VendorCard implements DynamicSearchBarUI.RenderTemplate<VendorModel
         exploreButton.getStyleClass().add("explore-button");
         exploreButton.setOnAction(event -> {
             System.out.println("Navigating to shop: " + vendor.getId());
+            CustomerViewModel.getHomeViewModel().initMenuSelection(vendor.getId());
         });
 
         VBox buttonBox = new VBox();

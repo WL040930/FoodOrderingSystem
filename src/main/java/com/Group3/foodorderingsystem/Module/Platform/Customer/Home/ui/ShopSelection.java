@@ -1,8 +1,9 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.CategoryEnum;
+import com.Group3.foodorderingsystem.Core.Services.ItemServices;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;
-import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.VendorCard;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.VendorSmallCard;
 
 import javafx.scene.Node;
@@ -12,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ShopSelection extends VBox {
@@ -23,12 +25,14 @@ public class ShopSelection extends VBox {
 
     public void init() {
         List<VendorModel> vendors = UserServices.getVendors();
+        Map<CategoryEnum, List<VendorModel>> data = ItemServices.filterVendorItem();
+
         List<VendorModel> foodVendors = vendors.stream()
-                .filter(vendor -> hasFoodItems(vendor))
+                .filter(vendor -> data.get(CategoryEnum.FOOD).stream().anyMatch(v -> v.getId().equals(vendor.getId())))
                 .collect(Collectors.toList());
 
         List<VendorModel> drinkVendors = vendors.stream()
-                .filter(vendor -> hasDrinkItems(vendor))
+                .filter(vendor -> data.get(CategoryEnum.DRINK).stream().anyMatch(v -> v.getId().equals(vendor.getId())))
                 .collect(Collectors.toList());
 
         Node foodSection = createVendorSection("Food Seller", foodVendors);
@@ -54,11 +58,6 @@ public class ShopSelection extends VBox {
             vendorCards.getChildren().add(new Label(" "));
         });
 
-        vendors.forEach(vendor -> {
-            vendorCards.getChildren().add(new VendorSmallCard(vendor));
-            vendorCards.getChildren().add(new Label(" "));
-        });
-
         ScrollPane scrollPane = new ScrollPane(vendorCards);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -74,13 +73,5 @@ public class ShopSelection extends VBox {
 
         section.getChildren().add(container);
         return section;
-    }
-
-    private boolean hasFoodItems(VendorModel vendor) {
-        return true;
-    }
-
-    private boolean hasDrinkItems(VendorModel vendor) {
-        return true;
     }
 }

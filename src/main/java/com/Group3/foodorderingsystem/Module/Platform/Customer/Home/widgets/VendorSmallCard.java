@@ -3,6 +3,7 @@ package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -42,9 +43,12 @@ public class VendorSmallCard extends Card {
                 .getResource("/com/Group3/foodorderingsystem/Module/Common/ButtonStyles.css")
                 .toExternalForm());
         button.getStyleClass().add("explore-button");
-        button.setMinWidth(100); 
+        button.setMinWidth(100);
+        button.setOnAction(event -> {
+            CustomerViewModel.getHomeViewModel().initMenuSelection(vendor.getId());
+        });
 
-        VBox vbox = new VBox(1); 
+        VBox vbox = new VBox(1);
         vbox.getChildren().addAll(imageView, shopNameLabel, starRatingLabel, button);
 
         vbox.setPadding(new Insets(10));

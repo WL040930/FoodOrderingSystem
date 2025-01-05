@@ -52,7 +52,7 @@ public class ItemServices {
                 .collect(java.util.stream.Collectors.toList());
     }
 
-    public static Map<CategoryEnum, List<VendorModel>> getVendorByItemCategory() {
+    public static Map<CategoryEnum, List<VendorModel>> filterVendorItem() {
         Map<CategoryEnum, List<VendorModel>> vendorsByCategory = new HashMap<>();
 
         for (CategoryEnum i : CategoryEnum.values()) {
