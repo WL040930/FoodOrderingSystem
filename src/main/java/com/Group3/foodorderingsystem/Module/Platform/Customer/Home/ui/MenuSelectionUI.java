@@ -1,5 +1,7 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui;
 
+import java.util.ArrayList;
+
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Services.ItemServices;
@@ -7,6 +9,7 @@ import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.BottomButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.DynamicSearchBarUI;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.MenuItemCard;
@@ -14,6 +17,8 @@ import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.Vendo
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.VendorReviewCard;
 
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -32,18 +37,18 @@ public class MenuSelectionUI extends BaseContentPanel {
 
     private Node header() {
         return new TitleBackButton(vendorModel.getShopName(), () -> {
-            // Alert confirmationAlert = new Alert(AlertType.CONFIRMATION);
-            // confirmationAlert.setTitle("Confirmation");
-            // confirmationAlert.setHeaderText(null);
-            // confirmationAlert.setContentText("Are you sure you want to navigate back?");
+            Alert confirmationAlert = new Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Confirmation");
+            confirmationAlert.setHeaderText(null);
+            confirmationAlert.setContentText("Are you sure you want to navigate back? All items in cart will be removed.");
 
-            // // Check if user confirms the action
-            // confirmationAlert.showAndWait().ifPresent(response -> {
-            // if (response == ButtonType.OK) {
-            CustomerViewModel.getHomeViewModel().navigate(CustomerViewModel.getHomeViewModel().getHomeUI());
-            SessionUtil.setItemsInSession(null);
-            // }
-            // });
+            // Check if user confirms the action
+            confirmationAlert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    CustomerViewModel.getHomeViewModel().navigate(CustomerViewModel.getHomeViewModel().getHomeUI());
+                    SessionUtil.setItemsInSession(new ArrayList<>());
+                }
+            });
         });
     }
 
@@ -63,6 +68,6 @@ public class MenuSelectionUI extends BaseContentPanel {
     }
 
     private Node footer() {
-        return new Label("Footer");
+        return CustomerViewModel.getHomeViewModel().getBottomButton();
     }
 }

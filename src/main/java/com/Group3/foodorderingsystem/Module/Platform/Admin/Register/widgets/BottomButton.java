@@ -5,8 +5,13 @@ import javafx.scene.input.MouseEvent;
 
 public class BottomButton extends Button {
 
+        private String text;
+        private Runnable action;
+
         public BottomButton(String text, Runnable action) {
                 super();
+                this.text = text;
+                this.action = action;
 
                 try {
                         String cssPath = "/com/Group3/foodorderingsystem/Module/Common/HeaderCSS.css";
@@ -20,15 +25,31 @@ public class BottomButton extends Button {
                         System.err.println("Error loading CSS: " + e.getMessage());
                 }
 
-                this.setText(text);
+                this.setText(this.text);
                 this.setMaxWidth(Double.MAX_VALUE);
 
                 this.getStyleClass().add("selected-button");
 
-                this.setOnMouseClicked(event -> action.run());
+                this.setOnMouseClicked(event -> this.action.run());
 
-                this.setStyle("-fx-cursor: hand;"); 
-
+                this.setStyle("-fx-cursor: hand;");
         }
 
+        // Setter for the action
+        public void setAction(Runnable action) {
+                this.action = action;
+        }
+
+        public void setDisabled(Boolean isDisabled) {
+                if (isDisabled) {
+                        this.setDisable(true);
+                        this.setOpacity(0.5);
+                        this.setStyle("-fx-cursor: not-allowed;");
+                } else {
+                        // Enable the button functionality
+                        this.setDisable(false);
+                        this.setOpacity(1.0); // Restore original opacity
+                        this.setStyle("-fx-cursor: hand;"); // Restore cursor style
+                }
+        }
 }

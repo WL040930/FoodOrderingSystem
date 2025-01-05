@@ -64,7 +64,6 @@ public class VendorCard implements DynamicSearchBarUI.RenderTemplate<VendorModel
                 .toExternalForm());
         exploreButton.getStyleClass().add("explore-button");
         exploreButton.setOnAction(event -> {
-            System.out.println("Navigating to shop: " + vendor.getId());
             CustomerViewModel.getHomeViewModel().initMenuSelection(vendor.getId());
         });
 

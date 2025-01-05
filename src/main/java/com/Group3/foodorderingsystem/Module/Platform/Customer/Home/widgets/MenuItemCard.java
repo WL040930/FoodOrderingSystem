@@ -2,6 +2,7 @@ package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Util.Images;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
 
 import javafx.geometry.Pos;
@@ -34,21 +35,22 @@ public class MenuItemCard implements DynamicSearchBarUI.RenderTemplate<ItemModel
         Label itemPrice = new Label("RM " + String.format("%.2f", item.getItemPrice()));
         itemPrice.setStyle("-fx-font-size: 14px; -fx-text-fill: #FFA500;");
 
-        // Product Availability
-        Label availableQuantityLabel = new Label("Available: " + item.getItemQuantity());
-        availableQuantityLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #333;");
-
         // Quantity Control (starting at 0)
         Label selectedQuantityLabel = new Label("0");
         selectedQuantityLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333;");
+
+        // Local variable to store the current quantity
+        int[] currentQuantity = { 0 }; // Use an array to allow modification inside the lambda
 
         Button decrementButton = new Button("-");
         decrementButton.setStyle(
                 "-fx-font-size: 14px; -fx-background-color: #334e68; -fx-text-fill: white; -fx-border-radius: 4; -fx-background-radius: 4;");
         decrementButton.setOnAction(e -> {
-            int currentQuantity = Integer.parseInt(selectedQuantityLabel.getText());
-            if (currentQuantity > 0) {
-                selectedQuantityLabel.setText(String.valueOf(currentQuantity - 1));
+            if (currentQuantity[0] > 0) {
+                currentQuantity[0]--; // Decrement quantity
+                selectedQuantityLabel.setText(String.valueOf(currentQuantity[0]));
+                // Add to cart after quantity change
+                CustomerViewModel.getHomeViewModel().addProductToCart(item, currentQuantity[0]);
             }
         });
         decrementButton.setMinSize(30, 30);
@@ -58,10 +60,9 @@ public class MenuItemCard implements DynamicSearchBarUI.RenderTemplate<ItemModel
         incrementButton.setStyle(
                 "-fx-font-size: 14px; -fx-background-color: #334e68; -fx-text-fill: white; -fx-border-radius: 4; -fx-background-radius: 4;");
         incrementButton.setOnAction(e -> {
-            int currentQuantity = Integer.parseInt(selectedQuantityLabel.getText());
-            if (currentQuantity < item.getItemQuantity()) {
-                selectedQuantityLabel.setText(String.valueOf(currentQuantity + 1));
-            }
+            currentQuantity[0]++;
+            selectedQuantityLabel.setText(String.valueOf(currentQuantity[0]));
+            CustomerViewModel.getHomeViewModel().addProductToCart(item, currentQuantity[0]);
         });
         incrementButton.setMinSize(30, 30);
         incrementButton.setMaxSize(30, 30);
@@ -71,24 +72,24 @@ public class MenuItemCard implements DynamicSearchBarUI.RenderTemplate<ItemModel
         quantityControlBox.setAlignment(Pos.CENTER_RIGHT);
         quantityControlBox.setSpacing(5); // Reduced spacing
 
-        // Food Details Box
-        VBox detailsBox = new VBox(itemName, itemDescription, itemPrice, availableQuantityLabel, quantityControlBox);
+        // Food Details Box (no available quantity label)
+        VBox detailsBox = new VBox(itemName, itemDescription, itemPrice, quantityControlBox);
         detailsBox.setAlignment(Pos.TOP_LEFT);
-        detailsBox.setSpacing(3); // Reduced spacing
+        detailsBox.setSpacing(5); // Reduced spacing
         HBox.setHgrow(detailsBox, Priority.ALWAYS);
 
         // Card Layout
         HBox contentBox = new HBox(itemImageView, detailsBox);
         contentBox.setAlignment(Pos.CENTER_LEFT);
-        contentBox.setSpacing(5); // Reduced spacing between elements
+        contentBox.setSpacing(15); // Adjust spacing between elements
 
-        Card card = new Card(contentBox, 470, 100, // Reduced card dimensions
-                item.getItemQuantity() > 0 ? null : javafx.scene.paint.Color.LIGHTGRAY);
+        Card card = new Card(contentBox, 470, 100, null);
         card.setStyle("-fx-padding: 5;"); // Remove padding from the card
 
         HBox cardBox = new HBox(card);
         cardBox.setAlignment(Pos.CENTER);
         cardBox.setPadding(new javafx.geometry.Insets(1)); // Reduced padding between card and container
+
         return cardBox;
     }
 }
