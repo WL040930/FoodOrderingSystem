@@ -34,7 +34,6 @@ public class AddNewItem extends BaseContentPanel {
     private TitleTextField itemPrice;
     private ComboBoxWidget category;
     private FileUploadWidget itemImage;
-    private TitleTextField itemQuantity;
 
     private Label errorLabel;
 
@@ -67,13 +66,11 @@ public class AddNewItem extends BaseContentPanel {
                         .toArray(String[]::new));
 
         itemImage = new FileUploadWidget(FileUploadType.CIRCLE_AVATAR, "logo.png");
-        itemQuantity = new TitleTextField("Quantity", "Enter the quantity of food/drink",
-                TitleTextFieldEnum.IntegerField);
 
         errorLabel = new Label();
         errorLabel.setStyle("-fx-text-fill: red;");
 
-        content.getChildren().addAll(itemName, itemDescription, itemPrice, category, itemImage, itemQuantity,
+        content.getChildren().addAll(itemName, itemDescription, itemPrice, category, itemImage,
                 errorLabel);
 
         return content;
@@ -86,7 +83,6 @@ public class AddNewItem extends BaseContentPanel {
             String price = itemPrice.getInputValue();
             String category = this.category.getSelectedValue();
             File image = itemImage.getSelectedFile();
-            String quantity = itemQuantity.getInputValue();
 
             if (name == "") {
                 errorLabel.setText("Name is required");
@@ -94,9 +90,7 @@ public class AddNewItem extends BaseContentPanel {
                 errorLabel.setText("Description is required");
             } else if (price == "") {
                 errorLabel.setText("Price is required");
-            } else if (quantity == "") {
-                errorLabel.setText("Quantity is required");
-            } else {
+            }  else {
                 errorLabel.setText("");
 
                 ItemModel item = new ItemModel();
@@ -111,7 +105,7 @@ public class AddNewItem extends BaseContentPanel {
                     item.setItemImage("logo.png");
                 }
 
-                item.setItemQuantity(Integer.parseInt(quantity));
+                item.setItemQuantity(0);
 
                 Object vendor = SessionUtil.getVendorFromSession();
                 if (vendor instanceof VendorModel) {

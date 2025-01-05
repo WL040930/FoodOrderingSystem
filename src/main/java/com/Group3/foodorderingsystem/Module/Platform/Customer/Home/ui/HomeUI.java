@@ -1,30 +1,38 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
+import com.Group3.foodorderingsystem.Core.Services.UserServices;
+import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
+import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.DynamicSearchBarUI;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.VendorCard;
 
-public class HomeUI extends VBox {
-    
+import javafx.scene.Node;
+
+import java.util.List;
+
+public class HomeUI extends BaseContentPanel {
+
     public HomeUI() {
         super();
-        init();
+        setHeader(new TitleBackButton("Home"));
+        setContent(content());
+
+        setContentHeight(580);
+        setFooterHeight(0);
     }
 
-    public void init() {
-        Label welcomeLabel = new Label("Welcome to the Food Ordering System!");
-        Button orderButton = new Button("Place an Order");
-        Button historyButton = new Button("Order History");
+    private Node content() {
+        List<VendorModel> vendor = UserServices.getVendors();
 
-        orderButton.setOnAction(event -> {
-            // Handle order button click
-        });
+        DynamicSearchBarUI.RenderTemplate<VendorModel> renderTemplate = item -> {
+            return new VendorCard().render(item);
+        };
 
-        historyButton.setOnAction(event -> {
-            // Handle history button click
-        });
+        DynamicSearchBarUI<VendorModel> searchWidget = new DynamicSearchBarUI<>(
+                vendor, "shopName", CustomerViewModel.getHomeViewModel().getShopSelection(), renderTemplate);
 
-        this.getChildren().addAll(welcomeLabel, orderButton, historyButton);
-
+        return searchWidget; 
     }
 }

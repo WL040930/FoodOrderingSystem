@@ -40,6 +40,9 @@ public class BaseContentPanel extends BorderPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
 
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
         scrollPane.setStyle("-fx-border-color: transparent; -fx-background-color:transparent;");
 
         this.content = scrollPane;

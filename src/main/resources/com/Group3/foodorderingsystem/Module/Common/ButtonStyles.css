@@ -1,0 +1,70 @@
+/* Base Button Style */
+.explore-button {
+    -fx-background-color: #334e68;
+    /* Dark blue base color */
+    -fx-text-fill: white;
+    /* White text */
+    -fx-font-size: 12px;
+    /* Slightly larger font for prominence */
+    -fx-font-weight: bold;
+    /* Bold text */
+    -fx-border-radius: 25px;
+    /* Rounded corners */
+    -fx-background-radius: 25px;
+    /* Ensure background matches border */
+    -fx-border-color: #334e68;
+    /* Subtle border in lighter blue */
+    -fx-border-width: 2px;
+    /* Border width for contrast */
+    -fx-pref-height: 30px;
+    /* Consistent height for alignment */
+    -fx-cursor: hand;
+    /* Hand cursor on hover */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
+    /* Shadow for depth */
+    -fx-transition: 0.3s ease-in-out;
+    /* Smooth transitions */
+}
+
+/* Pressed State */
+.explore-button:pressed {
+    -fx-background-color: #334e68;
+    /* Same as base color for consistency */
+    -fx-border-color: #334e68;
+    /* Retain hover border color */
+    -fx-effect: none;
+    /* Remove shadow */
+    -fx-translate-y: 2px;
+    /* Simulate a "pressed" effect */
+}
+
+/* Focused State */
+.explore-button:focused {
+    -fx-focus-color: transparent;
+    /* No focus outline */
+    -fx-faint-focus-color: transparent;
+    /* Remove faint focus */
+}
+
+/* Disabled State */
+.explore-button:disabled {
+    -fx-background-color: #374151;
+    /* Grayish blue for disabled state */
+    -fx-text-fill: #9CA3AF;
+    /* Light gray text */
+    -fx-border-color: #4B5563;
+    /* Matching grayish blue border */
+    -fx-cursor: not-allowed;
+    /* Disabled cursor */
+    -fx-effect: none;
+    /* No shadow */
+}
+
+.explore-button {
+    -fx-effect: null;
+    /* Ensure no shadows or effects are applied */
+    -fx-background-insets: 0;
+    /* Prevent overlapping insets */
+    -fx-border-insets: 0;
+    /* Ensure border is clear and uniform */
+}

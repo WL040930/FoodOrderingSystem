@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -28,8 +29,8 @@ public abstract class BaseMainApplication extends Application {
         currentPane.setFitToWidth(true);
         currentPane.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 
-        currentPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        currentPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        currentPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+        currentPane.setVbarPolicy(ScrollBarPolicy.NEVER);
 
         layout = new BorderPane();
         layout.setTop(buildHeader());
