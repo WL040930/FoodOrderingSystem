@@ -2,6 +2,7 @@ package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Util.Images;
+import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
 
@@ -35,12 +36,16 @@ public class MenuItemCard implements DynamicSearchBarUI.RenderTemplate<ItemModel
         Label itemPrice = new Label("RM " + String.format("%.2f", item.getItemPrice()));
         itemPrice.setStyle("-fx-font-size: 14px; -fx-text-fill: #FFA500;");
 
-        // Quantity Control (starting at 0)
-        Label selectedQuantityLabel = new Label("0");
-        selectedQuantityLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333;");
+        final int[] currentQuantity = { SessionUtil.getItemsFromSession()
+                .stream()
+                .filter(sessionItem -> sessionItem.getItemId().equals(item.getItemId()))
+                .mapToInt(sessionItem -> sessionItem.getItemQuantity())
+                .findFirst()
+                .orElse(0)};
 
-        // Local variable to store the current quantity
-        int[] currentQuantity = { 0 }; // Use an array to allow modification inside the lambda
+        // Quantity Control (starting at 0)
+        Label selectedQuantityLabel = new Label(String.valueOf(currentQuantity[0]));
+        selectedQuantityLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333;");
 
         Button decrementButton = new Button("-");
         decrementButton.setStyle(

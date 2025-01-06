@@ -9,6 +9,7 @@ import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
 import javafx.application.Application;
@@ -151,6 +152,17 @@ public class LoginPage extends Application {
             currentStage.close();
 
             customerStage.show();
+        } else if (user.getRole() == RoleEnum.RUNNER) {
+            SessionUtil.setRiderInSession(user); 
+
+            RunnerViewModel runnerViewModel = new RunnerViewModel();
+            Stage stage = new Stage();
+            runnerViewModel.getMainFrame().start(stage);
+
+            Stage currentStage = (Stage) userTextField.getScene().getWindow();
+            currentStage.close();
+
+            stage.show();
         }
     }
 
