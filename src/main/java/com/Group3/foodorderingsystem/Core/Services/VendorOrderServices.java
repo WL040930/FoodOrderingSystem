@@ -59,4 +59,26 @@ public class VendorOrderServices {
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ORDER), orderList);
     }
 
+
+    //retrieve overall rating of the vendor
+    public static double getOverallRating(String vendorId) {
+        List<OrderModel> orderList = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
+        List<OrderModel> vendorOrderList = orderList.stream().filter(order -> order.getVendor().equals(vendorId)).collect(Collectors.toList());
+        double totalRating = 0;
+        int count = 0;
+
+        for (OrderModel order : vendorOrderList) {
+            if (order.getRating() != 0) {
+                totalRating += order.getRating();
+                count++;
+            }
+        }
+
+        if (count == 0) {
+            return 0;
+        }
+
+        return totalRating / count;
+    }
+
 }
