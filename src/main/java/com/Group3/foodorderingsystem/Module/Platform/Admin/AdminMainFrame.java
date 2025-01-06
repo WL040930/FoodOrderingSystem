@@ -22,7 +22,7 @@ public class AdminMainFrame extends BaseMainApplication {
 
     @Override
     protected Node defaultContent() {
-        return AdminViewModel.getRegisterViewModel().getNode();
+        return AdminViewModel.getDatabaseViewModel().getNode();
     }
 
     @Override

@@ -81,6 +81,42 @@ public class UserServices {
         return returnList;
     }
 
+    public static List<User> getBaseUsers() {
+        List<User> returnList = new ArrayList<>();
+
+        for (CustomerModel customer : getCustomers()) {
+            User user = new User();
+            user.setId(customer.getId());
+            user.setName(customer.getName());
+            user.setEmail(customer.getEmail());
+            user.setRole(RoleEnum.CUSTOMER);
+            user.setProfilePicture(customer.getProfilePicture());
+            returnList.add(user);
+        }
+
+        for (RunnerModel runner : getRunners()) {
+            User user = new User();
+            user.setId(runner.getId());
+            user.setName(runner.getName());
+            user.setEmail(runner.getEmail());
+            user.setRole(RoleEnum.RUNNER);
+            user.setProfilePicture(runner.getProfilePicture());
+            returnList.add(user);
+        }
+
+        for (VendorModel vendor : getVendors()) {
+            User user = new User();
+            user.setId(vendor.getId());
+            user.setName(vendor.getName());
+            user.setEmail(vendor.getEmail());
+            user.setRole(RoleEnum.VENDOR);
+            user.setProfilePicture(vendor.getProfilePicture());
+            returnList.add(user);
+        }
+
+        return returnList;
+    }
+
     /**
      * Finds and returns a user by email and password.
      * 

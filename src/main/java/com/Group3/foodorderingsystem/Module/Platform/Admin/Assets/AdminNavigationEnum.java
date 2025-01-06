@@ -9,8 +9,8 @@ public enum AdminNavigationEnum {
                         "Users",
                         "logo.png",
                         Arrays.asList(
-                                        AdminTopNavigationEnum.Register,
-                                        AdminTopNavigationEnum.UserDatabase)),
+                                        AdminTopNavigationEnum.Database,
+                                        AdminTopNavigationEnum.Register)),
         Finance(
                         "Finance",
                         "logo.png",
