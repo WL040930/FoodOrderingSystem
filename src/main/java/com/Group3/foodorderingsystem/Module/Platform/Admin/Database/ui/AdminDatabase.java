@@ -7,6 +7,7 @@ import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.PopupMessage;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.DynamicSearchBarUI;
 
 import javafx.geometry.Pos;
@@ -84,7 +85,12 @@ public class AdminDatabase extends BaseContentPanel {
 
         Button deleteButton = new Button("Delete");
         deleteButton.setOnAction(event -> {
-            System.out.println("Delete button clicked");
+            UserServices.deleteUser(user.getId());
+            
+            PopupMessage.showMessage(user.getName()+ " has been deleted.", "success", () -> {
+                AdminViewModel.initDatabaseViewModel();
+                AdminViewModel.getDatabaseViewModel().navigate(AdminViewModel.getDatabaseViewModel().getNode());
+            });
         });
 
         buttonBox.getChildren().addAll(deleteButton, editButton);

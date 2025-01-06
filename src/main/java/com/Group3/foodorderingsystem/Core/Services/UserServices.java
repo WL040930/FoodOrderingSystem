@@ -372,4 +372,44 @@ public class UserServices {
         }
         return null;
     }
+
+    public static void deleteUser(String Id) {
+        List<CustomerModel> customers = getCustomers();
+        List<RunnerModel> runners = getRunners();
+        List<VendorModel> vendors = getVendors();
+        List<User> users = getAdmins();
+
+        for (int i = 0; i < customers.size(); i++) {
+            if (customers.get(i).getId().equals(Id)) {
+                customers.remove(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < runners.size(); i++) {
+            if (runners.get(i).getId().equals(Id)) {
+                runners.remove(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < vendors.size(); i++) {
+            if (vendors.get(i).getId().equals(Id)) {
+                vendors.remove(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId().equals(Id)) {
+                users.remove(i);
+                break;
+            }
+        }
+
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.RUNNER), runners);
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.VENDOR), vendors);
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.USER), users);
+    }
 }
