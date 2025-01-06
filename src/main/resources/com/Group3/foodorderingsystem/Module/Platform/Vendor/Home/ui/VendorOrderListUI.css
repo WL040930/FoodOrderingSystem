@@ -33,7 +33,7 @@
     -fx-border-radius: 20px; /* Rounded corners */
     -fx-background-radius: 20px; /* Ensure the background is also rounded */
     -fx-background-insets: 0; /* No additional insets */
-    -fx-pref-width: 115px; /* Preferred width for each tab */
+    -fx-pref-width: 110px; /* Preferred width for each tab */
     -fx-pref-height: 30px; /* Preferred height for each tab */
     -fx-font-size: 14px; /* Font size for each tab */
     -fx-font-weight: 700; /* Font weight for each tab */
@@ -41,6 +41,7 @@
     -fx-border-width: 15px, 1px; /* Border widths for the two colors */
     -fx-border-insets: 0, 2px; /* Insets for the two borders */
     -fx-cursor: hand;
+    
 }
 
 .tab-pane .tab .tab-label {
@@ -65,16 +66,13 @@
 
 
 
-
-
-
 .order-id-label {
     -fx-font-weight: bold;
     -fx-font-size: 14px;
 }
 
 /* CSS for shop name label */
-.shop-name-label {
+.item-quantity-label {
     -fx-font-size: 15px;  /* Slightly larger for emphasis */
     -fx-font-weight: bold;  /* Make the shop name stand out */
     -fx-text-fill: #333333;  /* Dark text for better readability */
@@ -124,7 +122,6 @@
     -fx-text-fill: #FF0000;  
 }
 
-
 /* Styling for the entire order box */
 .order-container {
     -fx-background-color: transparent;
@@ -137,9 +134,13 @@
 
 }
 
+.time-status-vbox {
+    -fx-min-width: 300px;
+    -fx-max-width: 300px;
+}
+
 .button-container {
-    -fx-pref-width: 400px; 
-    -fx-alignment: CENTER_RIGHT;
+    -fx-pref-width: 430px; 
 }
 
 .view-details-button {

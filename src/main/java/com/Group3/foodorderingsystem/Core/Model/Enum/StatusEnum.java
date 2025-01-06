@@ -6,6 +6,7 @@ public enum StatusEnum {
     REJECTED,
     PREPARING,
     READY_FOR_PICKUP,
+    WAITING_FOR_RIDER,
     DELIVERING,
     DELIVERED,
     PICKED_UP,

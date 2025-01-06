@@ -9,7 +9,6 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.Config.HeaderClass;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseMainApplication;
 import com.Group3.foodorderingsystem.Core.Widgets.BottomNavigation;
 import com.Group3.foodorderingsystem.Core.Widgets.Header;
-import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorNavigationEnum;
 
 import javafx.scene.Node;

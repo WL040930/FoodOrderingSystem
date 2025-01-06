@@ -5,8 +5,8 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
-import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 
 import javafx.geometry.Insets;
@@ -75,17 +75,15 @@ public class OrderSummaryUI extends VBox {
         topFixedHBox.getStyleClass().add("top-fixed-hbox");
 
         // Create a back button with an icon
-        Button backButton = new Button();
-        backButton.setGraphic(Images.getImageView("left_arrow.png", 20, 20));
-        backButton.getStyleClass().add("back-button");
-        //TODO: back button action if enter from cart
-        backButton.setOnAction(e -> {
-            String entryPoint = SessionUtil.getOrderSummaryEntryFromSession();
-            if (entryPoint == "Reorder") {
-                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderDetailsUI());
-                SessionUtil.setOrderSummaryEntryInSession(null);
-            }
-        });
+        TitleBackButton backButton = new TitleBackButton("", () -> {
+                String entryPoint = SessionUtil.getOrderSummaryEntryFromSession();
+                if (entryPoint == "Reorder") {
+                    CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderDetailsUI());
+                    SessionUtil.setOrderSummaryEntryInSession(null);
+                }
+            });
+
+
 
         // Create a shop name label, retrieve the shop name from the item list in the session
         Label shopNameLabel = new Label("Shop Name");
@@ -115,7 +113,7 @@ public class OrderSummaryUI extends VBox {
                 .sum();
 
         // Create a label to display the total price value
-        Label totalPriceValueLabel = new Label(String.format("$%.2f", totalPrice));
+        Label totalPriceValueLabel = new Label(String.format("RM%.2f", totalPrice));
         totalPriceValueLabel.getStyleClass().add("total-price-value-label");
 
         totalPriceBox.getChildren().addAll(totalPriceLabel, totalPriceValueLabel);
@@ -153,24 +151,23 @@ public class OrderSummaryUI extends VBox {
         addressTextArea.getStyleClass().add("address-textarea");
         addressBox.getChildren().addAll(addressLabel, addressTextArea);
 
-        // Show address input field if "Delivery" is selected
-        orderOptionComboBox.setOnAction(e -> {
-            if ("Delivery".equals(orderOptionComboBox.getValue())) {
-                addressBox.setMaxHeight(200);
-                addressBox.setMinHeight(200);
-                addressBox.setVisible(true);
-            } else {
-                addressBox.setMaxHeight(0);
-                addressBox.setMinHeight(0);
-                addressBox.setVisible(false);
-
-            }
+        // Show the address input field when the order option is set to "Delivery"
+        addressBox.setVisible("Delivery".equals(orderOptionComboBox.getValue()));
+        addressBox.setManaged("Delivery".equals(orderOptionComboBox.getValue()));
+        orderOptionComboBox.valueProperty().addListener((obs, oldVal, newVal) -> {
+            boolean isDelivery = "Delivery".equals(newVal);
+            addressBox.setVisible(isDelivery);
+            addressBox.setManaged(isDelivery); 
         });
+
 
         Separator separator = new Separator();
         separator.getStyleClass().add("separator");
 
-        orderOptionSection.getChildren().addAll(separator, orderOptionLabel, orderOptionComboBox, addressBox);
+        Separator separator1 = new Separator();
+        separator1.getStyleClass().add("separator");
+
+        orderOptionSection.getChildren().addAll(separator, orderOptionLabel, orderOptionComboBox, addressBox, separator1);
         return orderOptionSection;
     }
 
@@ -191,6 +188,12 @@ public class OrderSummaryUI extends VBox {
             orderMethod = OrderMethodEnum.DELIVERY;
             TextArea addressTextArea = (TextArea) this.lookup(".address-textarea");
             deliveryAddress = addressTextArea.getText();
+
+            // Check if the delivery address is empty
+            if (deliveryAddress.isEmpty()) {
+                showDialog("Delivery Address Required", "Unable to place order", "Please enter the delivery address.");
+                return;
+            }
         }
     
         // Check if the customer has enough balance to place the order
@@ -201,11 +204,12 @@ public class OrderSummaryUI extends VBox {
             boolean confirmationResult = showConfirmationDialog("Confirm Order", balance, totalPrice);
             if (confirmationResult) {
                 showDialog("Order Placed", null, "Your order has been successfully placed.");
+                // Clear session items after placing the order
+                SessionUtil.setItemsInSession(null);
                 CustomerOrderServices.placeOrder(orderMethod, deliveryAddress);
                 CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Pending"));
 
-                // Clear session items after placing the order
-                SessionUtil.setItemsInSession(null);
+
             }
         }
     }
@@ -298,8 +302,8 @@ public class OrderSummaryUI extends VBox {
             itemLabel.getStyleClass().add("item-label");
             HBox.setHgrow(itemLabel, Priority.ALWAYS);
 
-            Label priceLabel = new Label("$" + String.format("%.2f", item.getItemPrice() * item.getItemQuantity()));
-            priceLabel.getStyleClass().add("price-label");
+            Label priceLabel = new Label("RM" + String.format("%.2f", item.getItemPrice() * item.getItemQuantity()));
+            priceLabel.getStyleClass().add("item-price-label");
 
             itemBox.getChildren().addAll(itemQuantityLabel, itemLabel, priceLabel);
             itemsBox.getChildren().add(itemBox);

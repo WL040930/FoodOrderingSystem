@@ -308,5 +308,20 @@ public class CustomerOrderServices {
     }
 
 
+    // update rating and feedback
+    public static void updateRatingAndFeedback(String orderId, int rating, String review) {
+        List<OrderModel> orders = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
+
+        for (OrderModel order : orders) {
+            if (order.getOrderId().equals(orderId)) {
+                order.setRating(rating);
+                order.setReview(review);
+                break;
+            }
+        }
+
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ORDER), orders);
+    }
+
     
 }
