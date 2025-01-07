@@ -1,6 +1,7 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
+import com.Group3.foodorderingsystem.Core.Services.VendorOrderServices;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
@@ -35,7 +36,7 @@ public class VendorSmallCard extends Card {
         shopNameLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
 
         // Create the Label for star rating
-        Label starRatingLabel = new Label(getStarRating(2)); // Example rating value (2)
+        Label starRatingLabel = new Label(getStarRating((int) VendorOrderServices.getOverallRating(vendor.getId()))); // Example rating value (2)
         starRatingLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: gold;");
 
         Button button = new Button("Explore");

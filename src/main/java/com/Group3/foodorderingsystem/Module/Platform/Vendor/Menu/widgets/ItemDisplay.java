@@ -3,6 +3,7 @@ package com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.widgets;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -47,16 +48,33 @@ public class ItemDisplay implements DynamicSearchBarUI.RenderTemplate<ItemModel>
         itemTextBox.getChildren().addAll(itemNameLabel, itemDescriptionLabel, itemPriceLabel);
         itemTextBox.setStyle("-fx-alignment: top-left;");
 
-        // Add the image and text container to the main item box
         itemBox.getChildren().addAll(itemImageView, itemTextBox);
 
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(itemBox);
+
+        HBox buttonbox = new HBox(); 
+        buttonbox.setPadding(new Insets(10));
+
+        Button editButton = new Button("Edit");
+        editButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 10px;");
+        editButton.setPrefWidth(100);
+
+        Button deleteButton = new Button("Delete");
+        deleteButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 10px;");
+        deleteButton.setPrefWidth(100);
+
+        buttonbox.getChildren().addAll(editButton, deleteButton);
+
+        vbox.getChildren().addAll(buttonbox);
+
         // Add item box to the result container
-        resultContainer.getChildren().add(itemBox);
+        resultContainer.getChildren().add(vbox);
 
         // Set margin for the item box
-        VBox.setMargin(itemBox, new Insets(0, 10, 10, 10));
+        VBox.setMargin(vbox, new Insets(0, 10, 10, 10));
 
         // Return the item box as a Node to be rendered
-        return itemBox;
+        return vbox;
     }
 }

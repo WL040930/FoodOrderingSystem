@@ -11,6 +11,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminNavigatio
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.model.DatabaseViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.ui.AdminDatabase;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.model.FinanceViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.model.RegisterViewModel;
 
 import javafx.application.Platform;
@@ -40,6 +41,7 @@ public class AdminViewModel {
         initRegisterViewModel();
         initSettingsViewModel();
         initDatabaseViewModel();
+        initFinanceViewModel();
     }
 
     /**
@@ -240,6 +242,21 @@ public class AdminViewModel {
 
     public static void setSettingsViewModel(SettingsViewModel settingsViewModel) {
         instance.settingsViewModel = settingsViewModel;
+    }
+
+    private FinanceViewModel financeViewModel;
+
+    public static void initFinanceViewModel() {
+        instance.financeViewModel = new FinanceViewModel();
+        instance.financeViewModel.init();
+    }
+
+    public static FinanceViewModel getFinanceViewModel() {
+        return instance.financeViewModel;
+    }
+
+    public static void setFinanceViewModel(FinanceViewModel financeViewModel) {
+        instance.financeViewModel = financeViewModel;
     }
 
 }
