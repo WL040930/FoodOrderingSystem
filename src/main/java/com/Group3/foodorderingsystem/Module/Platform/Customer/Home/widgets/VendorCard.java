@@ -1,6 +1,7 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
+import com.Group3.foodorderingsystem.Core.Services.VendorOrderServices;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
@@ -38,7 +39,7 @@ public class VendorCard implements DynamicSearchBarUI.RenderTemplate<VendorModel
                 .setStyle("-fx-font-size: 14px; -fx-text-fill: #666; -fx-wrap-text: true; -fx-max-height: 40px;");
         shopDescription.setMaxHeight(40);
 
-        int rating = Math.min(5, 2); 
+        int rating = (int) Math.min(5, VendorOrderServices.getOverallRating(vendor.getId())); 
         StringBuilder starBuilder = new StringBuilder();
         for (int i = 0; i < 5; i++) {
             starBuilder.append(i < rating ? "★" : "☆"); 

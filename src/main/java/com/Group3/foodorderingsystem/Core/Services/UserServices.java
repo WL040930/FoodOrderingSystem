@@ -81,6 +81,42 @@ public class UserServices {
         return returnList;
     }
 
+    public static List<User> getBaseUsers() {
+        List<User> returnList = new ArrayList<>();
+
+        for (CustomerModel customer : getCustomers()) {
+            User user = new User();
+            user.setId(customer.getId());
+            user.setName(customer.getName());
+            user.setEmail(customer.getEmail());
+            user.setRole(RoleEnum.CUSTOMER);
+            user.setProfilePicture(customer.getProfilePicture());
+            returnList.add(user);
+        }
+
+        for (RunnerModel runner : getRunners()) {
+            User user = new User();
+            user.setId(runner.getId());
+            user.setName(runner.getName());
+            user.setEmail(runner.getEmail());
+            user.setRole(RoleEnum.RUNNER);
+            user.setProfilePicture(runner.getProfilePicture());
+            returnList.add(user);
+        }
+
+        for (VendorModel vendor : getVendors()) {
+            User user = new User();
+            user.setId(vendor.getId());
+            user.setName(vendor.getName());
+            user.setEmail(vendor.getEmail());
+            user.setRole(RoleEnum.VENDOR);
+            user.setProfilePicture(vendor.getProfilePicture());
+            returnList.add(user);
+        }
+
+        return returnList;
+    }
+
     /**
      * Finds and returns a user by email and password.
      * 
@@ -335,5 +371,45 @@ public class UserServices {
             }
         }
         return null;
+    }
+
+    public static void deleteUser(String Id) {
+        List<CustomerModel> customers = getCustomers();
+        List<RunnerModel> runners = getRunners();
+        List<VendorModel> vendors = getVendors();
+        List<User> users = getAdmins();
+
+        for (int i = 0; i < customers.size(); i++) {
+            if (customers.get(i).getId().equals(Id)) {
+                customers.remove(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < runners.size(); i++) {
+            if (runners.get(i).getId().equals(Id)) {
+                runners.remove(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < vendors.size(); i++) {
+            if (vendors.get(i).getId().equals(Id)) {
+                vendors.remove(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId().equals(Id)) {
+                users.remove(i);
+                break;
+            }
+        }
+
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.RUNNER), runners);
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.VENDOR), vendors);
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.USER), users);
     }
 }

@@ -15,7 +15,8 @@ public enum VendorNavigationEnum {
             "shop_icon.png",
             Arrays.asList(
                     VendorTopNavigationEnum.Menu, 
-                    VendorTopNavigationEnum.Review)),
+                    VendorTopNavigationEnum.Review, 
+                    VendorTopNavigationEnum.Vouchers)),
     Notification(
             "Notification",
             "logo.png",

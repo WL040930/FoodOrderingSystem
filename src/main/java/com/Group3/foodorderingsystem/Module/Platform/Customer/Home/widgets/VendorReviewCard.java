@@ -1,6 +1,7 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
+import com.Group3.foodorderingsystem.Core.Services.VendorOrderServices;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
 
@@ -41,7 +42,7 @@ public class VendorReviewCard {
         shopDescription.setMaxWidth(300);
 
         // Star Rating
-        int rating = Math.min(5, 2); // Ensure rating is capped at 5
+        int rating = (int) Math.min(5, VendorOrderServices.getOverallRating(vendor.getId())); // Ensure rating is capped at 5
         StringBuilder starBuilder = new StringBuilder();
         for (int i = 0; i < 5; i++) {
             starBuilder.append(i < rating ? "★" : "☆");

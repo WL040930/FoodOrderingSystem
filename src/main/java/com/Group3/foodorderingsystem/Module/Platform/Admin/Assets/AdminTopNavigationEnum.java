@@ -9,15 +9,15 @@ public enum AdminTopNavigationEnum {
             () -> {
                 AdminViewModel.navigate(AdminViewModel.getRegisterViewModel().getNode());
             }),
-    UserDatabase(
-            "User Database",
+    Database(
+            "Database",
             () -> {
-                AdminViewModel.navigate(AdminViewModel.getAdminDatabase());
+                AdminViewModel.navigate(AdminViewModel.getDatabaseViewModel().getNode());
             }),
     Finance(
             "Finance",
             () -> {
-
+                AdminViewModel.navigate(AdminViewModel.getFinanceViewModel().getNode());
             }),
     Noti(
             "Notification",

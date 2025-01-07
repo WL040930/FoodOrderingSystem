@@ -9,7 +9,9 @@ import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewMo
 import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminTopNavigationEnum;
-import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.AdminDatabase;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.model.DatabaseViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.ui.AdminDatabase;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.model.FinanceViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.model.RegisterViewModel;
 
 import javafx.application.Platform;
@@ -35,11 +37,11 @@ public class AdminViewModel {
         instance.adminMainFrame = new AdminMainFrame();
         instance.selectedNavigation = AdminNavigationEnum.User;
 
-        instance.adminDatabase = new AdminDatabase();
-
         init();
         initRegisterViewModel();
         initSettingsViewModel();
+        initDatabaseViewModel();
+        initFinanceViewModel();
     }
 
     /**
@@ -206,14 +208,19 @@ public class AdminViewModel {
         instance.registerViewModel.init();
     }
 
-    private AdminDatabase adminDatabase;
+    private DatabaseViewModel databaseViewModel;
 
-    public static AdminDatabase getAdminDatabase() {
-        return instance.adminDatabase;
+    public static void initDatabaseViewModel() {
+        instance.databaseViewModel = new DatabaseViewModel();
+        instance.databaseViewModel.init();
     }
 
-    public static void setAdminDatabase(AdminDatabase adminDatabase) {
-        instance.adminDatabase = adminDatabase;
+    public static DatabaseViewModel getDatabaseViewModel() {
+        return instance.databaseViewModel;
+    }
+
+    public static void setDatabaseViewModel(DatabaseViewModel databaseViewModel) {
+        instance.databaseViewModel = databaseViewModel;
     }
 
     private SettingsViewModel settingsViewModel;
@@ -235,6 +242,21 @@ public class AdminViewModel {
 
     public static void setSettingsViewModel(SettingsViewModel settingsViewModel) {
         instance.settingsViewModel = settingsViewModel;
+    }
+
+    private FinanceViewModel financeViewModel;
+
+    public static void initFinanceViewModel() {
+        instance.financeViewModel = new FinanceViewModel();
+        instance.financeViewModel.init();
+    }
+
+    public static FinanceViewModel getFinanceViewModel() {
+        return instance.financeViewModel;
+    }
+
+    public static void setFinanceViewModel(FinanceViewModel financeViewModel) {
+        instance.financeViewModel = financeViewModel;
     }
 
 }

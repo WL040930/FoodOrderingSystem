@@ -1,0 +1,133 @@
+package com.Group3.foodorderingsystem.Core.Services;
+
+import java.util.List;
+
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.TransactionModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.TransactionModel.TransactionType;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
+import com.Group3.foodorderingsystem.Core.Storage.Storage;
+import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
+import com.Group3.foodorderingsystem.Core.Util.FileUtil;
+
+public class TransactionServices {
+
+    private static List<TransactionModel> getTransaction() {
+        return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.TRANSACTION), TransactionModel.class);
+    }
+
+    public static TransactionModel createTransaction(Double amount, TransactionModel.TransactionType transactionType,
+            String userId) {
+        if (transactionType != TransactionType.TOPUP && transactionType != TransactionType.WITHDRAWAL) {
+            return null;
+        }
+
+        User user = UserServices.findUserById(userId);
+
+        TransactionModel transactionModel = new TransactionModel();
+        transactionModel.setTransactionId(Storage.generateNewId());
+        transactionModel.setAmount(transactionType == TransactionType.TOPUP ? amount : -amount);
+        transactionModel.setTransactionType(transactionType);
+        transactionModel.setUserModel(user);
+
+        switch (user.getRole()) {
+            // Customer can only topup
+            case CUSTOMER:
+                CustomerModel customerModel = UserServices.findCustomerById(user.getId());
+                customerModel.setBalance(customerModel.getBalance() + transactionModel.getAmount());
+
+                if (UserServices.saveUser(customerModel) == null) {
+                    return null;
+                }
+                break;
+
+            // vendor can only withdraw
+            case VENDOR:
+                VendorModel vendorModel = UserServices.findVendorById(user.getId());
+                vendorModel.setRevenue(vendorModel.getRevenue() + transactionModel.getAmount());
+                if (UserServices.saveUser(vendorModel) == null) {
+                    return null;
+                }
+
+                break;
+
+            case RUNNER:
+                RunnerModel runnerModel = UserServices.findRunnerById(user.getId());
+                runnerModel.setRevenue(runnerModel.getRevenue() + transactionModel.getAmount());
+
+                if (UserServices.saveUser(runnerModel) == null) {
+                    return null;
+                }
+
+                break;
+
+            default:
+                break;
+        }
+
+        List<TransactionModel> transaction = getTransaction();
+        transaction.add(transactionModel);
+
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.TRANSACTION), transaction);
+        return transactionModel;
+    }
+
+    public static TransactionModel createTransaction(String orderId, TransactionModel.TransactionType transactionType) {
+        if (transactionType != TransactionType.REFUND && transactionType != TransactionType.PAYMENT) {
+            return null;
+        }
+
+        // WAIT FOR GETORDERBYID
+        OrderModel orderModel = VendorOrderServices.getOrderById(orderId);
+        TransactionModel transactionModel = new TransactionModel();
+        transactionModel.setTransactionId(Storage.generateNewId());
+        transactionModel.setAmount(orderModel.getTotalPrice());
+        transactionModel.setTransactionType(transactionType);
+        transactionModel.setOrderModel(orderModel);
+
+        switch (transactionType) {
+            case PAYMENT:
+                VendorModel vendorModel = UserServices.findVendorById(orderModel.getVendor());
+                CustomerModel customerModel = UserServices.findCustomerById(orderModel.getCustomer());
+
+                vendorModel.setRevenue(vendorModel.getRevenue() + orderModel.getTotalPrice());
+                customerModel.setBalance(customerModel.getBalance() - orderModel.getTotalPrice());
+
+                if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null) {
+                    return null;
+                }
+                
+                break;
+
+            case REFUND:
+                VendorModel vendorModelRefund = UserServices.findVendorById(orderModel.getVendor());
+                CustomerModel customerModelRefund = UserServices.findCustomerById(orderModel.getCustomer());
+
+                vendorModelRefund.setRevenue(vendorModelRefund.getRevenue() - orderModel.getTotalPrice());
+                customerModelRefund.setBalance(customerModelRefund.getBalance() + orderModel.getTotalPrice());
+
+                if (UserServices.saveUser(vendorModelRefund) == null || UserServices.saveUser(customerModelRefund) == null) {
+                    return null;
+                }
+                
+                break;
+            default:
+                break;
+        }
+
+        List<TransactionModel> transaction = getTransaction();
+        transaction.add(transactionModel);
+
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.TRANSACTION), transaction);
+        return transactionModel;
+    }
+
+    public static void main(String[] args) {
+        // 1700
+        createTransaction("af083774", TransactionType.REFUND);
+    }
+
+}

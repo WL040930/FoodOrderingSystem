@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TransactionServices",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.Core.Services.TransactionServices",
+            "projectName": "FoodOrderingSystem"
+        },
+        {
+            "type": "java",
+            "name": "VoucherServices",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.Core.Services.VoucherServices",
+            "projectName": "FoodOrderingSystem"
+        },
+        {
+            "type": "java",
             "name": "ItemServices",
             "request": "launch",
             "mainClass": "com.Group3.foodorderingsystem.Core.Services.ItemServices",

@@ -1,0 +1,40 @@
+.button {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #334e68;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+}
+
+.card {
+    -fx-background-color: transparent;
+    -fx-border-color: #d3d3d3;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-padding: 10, 15;
+    -fx-spacing: 10;
+    -fx-pref-width: 450px;
+
+}
+
+.separator {
+    -fx-background-color: #d3d3d3;
+    -fx-pref-width: 450px;
+    -fx-max-width: 450px;
+    -fx-min-width: 450px;
+    -fx-pref-height: 3px;
+    -fx-max-height: 3px;
+    -fx-min-height: 3px;
+}
+
+.small-button {
+    -fx-background-color: #334e68;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 120px;
+    -fx-pref-height: 30px;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}

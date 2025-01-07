@@ -14,7 +14,7 @@ public class BottomButton extends Button {
                 this.action = action;
 
                 try {
-                        String cssPath = "/com/Group3/foodorderingsystem/Module/Common/HeaderCSS.css";
+                        String cssPath = "/com/Group3/foodorderingsystem/Module/Common/Common.css";
                         String cssResource = getClass().getResource(cssPath).toExternalForm();
                         if (cssResource != null) {
                                 this.getStylesheets().add(cssResource);
@@ -28,7 +28,7 @@ public class BottomButton extends Button {
                 this.setText(this.text);
                 this.setMaxWidth(Double.MAX_VALUE);
 
-                this.getStyleClass().add("selected-button");
+                this.getStyleClass().add("button");
 
                 this.setOnMouseClicked(event -> this.action.run());
 

@@ -33,6 +33,11 @@ public enum VendorTopNavigationEnum {
                         "Revenue",
                         () -> {
                                 // Action for Revenue
+                        }),
+        Vouchers(
+                        "Vouchers",
+                        () -> {
+                                VendorViewModel.navigate(VendorViewModel.getVoucherViewModel().getNode());
                         });
 
         private String title;

@@ -15,6 +15,10 @@ import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 
 
 public class VendorOrderServices {
+
+    private static List<OrderModel> orderList() {
+        return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
+    }
     
     //get pending order list
     public static List<OrderModel> getOrderList(String type) {
@@ -79,6 +83,15 @@ public class VendorOrderServices {
         }
 
         return totalRating / count;
+    }
+
+    public static OrderModel getOrderById(String Id) {
+        for (OrderModel order : orderList()) {
+            if (order.getOrderId().equals(Id)) {
+                return order;
+            }
+        }
+        return null;
     }
 
 }

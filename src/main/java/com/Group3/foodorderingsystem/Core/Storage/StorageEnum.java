@@ -19,7 +19,13 @@ public enum StorageEnum {
     ),
     ORDER(
         "order.txt"
-    ),;
+    ),
+    VOUCHER(
+        "voucher.txt"
+    ), 
+    TRANSACTION(
+        "transaction.txt"
+    );
 
     final String fileName;
 
