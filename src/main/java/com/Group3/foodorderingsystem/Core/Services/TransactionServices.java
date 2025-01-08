@@ -1,10 +1,11 @@
 package com.Group3.foodorderingsystem.Core.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel.TransactionType;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
-import com.Group3.foodorderingsystem.Core.Model.Entity.Order.TransactionModel;
-import com.Group3.foodorderingsystem.Core.Model.Entity.Order.TransactionModel.TransactionType;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
@@ -99,7 +100,7 @@ public class TransactionServices {
                 if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null) {
                     return null;
                 }
-                
+
                 break;
 
             case REFUND:
@@ -109,10 +110,11 @@ public class TransactionServices {
                 vendorModelRefund.setRevenue(vendorModelRefund.getRevenue() - orderModel.getTotalPrice());
                 customerModelRefund.setBalance(customerModelRefund.getBalance() + orderModel.getTotalPrice());
 
-                if (UserServices.saveUser(vendorModelRefund) == null || UserServices.saveUser(customerModelRefund) == null) {
+                if (UserServices.saveUser(vendorModelRefund) == null
+                        || UserServices.saveUser(customerModelRefund) == null) {
                     return null;
                 }
-                
+
                 break;
             default:
                 break;
@@ -125,9 +127,38 @@ public class TransactionServices {
         return transactionModel;
     }
 
-    public static void main(String[] args) {
-        // 1700
-        createTransaction("af083774", TransactionType.REFUND);
-    }
+    public static List<TransactionModel> getTransactionByUserId(String userId) {
+        List<TransactionModel> transactions = getTransaction();
+        List<TransactionModel> transactionList = new ArrayList<>();
 
+        for (TransactionModel transaction : transactions) {
+            if (transaction.getUserModel() != null) {
+                if (transaction.getUserModel().getId().equals(userId)) {
+                    transactionList.add(transaction);
+                }
+            } else if (transaction.getOrderModel() != null) {
+                if (transaction.getOrderModel().getCustomer().equals(userId)) {
+                    if (transaction.getTransactionType() == TransactionType.REFUND) {
+                        transaction.setAmount(transaction.getAmount());
+                        transactionList.add(transaction);
+                    } else if (transaction.getTransactionType() == TransactionType.PAYMENT) {
+                        transaction.setAmount(-transaction.getAmount());
+                        transactionList.add(transaction);
+                    }
+                } else if (transaction.getOrderModel().getVendor().equals(userId)) {
+                    if (transaction.getTransactionType() == TransactionType.REFUND) {
+                        transaction.setAmount(-transaction.getAmount());
+                        transactionList.add(transaction);
+                    } else if (transaction.getTransactionType() == TransactionType.PAYMENT) {
+                        transaction.setAmount(transaction.getAmount());
+                        transactionList.add(transaction);
+                    }
+                }
+            }
+        }
+
+        transactionList.sort((t1, t2) -> t2.getTransactionDate().compareTo(t1.getTransactionDate()));
+
+        return transactionList;
+    }
 }

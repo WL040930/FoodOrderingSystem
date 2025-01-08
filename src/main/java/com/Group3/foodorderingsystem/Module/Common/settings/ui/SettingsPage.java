@@ -15,6 +15,7 @@ import com.Group3.foodorderingsystem.Module.Common.settings.widgets.IconLabelCon
 import com.Group3.foodorderingsystem.Module.Common.settings.widgets.UserCard;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
 import javafx.geometry.Pos;
@@ -58,6 +59,10 @@ public class SettingsPage extends BaseContentPanel {
                     VendorViewModel.getSettingsViewModel().setSettingsProfileManagement(new SettingsProfileManagement(user));
                     VendorViewModel.getSettingsViewModel().navigate(VendorViewModel.getSettingsViewModel().getSettingsProfileManagement());
                     break;
+                case RUNNER:
+                    RunnerViewModel.getSettingsViewModel().setSettingsProfileManagement(new SettingsProfileManagement(user));
+                    RunnerViewModel.getSettingsViewModel().navigate(RunnerViewModel.getSettingsViewModel().getSettingsProfileManagement());
+                    break;
                 default:
                     break;
             }
@@ -83,6 +88,12 @@ public class SettingsPage extends BaseContentPanel {
                 case CUSTOMER: 
                     CustomerViewModel.getCustomerMainFrame().dispose();
                     CustomerViewModel.setInstance(null);
+                    break;
+                    
+                case RUNNER:
+                    RunnerViewModel.getMainFrame().dispose();
+                    RunnerViewModel.setInstance(null);
+                    break;
                 default:
                     break;
             }

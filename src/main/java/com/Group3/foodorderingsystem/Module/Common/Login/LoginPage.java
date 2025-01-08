@@ -141,7 +141,6 @@ public class LoginPage extends Application {
 
             customerStage.show();
         } else if (user.getRole() == RoleEnum.VENDOR) {
-            System.out.println("Customer login");
             SessionUtil.setVendorInSession(user); 
 
             VendorViewModel vendorViewModel = new VendorViewModel();

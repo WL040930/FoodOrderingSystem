@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Common.Transaction.model.TransactionViewModel;
 import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorTopNavigationEnum;
@@ -34,6 +35,7 @@ public class VendorViewModel {
         initMenuViewModel();
         initSettingsViewModel();
         initVoucherViewModel();
+        initTransactionViewModel();
     }
 
     public static void clear() {
@@ -221,5 +223,20 @@ public class VendorViewModel {
     public static void initVoucherViewModel() {
         instance.voucherViewModel = new VoucherViewModel();
         instance.voucherViewModel.init();
+    }
+
+    private TransactionViewModel transactionViewModel;
+
+    public static TransactionViewModel getTransactionViewModel() {
+        return instance.transactionViewModel;
+    }
+
+    public static void setTransactionViewModel(TransactionViewModel transactionViewModel) {
+        instance.transactionViewModel = transactionViewModel;
+    }
+
+    public static void initTransactionViewModel() {
+        instance.transactionViewModel = new TransactionViewModel();
+        instance.transactionViewModel.init();
     }
 }

@@ -25,7 +25,8 @@ public enum RunnerNavigationEnum {
             "Settings",
             "settings.png",
             Arrays.asList(
-                    RunnerTopNavigationEnum.Settings));
+                    RunnerTopNavigationEnum.Settings, 
+                    RunnerTopNavigationEnum.Finance));
 
     private final String title;
     private final String icon;

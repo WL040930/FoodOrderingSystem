@@ -25,6 +25,9 @@ public enum StorageEnum {
     ), 
     TRANSACTION(
         "transaction.txt"
+    ), 
+    TOPUPWITHDRAW(
+        "topupwithdraw.txt"
     );
 
     final String fileName;

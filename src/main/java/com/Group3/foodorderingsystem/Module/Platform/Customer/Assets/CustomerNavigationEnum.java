@@ -9,7 +9,7 @@ public enum CustomerNavigationEnum {
             "Home",
             "home.png",
             Arrays.asList(
-                    CustomerTopNavigationEnum.Home, 
+                    CustomerTopNavigationEnum.Home,
                     CustomerTopNavigationEnum.CurrentOrder)),
     Order(
             "Order",
@@ -25,7 +25,8 @@ public enum CustomerNavigationEnum {
             "Settings",
             "settings.png",
             Arrays.asList(
-                    CustomerTopNavigationEnum.Settings));
+                    CustomerTopNavigationEnum.Settings,
+                    CustomerTopNavigationEnum.Finance));
 
     private final String title;
     private final String icon;

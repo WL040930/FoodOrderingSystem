@@ -32,7 +32,7 @@ public enum VendorTopNavigationEnum {
         Revenue(
                         "Revenue",
                         () -> {
-                                // Action for Revenue
+                                VendorViewModel.navigate(VendorViewModel.getTransactionViewModel().getNode());
                         }),
         Vouchers(
                         "Vouchers",

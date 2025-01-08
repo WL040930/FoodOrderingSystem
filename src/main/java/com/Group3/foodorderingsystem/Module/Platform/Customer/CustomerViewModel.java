@@ -6,8 +6,10 @@ import java.util.Map;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Common.Transaction.model.TransactionViewModel;
 import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
 import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsPage;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.model.FinanceViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.model.HomeViewModel;
@@ -37,6 +39,7 @@ public class CustomerViewModel {
         init();
         initHomeViewModel();
         initSettingsViewModel();
+        initTransactionViewModel();
     }
 
     /**
@@ -75,13 +78,9 @@ public class CustomerViewModel {
         return instance.navigationList;
     }
 
-    
     public static OrderViewModel getOrderViewModel() {
         return instance.orderViewModel;
     }
-
-    
-
 
     /**
      * @var selectedTopNavigation - Selected top navigation item - control which one
@@ -193,5 +192,20 @@ public class CustomerViewModel {
 
     public static void setSettingsViewModel(SettingsViewModel settingsViewModel) {
         instance.settingsViewModel = settingsViewModel;
+    }
+
+    private TransactionViewModel transactionViewModel;
+
+    public static TransactionViewModel getTransactionViewModel() {
+        return instance.transactionViewModel;
+    }
+
+    public static void setTransactionViewModel(TransactionViewModel transactionViewModel) {
+        instance.transactionViewModel = transactionViewModel;
+    }
+
+    public static void initTransactionViewModel() {
+        instance.transactionViewModel = new TransactionViewModel();
+        instance.transactionViewModel.init();
     }
 }

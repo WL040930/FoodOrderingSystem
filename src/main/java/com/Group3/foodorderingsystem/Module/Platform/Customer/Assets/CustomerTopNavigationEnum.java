@@ -27,7 +27,13 @@ public enum CustomerTopNavigationEnum {
             "Settings",
             () -> {
                 CustomerViewModel.navigate(CustomerViewModel.getSettingsViewModel().getNode());
-            });
+            }),
+    Finance(
+            "Finance",
+            () -> {
+                CustomerViewModel.navigate(CustomerViewModel.getTransactionViewModel().getNode());
+            }
+    );
 
     private String title;
     private Runnable action;
