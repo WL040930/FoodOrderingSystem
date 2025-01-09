@@ -28,6 +28,9 @@ public enum StorageEnum {
     ), 
     TOPUPWITHDRAW(
         "topupwithdraw.txt"
+    ), 
+    NOTIFICATION(
+        "notification.txt"
     );
 
     final String fileName;

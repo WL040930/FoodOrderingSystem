@@ -1,13 +1,16 @@
 package com.Group3.foodorderingsystem.Module.Common.Transaction.ui;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
+import com.Group3.foodorderingsystem.Core.Services.TopUpWithdrawServices;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.BottomButton;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.PopupMessage;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
@@ -153,8 +156,32 @@ public class TopupWithdrawUI extends BaseContentPanel {
                     return;
                 }
 
-                // Proceed with the transaction
-                System.out.println(transactionType + " of RM " + String.format("%.2f", enteredAmount) + " successful!");
+                TopUpWithdrawServices.createNewRequest(user.getId(), enteredAmount,
+                        transactionType == TransactionType.TOPUP ? TransactionModel.TransactionType.TOPUP
+                                : TransactionModel.TransactionType.WITHDRAWAL);
+
+                PopupMessage.showMessage("Request has been sent to Admin.", "success", () -> {
+                    switch (user.getRole()) {
+                        case CUSTOMER:
+                            CustomerViewModel.initTransactionViewModel();
+                            CustomerViewModel.navigate(CustomerViewModel.getTransactionViewModel().getNode());
+                            break;
+
+                        case VENDOR:
+                            VendorViewModel.initTransactionViewModel();
+                            VendorViewModel.navigate(VendorViewModel.getTransactionViewModel().getNode());
+                            break;
+
+                        case RUNNER:
+                            RunnerViewModel.initTransactionViewModel();
+                            RunnerViewModel.navigate(RunnerViewModel.getTransactionViewModel().getNode());
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                });
+
             } catch (NumberFormatException e) {
                 System.out.println("Invalid amount entered!");
             }

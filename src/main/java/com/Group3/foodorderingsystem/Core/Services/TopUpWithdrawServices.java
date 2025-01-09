@@ -12,12 +12,12 @@ import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 
 public class TopUpWithdrawServices {
-    
+
     private static List<TopUpWithdrawModel> getTopUpWithdrawList() {
-        return  FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.TOPUPWITHDRAW), TopUpWithdrawModel.class);
+        return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.TOPUPWITHDRAW), TopUpWithdrawModel.class);
     }
 
-    private static void createNewRequest(String userId, Double amount, TransactionType transactionType) {
+    public static void createNewRequest(String userId, Double amount, TransactionType transactionType) {
         List<TopUpWithdrawModel> topUpWithdrawList = getTopUpWithdrawList();
         TopUpWithdrawModel topUpWithdrawModel = new TopUpWithdrawModel();
         topUpWithdrawModel.setTopUpWithdrawModelId(Storage.generateNewId());
@@ -26,6 +26,9 @@ public class TopUpWithdrawServices {
         topUpWithdrawModel.setTransactionType(transactionType);
         topUpWithdrawModel.setStatus(Status.UNDECIDED);
         topUpWithdrawList.add(topUpWithdrawModel);
+        NotificationServices.createNewNotification(userId,
+                transactionType == TransactionType.TOPUP ? NotificationServices.Template.topUpRequest(amount)
+                        : NotificationServices.Template.withdrawRequest(amount));
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.TOPUPWITHDRAW), topUpWithdrawList);
     }
 }
