@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Common.Notification.model.NotificationViewModel;
 import com.Group3.foodorderingsystem.Module.Common.Transaction.model.TransactionViewModel;
 import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Assets.RunnerNavigationEnum;
@@ -34,6 +35,7 @@ public class RunnerViewModel {
         initHomeViewModel();
         initSettingsViewModel();
         initTransactionViewModel();
+        initNotificationViewModel();
     }
 
     /**
@@ -202,5 +204,26 @@ public class RunnerViewModel {
             throw new IllegalStateException("Runner from session is not a User instance.");
         }
         instance.settingsViewModel.init();
+    }
+
+    private NotificationViewModel notificationViewModel;
+
+    public static NotificationViewModel getNotificationViewModel() {
+        return instance.notificationViewModel;
+    }
+
+    public static void setNotificationViewModel(NotificationViewModel notificationViewModel) {
+        instance.notificationViewModel = notificationViewModel;
+    }
+
+    public static void initNotificationViewModel() {
+        Object runner = SessionUtil.getRiderFromSession();
+        if (runner instanceof User) {
+            User user = (User) runner;
+            instance.notificationViewModel = new NotificationViewModel(user.getId());
+        } else {
+            throw new IllegalStateException("Runner from session is not a User instance.");
+        }
+        instance.notificationViewModel.init();
     }
 }

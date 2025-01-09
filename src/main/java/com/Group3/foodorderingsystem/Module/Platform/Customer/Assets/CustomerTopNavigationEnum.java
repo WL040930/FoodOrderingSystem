@@ -9,10 +9,6 @@ public enum CustomerTopNavigationEnum {
             () -> {
                 CustomerViewModel.navigate(CustomerViewModel.getHomeViewModel().getNode());
             }),
-    CurrentOrder(
-            "Current Order",
-            () -> {
-            }),
     Order(
             "Order",
             () -> {
@@ -22,6 +18,7 @@ public enum CustomerTopNavigationEnum {
     Notification(
             "Notification",
             () -> {
+                CustomerViewModel.navigate(CustomerViewModel.getNotificationViewModel().getNode());
             }),
     Settings(
             "Settings",

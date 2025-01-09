@@ -9,16 +9,15 @@ public enum CustomerNavigationEnum {
             "Home",
             "home.png",
             Arrays.asList(
-                    CustomerTopNavigationEnum.Home,
-                    CustomerTopNavigationEnum.CurrentOrder)),
+                    CustomerTopNavigationEnum.Home)),
     Order(
             "Order",
-            "logo.png",
+            "order.png",
             Arrays.asList(
                     CustomerTopNavigationEnum.Order)),
     Notification(
             "Notification",
-            "logo.png",
+            "notification.png",
             Arrays.asList(
                     CustomerTopNavigationEnum.Notification)),
     Settings(

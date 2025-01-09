@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Common.Notification.model.NotificationViewModel;
 import com.Group3.foodorderingsystem.Module.Common.Transaction.model.TransactionViewModel;
 import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorNavigationEnum;
@@ -36,6 +37,7 @@ public class VendorViewModel {
         initSettingsViewModel();
         initVoucherViewModel();
         initTransactionViewModel();
+        initNotificationViewModel();
     }
 
     public static void clear() {
@@ -238,5 +240,26 @@ public class VendorViewModel {
     public static void initTransactionViewModel() {
         instance.transactionViewModel = new TransactionViewModel();
         instance.transactionViewModel.init();
+    }
+
+    private NotificationViewModel notificationViewModel;
+
+    public static NotificationViewModel getNotificationViewModel() {
+        return instance.notificationViewModel;
+    }
+
+    public static void setNotificationViewModel(NotificationViewModel notificationViewModel) {
+        instance.notificationViewModel = notificationViewModel;
+    }
+
+    public static void initNotificationViewModel() {
+        Object vendorFromSession = SessionUtil.getVendorFromSession();
+        if (vendorFromSession instanceof User) {
+            User user = (User) vendorFromSession;
+            instance.notificationViewModel = new NotificationViewModel(user.getId());
+        } else {
+            throw new IllegalStateException("Vendor from session is not a User instance.");
+        }
+        instance.notificationViewModel.init();
     }
 }

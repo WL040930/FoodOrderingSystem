@@ -6,6 +6,7 @@ import java.util.Map;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Common.Notification.model.NotificationViewModel;
 import com.Group3.foodorderingsystem.Module.Common.Transaction.model.TransactionViewModel;
 import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
 import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsPage;
@@ -40,6 +41,7 @@ public class CustomerViewModel {
         initHomeViewModel();
         initSettingsViewModel();
         initTransactionViewModel();
+        initNotificationViewModel();
     }
 
     /**
@@ -207,5 +209,20 @@ public class CustomerViewModel {
     public static void initTransactionViewModel() {
         instance.transactionViewModel = new TransactionViewModel();
         instance.transactionViewModel.init();
+    }
+
+    private NotificationViewModel notificationViewModel;
+
+    public static NotificationViewModel getNotificationViewModel() {
+        return instance.notificationViewModel;
+    }
+
+    public static void setNotificationViewModel(NotificationViewModel notificationViewModel) {
+        instance.notificationViewModel = notificationViewModel;
+    }
+
+    public static void initNotificationViewModel() {
+        instance.notificationViewModel = new NotificationViewModel(SessionUtil.getCustomerFromSession().getId());
+        instance.notificationViewModel.init();
     }
 }

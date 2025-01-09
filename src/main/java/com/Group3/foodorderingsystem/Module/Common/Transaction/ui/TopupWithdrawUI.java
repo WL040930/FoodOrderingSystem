@@ -164,6 +164,7 @@ public class TopupWithdrawUI extends BaseContentPanel {
                     switch (user.getRole()) {
                         case CUSTOMER:
                             CustomerViewModel.initTransactionViewModel();
+                            CustomerViewModel.initNotificationViewModel();
                             CustomerViewModel.navigate(CustomerViewModel.getTransactionViewModel().getNode());
                             break;
 

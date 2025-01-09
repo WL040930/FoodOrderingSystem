@@ -1,6 +1,7 @@
 package com.Group3.foodorderingsystem.Module.Common.Transaction.ui;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel.TransactionType;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
@@ -76,7 +77,7 @@ public class UserFinance extends BaseContentPanel {
     private Node content() {
         VBox content = new VBox(10);
         content.setPadding(new Insets(10, 10, 10, 10));
-        content.setAlignment(Pos.CENTER);
+        content.setAlignment(Pos.TOP_CENTER);
 
         // Decorated Balance Label
         Label balanceLabel = new Label("Your" + (user.getRole() == RoleEnum.CUSTOMER ? " Balance" : " Revenue"));
@@ -146,15 +147,22 @@ public class UserFinance extends BaseContentPanel {
         box.setAlignment(Pos.CENTER);
 
         VBox left = new VBox();
-        Label transactionType = new Label(transaction.getTransactionType().toString());
+        Label transactionType = new Label();
+        if (transaction.getTransactionType() == TransactionType.PAYMENT || transaction.getTransactionType() == TransactionType.REFUND) {
+            transactionType
+                    .setText(transaction.getTransactionType() + " - Order ID: " + transaction.getOrderModel().getOrderId());
+        } else {
+            transactionType.setText(transaction.getTransactionType().toString());
+        }
+       
         transactionType.setStyle("-fx-font-weight: bold;");
         Label date = new Label(transaction.getTransactionDate().toString());
         left.getChildren().addAll(transactionType, date);
 
         VBox right = new VBox();
         Label amount = new Label(
-                transaction.getAmount() > 0 ? "+ RM" + transaction.getAmount()
-                        : "- RM" + Math.abs(transaction.getAmount()));
+                transaction.getAmount() > 0 ? "+ RM" + String.format("%.2f", transaction.getAmount())
+                        : "- RM" + String.format("%.2f", Math.abs(transaction.getAmount())));
         amount.setStyle(transaction.getAmount() > 0 ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
         right.setAlignment(Pos.CENTER_RIGHT);
 

@@ -15,7 +15,7 @@ public class NotificationModel {
 
     public NotificationModel() {
         this.date = new Date();
-        this.notificationId = Storage.generateNewId(); 
+        this.notificationId = Storage.generateNewId();
     }
 
     public void setNotificationId(String notificationId) {
