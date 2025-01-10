@@ -4,6 +4,7 @@ import com.Group3.foodorderingsystem.Core.Util.Images;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -32,6 +33,7 @@ public class PopupMessage {
 
         Text messageText = new Text(message);
         messageText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;");
+        messageText.setWrappingWidth(250); // Set the width after which the text should wrap
 
         Button closeButton = new Button("OK");
         closeButton.setStyle("-fx-font-size: 14px; -fx-background-color: #0078D7; -fx-text-fill: white;");

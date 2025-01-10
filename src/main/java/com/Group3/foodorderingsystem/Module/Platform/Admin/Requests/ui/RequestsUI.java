@@ -10,6 +10,7 @@ import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Common.Transaction.ui.TopupWithdrawUI;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.PopupMessage;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.DynamicSearchBarUI;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Vouchers.widgets.KButton;
 
@@ -147,6 +148,20 @@ public class RequestsUI extends BaseContentPanel {
                 TopUpWithdrawModel model = TopUpWithdrawServices.updateStatus(topUpWithdrawModel, Status.ALLOWED);
                 if (model == null) {
                     System.out.println("Failed to update status");
+                    PopupMessage.showMessage(
+                            topUpWithdrawModel.getTransactionType()
+                                    + " requests failed. Request status changed to declined.",
+                            "error",
+                            () -> {
+                                TopUpWithdrawModel model2 = TopUpWithdrawServices.updateStatus(topUpWithdrawModel,
+                                        Status.REJECTED);
+                                if (model2 == null) {
+                                    System.out.println("Failed to update status");
+                                } else {
+                                    System.out.println("Status updated successfully");
+                                }
+                                updateSearchBar(getSelectedOption());
+                            });
                 } else {
                     System.out.println("Status updated successfully");
                 }
