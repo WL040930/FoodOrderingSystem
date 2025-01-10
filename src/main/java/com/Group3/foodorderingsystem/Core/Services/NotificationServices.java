@@ -3,6 +3,7 @@ package com.Group3.foodorderingsystem.Core.Services;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel.TransactionType;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.NotificationModel;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
@@ -42,8 +43,36 @@ public class NotificationServices {
             return "Your top up request of <b>RM " + String.format("%.2f", amount) + "</b> is being processed.";
         }
 
+        public static String approveRequest(Double amount, TransactionType transactionType) {
+            return "Your <b>" + transactionType + "</b> request of <b>RM " + String.format("%.2f", amount) + "</b> has been approved.";
+        }
+
+        public static String rejectRequest(Double amount, TransactionType transactionType) {
+            return "Your " + transactionType + " request of <b>RM " + String.format("%.2f", amount) + "</b> has been rejected.";
+        }
+
         public static String withdrawRequest(Double amount) {
             return "Your withdraw request of <b>RM " + String.format("%.2f", amount) + "</b> is being processed.";
+        }
+
+        public static String adminTopupRequest(String userId, Double amount, String requestId) {
+            return "User <b>" + userId + "</b> has requested a top up of <b>RM " + String.format("%.2f", amount)
+                    + "</b>.<br>Request ID: <b>" + requestId + "</b>";
+        }
+
+        public static String adminWithdrawRequest(String userId, Double amount) {
+            return "User <b>" + userId + "</b> has requested a withdraw of <b>RM " + String.format("%.2f", amount)
+                    + "</b>.";
+        }
+
+        public static String receiveCredit(Double amount, TransactionType transactionType) {
+            return "You have received <b>RM " + String.format("%.2f", amount) + "</b> from a " + transactionType
+                    + " transaction.";
+        }
+
+        public static String withdrawCredit(Double amount, TransactionType transactionType) {
+            return "You have withdrawn <b>RM " + String.format("%.2f", amount) + "</b> from a " + transactionType
+                    + " transaction.";
         }
 
     }

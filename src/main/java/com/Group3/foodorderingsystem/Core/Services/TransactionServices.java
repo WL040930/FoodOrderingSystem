@@ -39,6 +39,8 @@ public class TransactionServices {
             case CUSTOMER:
                 CustomerModel customerModel = UserServices.findCustomerById(user.getId());
                 customerModel.setBalance(customerModel.getBalance() + transactionModel.getAmount());
+                NotificationServices.createNewNotification(customerModel.getId(),
+                        NotificationServices.Template.receiveCredit(amount, transactionType));
 
                 if (UserServices.saveUser(customerModel) == null) {
                     return null;
@@ -48,7 +50,12 @@ public class TransactionServices {
             // vendor can only withdraw
             case VENDOR:
                 VendorModel vendorModel = UserServices.findVendorById(user.getId());
+                if (vendorModel.getRevenue() < amount) {
+                    return null;
+                }
                 vendorModel.setRevenue(vendorModel.getRevenue() + transactionModel.getAmount());
+                NotificationServices.createNewNotification(vendorModel.getId(),
+                        NotificationServices.Template.withdrawCredit(amount, transactionType));
                 if (UserServices.saveUser(vendorModel) == null) {
                     return null;
                 }
@@ -57,6 +64,10 @@ public class TransactionServices {
 
             case RUNNER:
                 RunnerModel runnerModel = UserServices.findRunnerById(user.getId());
+                if (runnerModel.getRevenue() < amount) {
+                    return null;
+                }
+
                 runnerModel.setRevenue(runnerModel.getRevenue() + transactionModel.getAmount());
 
                 if (UserServices.saveUser(runnerModel) == null) {

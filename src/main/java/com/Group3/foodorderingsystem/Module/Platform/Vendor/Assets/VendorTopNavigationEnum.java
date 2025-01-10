@@ -22,7 +22,7 @@ public enum VendorTopNavigationEnum {
         Notification(
                         "Notification",
                         () -> {
-                                // Action for Notification
+                                VendorViewModel.navigate(VendorViewModel.getNotificationViewModel().getNode());
                         }),
         Settings(
                         "Settings",

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Common.Notification.model.NotificationViewModel;
 import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
 import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Assets.AdminNavigationEnum;
@@ -13,6 +14,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.model.Databa
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Database.ui.AdminDatabase;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.model.FinanceViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.model.RegisterViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Requests.model.RequestsViewModel;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -42,6 +44,8 @@ public class AdminViewModel {
         initSettingsViewModel();
         initDatabaseViewModel();
         initFinanceViewModel();
+        initNotificationViewModel();
+        initRequestsViewModel();
     }
 
     /**
@@ -257,6 +261,42 @@ public class AdminViewModel {
 
     public static void setFinanceViewModel(FinanceViewModel financeViewModel) {
         instance.financeViewModel = financeViewModel;
+    }
+
+    private NotificationViewModel notificationViewModel;
+
+    public static void initNotificationViewModel() {
+        Object admin = SessionUtil.getAdminFromSession();
+        if (admin instanceof User) {
+            User user = (User) admin;
+            instance.notificationViewModel = new NotificationViewModel(user.getId());
+        } else {
+            throw new IllegalStateException("Admin from session is not a User instance.");
+        }
+        instance.notificationViewModel.init();
+    }
+
+    public static NotificationViewModel getNotificationViewModel() {
+        return instance.notificationViewModel;
+    }
+
+    public static void setNotificationViewModel(NotificationViewModel notificationViewModel) {
+        instance.notificationViewModel = notificationViewModel;
+    }
+
+    private RequestsViewModel requestsViewModel;
+
+    public static void initRequestsViewModel() {
+        instance.requestsViewModel = new RequestsViewModel();
+        instance.requestsViewModel.init();
+    }
+
+    public static RequestsViewModel getRequestsViewModel() {
+        return instance.requestsViewModel;
+    }
+
+    public static void setRequestsViewModel(RequestsViewModel requestsViewModel) {
+        instance.requestsViewModel = requestsViewModel;
     }
 
 }

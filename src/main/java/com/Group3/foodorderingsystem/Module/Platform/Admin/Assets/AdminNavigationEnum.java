@@ -7,26 +7,27 @@ public enum AdminNavigationEnum {
 
         User(
                         "Users",
-                        "logo.png",
+                        "user.png",
                         Arrays.asList(
                                         AdminTopNavigationEnum.Database,
                                         AdminTopNavigationEnum.Register)),
         Finance(
                         "Finance",
-                        "logo.png",
+                        "financial.png",
                         Arrays.asList(
-                                        AdminTopNavigationEnum.Finance)),
+                                        AdminTopNavigationEnum.Finance, 
+                                        AdminTopNavigationEnum.Requests)),
         Notification(
                         "Notification",
-                        "logo.png",
+                        "notification.png",
                         Arrays.asList(
-                                        AdminTopNavigationEnum.Noti,
+                                        AdminTopNavigationEnum.Notification,
                                         AdminTopNavigationEnum.SendNoti)),
         Settings(
                         "Settings",
                         "settings.png",
                         Arrays.asList(
-                                        AdminTopNavigationEnum.SelfSettings));
+                                        AdminTopNavigationEnum.Settings));
 
         private final String title;
         private final String icon;

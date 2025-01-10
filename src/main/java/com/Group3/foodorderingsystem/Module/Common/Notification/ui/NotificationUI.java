@@ -7,6 +7,7 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.DynamicSearchBarUI;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
@@ -53,6 +54,10 @@ public class NotificationUI extends BaseContentPanel {
 
             case VENDOR:
                 this.notifications = VendorViewModel.getNotificationViewModel().getNotifications();
+                break;
+
+            case ADMIN:
+                this.notifications = AdminViewModel.getNotificationViewModel().getNotifications();
                 break;
 
             default:
@@ -105,7 +110,10 @@ public class NotificationUI extends BaseContentPanel {
         TextFlow textFlow = new TextFlow();
         textFlow.setStyle("-fx-font-size: 14px;");
 
-        // Simple parsing for <b> tags
+        // Replace <br> tags with \n to handle line breaks
+        htmlContent = htmlContent.replaceAll("(?i)<br\\s*/?>", "\n");
+
+        // Simple parsing for <b> tags and handling newlines
         String[] parts = htmlContent.split("(<b>|</b>)");
         boolean bold = false;
 
@@ -113,12 +121,20 @@ public class NotificationUI extends BaseContentPanel {
             if (part.isEmpty())
                 continue;
 
-            Text text = new Text(part);
-            if (bold) {
-                text.setStyle("-fx-font-weight: bold;");
-            }
+            String[] lines = part.split("\n"); // Split by newlines
+            for (int i = 0; i < lines.length; i++) {
+                Text text = new Text(lines[i]);
+                if (bold) {
+                    text.setStyle("-fx-font-weight: bold;");
+                }
 
-            textFlow.getChildren().add(text);
+                textFlow.getChildren().add(text);
+
+                // Add a newline if it's not the last line
+                if (i < lines.length - 1) {
+                    textFlow.getChildren().add(new Text("\n"));
+                }
+            }
             bold = !bold;
         }
 

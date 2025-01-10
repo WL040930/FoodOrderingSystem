@@ -19,7 +19,7 @@ public enum VendorNavigationEnum {
                     VendorTopNavigationEnum.Vouchers)),
     Notification(
             "Notification",
-            "logo.png",
+            "notification.png",
             Arrays.asList(
                     VendorTopNavigationEnum.Notification)),
     Settings(

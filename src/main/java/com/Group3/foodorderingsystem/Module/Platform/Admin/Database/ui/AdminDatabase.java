@@ -9,6 +9,7 @@ import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.PopupMessage;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.DynamicSearchBarUI;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Vouchers.widgets.KButton;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -76,18 +77,16 @@ public class AdminDatabase extends BaseContentPanel {
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
         buttonBox.setSpacing(10);
 
-        Button editButton = new Button("Edit");
-        editButton.setOnAction(event -> {
+        Button editButton = new KButton("Edit", () -> {
             AdminViewModel.getDatabaseViewModel().setEditUserInformation(new EditUserInformation(user));
             AdminViewModel.getDatabaseViewModel()
                     .navigate(AdminViewModel.getDatabaseViewModel().getEditUserInformation());
         });
 
-        Button deleteButton = new Button("Delete");
-        deleteButton.setOnAction(event -> {
+        KButton deleteButton = new KButton("Delete", () -> {
             UserServices.deleteUser(user.getId());
-            
-            PopupMessage.showMessage(user.getName()+ " has been deleted.", "success", () -> {
+
+            PopupMessage.showMessage(user.getName() + " has been deleted.", "success", () -> {
                 AdminViewModel.initDatabaseViewModel();
                 AdminViewModel.getDatabaseViewModel().navigate(AdminViewModel.getDatabaseViewModel().getNode());
             });
