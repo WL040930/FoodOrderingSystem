@@ -45,6 +45,7 @@ public class OrderDetailsUI extends BorderPane {
     public OrderDetailsUI() {
 
         this.setStyle("-fx-background-color: #f8fafc;");
+        System.out.println(selectedOrder.getItems().get(0).getItemName());
 
         VBox contentBox = new VBox(15);
         contentBox.setPadding(new Insets(20));
@@ -300,17 +301,12 @@ public class OrderDetailsUI extends BorderPane {
     }
 
     public VBox getPaymentDetails() {
-        Double deliveryFee = 0.0;
-        if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
-            deliveryFee = 5.0;
-        } else {
-            deliveryFee = 0.0;
-        }
+
 
         Separator separator1 = new Separator();
         separator1.getStyleClass().add("separator");
 
-        Double subtotal = selectedOrder.getTotalPrice() - deliveryFee;
+        Double subtotal = selectedOrder.getSubTotalPrice();
         Double totalPrice = selectedOrder.getTotalPrice();
         VBox paymentBox = new VBox(10);
         paymentBox.setPadding(new Insets(10, 0, 0, 0));
@@ -325,7 +321,7 @@ public class OrderDetailsUI extends BorderPane {
         HBox deliveryFeeBox = new HBox(10);
         Label deliveryFeeLabel = new Label("Delivery Fee:");
         deliveryFeeLabel.getStyleClass().add("subtotal-label");
-        Label deliveryFeeAmountLabel = new Label("RM" + String.format("%.2f", deliveryFee));
+        Label deliveryFeeAmountLabel = new Label("RM" + String.format("%.2f", selectedOrder.getDeliveryFee()));
         deliveryFeeAmountLabel.getStyleClass().add("subtotal-amount-label");
         deliveryFeeBox.getChildren().addAll(deliveryFeeLabel, deliveryFeeAmountLabel);
 

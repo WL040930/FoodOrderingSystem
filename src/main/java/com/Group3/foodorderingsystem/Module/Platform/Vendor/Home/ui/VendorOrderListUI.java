@@ -85,7 +85,7 @@ public class VendorOrderListUI extends VBox{
         root.getChildren().add(tabPane);
     }
 
-        private Node createOrdersContent(List<OrderModel> orders, String emptyMessage) {
+    private Node createOrdersContent(List<OrderModel> orders, String emptyMessage) {
         VBox allOrders = new VBox(15);
         allOrders.setPadding(new Insets(30, 0, 0, 15));
         allOrders.setStyle("-fx-background-color: #f8fafc;");

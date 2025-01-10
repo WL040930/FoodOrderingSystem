@@ -13,8 +13,12 @@ public class OrderModel {
     private String vendor;
     private String rider;
     private List<ItemModel> items;
+    private double subTotalPrice;
+    private double deliveryFee;
     private double totalPrice;
+    private int voucherRate;
     private String deliveryAddress;
+    private String area;
     private StatusEnum status;
     private OrderMethodEnum orderMethod;
     private Date time;
@@ -24,6 +28,7 @@ public class OrderModel {
     public OrderModel() {
         //get current time
         this.time = new Date();
+        this.voucherRate = 0;
     }
 
     // getters and setters
@@ -47,12 +52,29 @@ public class OrderModel {
         return items;
     }
 
+    public double getSubTotalPrice() {
+        return subTotalPrice;
+    }
+
+    public double getDeliveryFee() {
+        return deliveryFee;
+    }
+
+    public int getVoucherRate() {
+        return voucherRate;
+    }
+
     public double getTotalPrice() {
-        return totalPrice;
+        double discount = (subTotalPrice * voucherRate) / 100;
+        return subTotalPrice + deliveryFee - discount;
     }
 
     public String getDeliveryAddress() {
         return deliveryAddress;
+    }
+
+    public String getArea() {
+        return area;
     }
 
     public StatusEnum getStatus() {
@@ -95,12 +117,24 @@ public class OrderModel {
         this.items = items;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setSubTotalPrice(double subTotalPrice) {
+        this.subTotalPrice = subTotalPrice;
+    }
+
+    public void setDeliveryFee(double deliveryFee) {
+        this.deliveryFee = deliveryFee;
+    }
+
+    public void setVoucherRate(int voucherRate) {
+        this.voucherRate = voucherRate;
     }
 
     public void setDeliveryAddress(String deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public void setStatus(StatusEnum status) {
@@ -122,4 +156,6 @@ public class OrderModel {
     public void setReview(String review) {
         this.review = review;
     }
+
+
 }

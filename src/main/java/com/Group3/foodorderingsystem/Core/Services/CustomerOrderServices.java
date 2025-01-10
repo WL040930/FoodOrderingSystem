@@ -77,6 +77,52 @@ public class CustomerOrderServices {
             .sum();
     }
 
+    public static double calculateDeliveryFee(String state) {
+        if (state.contains("Petaling")) {
+            return 4.00;
+        } else if (state.contains("Gombak")) {
+            return 8.00;
+        } else if (state.contains("Klang")) {
+            return 10.00;
+        } else if (state.contains("Kuala Langat")) {
+            return 12.00;
+        } else if (state.contains("Kuala Selangor")) {
+            return 15.00;
+        } else if (state.contains("Hulu Langat")) {
+            return 6.00;
+        } else if (state.contains("Hulu Selangor")) {
+            return 16.00;
+        } else if (state.contains("Sabak Bernam")) {
+            return 18.00;
+        } else if (state.contains("Sepang")) {
+            return 12.00;
+        } else if (state.contains("Batu")) {
+            return 7.00;
+        } else if (state.contains("Bukit Bintang")) {
+            return 6.00;
+        } else if (state.contains("Cheras")) {
+            return 6.00;
+        } else if (state.contains("Kepong")) {
+            return 8.00;
+        } else if (state.contains("Lembah Pantai")) {
+            return 7.00;
+        } else if (state.contains("Segambut")) {
+            return 6.50;
+        } else if (state.contains("Seputeh")) {
+            return 5.50;
+        } else if (state.contains("Setiawangsa")) {
+            return 7.50;
+        } else if (state.contains("Titiwangsa")) {
+            return 6.00;
+        } else if (state.contains("Wangsa Maju")) {
+            return 7.50;
+        } else if (state.contains("Bandar Tun Razak")) {
+            return 6.00;
+        } else {
+            return 0.00; // Default fee if the state is not found
+        }
+    }
+
     //check if customer id same with session id
     public boolean checkCustomerId(String customerId) {
         return customerId.equals(SessionUtil.getCustomerFromSession().getId());
@@ -84,30 +130,39 @@ public class CustomerOrderServices {
 
 
     // place order. it will accept order method, delivery address (but not required)
-    public static void placeOrder(OrderMethodEnum orderMethod, String deliveryAddress) {
+    public static void placeOrder(OrderMethodEnum orderMethod, String deliveryAddress, String state) {
         List<ItemModel> items = SessionUtil.getItemsFromSession();
         CustomerModel customer = SessionUtil.getCustomerFromSession();
         VendorModel vendor = items.get(0).getVendorModel();
 
         // Calculate total price
-        double totalPrice = calculatePrice(items);
+        double deliveryFee;
+        double subTotalPrice = calculatePrice(items);
+        if (state == null) {
+            deliveryFee = 0.00;
+        } else {
+            deliveryFee = calculateDeliveryFee(state);
+        }
+
 
         // Create order object
         OrderModel order = new OrderModel();
         order.setOrderId(generateUniqueOrderId());
         order.setItems(items);
         order.setCustomer(customer.getId());
-        order.setTotalPrice(totalPrice);
+        order.setSubTotalPrice(subTotalPrice);
+        order.setDeliveryFee(deliveryFee);
         order.setStatus(StatusEnum.PENDING);
         order.setOrderMethod(orderMethod);
         order.setDeliveryAddress(deliveryAddress);
         order.setVendor(vendor.getId());
+        order.setArea(state);
 
         // Save order to file
         saveOrderToFile(order);
 
         //deduct the balance from customer
-        customer.setBalance(customer.getBalance() - totalPrice);
+        customer.setBalance(customer.getBalance() - (subTotalPrice + deliveryFee));
 
         // Save customer to file
         List<CustomerModel> customers = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), CustomerModel.class);
@@ -267,7 +322,7 @@ public class CustomerOrderServices {
             String shopName = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(order.getVendor())).get(0).getShopName();
             document.add(new Paragraph("Shop Name: " + shopName).setFontSize(10));
             document.add(new Paragraph("Order Method: " + order.getOrderMethod()).setFontSize(10));
-            document.add(new Paragraph("RM" + order.getTotalPrice() + " paid on " + formattedDate).setBold().setFontSize(15));
+            document.add(new Paragraph("RM" + (order.getDeliveryFee() + order.getSubTotalPrice()) + " paid on " + formattedDate).setBold().setFontSize(15));
             
     
             // Items Table
@@ -286,7 +341,7 @@ public class CustomerOrderServices {
             document.add(table);
     
             // Total
-            document.add(new Paragraph("Amount Paid: RM" + order.getTotalPrice()).setBold().setTextAlignment(TextAlignment.RIGHT).setFontSize(15));
+            document.add(new Paragraph("Amount Paid: RM" + (order.getDeliveryFee() + order.getSubTotalPrice())).setBold().setTextAlignment(TextAlignment.RIGHT).setFontSize(15));
     
             // Footer
             document.add(new Paragraph("Thank you for your purchase!").setTextAlignment(TextAlignment.CENTER));

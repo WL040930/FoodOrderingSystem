@@ -68,7 +68,6 @@
 .detail-title-label {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-border-radius: 5px; /* Rounded corners for a softer look */
 }
 
 
