@@ -123,3 +123,15 @@
 {"notificationId":"d702068d-9f3c-4a3c-8a7d-efab1813270e","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your <b>WITHDRAWAL</b> request of <b>RM 0.30</b> has been approved.","date":1736488016098}
 {"notificationId":"bb939e4d-ce0d-4c8a-824e-be92090f241e","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your <b>WITHDRAWAL</b> request of <b>RM 0.30</b> has been approved.","date":1736488067587}
 {"notificationId":"0bc4648f-ede7-47a0-8dfa-ee5b8ae36faa","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your <b>WITHDRAWAL</b> request of <b>RM 0.30</b> has been approved.","date":1736488093152}
+{"notificationId":"4e1f0fec-a7a2-45b7-ac38-26f523fb69ca","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your <b>WITHDRAWAL</b> request of <b>RM 0.30</b> has been approved.","date":1736488791064}
+{"notificationId":"f635203e-2c92-4e66-a4bc-4d88d72ce7c3","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your WITHDRAWAL request of <b>RM 0.30</b> has been rejected.","date":1736488791158}
+{"notificationId":"5b708b98-5e88-4bc4-ba54-61d38ce1456b","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your WITHDRAWAL request of <b>RM 0.30</b> has been rejected.","date":1736488792362}
+{"notificationId":"9ab77112-c836-40b2-bff7-374fbe2a35a5","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your withdraw request of <b>RM 0.06</b> is being processed.","date":1736488910747}
+{"notificationId":"545aca6c-530f-4d6a-b662-007b94abd150","userId":"1dd0b94a-27d5-4cff-bae1-2b962a4f06fe","content":"User <b>vendornameeeeeeeeeeeeeeeeeeeee</b> has requested a withdraw of <b>RM 0.06</b>.","date":1736488910828}
+{"notificationId":"fc916618-760a-4478-9202-51059cc8e9b1","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your withdraw request of <b>RM 0.06</b> is being processed.","date":1736488916710}
+{"notificationId":"1d9d9a44-7485-42cc-b672-1d70c6a475ba","userId":"1dd0b94a-27d5-4cff-bae1-2b962a4f06fe","content":"User <b>vendornameeeeeeeeeeeeeeeeeeeee</b> has requested a withdraw of <b>RM 0.06</b>.","date":1736488916764}
+{"notificationId":"ee51839a-a18b-4f7e-8890-3c40ebc68aed","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your <b>WITHDRAWAL</b> request of <b>RM 0.06</b> has been approved.","date":1736488927183}
+{"notificationId":"164be685-2471-4792-b5a1-3993e4c1a34d","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"You have withdrawn <b>RM 0.06</b> from a WITHDRAWAL transaction.","date":1736488927234}
+{"notificationId":"424ea611-93ed-4384-9467-b535884e51fc","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your <b>WITHDRAWAL</b> request of <b>RM 0.06</b> has been approved.","date":1736488927947}
+{"notificationId":"7d111d83-f487-4bd5-949a-e3c537d28363","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your WITHDRAWAL transaction of <b>RM 0.06</b> has been rejected.","date":1736488928000}
+{"notificationId":"3421c029-3f5a-465d-8bd6-c8c1f9b81783","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your WITHDRAWAL request of <b>RM 0.06</b> has been rejected.","date":1736488929415}

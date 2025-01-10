@@ -51,6 +51,8 @@ public class TransactionServices {
             case VENDOR:
                 VendorModel vendorModel = UserServices.findVendorById(user.getId());
                 if (vendorModel.getRevenue() < amount) {
+                    NotificationServices.createNewNotification(vendorModel.getId(),
+                            NotificationServices.Template.transactionReject(amount, transactionType));
                     return null;
                 }
                 vendorModel.setRevenue(vendorModel.getRevenue() + transactionModel.getAmount());

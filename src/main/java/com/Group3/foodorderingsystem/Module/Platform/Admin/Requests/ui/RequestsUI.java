@@ -9,7 +9,6 @@ import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
-import com.Group3.foodorderingsystem.Module.Common.Transaction.ui.TopupWithdrawUI;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.PopupMessage;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.DynamicSearchBarUI;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Vouchers.widgets.KButton;
@@ -25,7 +24,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Box;
 
 public class RequestsUI extends BaseContentPanel {
 
@@ -133,12 +131,7 @@ public class RequestsUI extends BaseContentPanel {
 
             // Reject button
             KButton rejectButton = new KButton("Reject", () -> {
-                TopUpWithdrawModel model = TopUpWithdrawServices.updateStatus(topUpWithdrawModel, Status.REJECTED);
-                if (model == null) {
-                    System.out.println("Failed to update status");
-                } else {
-                    System.out.println("Status updated successfully");
-                }
+                TopUpWithdrawServices.updateStatus(topUpWithdrawModel, Status.REJECTED);
                 updateSearchBar(getSelectedOption());
             });
             rejectButton.setBackgroundColor(KButton.red);
@@ -153,18 +146,11 @@ public class RequestsUI extends BaseContentPanel {
                                     + " requests failed. Request status changed to declined.",
                             "error",
                             () -> {
-                                TopUpWithdrawModel model2 = TopUpWithdrawServices.updateStatus(topUpWithdrawModel,
+                                TopUpWithdrawServices.updateStatus(topUpWithdrawModel,
                                         Status.REJECTED);
-                                if (model2 == null) {
-                                    System.out.println("Failed to update status");
-                                } else {
-                                    System.out.println("Status updated successfully");
-                                }
                                 updateSearchBar(getSelectedOption());
                             });
-                } else {
-                    System.out.println("Status updated successfully");
-                }
+                } 
 
                 updateSearchBar(getSelectedOption());
             });

@@ -17,4 +17,6 @@
 {"userId":"de5ee8bc-6786-470d-86d0-976673e64c72","amount":0.6,"transactionType":"WITHDRAWAL","status":"ALLOWED","topUpWithdrawModelId":"6104df22-a1d2-435a-94ce-f6891e4e17c6"}
 {"userId":"de5ee8bc-6786-470d-86d0-976673e64c72","amount":0.6,"transactionType":"WITHDRAWAL","status":"REJECTED","topUpWithdrawModelId":"6a51b2b0-d953-4343-a457-f175467ad06f"}
 {"userId":"de5ee8bc-6786-470d-86d0-976673e64c72","amount":0.3,"transactionType":"WITHDRAWAL","status":"ALLOWED","topUpWithdrawModelId":"baa352ed-97a5-4845-bff1-cc223963eeba"}
-{"userId":"de5ee8bc-6786-470d-86d0-976673e64c72","amount":0.3,"transactionType":"WITHDRAWAL","status":"UNDECIDED","topUpWithdrawModelId":"1876bb35-3e22-43ec-8a33-cfbb236af5b0"}
+{"userId":"de5ee8bc-6786-470d-86d0-976673e64c72","amount":0.3,"transactionType":"WITHDRAWAL","status":"REJECTED","topUpWithdrawModelId":"1876bb35-3e22-43ec-8a33-cfbb236af5b0"}
+{"userId":"de5ee8bc-6786-470d-86d0-976673e64c72","amount":0.06,"transactionType":"WITHDRAWAL","status":"REJECTED","topUpWithdrawModelId":"d9be69f2-b578-4685-98ce-f4ba88b3ca7c"}
+{"userId":"de5ee8bc-6786-470d-86d0-976673e64c72","amount":0.06,"transactionType":"WITHDRAWAL","status":"ALLOWED","topUpWithdrawModelId":"60ecb1aa-6fba-4167-b015-3f4fa18d6fb7"}

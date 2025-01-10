@@ -1,6 +1,7 @@
 package com.Group3.foodorderingsystem.Core.Services;
 
 import java.io.ObjectInputFilter.Status;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,8 +57,15 @@ public class TopUpWithdrawServices {
     }
 
     public static List<TopUpWithdrawModel> getTopUpWithdrawListByStatus(Status status) {
-        return getTopUpWithdrawList().stream().filter(topUpWithdrawModel -> topUpWithdrawModel.getStatus() == status)
-                .collect(Collectors.toList());
+        return getTopUpWithdrawList().stream()
+                .filter(topUpWithdrawModel -> topUpWithdrawModel.getStatus() == status)
+                .collect(Collectors.toList())
+                .stream()
+                .collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
+                    Collections.reverse(list);
+                    return list;
+                }));
+
     }
 
     public static TopUpWithdrawModel updateStatus(TopUpWithdrawModel topUpWithdrawModel, Status status) {

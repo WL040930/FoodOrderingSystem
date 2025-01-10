@@ -44,11 +44,13 @@ public class NotificationServices {
         }
 
         public static String approveRequest(Double amount, TransactionType transactionType) {
-            return "Your <b>" + transactionType + "</b> request of <b>RM " + String.format("%.2f", amount) + "</b> has been approved.";
+            return "Your <b>" + transactionType + "</b> request of <b>RM " + String.format("%.2f", amount)
+                    + "</b> has been approved.";
         }
 
         public static String rejectRequest(Double amount, TransactionType transactionType) {
-            return "Your " + transactionType + " request of <b>RM " + String.format("%.2f", amount) + "</b> has been rejected.";
+            return "Your <b>" + transactionType + "</b> request of <b>RM " + String.format("%.2f", amount)
+                    + "</b> has been rejected.";
         }
 
         public static String withdrawRequest(Double amount) {
@@ -73,6 +75,11 @@ public class NotificationServices {
         public static String withdrawCredit(Double amount, TransactionType transactionType) {
             return "You have withdrawn <b>RM " + String.format("%.2f", amount) + "</b> from a " + transactionType
                     + " transaction.";
+        }
+
+        public static String transactionReject(Double amount, TransactionType transactionType) {
+            return "Your <b>" + transactionType.name() + "</b> transaction of <b>RM " + String.format("%.2f", amount)
+                    + "</b> has been rejected.";
         }
 
     }
