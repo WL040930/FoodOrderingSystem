@@ -21,8 +21,7 @@ public enum AdminNavigationEnum {
                         "Notification",
                         "notification.png",
                         Arrays.asList(
-                                        AdminTopNavigationEnum.Notification,
-                                        AdminTopNavigationEnum.SendNoti)),
+                                        AdminTopNavigationEnum.Notification)),
         Settings(
                         "Settings",
                         "settings.png",

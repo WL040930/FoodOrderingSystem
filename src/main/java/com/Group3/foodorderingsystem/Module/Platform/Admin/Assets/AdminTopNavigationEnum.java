@@ -24,10 +24,6 @@ public enum AdminTopNavigationEnum {
             () -> {
                 AdminViewModel.navigate(AdminViewModel.getNotificationViewModel().getNode());
             }),
-    SendNoti(
-            "semd noti",
-            () -> {
-            }),
     Settings(
             "Settings",
             () -> {
