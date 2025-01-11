@@ -69,8 +69,4 @@ public class AdminMainFrame extends BaseMainApplication {
         layout.setBottom(buildBottomNavigator());
         layout.setTop(buildHeader());
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

@@ -2,6 +2,7 @@ package com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.model;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Config.ViewModelConfig;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.ui.AdminTopUpUI;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.ui.FinanceCustomerListUI;
 
 import javafx.scene.Node;
@@ -30,5 +31,15 @@ public class FinanceViewModel extends ViewModelConfig {
             financeCustomerListUI = new FinanceCustomerListUI();
         }
         return financeCustomerListUI;
+    }
+
+    private AdminTopUpUI adminTopUpUI;
+
+    public AdminTopUpUI getAdminTopUpUI() {
+        return adminTopUpUI;
+    }
+
+    public void setAdminTopUpUI(AdminTopUpUI adminTopUpUI) {
+        this.adminTopUpUI = adminTopUpUI;
     }
 }

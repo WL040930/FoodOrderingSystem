@@ -16,6 +16,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.Popu
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextField;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextFieldEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
 import javafx.scene.Node;
@@ -62,6 +63,10 @@ public class SettingsProfileManagement extends BaseContentPanel {
                 case VENDOR:
                     VendorViewModel.getSettingsViewModel()
                             .navigate(VendorViewModel.getSettingsViewModel().getSettingsPage());
+                    break;
+                case RUNNER:
+                    RunnerViewModel.getSettingsViewModel()
+                            .navigate(RunnerViewModel.getSettingsViewModel().getSettingsPage());
                     break;
                 default:
                     break;
@@ -206,6 +211,34 @@ public class SettingsProfileManagement extends BaseContentPanel {
                         PopupMessage.showMessage("An error occured, please try again", "error", () -> {
                         });
                     }
+                    break;
+                case RUNNER:
+                    RunnerModel runner = UserServices.findRunnerById(this.user.getId());
+                    runner.setId(this.user.getId());
+                    runner.setEmail(this.user.getEmail());
+                    runner.setName(name.getInputValue() != "" ? name.getInputValue() : this.user.getName());
+                    runner.setPassword(
+                            password.getInputValue() != "" ? password.getInputValue() : this.user.getPassword());
+                    runner.setProfilePicture(profilePicture.getSelectedFile() != null
+                            ? Storage.saveFile(profilePicture.getSelectedFile())
+                            : this.user.getProfilePicture());
+                    runner.setRole(this.user.getRole());
+                    runner.setPhoneNumber(
+                            phoneNumber.getInputValue() != "" ? phoneNumber.getInputValue() : runner.getPhoneNumber());
+
+                    RunnerModel saveRunner = UserServices.saveUser(runner);
+
+                    if (saveRunner != null) {
+                        PopupMessage.showMessage("Profile updated successfully!", "success", () -> {
+                            RunnerViewModel.initSettingsViewModel();
+                            RunnerViewModel.getSettingsViewModel()
+                                    .navigate(RunnerViewModel.getSettingsViewModel().getNode());
+                        });
+                    } else {
+                        PopupMessage.showMessage("An error occured, please try again", "error", () -> {
+                        });
+                    }
+
                     break;
                 default:
                     break;

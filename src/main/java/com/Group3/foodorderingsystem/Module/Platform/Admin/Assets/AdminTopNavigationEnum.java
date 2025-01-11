@@ -19,19 +19,20 @@ public enum AdminTopNavigationEnum {
             () -> {
                 AdminViewModel.navigate(AdminViewModel.getFinanceViewModel().getNode());
             }),
-    Noti(
+    Notification(
             "Notification",
             () -> {
-
+                AdminViewModel.navigate(AdminViewModel.getNotificationViewModel().getNode());
             }),
-    SendNoti(
-            "semd noti",
-            () -> {
-            }),
-    SelfSettings(
-            "Self Settings",
+    Settings(
+            "Settings",
             () -> {
                 AdminViewModel.navigate(AdminViewModel.getSettingsViewModel().getNode());
+            }), 
+    Requests(
+            "Requests",
+            () -> {
+                AdminViewModel.navigate(AdminViewModel.getRequestsViewModel().getNode());
             });
 
     private String title;

@@ -1,5 +1,7 @@
 package com.Group3.foodorderingsystem.Module.Platform.Runner.Assets;
 
+import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
+
 public enum RunnerTopNavigationEnum {
 
     Home(
@@ -24,7 +26,12 @@ public enum RunnerTopNavigationEnum {
     Settings(
             "Settings",
             () -> {
-                // CustomerViewModel.navigate(CustomerViewModel.getSettingsViewModel().getNode());
+                RunnerViewModel.navigate(RunnerViewModel.getSettingsViewModel().getNode());
+            }), 
+    Finance(
+            "Finance",
+            () -> {
+                RunnerViewModel.navigate(RunnerViewModel.getTransactionViewModel().getNode());
             });
 
     private String title;

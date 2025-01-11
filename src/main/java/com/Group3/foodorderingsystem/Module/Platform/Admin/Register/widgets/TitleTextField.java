@@ -104,4 +104,11 @@ public class TitleTextField extends VBox {
         }
         return null;
     }
+
+    public TextField getTextField() {
+        if (inputField instanceof TextField) {
+            return (TextField) inputField;
+        }
+        return null;
+    }
 }

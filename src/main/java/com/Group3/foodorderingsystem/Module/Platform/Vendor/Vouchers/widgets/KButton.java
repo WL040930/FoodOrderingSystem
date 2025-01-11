@@ -22,4 +22,19 @@ public class KButton extends Button {
             action.run();
         });
     }
+
+    public static String red = "#FF0000";
+    public static String green = "#32CD32";
+
+    /**
+     * Sets the background color of the button.
+     * 
+     * @param color the desired background color in CSS format (e.g., "#FF0000" for
+     *              red)
+     */
+    public void setBackgroundColor(String color) {
+        if (color != null && !color.isEmpty()) {
+            this.setStyle("-fx-background-color: " + color + ";");
+        }
+    }
 }

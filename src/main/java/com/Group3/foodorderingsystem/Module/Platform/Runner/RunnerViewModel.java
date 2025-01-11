@@ -3,6 +3,11 @@ package com.Group3.foodorderingsystem.Module.Platform.Runner;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
+import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Module.Common.Notification.model.NotificationViewModel;
+import com.Group3.foodorderingsystem.Module.Common.Transaction.model.TransactionViewModel;
+import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Assets.RunnerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Assets.RunnerTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Home.model.RunnerHomeViewModel;
@@ -28,7 +33,9 @@ public class RunnerViewModel {
 
         init();
         initHomeViewModel();
-        // initSettingsViewModel();
+        initSettingsViewModel();
+        initTransactionViewModel();
+        initNotificationViewModel();
     }
 
     /**
@@ -161,5 +168,62 @@ public class RunnerViewModel {
     public static void initHomeViewModel() {
         instance.runnerHomeViewModel = new RunnerHomeViewModel();
         instance.runnerHomeViewModel.init();
+    }
+
+    private TransactionViewModel transactionViewModel;
+
+    public static TransactionViewModel getTransactionViewModel() {
+        return instance.transactionViewModel;
+    }
+
+    public static void setTransactionViewModel(TransactionViewModel transactionViewModel) {
+        instance.transactionViewModel = transactionViewModel;
+    }
+
+    public static void initTransactionViewModel() {
+        instance.transactionViewModel = new TransactionViewModel();
+        instance.transactionViewModel.init();
+    }
+
+    private SettingsViewModel settingsViewModel;
+
+    public static SettingsViewModel getSettingsViewModel() {
+        return instance.settingsViewModel;
+    }
+
+    public static void setSettingsViewModel(SettingsViewModel settingsViewModel) {
+        instance.settingsViewModel = settingsViewModel;
+    }
+
+    public static void initSettingsViewModel() {
+        Object runner = SessionUtil.getRiderFromSession();
+        if (runner instanceof User) {
+            User user = (User) runner;
+            instance.settingsViewModel = new SettingsViewModel(user.getId());
+        } else {
+            throw new IllegalStateException("Runner from session is not a User instance.");
+        }
+        instance.settingsViewModel.init();
+    }
+
+    private NotificationViewModel notificationViewModel;
+
+    public static NotificationViewModel getNotificationViewModel() {
+        return instance.notificationViewModel;
+    }
+
+    public static void setNotificationViewModel(NotificationViewModel notificationViewModel) {
+        instance.notificationViewModel = notificationViewModel;
+    }
+
+    public static void initNotificationViewModel() {
+        Object runner = SessionUtil.getRiderFromSession();
+        if (runner instanceof User) {
+            User user = (User) runner;
+            instance.notificationViewModel = new NotificationViewModel(user.getId());
+        } else {
+            throw new IllegalStateException("Runner from session is not a User instance.");
+        }
+        instance.notificationViewModel.init();
     }
 }

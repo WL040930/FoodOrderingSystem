@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TopUpWithdrawServices",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.Core.Services.TopUpWithdrawServices",
+            "projectName": "FoodOrderingSystem"
+        },
+        {
+            "type": "java",
             "name": "TransactionServices",
             "request": "launch",
             "mainClass": "com.Group3.foodorderingsystem.Core.Services.TransactionServices",

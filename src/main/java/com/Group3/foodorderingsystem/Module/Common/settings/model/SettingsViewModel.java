@@ -7,6 +7,7 @@ import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsPage;
 import com.Group3.foodorderingsystem.Module.Common.settings.ui.SettingsProfileManagement;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
 import javafx.scene.Node;
@@ -29,6 +30,10 @@ public class SettingsViewModel extends ViewModelConfig {
             case VENDOR:
                 VendorViewModel.getSettingsViewModel().setNode(node);
                 VendorViewModel.navigate(VendorViewModel.getSettingsViewModel().getNode());
+                break;
+            case RUNNER:
+                RunnerViewModel.getSettingsViewModel().setNode(node);
+                RunnerViewModel.navigate(RunnerViewModel.getSettingsViewModel().getNode());
                 break;
             default:
                 break;

@@ -1,7 +1,8 @@
-package com.Group3.foodorderingsystem.Core.Model.Entity.Order;
+package com.Group3.foodorderingsystem.Core.Model.Entity.Finance;
 
 import java.util.Date;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

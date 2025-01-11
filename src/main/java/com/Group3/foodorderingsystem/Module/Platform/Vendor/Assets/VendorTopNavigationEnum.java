@@ -22,7 +22,7 @@ public enum VendorTopNavigationEnum {
         Notification(
                         "Notification",
                         () -> {
-                                // Action for Notification
+                                VendorViewModel.navigate(VendorViewModel.getNotificationViewModel().getNode());
                         }),
         Settings(
                         "Settings",
@@ -32,7 +32,7 @@ public enum VendorTopNavigationEnum {
         Revenue(
                         "Revenue",
                         () -> {
-                                // Action for Revenue
+                                VendorViewModel.navigate(VendorViewModel.getTransactionViewModel().getNode());
                         }),
         Vouchers(
                         "Vouchers",
