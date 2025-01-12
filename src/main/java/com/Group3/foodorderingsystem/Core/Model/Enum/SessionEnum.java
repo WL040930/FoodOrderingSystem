@@ -6,6 +6,7 @@ public enum SessionEnum {
     ADMIN("admin"),
     VENDOR("vendor"),
     RIDER("rider"),
+    MANAGER("manager"),
     SELECTED_ORDER("selected order"),
     ORDER_SUMMARY_ENTRY("order summary entry"),;
 

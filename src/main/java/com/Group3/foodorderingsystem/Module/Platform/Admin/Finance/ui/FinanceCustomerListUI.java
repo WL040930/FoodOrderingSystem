@@ -62,9 +62,11 @@ public class FinanceCustomerListUI extends BaseContentPanel {
             AdminViewModel.getFinanceViewModel().navigate(AdminViewModel.getFinanceViewModel().getAdminTopUpUI());
         });
 
-        KButton orderButton = new KButton("View Orders", () -> {
-
+        KButton orderButton = new KButton("Order History", () -> {
+            AdminViewModel.getFinanceViewModel().setAdminOrderHistoryUI(new AdminOrderHistoryUI(customer));
+            AdminViewModel.getFinanceViewModel().navigate(AdminViewModel.getFinanceViewModel().getAdminOrderHistoryUI());
         });
+
         actionBox.getChildren().addAll(viewButton, orderButton);
 
         contentBox.getChildren().add(actionBox);
