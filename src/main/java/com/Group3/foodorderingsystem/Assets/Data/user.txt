@@ -1,1 +1,1 @@
-{"id":"1dd0b94a-27d5-4cff-bae1-2b962a4f06fe","name":"AdminHere","email":"1","password":"1","role":"ADMIN","profilePicture":"d733e20d-5ee3-4c21-983b-314a5b748930.png"}
+{"id":"1dd0b94a-27d5-4cff-bae1-2b962a4f06fe","name":"","email":"1","password":"","role":"ADMIN","profilePicture":"d733e20d-5ee3-4c21-983b-314a5b748930.png"}

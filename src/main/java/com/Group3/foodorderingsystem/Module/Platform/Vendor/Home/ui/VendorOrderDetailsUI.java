@@ -451,6 +451,7 @@ public class VendorOrderDetailsUI extends BorderPane {
 
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.YES, ButtonType.NO);
+        
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 VendorOrderServices.updateOrderStatus(selectedOrder, status);
@@ -460,8 +461,7 @@ public class VendorOrderDetailsUI extends BorderPane {
             }
 
             if (finalFindRider) {
-                //TODO: Find a rider
-                return;
+                VendorOrderServices.assignOrderToRunner(selectedOrder.getOrderId());
             }
             
         });

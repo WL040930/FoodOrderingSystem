@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RunnerStatusEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 
 
@@ -57,6 +59,32 @@ public class VendorOrderServices {
         }
 
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ORDER), orderList);
+    }
+
+    //assign order to runner (change the status to assigning, then add the order id into the runner list)
+    public static void assignOrderToRunner(String orderId) {
+        
+        //first find the first runner that is available and the assigned orderID is not equal to the current orderID
+        List<RunnerModel> runners = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.RUNNER), RunnerModel.class, runner -> runner.getStatus().equals(RunnerStatusEnum.AVAILABLE) && !runner.getOrderIDs().contains(orderId));
+
+        //update the order status to assigning
+        if (!runners.isEmpty())  {
+            RunnerModel availableRunner = runners.get(0);
+            List<RunnerModel> runnerList = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.RUNNER), RunnerModel.class);
+
+            for (RunnerModel runner : runnerList) {
+                if (runner.getId().equals(availableRunner.getId())) {
+                    runner.setStatus(RunnerStatusEnum.ASSIGNING);
+                    List<String> orderList = runner.getOrderIDs();
+                    orderList.add(orderId); 
+                    runner.setorderIDs(orderList);
+                    break;
+                }
+            }
+
+            FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.RUNNER), runnerList);
+        } //TODO: if no runner is available, cancel the order and refund the customer
+
     }
 
 }

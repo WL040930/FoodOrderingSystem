@@ -119,7 +119,7 @@ public class CustomerOrderServices {
         } else if (state.contains("Bandar Tun Razak")) {
             return 6.00;
         } else {
-            return 0.00; // Default fee if the state is not found
+            return 7.00;
         }
     }
 
