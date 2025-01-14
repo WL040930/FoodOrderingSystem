@@ -17,9 +17,11 @@ public class VendorReviewCard {
 
     private VendorModel vendor;
     private Card card;
+    private Runnable onNavigate;
 
-    public VendorReviewCard(VendorModel vendor) {
+    public VendorReviewCard(VendorModel vendor, Runnable onNavigate) {
         this.vendor = vendor;
+        this.onNavigate = onNavigate;
         init();
     }
 
@@ -60,7 +62,7 @@ public class VendorReviewCard {
         ImageView rightArrow = Images.getImageView("arrow-point-to-right.png", 20, 20);
         rightArrow.setCursor(Cursor.HAND); // Set the arrow as clickable
         rightArrow.setOnMouseClicked(e -> {
-            System.out.println("Navigate to Vendor Details, Vendor ID: " + vendor.getId());
+            onNavigate.run();
         });
 
         // Content Box (Including both image and arrow)

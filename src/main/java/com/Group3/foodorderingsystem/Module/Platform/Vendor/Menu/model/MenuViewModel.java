@@ -3,6 +3,7 @@ package com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.model;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Config.ViewModelConfig;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.ui.AddNewItem;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.ui.EditItemUI;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.ui.MenuList;
 
 import javafx.scene.Node;
@@ -41,5 +42,15 @@ public class MenuViewModel extends ViewModelConfig {
 
     public void setAddNewItem(AddNewItem addNewItem) {
         this.addNewItem = addNewItem;
+    }
+
+    private EditItemUI editItemUI;
+
+    public EditItemUI getEditItemUI() {
+        return editItemUI;
+    }
+
+    public void setEditItemUI(EditItemUI editItemUI) {
+        this.editItemUI = editItemUI;
     }
 }

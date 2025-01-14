@@ -11,6 +11,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.HomeUI;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.MenuSelectionUI;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.ShopSelection;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.VendorReview;
 
 import javafx.scene.Node;
 
@@ -143,6 +144,16 @@ public class HomeViewModel extends ViewModelConfig {
             });
             bottomButton.setDisabled(false); // Enable button when cart has items
         }
+    }
+
+    private VendorReview vendorReview;
+
+    public VendorReview getVendorReview() {
+        return vendorReview;
+    }
+    
+    public void setVendorReview(VendorReview vendorReview) {
+        this.vendorReview = vendorReview;
     }
 
 }
