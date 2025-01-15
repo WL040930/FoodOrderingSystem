@@ -40,7 +40,8 @@ public class MenuSelectionUI extends BaseContentPanel {
             Alert confirmationAlert = new Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
             confirmationAlert.setTitle("Confirmation");
             confirmationAlert.setHeaderText(null);
-            confirmationAlert.setContentText("Are you sure you want to navigate back? All items in cart will be removed.");
+            confirmationAlert
+                    .setContentText("Are you sure you want to navigate back? All items in cart will be removed.");
 
             // Check if user confirms the action
             confirmationAlert.showAndWait().ifPresent(response -> {
@@ -56,7 +57,10 @@ public class MenuSelectionUI extends BaseContentPanel {
         VBox content = new VBox();
         content.setSpacing(20);
 
-        VendorReviewCard vendorReviewCard = new VendorReviewCard(vendorModel);
+        VendorReviewCard vendorReviewCard = new VendorReviewCard(vendorModel, () -> {
+            CustomerViewModel.getHomeViewModel().setVendorReview(new VendorReview(vendorModel.getId()));
+            CustomerViewModel.getHomeViewModel().navigate(CustomerViewModel.getHomeViewModel().getVendorReview());
+        });
         content.getChildren().add(vendorReviewCard.getCard());
 
         DynamicSearchBarUI.RenderTemplate<ItemModel> renderTemplate = new MenuItemCard();

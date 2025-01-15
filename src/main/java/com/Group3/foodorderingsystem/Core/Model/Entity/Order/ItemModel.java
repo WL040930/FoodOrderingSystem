@@ -6,27 +6,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ItemModel {
-    
-    private String itemId; 
+
+    private String itemId;
     private String itemName;
     private String itemDescription;
     private double itemPrice;
     private CategoryEnum itemCategory;
     private String itemImage;
     private int itemQuantity;
-    private VendorModel vendorModel; 
+    private VendorModel vendorModel;
+    private boolean isEnabled;
 
     public ItemModel() {
-    }
-
-    public ItemModel(String itemId, String itemName, String itemDescription, double itemPrice, CategoryEnum itemCategory, String itemImage, VendorModel vendorModel) {
-        this.itemId = itemId;
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        this.itemPrice = itemPrice;
-        this.itemCategory = itemCategory;
-        this.itemImage = itemImage;
-        this.vendorModel = vendorModel;
+        this.isEnabled = true;
     }
 
     public String getItemId() {
@@ -55,6 +47,14 @@ public class ItemModel {
 
     public VendorModel getVendorModel() {
         return vendorModel;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 
     public void setItemId(String itemId) {

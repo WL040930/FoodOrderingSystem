@@ -20,4 +20,8 @@ public class ComboBoxWidget extends ComboBox<String> {
     public String getSelectedValue() {
         return this.getSelectionModel().getSelectedItem();
     }
+
+    public void setSelectedValue(String value) {
+        this.getSelectionModel().select(value);
+    }
 }

@@ -2,7 +2,6 @@ package com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.ui;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Locale.Category;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
@@ -22,8 +21,6 @@ import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.widgets.ComboBoxWidget;
 
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 

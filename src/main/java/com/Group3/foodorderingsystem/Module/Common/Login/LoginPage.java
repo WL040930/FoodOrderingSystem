@@ -9,6 +9,7 @@ import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Manager.ManagerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
@@ -141,7 +142,7 @@ public class LoginPage extends Application {
 
             customerStage.show();
         } else if (user.getRole() == RoleEnum.VENDOR) {
-            SessionUtil.setVendorInSession(user); 
+            SessionUtil.setVendorInSession(user);
 
             VendorViewModel vendorViewModel = new VendorViewModel();
             Stage customerStage = new Stage();
@@ -152,11 +153,22 @@ public class LoginPage extends Application {
 
             customerStage.show();
         } else if (user.getRole() == RoleEnum.RUNNER) {
-            SessionUtil.setRiderInSession(user); 
+            SessionUtil.setRiderInSession(user);
 
             RunnerViewModel runnerViewModel = new RunnerViewModel();
             Stage stage = new Stage();
             runnerViewModel.getMainFrame().start(stage);
+
+            Stage currentStage = (Stage) userTextField.getScene().getWindow();
+            currentStage.close();
+
+            stage.show();
+        } else if (user.getRole() == RoleEnum.MANAGER) {
+            SessionUtil.setManagerInSession(user);
+
+            ManagerViewModel managerViewModel = new ManagerViewModel();
+            Stage stage = new Stage();
+            managerViewModel.getMainFrame().start(stage);
 
             Stage currentStage = (Stage) userTextField.getScene().getWindow();
             currentStage.close();

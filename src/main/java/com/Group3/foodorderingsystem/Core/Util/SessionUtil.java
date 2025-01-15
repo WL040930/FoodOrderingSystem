@@ -54,6 +54,14 @@ public class SessionUtil {
         return session.get(SessionEnum.RIDER.getKey());
     }
 
+    public static void setManagerInSession(Object manager) {
+        session.put(SessionEnum.MANAGER.getKey(), manager);
+    }
+
+    public static Object getManagerFromSession() {
+        return session.get(SessionEnum.MANAGER.getKey());
+    }
+
     public static void setSelectedOrderInSession(Object order) {
         session.put(SessionEnum.SELECTED_ORDER.getKey(), order);
     }

@@ -80,4 +80,13 @@ public class VoucherServices {
         }
         return false; // Return false if the voucher was not found
     }
+
+    public static Double getDiscountPrice(String voucherCode, String vendorId, Double totalPrice) {
+        VoucherModel voucher = getApplicableVoucher(voucherCode, UserServices.findVendorById(vendorId));
+        if (voucher == null) 
+            return null; 
+
+        return totalPrice - (totalPrice * voucher.getDiscountRate() / 100);
+    }
+    
 }

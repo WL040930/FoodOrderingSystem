@@ -48,7 +48,14 @@ public class ItemServices {
     }
 
     public static List<ItemModel> getItemByVendor(VendorModel vendorModel) {
-        return getItems().stream().filter(item -> item.getVendorModel().getId().equals(vendorModel.getId()))
+        return getItems().stream()
+                .filter(item -> item.getVendorModel().getId().equals(vendorModel.getId()) && item.isEnabled())
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    public static List<ItemModel> getItemByVendorWithDisabled(VendorModel vendorModel) {
+        return getItems().stream()
+                .filter(item -> item.getVendorModel().getId().equals(vendorModel.getId()))
                 .collect(java.util.stream.Collectors.toList());
     }
 
@@ -73,6 +80,19 @@ public class ItemServices {
         }
 
         return vendorsByCategory;
+    }
+
+    public static void updateItemStatus(ItemModel itemModel, boolean status) {
+        List<ItemModel> items = getItems();
+
+        for (ItemModel item : items) {
+            if (item.getItemId().equals(itemModel.getItemId())) {
+                item.setEnabled(status);
+                break;
+            }
+        }
+
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ITEM), items);
     }
 
 }

@@ -3,6 +3,7 @@ package com.Group3.foodorderingsystem.Core.Services;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
@@ -12,43 +13,52 @@ import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 
-
-
 public class VendorOrderServices {
 
     private static List<OrderModel> orderList() {
         return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
     }
-    
-    //get pending order list
+
+    // get pending order list
     public static List<OrderModel> getOrderList(String type) {
 
         VendorModel vendor = (VendorModel) SessionUtil.getVendorFromSession();
         List<OrderModel> orderList;
 
         if (type.equals("Pending")) {
-            orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getVendor().equals(vendor.getId()) && order.getStatus().toString().equals("PENDING"));
+            orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class,
+                    order -> order.getVendor().equals(vendor.getId())
+                            && order.getStatus().toString().equals("PENDING"));
             Collections.sort(orderList, Comparator.comparing(OrderModel::getTime).reversed());
-            
+
         } else if (type.equals("Active")) {
-            orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getVendor().equals(vendor.getId()) && order.getStatus().toString().equals("PREPARING") );
+            orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class,
+                    order -> order.getVendor().equals(vendor.getId())
+                            && order.getStatus().toString().equals("PREPARING"));
             Collections.sort(orderList, Comparator.comparing(OrderModel::getTime).reversed());
-            
+
         } else if (type.equals("Prepared")) {
-            orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getVendor().equals(vendor.getId()) && (order.getStatus().toString().equals("READY_FOR_PICKUP") || order.getStatus().toString().equals("DELIVERING") || order.getStatus().toString().equals("WAITING_FOR_RIDER")));
+            orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class,
+                    order -> order.getVendor().equals(vendor.getId())
+                            && (order.getStatus().toString().equals("READY_FOR_PICKUP")
+                                    || order.getStatus().toString().equals("DELIVERING")
+                                    || order.getStatus().toString().equals("WAITING_FOR_RIDER")));
             // sort the order by priotise ready for pickup, then sort by time
             orderList = orderList.stream()
-                        .sorted(Comparator.comparing((OrderModel o) -> !o.getStatus().toString().equals("READY_FOR_PICKUP"))
-                                        .thenComparing(OrderModel::getTime, Comparator.reverseOrder()))
-                        .collect(Collectors.toList());
-        } else  {
-            orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getVendor().equals(vendor.getId()) && (order.getStatus().toString().equals("DELIVERED") || order.getStatus().toString().equals("PICKED_UP") || order.getStatus().toString().equals("SERVED")));
+                    .sorted(Comparator.comparing((OrderModel o) -> !o.getStatus().toString().equals("READY_FOR_PICKUP"))
+                            .thenComparing(OrderModel::getTime, Comparator.reverseOrder()))
+                    .collect(Collectors.toList());
+        } else {
+            orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class,
+                    order -> order.getVendor().equals(vendor.getId())
+                            && (order.getStatus().toString().equals("DELIVERED")
+                                    || order.getStatus().toString().equals("PICKED_UP")
+                                    || order.getStatus().toString().equals("SERVED")));
             Collections.sort(orderList, Comparator.comparing(OrderModel::getTime).reversed());
-        } 
+        }
 
         return orderList;
     }
-
 
     public static void updateOrderStatus(OrderModel order, StatusEnum status) {
         List<OrderModel> orderList = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
@@ -63,11 +73,11 @@ public class VendorOrderServices {
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ORDER), orderList);
     }
 
-
-    //retrieve overall rating of the vendor
+    // retrieve overall rating of the vendor
     public static double getOverallRating(String vendorId) {
         List<OrderModel> orderList = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
-        List<OrderModel> vendorOrderList = orderList.stream().filter(order -> order.getVendor().equals(vendorId)).collect(Collectors.toList());
+        List<OrderModel> vendorOrderList = orderList.stream().filter(order -> order.getVendor().equals(vendorId))
+                .collect(Collectors.toList());
         double totalRating = 0;
         int count = 0;
 
