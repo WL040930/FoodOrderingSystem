@@ -113,7 +113,7 @@ public class VendorOrderDetailsUI extends BorderPane {
     }
 
 
-    public VBox getOrderDetails() {
+    private VBox getOrderDetails() {
         VBox orderBox = new VBox(10);
         orderBox.setPadding(new Insets(10, 0, 0, 0));
         Separator separator1 = new Separator();
@@ -176,7 +176,7 @@ public class VendorOrderDetailsUI extends BorderPane {
         return orderBox;
     }
 
-    public VBox getCustomerDetails() {
+    private VBox getCustomerDetails() {
         VBox customerBox = new VBox(10);
         customerBox.setPadding(new Insets(10, 0, 0, 0));
 
@@ -214,7 +214,7 @@ public class VendorOrderDetailsUI extends BorderPane {
 
 
 
-    public VBox getItemsDetails() {
+    private VBox getItemsDetails() {
         VBox itemsBox = new VBox(10);
         itemsBox.setPadding(new Insets(10, 0, 0, 0));
         Separator separator = new Separator();
@@ -248,7 +248,7 @@ public class VendorOrderDetailsUI extends BorderPane {
         return itemsBox;
     }
 
-    public VBox getPaymentDetails() {
+    private VBox getPaymentDetails() {
 
 
         Separator separator1 = new Separator();

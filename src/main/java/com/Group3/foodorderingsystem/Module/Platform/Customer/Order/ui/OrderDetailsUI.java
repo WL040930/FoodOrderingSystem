@@ -45,7 +45,6 @@ public class OrderDetailsUI extends BorderPane {
     public OrderDetailsUI() {
 
         this.setStyle("-fx-background-color: #f8fafc;");
-        System.out.println(selectedOrder.getItems().get(0).getItemName());
 
         VBox contentBox = new VBox(15);
         contentBox.setPadding(new Insets(20));
@@ -69,19 +68,15 @@ public class OrderDetailsUI extends BorderPane {
         VBox fixedVBox = createBottomButtonContainer(selectedOrder);
 
         // Create a back button
-        TitleBackButton backButton = new TitleBackButton("", () -> {
+        TitleBackButton backButton = new TitleBackButton(vendor.getShopName(), () -> {
                 SessionUtil.setSelectedOrderInSession(null);
                 // Navigate back to OrderHistoryUI
                 CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
             });
 
-        // Create a label for the shop name
-        Label shopNameLabel = new Label(selectedOrder != null ? vendor.getShopName() : "Shop Name");
-        shopNameLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-
         // Create a VBox for the top section
         HBox topContainer = new HBox(10);
-        topContainer.getChildren().addAll(backButton, shopNameLabel);
+        topContainer.getChildren().addAll(backButton);
         topContainer.setAlignment(Pos.CENTER_LEFT);
 
         // Create a container for the back button and fixedVBox

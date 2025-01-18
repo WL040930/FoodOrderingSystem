@@ -21,7 +21,8 @@ public class RunnerOrderServices {
         RunnerModel runner = (RunnerModel) SessionUtil.getRiderFromSession();
         List<OrderModel> orders = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> {
             String riderId = order.getRider();
-            return riderId != null && riderId.equals(runner.getId());
+            StatusEnum status = order.getStatus();
+            return riderId != null && riderId.equals(runner.getId() ) && status == StatusEnum.DELIVERED;
         });
         Collections.sort(orders, Comparator.comparing(OrderModel::getTime).reversed());
 

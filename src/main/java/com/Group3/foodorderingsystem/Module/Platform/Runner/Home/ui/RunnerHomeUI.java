@@ -21,7 +21,7 @@ import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Order.ui.OrderDetailsUI;
-
+import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -181,10 +181,10 @@ public class RunnerHomeUI extends VBox {
 
 
         viewDetailsButton.setOnAction(e -> {
-            //TODO:
             SessionUtil.setSelectedOrderInSession(order);
-            CustomerViewModel.getOrderViewModel().setOrderDetailsUI(new OrderDetailsUI());
-            CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderDetailsUI());
+            RunnerViewModel.getHomeViewModel().setRunnerViewDetailsUI(new RunnerViewDetailsUI());
+            RunnerViewModel.getHomeViewModel().navigate(RunnerViewModel.getHomeViewModel().getRunnerViewDetailsUI());
+            
         });
 
 
