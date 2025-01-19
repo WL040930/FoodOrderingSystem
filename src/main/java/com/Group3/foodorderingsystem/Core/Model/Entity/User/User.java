@@ -61,29 +61,24 @@ public class User {
         return this;
     }
 
-    public User setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
-    public User setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
-    public User setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
-        return this;
     }
 
-    public User setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
-        return this;
     }
 
-    public User setRole(RoleEnum role) {
+    public void setRole(RoleEnum role) {
         this.role = role;
-        return this;
     }
 
     public String getProfilePicture() {
