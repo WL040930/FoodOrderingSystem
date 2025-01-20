@@ -67,6 +67,151 @@
 
 
 
+.availability-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #BCCCDC;
+}
+.available-button, .unavailable-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 5px 20px;
+    -fx-cursor: hand;
+}
+
+.available-button {
+    -fx-background-color: #66BB6A; 
+}
+
+.available-button:selected, .available-button:hover {
+    -fx-background-color: #388E3C; 
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 2); 
+}
+
+/* Specific styling for unavailable button */
+.unavailable-button {
+    -fx-background-color: #EF9A9A; 
+}
+
+.unavailable-button:selected, .unavailable-button:hover {
+    -fx-background-color: #D32F2F; 
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 2); 
+}
+
+.status-info {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.reject-order-button, .accept-order-button{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-pref-width: 430px;
+    -fx-max-width: 430px;
+    -fx-min-width: 430px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+}
+
+.accept-order-button {
+    -fx-background-color: #4CAF50;
+}
+
+.reject-order-button {
+    -fx-background-color: #C62828;
+}
+
+.press-button {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #334e68;
+    -fx-pref-width: 430px;
+    -fx-max-width: 430px;
+    -fx-min-width: 430px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+}
+
+.total-price-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #334e68;
+}
+
+.total-price-amount-label {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #334e68;
+}
+
+
+.detail-title-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+
+.status-label {
+    -fx-font-size: 14px;
+    -fx-preferred-width: 320px;
+    -fx-max-width: 275px;
+    -fx-min-width: 275px;
+}
+
+
+.status-value-label {
+    -fx-font-size: 14px;
+    -fx-preferred-width: 185px;
+    -fx-max-width: 185px;
+    -fx-min-width: 185px;
+    -fx-font-weight: bold;
+}
+
+.delivery-address-label {
+    -fx-font-size: 14px;
+    -fx-preferred-width: 350px;
+    -fx-max-width: 350px;
+    -fx-wrap-text: true;
+    -fx-min-width: 350px;
+}
+
+.item-quantity-label {
+    -fx-font-size: 14px;
+    -fx-preferred-width: 50px;
+    -fx-max-width: 50px;
+    -fx-min-width: 50px;
+}
+
+.item-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-preferred-width: 300px;
+    -fx-max-width: 300px;
+    -fx-min-width: 300px;
+    -fx-text-alignment: left;
+    -fx-wrap-text: true;
+}
+
+.price-label {
+    -fx-font-size: 14px;
+    -fx-preferred-width: 100px;
+    -fx-max-width: 100px;
+    -fx-min-width: 100px;
+}
+
+.separator {
+    -fx-background-color: #d3d3d3;
+    -fx-pref-width: 450px;
+    -fx-max-width: 450px;
+    -fx-min-width: 450px;
+    -fx-pref-height: 3px;
+    -fx-max-height: 3px;
+    -fx-min-height: 3px;
+}
 
 .order-id-label {
     -fx-font-weight: bold;
@@ -98,32 +243,6 @@
     -fx-font-size: 12px;
     -fx-font-weight: bold;  /* Bold for importance */
 }
-
-/* Specific styles for different statuses */
-.status-pending {
-    -fx-text-fill: #FFA500;  
-}
-
-.status-rejected {
-    -fx-text-fill: #FF0000;  
-}
-
-.status-group1 {
-    -fx-text-fill: #32CD32;  
-}
-
-.status-group2 {
-    -fx-text-fill: #1E90FF;  
-}
-
-.status-readyforpickup {
-    -fx-text-fill: #00CED1;  
-}
-
-.status-cancelled {
-    -fx-text-fill: #FF0000;  
-}
-
 
 /* Styling for the entire order box */
 .order-container {

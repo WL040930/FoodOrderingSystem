@@ -7,8 +7,6 @@ import com.Group3.foodorderingsystem.Module.Platform.Vendor.Home.ui.VendorOrderL
 
 import javafx.scene.Node;
 
-import javafx.scene.Node;
-
 public class HomeViewModel extends ViewModelConfig {
 
     private VendorOrderListUI vendorOrderListUI;
