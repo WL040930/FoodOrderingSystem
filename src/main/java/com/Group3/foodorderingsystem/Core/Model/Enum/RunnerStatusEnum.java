@@ -4,6 +4,6 @@ public enum RunnerStatusEnum {
     
     UNAVAILABLE,
     AVAILABLE,
-    ASSIGNED,
+    ASSIGNING,
     DELIVERING;
 }
