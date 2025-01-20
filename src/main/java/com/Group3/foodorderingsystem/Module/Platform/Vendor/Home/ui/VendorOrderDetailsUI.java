@@ -113,7 +113,7 @@ public class VendorOrderDetailsUI extends BorderPane {
     }
 
 
-    private VBox getOrderDetails() {
+    public VBox getOrderDetails() {
         VBox orderBox = new VBox(10);
         orderBox.setPadding(new Insets(10, 0, 0, 0));
         Separator separator1 = new Separator();
@@ -176,7 +176,7 @@ public class VendorOrderDetailsUI extends BorderPane {
         return orderBox;
     }
 
-    private VBox getCustomerDetails() {
+    public VBox getCustomerDetails() {
         VBox customerBox = new VBox(10);
         customerBox.setPadding(new Insets(10, 0, 0, 0));
 
@@ -214,7 +214,7 @@ public class VendorOrderDetailsUI extends BorderPane {
 
 
 
-    private VBox getItemsDetails() {
+    public VBox getItemsDetails() {
         VBox itemsBox = new VBox(10);
         itemsBox.setPadding(new Insets(10, 0, 0, 0));
         Separator separator = new Separator();
@@ -248,8 +248,13 @@ public class VendorOrderDetailsUI extends BorderPane {
         return itemsBox;
     }
 
-    private VBox getPaymentDetails() {
-
+    public VBox getPaymentDetails() {
+        Double deliveryFee = 0.0;
+        if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
+            deliveryFee = 5.0;
+        } else {
+            deliveryFee = 0.0;
+        }
 
         Separator separator1 = new Separator();
         separator1.getStyleClass().add("separator");
@@ -257,7 +262,7 @@ public class VendorOrderDetailsUI extends BorderPane {
         Separator separator2 = new Separator();
         separator2.getStyleClass().add("separator");
 
-        Double subtotal = selectedOrder.getSubTotalPrice();
+        Double subtotal = selectedOrder.getTotalPrice() - deliveryFee;
         Double totalPrice = selectedOrder.getTotalPrice();
         VBox paymentBox = new VBox(10);
         paymentBox.setPadding(new Insets(10, 0, 0, 0));
@@ -283,7 +288,7 @@ public class VendorOrderDetailsUI extends BorderPane {
         HBox deliveryFeeBox = new HBox(10);
         Label deliveryFeeLabel = new Label("Delivery Fee:");
         deliveryFeeLabel.getStyleClass().add("subtotal-label");
-        Label deliveryFeeAmountLabel = new Label("RM" + String.format("%.2f", selectedOrder.getDeliveryFee()));
+        Label deliveryFeeAmountLabel = new Label("RM" + String.format("%.2f", deliveryFee));
         deliveryFeeAmountLabel.getStyleClass().add("subtotal-amount-label");
         deliveryFeeBox.getChildren().addAll(deliveryFeeLabel, deliveryFeeAmountLabel);
 
@@ -451,7 +456,6 @@ public class VendorOrderDetailsUI extends BorderPane {
 
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.YES, ButtonType.NO);
-        
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 VendorOrderServices.updateOrderStatus(selectedOrder, status);
@@ -461,7 +465,8 @@ public class VendorOrderDetailsUI extends BorderPane {
             }
 
             if (finalFindRider) {
-                VendorOrderServices.assignOrderToRunner(selectedOrder.getOrderId());
+                //TODO: Find a rider
+                return;
             }
             
         });
