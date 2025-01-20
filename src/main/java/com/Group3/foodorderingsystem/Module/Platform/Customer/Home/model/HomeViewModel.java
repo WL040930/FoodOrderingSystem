@@ -12,7 +12,6 @@ import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.HomeUI;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.MenuSelectionUI;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.ShopSelection;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.VendorReview;
-import com.Group3.foodorderingsystem.Module.Platform.Customer.Order.ui.OrderSummaryUI;
 
 import javafx.scene.Node;
 
@@ -141,8 +140,7 @@ public class HomeViewModel extends ViewModelConfig {
             bottomButton.setText("Check Out (Total of " + size + " Items: RM " + String.format("%.2f", price) + ")");
             bottomButton.setAction(() -> {
                 // Handle checkout logic
-                CustomerViewModel.getOrderViewModel().setOrderSummaryUI(new OrderSummaryUI());
-                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderSummaryUI());
+                System.out.println("Proceeding to Checkout...");
             });
             bottomButton.setDisabled(false); // Enable button when cart has items
         }
