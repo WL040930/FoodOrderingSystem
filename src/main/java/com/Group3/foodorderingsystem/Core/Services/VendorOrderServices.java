@@ -1,8 +1,15 @@
 package com.Group3.foodorderingsystem.Core.Services;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
@@ -83,8 +90,54 @@ public class VendorOrderServices {
             }
 
             FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.RUNNER), runnerList);
-        } //TODO: if no runner is available, cancel the order and refund the customer
+        } else {
+            //set the order status to cancelled
+            OrderModel order = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, o -> o.getOrderId().equals(orderId)).get(0);
+            updateOrderStatus(order, StatusEnum.CANCELLED);
+
+            //refund the customer
+            CustomerOrderServices.setBalance(order.getCustomer(), order.getTotalPrice(), "customer");
+
+            //deduct the vendor balance
+            CustomerOrderServices.setBalance(order.getVendor(), -1 * order.getSubTotalPrice(), "vendor");
+
+            //TODO: send notification to vendor and customer
+        }
 
     }
+
+    //get the orders grouped by rating
+    public static Map<Integer, List<OrderModel>> getOrdersGroupedByRating(VendorModel vendor) {
+        List<OrderModel> orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getVendor().equals(vendor.getId()) && order.getRating() != 0);
+        Map<Integer, List<OrderModel>> ratingMap = new HashMap<>();
+
+        for (OrderModel order : orderList) {
+            Integer rating = order.getRating();
+            ratingMap.computeIfAbsent(rating, k -> new ArrayList<>()).add(order);
+        }
+
+        return ratingMap;
+    }
+
+
+    public static List<OrderModel> filterOrders(List<OrderModel> orders, String filter) {
+        LocalDate now = LocalDate.now();
+        return orders.stream().filter(order -> {
+            Date orderDate = order.getTime();
+            LocalDate localOrderDate = orderDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            switch (filter) {
+                case "Day":
+                    return ChronoUnit.DAYS.between(localOrderDate, now) <= 1;
+                case "Week":
+                    return ChronoUnit.WEEKS.between(localOrderDate, now) <= 1;
+                case "Month":
+                    return ChronoUnit.MONTHS.between(localOrderDate, now) <= 1;
+                default:
+                    return true;
+            }
+        }).collect(Collectors.toList());
+    }
+
+    
 
 }

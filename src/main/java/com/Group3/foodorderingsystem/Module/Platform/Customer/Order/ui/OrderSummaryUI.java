@@ -8,6 +8,7 @@ import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.HomeUI;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -285,8 +286,8 @@ public class OrderSummaryUI extends VBox {
                 // Clear session items after placing the order
                 CustomerOrderServices.placeOrder(orderMethod, deliveryAddress, state);
                 SessionUtil.setItemsInSession(null);
+                CustomerViewModel.initHomeViewModel();
                 CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Pending"));
-
 
             }
         }

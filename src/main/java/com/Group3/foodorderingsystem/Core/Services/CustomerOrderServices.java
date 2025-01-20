@@ -6,16 +6,22 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.Date;
+
 import com.itextpdf.layout.Document;
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.awt.Desktop;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
+
 
 
 
@@ -162,22 +168,45 @@ public class CustomerOrderServices {
         saveOrderToFile(order);
 
         //deduct the balance from customer
-        customer.setBalance(customer.getBalance() - (subTotalPrice + deliveryFee));
-
-        // Save customer to file
-        List<CustomerModel> customers = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), CustomerModel.class);
-        for (CustomerModel c : customers) {
-            if (c.getId().equals(customer.getId())) {
-                c.setBalance(customer.getBalance());
-                break;
-            }
-        }
-        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
-
+        setBalance(customer.getId(), -1 * (subTotalPrice + deliveryFee), "customer");
 
         // Clear only item from session
         SessionUtil.setItemsInSession(null);
 
+    }
+
+    //customer set balance, accpet jd, amoun
+    public static void setBalance(String entityId, double amount, String entityType) {
+        List<?> entities;
+    
+        switch (entityType.toLowerCase()) {
+            case "customer":
+                entities = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), CustomerModel.class);
+                break;
+            case "vendor":
+                entities = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid entity type: " + entityType);
+        }
+
+        for (Object entity : entities) {
+            if (entity instanceof CustomerModel) {
+                CustomerModel customer = (CustomerModel) entity;
+                if (customer.getId().equals(entityId)) {
+                    customer.setBalance(customer.getBalance() + amount);
+                    break;
+                }
+            } else if (entity instanceof VendorModel) {
+                VendorModel vendor = (VendorModel) entity;
+                if (vendor.getId().equals(entityId)) {
+                    vendor.setRevenue(vendor.getRevenue() + amount);
+                    break;
+                }
+            }
+        }
+    
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.valueOf(entityType.toUpperCase())), entities);
     }
 
 

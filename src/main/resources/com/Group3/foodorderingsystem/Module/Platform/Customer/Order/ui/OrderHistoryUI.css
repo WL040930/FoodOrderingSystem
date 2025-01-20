@@ -152,3 +152,11 @@
     -fx-background-radius: 20;  
     -fx-border-radius: 20;  
 }
+
+.filter-combobox {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+}

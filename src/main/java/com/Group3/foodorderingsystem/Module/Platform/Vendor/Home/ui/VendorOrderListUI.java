@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
+import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
 import com.Group3.foodorderingsystem.Core.Services.VendorOrderServices;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
@@ -17,6 +18,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -89,6 +91,16 @@ public class VendorOrderListUI extends VBox{
         VBox allOrders = new VBox(15);
         allOrders.setPadding(new Insets(30, 0, 0, 15));
         allOrders.setStyle("-fx-background-color: #f8fafc;");
+
+        HBox filterBox = new HBox(10);
+        ComboBox<String> filterComboBox = new ComboBox<>();
+        filterBox.setAlignment(Pos.CENTER_RIGHT);
+        filterComboBox.getStyleClass().add("filter-combobox");
+        filterComboBox.getItems().addAll("All", "Day", "Week", "Month");
+        filterComboBox.setValue("All");
+
+        filterBox.getChildren().add(filterComboBox);
+        allOrders.getChildren().add(filterBox);
     
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(allOrders);
@@ -101,15 +113,33 @@ public class VendorOrderListUI extends VBox{
             allOrders.getChildren().add(noOrdersLabel);
         } else {
             for (OrderModel order : orders) {
-                HBox orderBox = createPendingOrderBox(order);
+                HBox orderBox = createOrderBox(order);
                 allOrders.getChildren().add(orderBox);
             }
         }
+
+        filterComboBox.setOnAction(e -> {
+            String filter = filterComboBox.getValue();
+            List<OrderModel> filteredOrders = VendorOrderServices.filterOrders(orders, filter);
+            allOrders.getChildren().clear();
+            allOrders.getChildren().add(filterBox);
+    
+            if (filteredOrders.isEmpty()) {
+                Label noOrdersLabel = new Label(emptyMessage);
+                noOrdersLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #666;");
+                allOrders.getChildren().add(noOrdersLabel);
+            } else {
+                for (OrderModel order : filteredOrders) {
+                    HBox orderBox = createOrderBox(order);
+                    allOrders.getChildren().add(orderBox);
+                }
+            }
+        });
     
         return scrollPane;
     }
 
-        private HBox createPendingOrderBox(OrderModel order) {
+    private HBox createOrderBox(OrderModel order) {
         VBox orderContainer = new VBox(5); // Main container for each order
         orderContainer.setPadding(new Insets(10));
         orderContainer.getStyleClass().add("order-container");
