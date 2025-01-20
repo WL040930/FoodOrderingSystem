@@ -12,6 +12,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.HomeUI;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.MenuSelectionUI;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.ShopSelection;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.VendorReview;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Order.ui.OrderSummaryUI;
 
 import javafx.scene.Node;
 
