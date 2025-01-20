@@ -96,24 +96,9 @@
 
 .order-option-combobox {
     -fx-font-size: 16px;
+    -fx-pref-width: 430px;
     -fx-max-width: 450px;
     -fx-min-width: 450px;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-}
-
-.state-combobox {
-    -fx-font-size: 16px;
-    -fx-max-width: 220px;
-    -fx-min-width: 220px;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-}
-
-.area-combobox {
-    -fx-font-size: 16px;
-    -fx-max-width: 220px;
-    -fx-min-width: 220px;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
 }
@@ -121,8 +106,8 @@
 .address-box {
     -fx-max-width: 450px;
     -fx-min-width: 450px;
-    -fx-max-height: 300px;
-    -fx-min-height: 300px;
+    -fx-max-height: 200px;
+    -fx-min-height: 200px;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
 }
