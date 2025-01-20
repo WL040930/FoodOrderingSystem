@@ -12,48 +12,6 @@
     -fx-border-width: 3px 0 0 0; /* Set border width for top */
 }
 
-.reject-order-button, .accept-order-button{
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
-    -fx-pref-width: 430px;
-    -fx-max-width: 430px;
-    -fx-min-width: 430px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-}
-
-.accept-order-button {
-    -fx-background-color: #4CAF50;
-}
-
-.reject-order-button {
-    -fx-background-color: #C62828;
-}
-
-.reorder-button {
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
-    -fx-background-color: #334e68;
-    -fx-pref-width: 430px;
-    -fx-max-width: 430px;
-    -fx-min-width: 430px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-}
-
-.generate-receipt-button {
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
-    -fx-background-color: #334e68;
-    -fx-pref-width: 430px;
-    -fx-max-width: 430px;
-    -fx-min-width: 430px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-}
 
 .vendor-label {
     -fx-font-size: 18px;

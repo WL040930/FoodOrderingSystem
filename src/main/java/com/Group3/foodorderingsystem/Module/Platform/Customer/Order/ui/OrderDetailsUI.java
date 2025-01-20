@@ -68,19 +68,15 @@ public class OrderDetailsUI extends BorderPane {
         VBox fixedVBox = createBottomButtonContainer(selectedOrder);
 
         // Create a back button
-        TitleBackButton backButton = new TitleBackButton("", () -> {
+        TitleBackButton backButton = new TitleBackButton(vendor.getShopName(), () -> {
                 SessionUtil.setSelectedOrderInSession(null);
                 // Navigate back to OrderHistoryUI
                 CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
             });
 
-        // Create a label for the shop name
-        Label shopNameLabel = new Label(selectedOrder != null ? vendor.getShopName() : "Shop Name");
-        shopNameLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-
         // Create a VBox for the top section
         HBox topContainer = new HBox(10);
-        topContainer.getChildren().addAll(backButton, shopNameLabel);
+        topContainer.getChildren().addAll(backButton);
         topContainer.setAlignment(Pos.CENTER_LEFT);
 
         // Create a container for the back button and fixedVBox
@@ -300,17 +296,12 @@ public class OrderDetailsUI extends BorderPane {
     }
 
     public VBox getPaymentDetails() {
-        Double deliveryFee = 0.0;
-        if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
-            deliveryFee = 5.0;
-        } else {
-            deliveryFee = 0.0;
-        }
+
 
         Separator separator1 = new Separator();
         separator1.getStyleClass().add("separator");
 
-        Double subtotal = selectedOrder.getTotalPrice() - deliveryFee;
+        Double subtotal = selectedOrder.getSubTotalPrice();
         Double totalPrice = selectedOrder.getTotalPrice();
         VBox paymentBox = new VBox(10);
         paymentBox.setPadding(new Insets(10, 0, 0, 0));
@@ -325,7 +316,7 @@ public class OrderDetailsUI extends BorderPane {
         HBox deliveryFeeBox = new HBox(10);
         Label deliveryFeeLabel = new Label("Delivery Fee:");
         deliveryFeeLabel.getStyleClass().add("subtotal-label");
-        Label deliveryFeeAmountLabel = new Label("RM" + String.format("%.2f", deliveryFee));
+        Label deliveryFeeAmountLabel = new Label("RM" + String.format("%.2f", selectedOrder.getDeliveryFee()));
         deliveryFeeAmountLabel.getStyleClass().add("subtotal-amount-label");
         deliveryFeeBox.getChildren().addAll(deliveryFeeLabel, deliveryFeeAmountLabel);
 
