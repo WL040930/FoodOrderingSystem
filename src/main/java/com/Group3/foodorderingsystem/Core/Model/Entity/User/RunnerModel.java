@@ -1,5 +1,8 @@
 package com.Group3.foodorderingsystem.Core.Model.Entity.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.RunnerStatusEnum;
 

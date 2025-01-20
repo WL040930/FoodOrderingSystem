@@ -1,11 +1,11 @@
 package com.Group3.foodorderingsystem.Module.Platform.Runner.Home.ui;
 
-import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
-import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-<<<<<<< HEAD
-public class RunnerHomeUI extends BaseContentPanel {
-=======
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
@@ -29,6 +29,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
@@ -45,15 +46,12 @@ public class RunnerHomeUI extends VBox {
 
     RunnerModel runner;
     List<OrderModel> orders = RunnerOrderServices.listPastOrders();
->>>>>>> parent of 8a1e738 (order refund)
     
     public RunnerHomeUI() {
-        super();
+        runner = (RunnerModel) SessionUtil.getRiderFromSession();
 
-        setHeader(new TitleBackButton("Runner Panel"));
+        initUI();
     }
-<<<<<<< HEAD
-=======
 
     private void initUI() {
 
@@ -109,6 +107,16 @@ public class RunnerHomeUI extends VBox {
         allOrders.setPadding(new Insets(30, 0, 0, 15));
         allOrders.setStyle("-fx-background-color: #f8fafc;");
     
+        HBox filterBox = new HBox(10);
+        ComboBox<String> filterComboBox = new ComboBox<>();
+        filterBox.setAlignment(Pos.CENTER_RIGHT);
+        filterComboBox.getStyleClass().add("filter-combobox");
+        filterComboBox.getItems().addAll("All", "Day", "Week", "Month");
+        filterComboBox.setValue("All");
+
+        filterBox.getChildren().add(filterComboBox);
+        allOrders.getChildren().add(filterBox);
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(allOrders);
         scrollPane.setFitToWidth(true);
@@ -125,6 +133,24 @@ public class RunnerHomeUI extends VBox {
             }
         }
     
+        filterComboBox.setOnAction(e -> {
+            String filter = filterComboBox.getValue();
+            List<OrderModel> filteredOrders = VendorOrderServices.filterOrders(orders, filter);
+            allOrders.getChildren().clear();
+            allOrders.getChildren().add(filterBox);
+    
+            if (filteredOrders.isEmpty()) {
+                Label noOrdersLabel = new Label(emptyMessage);
+                noOrdersLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #666;");
+                allOrders.getChildren().add(noOrdersLabel);
+            } else {
+                for (OrderModel order : filteredOrders) {
+                    HBox orderBox = createOrderBox(order);
+                    allOrders.getChildren().add(orderBox);
+                }
+            }
+        });
+        
         return scrollPane;
     }
 
@@ -550,5 +576,4 @@ public class RunnerHomeUI extends VBox {
     }
 
     
->>>>>>> parent of 8a1e738 (order refund)
 }

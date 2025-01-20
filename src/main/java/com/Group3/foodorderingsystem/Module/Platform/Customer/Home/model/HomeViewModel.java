@@ -141,7 +141,8 @@ public class HomeViewModel extends ViewModelConfig {
             bottomButton.setText("Check Out (Total of " + size + " Items: RM " + String.format("%.2f", price) + ")");
             bottomButton.setAction(() -> {
                 // Handle checkout logic
-                System.out.println("Proceeding to Checkout...");
+                CustomerViewModel.getOrderViewModel().setOrderSummaryUI(new OrderSummaryUI());
+                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderSummaryUI());
             });
             bottomButton.setDisabled(false); // Enable button when cart has items
         }
