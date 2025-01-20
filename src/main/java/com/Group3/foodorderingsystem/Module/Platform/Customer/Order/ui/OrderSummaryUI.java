@@ -206,7 +206,10 @@ public class OrderSummaryUI extends VBox {
                 showDialog("Order Placed", null, "Your order has been successfully placed.");
                 // Clear session items after placing the order
                 SessionUtil.setItemsInSession(null);
+<<<<<<< HEAD
                 CustomerOrderServices.placeOrder(orderMethod, deliveryAddress);
+=======
+>>>>>>> parent of 8a1e738 (order refund)
                 CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Pending"));
 
 

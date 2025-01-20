@@ -3,7 +3,6 @@ package com.Group3.foodorderingsystem.Core.Services;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
@@ -86,6 +85,7 @@ public class VendorOrderServices {
                 totalRating += order.getRating();
                 count++;
             }
+<<<<<<< HEAD
         }
 
         if (count == 0) {
@@ -102,6 +102,12 @@ public class VendorOrderServices {
             }
         }
         return null;
+=======
+
+            FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.RUNNER), runnerList);
+        } //TODO: if no runner is available, cancel the order and refund the customer
+
+>>>>>>> parent of 8a1e738 (order refund)
     }
 
 }

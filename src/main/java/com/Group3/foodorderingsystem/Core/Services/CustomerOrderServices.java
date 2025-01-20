@@ -17,6 +17,11 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> parent of 8a1e738 (order refund)
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
@@ -100,12 +105,20 @@ public class CustomerOrderServices {
         // Save order to file
         saveOrderToFile(order);
 
+<<<<<<< HEAD
         // deduct the balance from customer
         customer.setBalance(customer.getBalance() - totalPrice);
 
         // Save customer to file
         List<CustomerModel> customers = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.CUSTOMER),
                 CustomerModel.class);
+=======
+        //deduct the balance from customer
+        customer.setBalance(customer.getBalance() - (subTotalPrice + deliveryFee));
+
+        // Save customer to file
+        List<CustomerModel> customers = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), CustomerModel.class);
+>>>>>>> parent of 8a1e738 (order refund)
         for (CustomerModel c : customers) {
             if (c.getId().equals(customer.getId())) {
                 c.setBalance(customer.getBalance());
@@ -113,12 +126,21 @@ public class CustomerOrderServices {
             }
         }
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 8a1e738 (order refund)
 
         // Clear only item from session
         SessionUtil.setItemsInSession(null);
 
     }
 
+<<<<<<< HEAD
+=======
+
+    
+>>>>>>> parent of 8a1e738 (order refund)
     // cancel order
     public static void cancelOrder(String orderId) {
         List<OrderModel> orders = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
