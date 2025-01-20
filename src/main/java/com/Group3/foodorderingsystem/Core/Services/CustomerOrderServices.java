@@ -21,6 +21,9 @@ import com.itextpdf.layout.property.UnitValue;
 =======
 
 
+<<<<<<< HEAD
+>>>>>>> parent of 8a1e738 (order refund)
+=======
 >>>>>>> parent of 8a1e738 (order refund)
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
@@ -118,6 +121,9 @@ public class CustomerOrderServices {
 
         // Save customer to file
         List<CustomerModel> customers = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), CustomerModel.class);
+<<<<<<< HEAD
+>>>>>>> parent of 8a1e738 (order refund)
+=======
 >>>>>>> parent of 8a1e738 (order refund)
         for (CustomerModel c : customers) {
             if (c.getId().equals(customer.getId())) {
@@ -127,6 +133,10 @@ public class CustomerOrderServices {
         }
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 8a1e738 (order refund)
 =======
 
 >>>>>>> parent of 8a1e738 (order refund)
@@ -137,7 +147,10 @@ public class CustomerOrderServices {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 8a1e738 (order refund)
 
     
 >>>>>>> parent of 8a1e738 (order refund)

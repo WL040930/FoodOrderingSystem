@@ -207,7 +207,10 @@ public class OrderSummaryUI extends VBox {
                 // Clear session items after placing the order
                 SessionUtil.setItemsInSession(null);
 <<<<<<< HEAD
+<<<<<<< HEAD
                 CustomerOrderServices.placeOrder(orderMethod, deliveryAddress);
+=======
+>>>>>>> parent of 8a1e738 (order refund)
 =======
 >>>>>>> parent of 8a1e738 (order refund)
                 CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Pending"));
