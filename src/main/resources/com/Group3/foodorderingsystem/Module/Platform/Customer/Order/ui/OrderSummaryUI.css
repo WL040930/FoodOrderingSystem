@@ -199,3 +199,34 @@
 }
 
 
+.voucher-textfield {
+    -fx-pref-width: 200px;
+    -fx-max-width: 200px;
+    -fx-min-height: 30px;
+    -fx-font-size: 14px;
+    -fx-padding: 4px;
+}
+
+.voucher-message-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+}
+
+.voucher-message-success {
+    -fx-text-fill: green;
+}
+
+.voucher-message-error {
+    -fx-text-fill: red;
+}
+
+.apply-voucher-button {
+    -fx-background-color: #4A5568;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+}
+
+
+

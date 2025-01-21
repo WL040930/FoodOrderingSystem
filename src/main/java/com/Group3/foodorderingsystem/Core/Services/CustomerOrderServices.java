@@ -6,23 +6,20 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.Date;
 
 import com.itextpdf.layout.Document;
 import java.io.IOException;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.awt.Desktop;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.VoucherModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
@@ -118,8 +115,10 @@ public class CustomerOrderServices {
             return 7.50;
         } else if (state.contains("Bandar Tun Razak")) {
             return 6.00;
-        } else {
+        } else if (state.contains("Putrajaya")) {
             return 7.00;
+        } else {
+            return 0.00;
         }
     }
 
@@ -129,7 +128,7 @@ public class CustomerOrderServices {
     }
 
     // place order. it will accept order method, delivery address (but not required)
-    public static void placeOrder(OrderMethodEnum orderMethod, String deliveryAddress, String state) {
+    public static void placeOrder(OrderMethodEnum orderMethod, String deliveryAddress, String state, Double voucherRate) {
         List<ItemModel> items = SessionUtil.getItemsFromSession();
         CustomerModel customer = SessionUtil.getCustomerFromSession();
         VendorModel vendor = items.get(0).getVendorModel();
@@ -156,6 +155,8 @@ public class CustomerOrderServices {
         order.setDeliveryAddress(deliveryAddress);
         order.setVendor(vendor.getId());
         order.setArea(state);
+        order.setVoucherRate(voucherRate);
+        order.setTotalPrice(subTotalPrice + deliveryFee - (subTotalPrice * voucherRate / 100));
 
         // Save order to file
         saveOrderToFile(order);
@@ -407,6 +408,22 @@ public class CustomerOrderServices {
         }
 
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ORDER), orders);
+    }
+
+
+    // voucher code validation
+    public static double validateVoucherCode(String voucherCode) {
+        String vendorID = SessionUtil.getItemsFromSession().get(0).getVendorModel().getId();
+        List<VoucherModel> voucher = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VOUCHER), VoucherModel.class,
+                v -> v.getVendor().getId().equals(vendorID) && v.getVoucherCode().toLowerCase().equals(voucherCode.toLowerCase()));
+
+        // return discount rate if voucher code is valid
+        if (voucher.size() > 0) {
+            return voucher.get(0).getDiscountRate();
+        } else {
+            return 0;
+        }
+
     }
 
 }

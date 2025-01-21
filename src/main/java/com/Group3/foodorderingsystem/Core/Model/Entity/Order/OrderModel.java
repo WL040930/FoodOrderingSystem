@@ -16,7 +16,7 @@ public class OrderModel {
     private double subTotalPrice;
     private double deliveryFee;
     private double totalPrice;
-    private int voucherRate;
+    private double voucherRate;
     private String deliveryAddress;
     private String area;
     private StatusEnum status;
@@ -28,7 +28,6 @@ public class OrderModel {
     public OrderModel() {
         //get current time
         this.time = new Date();
-        this.voucherRate = 0;
     }
 
     // getters and setters
@@ -60,13 +59,12 @@ public class OrderModel {
         return deliveryFee;
     }
 
-    public int getVoucherRate() {
+    public double getVoucherRate() {
         return voucherRate;
     }
 
     public double getTotalPrice() {
-        double discount = (subTotalPrice * voucherRate) / 100;
-        return subTotalPrice + deliveryFee - discount;
+        return totalPrice;
     }
 
     public String getDeliveryAddress() {
@@ -125,7 +123,11 @@ public class OrderModel {
         this.deliveryFee = deliveryFee;
     }
 
-    public void setVoucherRate(int voucherRate) {
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setVoucherRate(double voucherRate) {
         this.voucherRate = voucherRate;
     }
 

@@ -189,7 +189,7 @@ public class OrderHistoryUI extends VBox {
         String shopName = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(order.getVendor())).get(0).getShopName();
         Label shopNameLabel = new Label(shopName);
         Label orderTimeLabel = new Label(formattedDate);
-        Label orderPriceLabel = new Label(String.format("$%.2f", order.getTotalPrice()));
+        Label orderPriceLabel = new Label(String.format("RM%.2f", order.getTotalPrice()));
         Label orderStatusLabel = new Label("Status: " + order.getStatus().toString());
         applyStatusClass(orderStatusLabel, order.getStatus());
 

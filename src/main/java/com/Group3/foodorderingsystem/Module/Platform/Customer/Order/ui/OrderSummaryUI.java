@@ -8,7 +8,6 @@ import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
-import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.HomeUI;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -22,8 +21,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.TextField;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Arrays;
@@ -33,7 +32,10 @@ public class OrderSummaryUI extends VBox {
     List<ItemModel> items = SessionUtil.getItemsFromSession();
     CustomerModel customer = SessionUtil.getCustomerFromSession();
 
+    Double totalPriceBefore;
     Double totalPrice;
+    Double discountRate = 0.0;
+    Double deliveryFee = 0.0;
 
     public OrderSummaryUI() {
         this.setPadding(new Insets(20));
@@ -66,11 +68,10 @@ public class OrderSummaryUI extends VBox {
     private VBox displayOrderSummary() {
 
         VBox itemsList = getItemsDetails();
-
-        // Create order option section
         VBox orderOptionSection = createOrderOptionSection();
+        VBox voucherSection = getVoucherSection();
 
-        return new VBox(itemsList, orderOptionSection);
+        return new VBox(itemsList, orderOptionSection, voucherSection);
     }
 
     private HBox createTopFixedHBox() {
@@ -98,10 +99,12 @@ public class OrderSummaryUI extends VBox {
         return topFixedHBox;
     }
 
+    private Label totalPriceValueLabel;
+
+
     private VBox createBottomFixedVBox(List<ItemModel> items) {
         VBox bottomFixedVBox = new VBox(10);
         bottomFixedVBox.getStyleClass().add("bottom-fixed-vbox");
-        // bottomFixedVBox.setAlignment(Pos.CENTER);
 
         // Create a HBox to hold the total price label and the total price
         HBox totalPriceBox = new HBox(10);
@@ -113,12 +116,14 @@ public class OrderSummaryUI extends VBox {
         totalPriceLabel.getStyleClass().add("total-price-label");
 
         // Calculate total price
-        totalPrice = items.stream()
+        totalPriceBefore = items.stream()
                 .mapToDouble(item -> item.getItemPrice() * item.getItemQuantity())
                 .sum();
 
+        totalPrice = totalPriceBefore + deliveryFee;
+
         // Create a label to display the total price value
-        Label totalPriceValueLabel = new Label(String.format("RM%.2f", totalPrice));
+        totalPriceValueLabel = new Label(String.format("RM%.2f", totalPrice));
         totalPriceValueLabel.getStyleClass().add("total-price-value-label");
 
         totalPriceBox.getChildren().addAll(totalPriceLabel, totalPriceValueLabel);
@@ -162,14 +167,6 @@ public class OrderSummaryUI extends VBox {
         ComboBox<String> areaComboBox = new ComboBox<>();
         areaComboBox.getStyleClass().add("area-combobox");
 
-        // Add listener to state ComboBox to update area ComboBox
-        stateComboBox.setOnAction(event -> {
-            String selectedState = stateComboBox.getValue();
-            areaComboBox.getItems().clear();
-            areaComboBox.getItems().addAll(getAreasForState(selectedState));
-            areaComboBox.setValue(areaComboBox.getItems().get(0));
-        });
-
         HBox stateAreaBox = new HBox(10);
         stateAreaBox.getChildren().addAll(stateComboBox, areaComboBox);
 
@@ -181,7 +178,32 @@ public class OrderSummaryUI extends VBox {
         ComboBox<String> postcodeOptionComboBox = new ComboBox<>();
         postcodeOptionComboBox.getStyleClass().add("order-option-combobox");
 
-        addressBox.getChildren().addAll(areaLabel, stateAreaBox, addressLabel, addressTextArea);
+        HBox deliveryFeeBox = new HBox(10);
+        Label deliveryFeeLabel = new Label("Delivery Fee:");
+        deliveryFeeBox.getStyleClass().add("status-label");
+        Label deliveryFeeValueLabel = new Label(String.format("RM%.2f", deliveryFee));
+        deliveryFeeValueLabel.getStyleClass().add("status-value-label");
+        deliveryFeeBox.getChildren().addAll(deliveryFeeLabel, deliveryFeeValueLabel);
+
+        // Add listener to state ComboBox to update area ComboBox
+        stateComboBox.setOnAction(event -> {
+            String selectedState = stateComboBox.getValue();
+            areaComboBox.getItems().clear();
+            areaComboBox.getItems().addAll(getAreasForState(selectedState));
+            areaComboBox.setValue(areaComboBox.getItems().get(0));
+        });
+
+        areaComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                String selectedState = newValue;
+                deliveryFee = CustomerOrderServices.calculateDeliveryFee(selectedState);
+                deliveryFeeValueLabel.setText(String.format("RM%.2f", deliveryFee));
+                totalPrice = totalPriceBefore + deliveryFee - (totalPriceBefore * discountRate / 100);
+                totalPriceValueLabel.setText(String.format("RM%.2f", totalPriceBefore + deliveryFee - (totalPriceBefore * discountRate / 100)));
+            }
+        });
+
+        addressBox.getChildren().addAll(areaLabel, stateAreaBox, addressLabel, addressTextArea, deliveryFeeBox);
 
         // Show the address input field when the order option is set to "Delivery"
         addressBox.setVisible("Delivery".equals(orderOptionComboBox.getValue()));
@@ -190,6 +212,20 @@ public class OrderSummaryUI extends VBox {
             boolean isDelivery = "Delivery".equals(newVal);
             addressBox.setVisible(isDelivery);
             addressBox.setManaged(isDelivery); 
+            if (!isDelivery) {
+                deliveryFee = 0.0;
+                totalPrice = totalPriceBefore + deliveryFee - (totalPriceBefore * discountRate / 100);
+                totalPriceValueLabel.setText(String.format("RM%.2f", totalPrice));
+            } else {
+                String selectedArea = areaComboBox.getValue();
+                if (selectedArea != null) {
+                    deliveryFee = CustomerOrderServices.calculateDeliveryFee(selectedArea);
+                    deliveryFeeValueLabel.setText(String.format("RM%.2f", deliveryFee));
+                    totalPrice = totalPriceBefore + deliveryFee - (totalPriceBefore * discountRate / 100);
+                    totalPriceValueLabel.setText(String.format("RM%.2f", totalPrice));
+                }
+
+            }
         });
 
 
@@ -265,7 +301,6 @@ public class OrderSummaryUI extends VBox {
 
             ComboBox<String> stateComboBox = (ComboBox<String>) this.lookup(".state-combobox");
             ComboBox<String> areaComboBox = (ComboBox<String>) this.lookup(".area-combobox");
-            System.out.println(stateComboBox.getValue());
             if (stateComboBox.getValue() == null || areaComboBox.getValue() == null) {
                 showDialog("State and Area Required", "Unable to place order", "Please select the state and area.");
                 return;
@@ -284,7 +319,7 @@ public class OrderSummaryUI extends VBox {
             if (confirmationResult) {
                 showDialog("Order Placed", null, "Your order has been successfully placed.");
                 // Clear session items after placing the order
-                CustomerOrderServices.placeOrder(orderMethod, deliveryAddress, state);
+                CustomerOrderServices.placeOrder(orderMethod, deliveryAddress, state, discountRate);
                 SessionUtil.setItemsInSession(null);
                 CustomerViewModel.initHomeViewModel();
                 CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Pending"));
@@ -390,5 +425,52 @@ public class OrderSummaryUI extends VBox {
 
         return itemsBox;
     }
+
+
+    // Voucher Section
+    private VBox getVoucherSection() {
+        VBox voucherSection = new VBox(10);
+        voucherSection.getStyleClass().add("voucher-section");
+
+        // Voucher label
+        Label voucherLabel = new Label("Voucher");
+        voucherLabel.getStyleClass().add("order-summary-label");
+
+        // Voucher input field
+        TextField voucherTextField = new TextField();
+        voucherTextField.getStyleClass().add("voucher-textfield");
+
+        // Message displayed when the voucher is applied
+        Label voucherMessageLabel = new Label("No voucher applied");
+        voucherMessageLabel.getStyleClass().add("voucher-message-label");
+
+        // Button to apply voucher
+        Button applyVoucherButton = new Button("Apply Voucher");
+        applyVoucherButton.getStyleClass().add("apply-voucher-button");
+        applyVoucherButton.setOnAction(e -> {
+            String voucherCode = voucherTextField.getText();
+            discountRate = CustomerOrderServices.validateVoucherCode(voucherCode);
+           
+            if (discountRate > 0) {
+                totalPrice = totalPriceBefore + deliveryFee - (totalPriceBefore * discountRate / 100);
+                totalPriceValueLabel.setText(String.format("RM%.2f", totalPrice));
+                voucherMessageLabel.setText("Voucher applied successfully");
+                voucherMessageLabel.getStyleClass().remove("voucher-message-error");
+                voucherMessageLabel.getStyleClass().add("voucher-message-success");
+            } else {
+                voucherMessageLabel.setText("Invalid voucher code");
+                voucherMessageLabel.getStyleClass().remove("voucher-message-success");
+                voucherMessageLabel.getStyleClass().add("voucher-message-error");
+            }
+        });
+
+        Separator separator = new Separator();
+        separator.getStyleClass().add("separator");
+
+        voucherSection.getChildren().addAll(voucherLabel, voucherTextField, voucherMessageLabel, applyVoucherButton, separator);
+        return voucherSection;
+    }
+
+
 }
 

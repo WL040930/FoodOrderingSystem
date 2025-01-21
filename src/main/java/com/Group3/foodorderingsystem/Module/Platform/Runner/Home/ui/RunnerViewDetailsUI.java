@@ -174,7 +174,7 @@ public class RunnerViewDetailsUI extends BorderPane {
 
         Double subtotal = selectedOrder.getSubTotalPrice();
         Double deliveryFee = selectedOrder.getDeliveryFee();
-        int voucherRate = selectedOrder.getVoucherRate() / 100;
+        Double voucherRate = selectedOrder.getVoucherRate() / 100;
         VBox paymentBox = new VBox(10);
         paymentBox.setPadding(new Insets(10, 0, 0, 0));
 

@@ -280,6 +280,14 @@ public class VendorOrderDetailsUI extends BorderPane {
         subtotalAmountLabel.getStyleClass().add("subtotal-amount-label");
         subtotalBox.getChildren().addAll(subtotalLabel, subtotalAmountLabel);
 
+        HBox discountBox = new HBox(10);
+        Label discountLabel = new Label("Discount:");
+        discountLabel.getStyleClass().add("subtotal-label");
+        Label discountAmountLabel = new Label("RM" + String.format("%.2f", (selectedOrder.getSubTotalPrice() * selectedOrder.getVoucherRate() / 100)));
+        discountAmountLabel.getStyleClass().add("subtotal-amount-label");
+        discountBox.getChildren().addAll(discountLabel, discountAmountLabel);
+
+
         HBox deliveryFeeBox = new HBox(10);
         Label deliveryFeeLabel = new Label("Delivery Fee:");
         deliveryFeeLabel.getStyleClass().add("subtotal-label");
@@ -288,7 +296,7 @@ public class VendorOrderDetailsUI extends BorderPane {
         deliveryFeeBox.getChildren().addAll(deliveryFeeLabel, deliveryFeeAmountLabel);
 
 
-        paymentBox.getChildren().addAll(separator1, totalBox, separator2, subtotalBox, deliveryFeeBox);
+        paymentBox.getChildren().addAll(separator1, totalBox, separator2, subtotalBox, discountBox, deliveryFeeBox);
 
         return paymentBox;
     }
