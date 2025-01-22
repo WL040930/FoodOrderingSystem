@@ -102,15 +102,30 @@ public class TransactionServices {
         transactionModel.setTransactionType(transactionType);
         transactionModel.setOrderModel(orderModel);
 
+        VendorModel vendorModel = UserServices.findVendorById(orderModel.getVendor());
+        CustomerModel customerModel = UserServices.findCustomerById(orderModel.getCustomer());
+        RunnerModel runnerModel = UserServices.findRunnerById(orderModel.getRider());
+
         switch (transactionType) {
             case PAYMENT:
-                VendorModel vendorModel = UserServices.findVendorById(orderModel.getVendor());
-                CustomerModel customerModel = UserServices.findCustomerById(orderModel.getCustomer());
 
-                vendorModel.setRevenue(vendorModel.getRevenue() + orderModel.getTotalPrice());
+                if (customerModel.getBalance() < orderModel.getTotalPrice()) {
+                    return null;
+                }
+
+                vendorModel.setRevenue(vendorModel.getRevenue() + orderModel.getSubTotalPrice());
+                runnerModel.setRevenue(runnerModel.getRevenue() + orderModel.getDeliveryFee());
                 customerModel.setBalance(customerModel.getBalance() - orderModel.getTotalPrice());
 
-                if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null) {
+                NotificationServices.createNewNotification(vendorModel.getId(), NotificationServices.Template
+                        .receiveOrderPayment(orderModel.getSubTotalPrice(), orderModel.getOrderId()));
+                NotificationServices.createNewNotification(runnerModel.getId(), NotificationServices.Template
+                        .receiveDeliveryPayment(orderModel.getDeliveryFee(), orderModel.getOrderId()));
+                NotificationServices.createNewNotification(customerModel.getId(),
+                        NotificationServices.Template.payOrder(orderModel.getTotalPrice(), orderModel.getOrderId()));
+
+                if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null
+                        || UserServices.saveUser(runnerModel) == null) {
                     return null;
                 }
 
