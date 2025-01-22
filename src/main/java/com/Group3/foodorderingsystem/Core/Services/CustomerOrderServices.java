@@ -31,6 +31,8 @@ import com.itextpdf.layout.element.Paragraph;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 
 public class CustomerOrderServices {
 
@@ -128,7 +130,7 @@ public class CustomerOrderServices {
     }
 
     // place order. it will accept order method, delivery address (but not required)
-    public static void placeOrder(OrderMethodEnum orderMethod, String deliveryAddress, String state, Double voucherRate) {
+    public static String placeOrder(OrderMethodEnum orderMethod, String deliveryAddress, String state, Double voucherRate) {
         List<ItemModel> items = SessionUtil.getItemsFromSession();
         CustomerModel customer = SessionUtil.getCustomerFromSession();
         VendorModel vendor = items.get(0).getVendorModel();
@@ -142,10 +144,12 @@ public class CustomerOrderServices {
             deliveryFee = calculateDeliveryFee(state);
         }
 
+        //generate order id
+        String orderId = generateUniqueOrderId();
 
         // Create order object
         OrderModel order = new OrderModel();
-        order.setOrderId(generateUniqueOrderId());
+        order.setOrderId(orderId);
         order.setItems(items);
         order.setCustomer(customer.getId());
         order.setSubTotalPrice(subTotalPrice);
@@ -161,11 +165,9 @@ public class CustomerOrderServices {
         // Save order to file
         saveOrderToFile(order);
 
-        //deduct the balance from customer
-        setBalance(customer.getId(), -1 * (subTotalPrice + deliveryFee), "customer");
-
         // Clear only item from session
         SessionUtil.setItemsInSession(null);
+        return orderId;
 
     }
 
@@ -217,6 +219,7 @@ public class CustomerOrderServices {
         }
 
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ORDER), orders);
+
     }
 
     // list pending order history

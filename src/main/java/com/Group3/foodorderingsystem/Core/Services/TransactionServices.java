@@ -92,7 +92,7 @@ public class TransactionServices {
 
     public static TransactionModel createTransaction(String orderId, TransactionModel.TransactionType transactionType,
             RoleEnum role) {
-        if (transactionType != TransactionType.REFUND && transactionType != TransactionType.PAYMENT) {
+        if (transactionType != TransactionType.REFUND && transactionType != TransactionType.PAYMENT && transactionType != TransactionType.CANCEL) {
             return null;
         }
 
@@ -121,25 +121,29 @@ public class TransactionServices {
                         NotificationServices.createNewNotification(customerModel.getId(),
                                 NotificationServices.Template.payOrder(orderModel.getTotalPrice(),
                                         orderModel.getOrderId()));
+                        if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null) {
+                            return null;
+                        }
                         break;
                     case VENDOR:
                         vendorModel.setRevenue(vendorModel.getRevenue() + orderModel.getSubTotalPrice());
                         NotificationServices.createNewNotification(vendorModel.getId(), NotificationServices.Template
                                 .receiveOrderPayment(orderModel.getSubTotalPrice(), orderModel.getOrderId()));
+                        if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null) {
+                            return null;
+                        }
                         break;
                     case RUNNER:
                         runnerModel.setRevenue(runnerModel.getRevenue() + orderModel.getDeliveryFee());
                         NotificationServices.createNewNotification(runnerModel.getId(), NotificationServices.Template
                                 .receiveDeliveryPayment(orderModel.getDeliveryFee(), orderModel.getOrderId()));
-
+                        if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null
+                        || UserServices.saveUser(runnerModel) == null) {
+                            return null;
+                        }
                         break;
                     default:
                         break;
-                }
-
-                if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null
-                        || UserServices.saveUser(runnerModel) == null) {
-                    return null;
                 }
 
                 break;
@@ -148,19 +152,30 @@ public class TransactionServices {
                 VendorModel vendorModelRefund = UserServices.findVendorById(orderModel.getVendor());
                 CustomerModel customerModelRefund = UserServices.findCustomerById(orderModel.getCustomer());
 
-                vendorModelRefund.setRevenue(vendorModelRefund.getRevenue() - orderModel.getTotalPrice());
+                vendorModelRefund.setRevenue(vendorModelRefund.getRevenue() - orderModel.getSubTotalPrice());
                 customerModelRefund.setBalance(customerModelRefund.getBalance() + orderModel.getTotalPrice());
 
                 if (UserServices.saveUser(vendorModelRefund) == null
                         || UserServices.saveUser(customerModelRefund) == null) {
                     return null;
                 }
-
                 break;
+            case CANCEL:
+                CustomerModel customerModelCancel = UserServices.findCustomerById(orderModel.getCustomer());
+                customerModelCancel.setBalance(customerModelCancel.getBalance() + orderModel.getTotalPrice());
+
+                if (UserServices.saveUser(customerModelCancel) == null) {
+                    return null;
+                }
+                
+                break;
+
+            
             default:
                 break;
         }
 
+        System.out.println("TransactionModel: " + transactionModel);
         List<TransactionModel> transaction = getTransaction();
         transaction.add(transactionModel);
 

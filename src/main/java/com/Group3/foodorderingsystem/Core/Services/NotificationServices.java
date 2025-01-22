@@ -96,10 +96,6 @@ public class NotificationServices {
             return "You have paid <b>RM " + String.format("%.2f", amount) + "</b> for order <b>" + orderId + "</b>.";
         }
 
-        public static String orderPlacedCustomer() {
-            return "Your order has been placed.";
-        }
-
         public static String orderAcceptedCustomer(String orderId) {
             return "Your order <b>" + orderId + "</b> has been accepted.";
         }

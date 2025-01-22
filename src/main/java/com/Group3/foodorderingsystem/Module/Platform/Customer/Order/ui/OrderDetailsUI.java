@@ -8,13 +8,17 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
+import com.Group3.foodorderingsystem.Core.Services.TransactionServices;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.Images;
@@ -148,9 +152,16 @@ public class OrderDetailsUI extends BorderPane {
                 Alert infoAlert = new Alert(Alert.AlertType.INFORMATION, "Order cancelled successfully.");
                 infoAlert.showAndWait();
                 CustomerOrderServices.cancelOrder(selectedOrder.getOrderId());
-                CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI());
-                CustomerViewModel.getOrderViewModel()
-                        .navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
+                TransactionServices.createTransaction(selectedOrder.getOrderId(), TransactionModel.TransactionType.CANCEL, RoleEnum.CUSTOMER);
+
+                
+                //refresh view model
+                CustomerViewModel.initTransactionViewModel();
+                CustomerViewModel.initNotificationViewModel();
+
+
+                CustomerViewModel.initOrderViewModel();
+                CustomerViewModel.getCustomerMainFrame().handleNavigation(CustomerNavigationEnum.Order);
             }
         });
     }

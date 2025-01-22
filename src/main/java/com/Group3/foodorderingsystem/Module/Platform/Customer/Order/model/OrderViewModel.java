@@ -28,7 +28,7 @@ public class OrderViewModel extends ViewModelConfig{
     }
 
     public OrderViewModel() {
-        orderHistoryUI = new OrderHistoryUI();
+        super();
         
     }
 

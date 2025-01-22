@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
@@ -20,6 +21,8 @@ import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Model.Enum.RunnerStatusEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
+
 
 public class VendorOrderServices {
 
@@ -82,6 +85,8 @@ public class VendorOrderServices {
 
         if (status == StatusEnum.REJECTED) {
             CustomerOrderServices.setBalance(order.getCustomer(), order.getTotalPrice(), "customer");
+        } else if (status == StatusEnum.PREPARING) {
+            TransactionServices.createTransaction(order.getOrderId(), TransactionModel.TransactionType.PAYMENT, RoleEnum.VENDOR);
         }
     }
 
@@ -151,6 +156,8 @@ public class VendorOrderServices {
             //deduct the vendor balance
             CustomerOrderServices.setBalance(order.getVendor(), -1 * order.getSubTotalPrice(), "vendor");
 
+            //create a refund transaction
+            TransactionServices.createTransaction(order.getOrderId(), TransactionModel.TransactionType.REFUND, RoleEnum.CUSTOMER);
             NotificationServices.createNewNotification(order.getCustomer(), NotificationServices.Template.orderCancelledCustomer(order.getOrderId()));
             NotificationServices.createNewNotification(order.getVendor(), NotificationServices.Template.orderCancelledVendor(order.getOrderId()));
         }
