@@ -8,6 +8,7 @@ import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -25,6 +26,7 @@ import javafx.scene.control.TextField;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class OrderSummaryUI extends VBox {
@@ -320,10 +322,11 @@ public class OrderSummaryUI extends VBox {
                 showDialog("Order Placed", null, "Your order has been successfully placed.");
                 // Clear session items after placing the order
                 CustomerOrderServices.placeOrder(orderMethod, deliveryAddress, state, discountRate);
-                SessionUtil.setItemsInSession(null);
+                SessionUtil.setItemsInSession(new ArrayList<>());
                 CustomerViewModel.initHomeViewModel();
-                CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Pending"));
+                CustomerViewModel.initOrderViewModel();
 
+                CustomerViewModel.getCustomerMainFrame().handleNavigation(CustomerNavigationEnum.Order);
             }
         }
     }
