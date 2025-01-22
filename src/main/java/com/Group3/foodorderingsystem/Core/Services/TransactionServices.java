@@ -10,6 +10,7 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Storage.Storage;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
@@ -89,7 +90,8 @@ public class TransactionServices {
         return transactionModel;
     }
 
-    public static TransactionModel createTransaction(String orderId, TransactionModel.TransactionType transactionType) {
+    public static TransactionModel createTransaction(String orderId, TransactionModel.TransactionType transactionType,
+            RoleEnum role) {
         if (transactionType != TransactionType.REFUND && transactionType != TransactionType.PAYMENT) {
             return null;
         }
@@ -113,16 +115,27 @@ public class TransactionServices {
                     return null;
                 }
 
-                vendorModel.setRevenue(vendorModel.getRevenue() + orderModel.getSubTotalPrice());
-                runnerModel.setRevenue(runnerModel.getRevenue() + orderModel.getDeliveryFee());
-                customerModel.setBalance(customerModel.getBalance() - orderModel.getTotalPrice());
+                switch (role) {
+                    case CUSTOMER:
+                        customerModel.setBalance(customerModel.getBalance() - orderModel.getTotalPrice());
+                        NotificationServices.createNewNotification(customerModel.getId(),
+                                NotificationServices.Template.payOrder(orderModel.getTotalPrice(),
+                                        orderModel.getOrderId()));
+                        break;
+                    case VENDOR:
+                        vendorModel.setRevenue(vendorModel.getRevenue() + orderModel.getSubTotalPrice());
+                        NotificationServices.createNewNotification(vendorModel.getId(), NotificationServices.Template
+                                .receiveOrderPayment(orderModel.getSubTotalPrice(), orderModel.getOrderId()));
+                        break;
+                    case RUNNER:
+                        runnerModel.setRevenue(runnerModel.getRevenue() + orderModel.getDeliveryFee());
+                        NotificationServices.createNewNotification(runnerModel.getId(), NotificationServices.Template
+                                .receiveDeliveryPayment(orderModel.getDeliveryFee(), orderModel.getOrderId()));
 
-                NotificationServices.createNewNotification(vendorModel.getId(), NotificationServices.Template
-                        .receiveOrderPayment(orderModel.getSubTotalPrice(), orderModel.getOrderId()));
-                NotificationServices.createNewNotification(runnerModel.getId(), NotificationServices.Template
-                        .receiveDeliveryPayment(orderModel.getDeliveryFee(), orderModel.getOrderId()));
-                NotificationServices.createNewNotification(customerModel.getId(),
-                        NotificationServices.Template.payOrder(orderModel.getTotalPrice(), orderModel.getOrderId()));
+                        break;
+                    default:
+                        break;
+                }
 
                 if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null
                         || UserServices.saveUser(runnerModel) == null) {
