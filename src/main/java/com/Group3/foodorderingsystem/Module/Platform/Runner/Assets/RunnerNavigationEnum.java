@@ -9,13 +9,7 @@ public enum RunnerNavigationEnum {
             "Home",
             "home.png",
             Arrays.asList(
-                    RunnerTopNavigationEnum.Home,
-                    RunnerTopNavigationEnum.CurrentOrder)),
-    Order(
-            "Order",
-            "logo.png",
-            Arrays.asList(
-                    RunnerTopNavigationEnum.Order)),
+                    RunnerTopNavigationEnum.Home)),
     Notification(
             "Notification",
             "notification.png",

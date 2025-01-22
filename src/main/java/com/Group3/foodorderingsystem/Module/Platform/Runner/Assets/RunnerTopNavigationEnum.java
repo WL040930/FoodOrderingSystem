@@ -9,16 +9,6 @@ public enum RunnerTopNavigationEnum {
             () -> {
                 RunnerViewModel.navigate(RunnerViewModel.getHomeViewModel().getNode());
             }),
-    CurrentOrder(
-            "Current Order",
-            () -> {
-            }),
-    Order(
-            "Order",
-            () -> {
-                // CustomerViewModel.navigate(CustomerViewModel.getOrderViewModel().getNode());
-            }),
-
     Notification(
             "Notification",
             () -> {
