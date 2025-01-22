@@ -1,6 +1,7 @@
 package com.Group3.foodorderingsystem.Module.Common.Transaction.model;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Config.ViewModelConfig;
+import com.Group3.foodorderingsystem.Module.Common.Transaction.ui.RevenueSummary;
 import com.Group3.foodorderingsystem.Module.Common.Transaction.ui.TopupWithdrawUI;
 import com.Group3.foodorderingsystem.Module.Common.Transaction.ui.UserFinance;
 
@@ -40,6 +41,16 @@ public class TransactionViewModel extends ViewModelConfig {
 
     public void setTopupWithdrawUI(TopupWithdrawUI topupWithdrawUI) {
         this.topupWithdrawUI = topupWithdrawUI;
+    }
+
+    private RevenueSummary revenueSummary;
+
+    public RevenueSummary getRevenueSummary() {
+        return revenueSummary;
+    }
+
+    public void setRevenueSummary(RevenueSummary revenueSummary) {
+        this.revenueSummary = revenueSummary;
     }
 
 }

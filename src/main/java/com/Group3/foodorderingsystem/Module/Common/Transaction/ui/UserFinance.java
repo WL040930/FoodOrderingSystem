@@ -121,6 +121,28 @@ public class UserFinance extends BaseContentPanel {
             content.getChildren().add(withdrawButton);
         }
 
+        if (user.getRole() == RoleEnum.VENDOR || user.getRole() == RoleEnum.RUNNER) {
+            Label revenueSummary = new Label("Revenue Summary >");
+            revenueSummary.setStyle(
+                    "-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0000EE; -fx-cursor: hand; -fx-underline: true;");
+
+            revenueSummary.setOnMouseClicked(e -> {
+                if (user.getRole() == RoleEnum.VENDOR) {
+                    VendorViewModel.getTransactionViewModel().setRevenueSummary(new RevenueSummary(user));
+                    VendorViewModel.getTransactionViewModel()
+                            .navigate(VendorViewModel.getTransactionViewModel().getRevenueSummary());
+                    VendorViewModel.navigate(VendorViewModel.getTransactionViewModel().getNode());
+                } else if (user.getRole() == RoleEnum.RUNNER) {
+                    RunnerViewModel.getTransactionViewModel().setRevenueSummary(new RevenueSummary(user));
+                    RunnerViewModel.getTransactionViewModel()
+                            .navigate(RunnerViewModel.getTransactionViewModel().getRevenueSummary());
+                    RunnerViewModel.navigate(RunnerViewModel.getTransactionViewModel().getNode());
+                }
+            });
+
+            content.getChildren().add(revenueSummary);
+        }
+
         // Add a Separator
         KSeparator separator = new KSeparator();
         content.getChildren().add(separator);
@@ -148,13 +170,15 @@ public class UserFinance extends BaseContentPanel {
 
         VBox left = new VBox();
         Label transactionType = new Label();
-        if (transaction.getTransactionType() == TransactionType.PAYMENT || transaction.getTransactionType() == TransactionType.REFUND) {
+        if (transaction.getTransactionType() == TransactionType.PAYMENT
+                || transaction.getTransactionType() == TransactionType.REFUND) {
             transactionType
-                    .setText(transaction.getTransactionType() + " - Order ID: " + transaction.getOrderModel().getOrderId());
+                    .setText(transaction.getTransactionType() + " - Order ID: "
+                            + transaction.getOrderModel().getOrderId());
         } else {
             transactionType.setText(transaction.getTransactionType().toString());
         }
-       
+
         transactionType.setStyle("-fx-font-weight: bold;");
         Label date = new Label(transaction.getTransactionDate().toString());
         left.getChildren().addAll(transactionType, date);
