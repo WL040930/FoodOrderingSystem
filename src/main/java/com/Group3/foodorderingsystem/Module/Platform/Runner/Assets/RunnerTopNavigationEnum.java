@@ -7,7 +7,7 @@ public enum RunnerTopNavigationEnum {
     Home(
             "Home",
             () -> {
-                // RunnerViewModel.navigate(CustomerViewModel.getHomeViewModel().getNode());
+                RunnerViewModel.navigate(RunnerViewModel.getHomeViewModel().getNode());
             }),
     CurrentOrder(
             "Current Order",
@@ -22,6 +22,7 @@ public enum RunnerTopNavigationEnum {
     Notification(
             "Notification",
             () -> {
+                RunnerViewModel.navigate(RunnerViewModel.getNotificationViewModel().getNode());
             }),
     Settings(
             "Settings",

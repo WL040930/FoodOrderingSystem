@@ -82,5 +82,19 @@ public class NotificationServices {
                     + "</b> has been rejected.";
         }
 
+        public static String receiveOrderPayment(Double amount, String orderId) {
+            return "You have received <b>RM " + String.format("%.2f", amount) + "</b> from order <b>" + orderId
+                    + "</b>.";
+        }
+
+        public static String receiveDeliveryPayment(Double amount, String orderId) {
+            return "You have received <b>RM " + String.format("%.2f", amount) + "</b> from delivery of order <b>"
+                    + orderId + "</b>.";
+        }
+
+        public static String payOrder(Double amount, String orderId) {
+            return "You have paid <b>RM " + String.format("%.2f", amount) + "</b> for order <b>" + orderId + "</b>.";
+        }
+
     }
 }
