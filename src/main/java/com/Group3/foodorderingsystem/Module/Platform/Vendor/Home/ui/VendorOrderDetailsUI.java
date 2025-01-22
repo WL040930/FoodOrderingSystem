@@ -19,6 +19,7 @@ import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Services.VendorOrderServices;
+import com.Group3.foodorderingsystem.Core.Services.NotificationServices;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -424,54 +425,88 @@ public class VendorOrderDetailsUI extends BorderPane {
         return firstcontainer;
     }
 
-    private void buttonAction(OrderModel selectedOrder, String Reply) {
+    private void buttonAction(OrderModel selectedOrder, String reply) {
 
         String message;
-        StatusEnum status;
+        StatusEnum status = null;
         boolean findRider = false;
-
-        if (Reply.equals("Reject")) {
-            message = "Are you sure you want to reject this order?";
-            status = StatusEnum.REJECTED;
-        } else if (Reply.equals("Accept")) {
-            message = "Are you sure you want to accept this order?";
-            status = StatusEnum.PREPARING;
-
-            if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
-                findRider = true;
-            }
-
-        } else if (Reply.equals("Ready")) {
-            message = "Is the order done?";
-            if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
-                status = StatusEnum.WAITING_FOR_RIDER;
-            } else if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DINE_IN)) {
-                status = StatusEnum.SERVED;
-            } else {
-                status = StatusEnum.READY_FOR_PICKUP;
-            }
-        } else {
-            message = "Has the order been picked up?";
-            status = StatusEnum.PICKED_UP;
+    
+        // Use final variables for notifications
+        final String notificationCustomer;
+        final String notificationVendor;
+        final String notificationRunner;
+    
+        switch (reply) {
+            case "Reject":
+                message = "Are you sure you want to reject this order?";
+                status = StatusEnum.REJECTED;
+                notificationCustomer = NotificationServices.Template.orderRejectedCustomer(selectedOrder.getOrderId());
+                notificationVendor = ""; 
+                notificationRunner = "";
+                break;
+            case "Accept":
+                message = "Are you sure you want to accept this order?";
+                status = StatusEnum.PREPARING;
+                notificationCustomer = NotificationServices.Template.orderAcceptedCustomer(selectedOrder.getOrderId());
+                findRider = selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY);
+                notificationVendor = ""; 
+                notificationRunner = "";
+                break;
+            case "Ready":
+                message = "Is the order done?";
+                if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
+                    status = StatusEnum.WAITING_FOR_RIDER;
+                    notificationCustomer = "";
+                    notificationVendor = "";
+                    notificationRunner = NotificationServices.Template.orderReadyPickUpCustomer(selectedOrder.getOrderId());
+                } else if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DINE_IN)) {
+                    status = StatusEnum.SERVED;
+                    notificationCustomer = NotificationServices.Template.orderCompletedCustomer(selectedOrder.getOrderId());
+                    notificationVendor = NotificationServices.Template.orderCompletedVendor(selectedOrder.getOrderId());
+                    notificationRunner = "";
+                } else {
+                    status = StatusEnum.READY_FOR_PICKUP;
+                    notificationCustomer = NotificationServices.Template.orderReadyPickUpCustomer(selectedOrder.getOrderId());
+                    notificationVendor = "";
+                    notificationRunner = "";
+                }
+                break;
+            default:
+                message = "Has the order been picked up?";
+                status = StatusEnum.PICKED_UP;
+                notificationCustomer = NotificationServices.Template.orderCompletedCustomer(selectedOrder.getOrderId());
+                notificationVendor = NotificationServices.Template.orderCompletedVendor(selectedOrder.getOrderId());
+                notificationRunner = "";
+                break;
         }
-
-        boolean finalFindRider = findRider;
-
-
+    
+        final boolean finalFindRider = findRider;
+        final StatusEnum finalStatus = status;
+    
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.YES, ButtonType.NO);
-        
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
-                VendorOrderServices.updateOrderStatus(selectedOrder, status);
-
+                VendorOrderServices.updateOrderStatus(selectedOrder, finalStatus);
                 VendorViewModel.getHomeViewModel().setVendorOrderListUI(new VendorOrderListUI());
                 VendorViewModel.getHomeViewModel().navigate(VendorViewModel.getHomeViewModel().getVendorOrderListUI());
-            }
+    
+                if (!notificationCustomer.isEmpty()) {
+                    NotificationServices.createNewNotification(selectedOrder.getCustomer(), notificationCustomer);
+                }
+                if (!notificationVendor.isEmpty()) {
+                    NotificationServices.createNewNotification(selectedOrder.getVendor(), notificationVendor);
+                }
+                if (!notificationRunner.isEmpty()) {
+                    NotificationServices.createNewNotification(selectedOrder.getRider(), notificationRunner);
+                }
+    
+                if (finalFindRider) {
+                    VendorOrderServices.assignOrderToRunner(selectedOrder.getOrderId());
+                }
 
-            if (finalFindRider) {
-                VendorOrderServices.assignOrderToRunner(selectedOrder.getOrderId());
+                VendorViewModel.initNotificationViewModel();
+                VendorViewModel.initTransactionViewModel();
             }
-            
         });
     }
 

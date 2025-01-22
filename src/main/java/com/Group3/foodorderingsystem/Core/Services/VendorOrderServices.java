@@ -79,6 +79,10 @@ public class VendorOrderServices {
         }
 
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ORDER), orderList);
+
+        if (status == StatusEnum.REJECTED) {
+            CustomerOrderServices.setBalance(order.getCustomer(), order.getTotalPrice(), "customer");
+        }
     }
 
     // retrieve overall rating of the vendor
@@ -133,6 +137,8 @@ public class VendorOrderServices {
                 }
             }
 
+            NotificationServices.createNewNotification(availableRunner.getId(), NotificationServices.Template.orderReceivedRunner(orderId));
+
             FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.RUNNER), runnerList);
         } else {
             //set the order status to cancelled
@@ -145,7 +151,8 @@ public class VendorOrderServices {
             //deduct the vendor balance
             CustomerOrderServices.setBalance(order.getVendor(), -1 * order.getSubTotalPrice(), "vendor");
 
-            //TODO: send notification to vendor and customer
+            NotificationServices.createNewNotification(order.getCustomer(), NotificationServices.Template.orderCancelledCustomer(order.getOrderId()));
+            NotificationServices.createNewNotification(order.getVendor(), NotificationServices.Template.orderCancelledVendor(order.getOrderId()));
         }
 
     }

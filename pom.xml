@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>11</maven.compiler.release>
         <javafx.version>17.0.0.1</javafx.version>
-        <exec.mainClass>com.Group3.foodorderingsystem.Module.Common.Login.LoginPage</exec.mainClass>
+        <exec.mainClass>com.Group3.foodorderingsystem.FoodOrderingSystem</exec.mainClass>
     </properties>
 
     <dependencies>
