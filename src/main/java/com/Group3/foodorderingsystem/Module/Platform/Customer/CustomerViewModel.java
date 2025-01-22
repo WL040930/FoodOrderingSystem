@@ -34,14 +34,12 @@ public class CustomerViewModel {
         instance.customerMainFrame = new CustomerMainFrame();
         instance.selectedNavigation = CustomerNavigationEnum.Home;
 
-        instance.orderViewModel = new OrderViewModel();
-        instance.orderViewModel.init();
-
         init();
         initHomeViewModel();
         initSettingsViewModel();
         initTransactionViewModel();
         initNotificationViewModel();
+        initOrderViewModel();
     }
 
     /**
@@ -78,10 +76,6 @@ public class CustomerViewModel {
      */
     public static CustomerNavigationEnum[] getNavigationList() {
         return instance.navigationList;
-    }
-
-    public static OrderViewModel getOrderViewModel() {
-        return instance.orderViewModel;
     }
 
     /**
@@ -224,5 +218,14 @@ public class CustomerViewModel {
     public static void initNotificationViewModel() {
         instance.notificationViewModel = new NotificationViewModel(SessionUtil.getCustomerFromSession().getId());
         instance.notificationViewModel.init();
+    }
+
+    public static OrderViewModel getOrderViewModel() {
+        return instance.orderViewModel;
+    }
+
+    public static void initOrderViewModel() {
+        instance.orderViewModel = new OrderViewModel();
+        instance.orderViewModel.init();
     }
 }

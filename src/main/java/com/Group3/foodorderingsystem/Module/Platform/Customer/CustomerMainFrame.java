@@ -64,7 +64,7 @@ public class CustomerMainFrame extends BaseMainApplication {
         return bottomNavigation;
     }
 
-    private void handleNavigation(CustomerNavigationEnum selectedComponent) {
+    public void handleNavigation(CustomerNavigationEnum selectedComponent) {
         CustomerViewModel.setSelectedNavigation(selectedComponent);
         layout.setBottom(buildBottomNavigator());
         layout.setTop(buildHeader());
