@@ -312,7 +312,9 @@ public class OrderSummaryUI extends VBox {
             state = areaComboBox.getValue() + ", " + stateComboBox.getValue();
             
         }
-    
+
+        String vendorId = SessionUtil.getItemsFromSession().get(0).getVendorModel().getId();
+
         // Check if the customer has enough balance to place the order
         if (balance < totalPrice) {
             showDialog("Insufficient Balance", "Unable to place order", "You do not have enough balance to complete this order.");
@@ -323,14 +325,16 @@ public class OrderSummaryUI extends VBox {
                 showDialog("Order Placed", null, "Your order has been successfully placed.");
                 // Clear session items after placing the order
                 CustomerOrderServices.placeOrder(orderMethod, deliveryAddress, state, discountRate);
-                SessionUtil.setItemsInSession(new ArrayList<>());
                 CustomerViewModel.initHomeViewModel();
                 CustomerViewModel.initOrderViewModel();
 
                 CustomerViewModel.getCustomerMainFrame().handleNavigation(CustomerNavigationEnum.Order);
                 NotificationServices.createNewNotification(customer.getId(), NotificationServices.Template.orderPlacedCustomer());
-                String vendorId = SessionUtil.getItemsFromSession().get(0).getVendorModel().getId();
-                NotificationServices.createNewNotification(vendorId, NotificationServices.Template.orderPlacedVendor());                
+                NotificationServices.createNewNotification(vendorId, NotificationServices.Template.orderPlacedVendor());    
+                
+                // Clear session items after placing the order
+                SessionUtil.setItemsInSession(new ArrayList<>());       
+                CustomerViewModel.initNotificationViewModel();    
             }
         }
     }

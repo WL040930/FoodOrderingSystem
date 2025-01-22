@@ -79,6 +79,10 @@ public class VendorOrderServices {
         }
 
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ORDER), orderList);
+
+        if (status == StatusEnum.REJECTED) {
+            CustomerOrderServices.setBalance(order.getCustomer(), order.getTotalPrice(), "customer");
+        }
     }
 
     // retrieve overall rating of the vendor

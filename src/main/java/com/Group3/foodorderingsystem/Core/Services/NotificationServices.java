@@ -105,7 +105,7 @@ public class NotificationServices {
         }
 
         public static String orderRejectedCustomer(String orderId) {
-            return "Your order <b>" + orderId + "</b> has been rejected.";
+            return "Your order <b>" + orderId + "</b> has been rejected. We have refunded the amount to your account.";
         }
 
         public static String orderReadyPickUpCustomer(String orderId) {

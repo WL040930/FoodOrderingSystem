@@ -1,4 +1,4 @@
-{"id":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","name":"1","email":"11","password":"1","role":"CUSTOMER","profilePicture":"customer.png","balance":7050.0,"phoneNumber":"Here","address":"Address"}
+{"id":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","name":"1","email":"11","password":"1","role":"CUSTOMER","profilePicture":"customer.png","balance":6863.0,"phoneNumber":"Here","address":"Address"}
 {"id":"0ab34608-eafe-438e-8cd3-82bffcafd014","name":"12","email":"121","password":"1212","role":"CUSTOMER","profilePicture":null,"balance":0.0,"phoneNumber":null,"address":null}
 {"id":"798a4788-b54e-42ff-b3fb-b66c641dc390","name":"11","email":"12121","password":"111","role":"CUSTOMER","profilePicture":null,"balance":0.0,"phoneNumber":"112","address":"212121"}
 {"id":"c2300d5e-07a1-4f38-8da7-7ac9d71655eb","name":"121","email":"1212121","password":"11","role":"CUSTOMER","profilePicture":null,"balance":0.0,"phoneNumber":"1212","address":"2121"}

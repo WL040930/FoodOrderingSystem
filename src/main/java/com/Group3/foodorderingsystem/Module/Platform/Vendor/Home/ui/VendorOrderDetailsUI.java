@@ -505,6 +505,7 @@ public class VendorOrderDetailsUI extends BorderPane {
                 }
 
                 VendorViewModel.initNotificationViewModel();
+                VendorViewModel.initTransactionViewModel();
             }
         });
     }

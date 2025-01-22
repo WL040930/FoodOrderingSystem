@@ -137,3 +137,30 @@
 {"notificationId":"3421c029-3f5a-465d-8bd6-c8c1f9b81783","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"Your WITHDRAWAL request of <b>RM 0.06</b> has been rejected.","date":1736488929415}
 {"notificationId":"88525a89-d35c-4c97-937f-3bd9d72f7801","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"You have received <b>RM 1000.00</b> from a TOPUP transaction.","date":1736575216299}
 {"notificationId":"13ee4760-9351-427e-aef5-66b0a31fa961","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"You have received <b>RM 1000.00</b> from a TOPUP transaction.","date":1736847427394}
+{"notificationId":"4ee1196c-28ad-4d9c-adc3-39c2e9cba537","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order has been placed.","date":1737536264486}
+{"notificationId":"2082fee8-b06e-4524-99cb-7d9284adfe57","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"You have a new order.","date":1737536264534}
+{"notificationId":"fa6ff89e-e535-4f7c-96c3-f4343b8fc108","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>cd944534</b> has been accepted.","date":1737536276449}
+{"notificationId":"66a67be8-316b-4b66-865c-fb9cfc62bb89","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>cd944534</b> has been completed.","date":1737536291204}
+{"notificationId":"a62322cd-046d-4e26-aa88-89b84f300695","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"cd944534: Your order has been completed.","date":1737536291253}
+{"notificationId":"297786a4-472b-40c4-976b-851e34637d5b","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order has been placed.","date":1737536313672}
+{"notificationId":"cfe94591-e6f0-4f0d-801c-1913b879aeb9","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"You have a new order.","date":1737536313709}
+{"notificationId":"b88eefbb-e8ee-48e0-83e1-725b168cad97","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>b182d532</b> has been accepted.","date":1737536321618}
+{"notificationId":"8e0be7a9-64ad-47ba-9c94-d4bf7aa355a2","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>b182d532</b> is ready for pick up.","date":1737536324487}
+{"notificationId":"4abc33a4-ffb0-4dab-9ccb-119aa6713b83","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>b182d532</b> has been completed.","date":1737536341241}
+{"notificationId":"b35dfbb2-8ef6-4262-9b1d-39b9b1ff8d98","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"b182d532: Your order has been completed.","date":1737536341294}
+{"notificationId":"456692d4-74ca-4d66-be36-32ca42369b8b","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order has been placed.","date":1737536356658}
+{"notificationId":"bbc3ee3d-a35d-490d-95d9-b0e203495179","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"You have a new order.","date":1737536356692}
+{"notificationId":"6c321d8a-7f68-4dcc-b7ea-aa17c446d814","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>b48df4ff</b> has been accepted.","date":1737536365627}
+{"notificationId":"d2d8344a-6b8f-43ef-af9b-640f68464fd3","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>b48df4ff</b> has been cancelled.","date":1737536365666}
+{"notificationId":"fcfbbcbe-c22b-4ba3-8e8b-bfe1e40ea33c","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"b48df4ff: Your order has been cancelled.","date":1737536365695}
+{"notificationId":"0f3ad8b5-44fd-4ec0-8fb1-7e50d892c870","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order has been placed.","date":1737536449259}
+{"notificationId":"7e46da71-fa04-4e69-886e-5a91fa3f4f6e","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"You have a new order.","date":1737536449306}
+{"notificationId":"ad0cb3e3-2d67-4085-855d-64d6e72f0e47","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>99eff22e</b> has been accepted.","date":1737536456663}
+{"notificationId":"b5fc33fc-5ea7-4f99-95c5-646f784419f5","userId":"6e0a30f5-6a86-42bf-898e-18b3d1ea27be","content":"99eff22e: You have received a new order.","date":1737536456717}
+{"notificationId":"d807b8fd-f4e1-4b30-a75c-6fd514a89d21","userId":"6e0a30f5-6a86-42bf-898e-18b3d1ea27be","content":"Your order <b>99eff22e</b> is ready for pick up.","date":1737536482304}
+{"notificationId":"4d5bd176-afea-4c7f-be0a-2eb369bd7089","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>99eff22e</b> has been completed.","date":1737536533443}
+{"notificationId":"15fd98e3-d9bf-4fb2-ae6b-a26d86ca6f49","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"99eff22e: Your order has been completed.","date":1737536533482}
+{"notificationId":"264d79ed-da47-496e-9f57-be25a7130e87","userId":"6e0a30f5-6a86-42bf-898e-18b3d1ea27be","content":"99eff22e: Order has been completed.","date":1737536533520}
+{"notificationId":"415cc2ce-0726-4030-ae52-2765fbcc4ca9","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order has been placed.","date":1737536867935}
+{"notificationId":"c22d260f-7c50-4b35-9af2-3890189efc9a","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"You have a new order.","date":1737536867956}
+{"notificationId":"d816b9e5-5a67-42fd-ad89-ad66272d1899","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>0009783f</b> has been rejected.","date":1737536889864}
