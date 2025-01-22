@@ -19,6 +19,7 @@ import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Services.VendorOrderServices;
+import com.Group3.foodorderingsystem.Core.Services.NotificationServices;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -429,10 +430,12 @@ public class VendorOrderDetailsUI extends BorderPane {
         String message;
         StatusEnum status;
         boolean findRider = false;
+        String notification;
 
         if (Reply.equals("Reject")) {
             message = "Are you sure you want to reject this order?";
             status = StatusEnum.REJECTED;
+            
         } else if (Reply.equals("Accept")) {
             message = "Are you sure you want to accept this order?";
             status = StatusEnum.PREPARING;

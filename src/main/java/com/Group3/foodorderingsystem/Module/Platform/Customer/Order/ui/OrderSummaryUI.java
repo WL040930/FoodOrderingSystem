@@ -5,6 +5,7 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
+import com.Group3.foodorderingsystem.Core.Services.NotificationServices;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
@@ -327,6 +328,9 @@ public class OrderSummaryUI extends VBox {
                 CustomerViewModel.initOrderViewModel();
 
                 CustomerViewModel.getCustomerMainFrame().handleNavigation(CustomerNavigationEnum.Order);
+                NotificationServices.createNewNotification(customer.getId(), NotificationServices.Template.orderPlacedCustomer());
+                String vendorId = SessionUtil.getItemsFromSession().get(0).getVendorModel().getId();
+                NotificationServices.createNewNotification(vendorId, NotificationServices.Template.orderPlacedVendor());                
             }
         }
     }
