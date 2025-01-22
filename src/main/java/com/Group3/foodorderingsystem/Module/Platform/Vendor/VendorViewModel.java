@@ -12,6 +12,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorNavigat
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Assets.VendorTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Home.model.HomeViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.model.MenuViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Review.model.ReviewViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Vouchers.model.VoucherViewModel;
 
 import javafx.application.Platform;
@@ -38,6 +39,7 @@ public class VendorViewModel {
         initVoucherViewModel();
         initTransactionViewModel();
         initNotificationViewModel();
+        initReviewViewModel();
     }
 
     public static void clear() {
@@ -261,5 +263,20 @@ public class VendorViewModel {
             throw new IllegalStateException("Vendor from session is not a User instance.");
         }
         instance.notificationViewModel.init();
+    }
+
+    private ReviewViewModel reviewViewModel;
+
+    public static ReviewViewModel getReviewViewModel() {
+        return instance.reviewViewModel;
+    }
+
+    public static void setReviewViewModel(ReviewViewModel reviewViewModel) {
+        instance.reviewViewModel = reviewViewModel;
+    }
+
+    public static void initReviewViewModel() {
+        instance.reviewViewModel = new ReviewViewModel();
+        instance.reviewViewModel.init();
     }
 }

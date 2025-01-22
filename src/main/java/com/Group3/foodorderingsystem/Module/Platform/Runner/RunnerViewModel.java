@@ -226,4 +226,5 @@ public class RunnerViewModel {
         }
         instance.notificationViewModel.init();
     }
+
 }

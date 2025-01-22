@@ -26,18 +26,15 @@ public class CustomerModel extends User {
         return address;
     }
 
-    public CustomerModel setBalance(double balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
-        return this;
     }
 
-    public CustomerModel setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-        return this;
     }
 
-    public CustomerModel setAddress(String address) {
+    public void setAddress(String address) {
         this.address = address;
-        return this;
     }
 }

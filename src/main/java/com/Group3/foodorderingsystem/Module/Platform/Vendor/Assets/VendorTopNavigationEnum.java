@@ -17,7 +17,7 @@ public enum VendorTopNavigationEnum {
         Review(
                         "Review",
                         () -> {
-                                // Action for Review
+                                VendorViewModel.navigate(VendorViewModel.getReviewViewModel().getNode());
                         }),
         Notification(
                         "Notification",

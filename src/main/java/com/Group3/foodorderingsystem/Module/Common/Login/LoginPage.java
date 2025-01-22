@@ -2,7 +2,6 @@ package com.Group3.foodorderingsystem.Module.Common.Login;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
-import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Util.Images;
@@ -175,9 +174,5 @@ public class LoginPage extends Application {
 
             stage.show();
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

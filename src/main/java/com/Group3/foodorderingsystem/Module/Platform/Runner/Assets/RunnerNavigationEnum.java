@@ -18,7 +18,7 @@ public enum RunnerNavigationEnum {
                     RunnerTopNavigationEnum.Order)),
     Notification(
             "Notification",
-            "logo.png",
+            "notification.png",
             Arrays.asList(
                     RunnerTopNavigationEnum.Notification)),
     Settings(
