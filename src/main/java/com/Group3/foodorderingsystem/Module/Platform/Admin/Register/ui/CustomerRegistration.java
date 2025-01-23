@@ -97,6 +97,8 @@ public class CustomerRegistration extends VBox {
         if (registerCustomer != null) {
             PopupMessage.showMessage("Customer registered successfully!", "success", () -> {
                 AdminViewModel.initRegisterViewModel();
+                AdminViewModel.initFinanceViewModel();
+                AdminViewModel.initDatabaseViewModel();
                 AdminViewModel.getRegisterViewModel().navigate(AdminViewModel.getRegisterViewModel().getNode());
             });
         } else {
