@@ -77,6 +77,10 @@ public class ItemServices {
             }
         }
 
+        vendorsByCategory.values().forEach(vendorList -> 
+            vendorList.removeIf(vendor -> vendor.isDeleted())
+        );
+
         return vendorsByCategory;
     }
 

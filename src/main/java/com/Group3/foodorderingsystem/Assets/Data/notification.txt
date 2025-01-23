@@ -143,3 +143,6 @@
 {"notificationId":"d3dbeec7-313d-490f-855e-79d4b2d35cb1","userId":"1dd0b94a-27d5-4cff-bae1-2b962a4f06fe","content":"User <b>12</b> has requested a top up of <b>RM 7000.00</b>.<br>Request ID: <b>a2faf94c-11d2-459a-be2f-3bf70e228e59</b>","date":1737508268012}
 {"notificationId":"83a77167-aaaa-46e8-ae3a-a641cb741727","userId":"0ab34608-eafe-438e-8cd3-82bffcafd014","content":"Your <b>TOPUP</b> request of <b>RM 7000.00</b> has been approved.","date":1737508346458}
 {"notificationId":"e4b0926c-8a24-4aef-950f-5e55abdfe45c","userId":"0ab34608-eafe-438e-8cd3-82bffcafd014","content":"You have received <b>RM 7000.00</b> from a TOPUP transaction.","date":1737508346537}
+{"notificationId":"13a595d3-7be1-4ef0-a8e5-6a37cafd9f4e","userId":"3cdd6b7d-c333-405a-af83-2db6031abbe7","content":"Your top up request of <b>RM 100.00</b> is being processed.","date":1737600155209}
+{"notificationId":"f5349cce-3d4c-451a-897c-d584907e9807","userId":"1dd0b94a-27d5-4cff-bae1-2b962a4f06fe","content":"User <b>dd</b> has requested a top up of <b>RM 100.00</b>.<br>Request ID: <b>d599dc29-b37f-4803-8f3c-cb50acfdeaeb</b>","date":1737600155310}
+{"notificationId":"23959526-65ac-4948-b673-27c765376486","userId":"3cdd6b7d-c333-405a-af83-2db6031abbe7","content":"Your <b>TOPUP</b> request of <b>RM 100.00</b> has been rejected.","date":1737600174293}
