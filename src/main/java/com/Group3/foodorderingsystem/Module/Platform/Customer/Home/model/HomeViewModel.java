@@ -8,6 +8,7 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.BottomButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.HomeUI;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.MenuSelectionUI;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.ui.ShopSelection;
@@ -142,6 +143,7 @@ public class HomeViewModel extends ViewModelConfig {
             bottomButton.setAction(() -> {
                 // Handle checkout logic
                 CustomerViewModel.getOrderViewModel().setOrderSummaryUI(new OrderSummaryUI());
+                CustomerViewModel.getCustomerMainFrame().handleNavigation(CustomerNavigationEnum.Order);
                 CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderSummaryUI());
             });
             bottomButton.setDisabled(false); // Enable button when cart has items

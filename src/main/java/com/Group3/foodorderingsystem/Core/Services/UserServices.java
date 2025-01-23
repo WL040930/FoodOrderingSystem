@@ -2,6 +2,7 @@ package com.Group3.foodorderingsystem.Core.Services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
@@ -84,7 +85,8 @@ public class UserServices {
     public static List<User> getBaseUsers() {
         List<User> returnList = new ArrayList<>();
 
-        for (CustomerModel customer : getCustomers()) {
+        for (CustomerModel customer : getCustomers().stream().filter(c -> !c.isDeleted())
+                .collect(Collectors.toList())) {
             User user = new User();
             user.setId(customer.getId());
             user.setName(customer.getName());
@@ -94,7 +96,7 @@ public class UserServices {
             returnList.add(user);
         }
 
-        for (RunnerModel runner : getRunners()) {
+        for (RunnerModel runner : getRunners().stream().filter(r -> !r.isDeleted()).collect(Collectors.toList())) {
             User user = new User();
             user.setId(runner.getId());
             user.setName(runner.getName());
@@ -104,7 +106,7 @@ public class UserServices {
             returnList.add(user);
         }
 
-        for (VendorModel vendor : getVendors()) {
+        for (VendorModel vendor : getVendors().stream().filter(v -> !v.isDeleted()).collect(Collectors.toList())) {
             User user = new User();
             user.setId(vendor.getId());
             user.setName(vendor.getName());
@@ -374,42 +376,45 @@ public class UserServices {
     }
 
     public static void deleteUser(String Id) {
+        // Load the lists of customers, runners, and vendors
         List<CustomerModel> customers = getCustomers();
         List<RunnerModel> runners = getRunners();
         List<VendorModel> vendors = getVendors();
-        List<User> users = getAdmins();
 
+        // Iterate through customers and mark as deleted if the Id matches
         for (int i = 0; i < customers.size(); i++) {
             if (customers.get(i).getId().equals(Id)) {
-                customers.remove(i);
-                break;
+                CustomerModel customer = customers.get(i);
+                customer.setDeleted(true); // Mark as deleted
+                customers.set(i, customer); // Update the list
+                break; // Exit the loop once the customer is found and updated
             }
         }
 
+        // Iterate through runners and mark as deleted if the Id matches
         for (int i = 0; i < runners.size(); i++) {
             if (runners.get(i).getId().equals(Id)) {
-                runners.remove(i);
-                break;
+                RunnerModel runner = runners.get(i);
+                runner.setDeleted(true); // Mark as deleted
+                runners.set(i, runner); // Update the list
+                break; // Exit the loop once the runner is found and updated
             }
         }
 
+        // Iterate through vendors and mark as deleted if the Id matches
         for (int i = 0; i < vendors.size(); i++) {
             if (vendors.get(i).getId().equals(Id)) {
-                vendors.remove(i);
-                break;
+                VendorModel vendor = vendors.get(i);
+                vendor.setDeleted(true); // Mark as deleted
+                vendors.set(i, vendor); // Update the list
+                break; // Exit the loop once the vendor is found and updated
             }
         }
 
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId().equals(Id)) {
-                users.remove(i);
-                break;
-            }
-        }
-
+        // Save the updated lists back to their respective files
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.RUNNER), runners);
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.VENDOR), vendors);
-        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.USER), users);
     }
+
 }

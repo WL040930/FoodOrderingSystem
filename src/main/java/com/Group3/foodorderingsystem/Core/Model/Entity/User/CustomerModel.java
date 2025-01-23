@@ -8,14 +8,24 @@ public class CustomerModel extends User {
 
     public CustomerModel() {
         super(RoleEnum.CUSTOMER); 
+        this.isDeleted = false;
     }
 
     private double balance;
     private String phoneNumber;
     private String address; 
+    private boolean isDeleted; 
 
     public double getBalance() {
         return balance;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getPhoneNumber() {

@@ -41,7 +41,7 @@ public class AdminDatabase extends BaseContentPanel {
     // Create the main content with a dynamic search bar
     private Node createContent() {
         DynamicSearchBarUI<User> searchBarUI = new DynamicSearchBarUI<>(
-                UserServices.getBaseUsers(), // Data source
+                UserServices.getBaseUsers(),
                 "email", // Field for dynamic searching
                 null, // Placeholder text (optional)
                 this::createUserCard // Method reference for card creation
@@ -87,8 +87,7 @@ public class AdminDatabase extends BaseContentPanel {
             UserServices.deleteUser(user.getId());
 
             PopupMessage.showMessage(user.getName() + " has been deleted.", "success", () -> {
-                AdminViewModel.initDatabaseViewModel();
-                AdminViewModel.getDatabaseViewModel().navigate(AdminViewModel.getDatabaseViewModel().getNode());
+                setContent(createContent());
             });
         });
 

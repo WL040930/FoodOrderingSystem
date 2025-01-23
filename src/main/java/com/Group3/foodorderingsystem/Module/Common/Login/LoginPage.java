@@ -1,12 +1,15 @@
 package com.Group3.foodorderingsystem.Module.Common.Login;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.PopupMessage;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Manager.ManagerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
@@ -99,9 +102,6 @@ public class LoginPage extends Application {
             } else {
                 User user = UserServices.findUserByEmailAndPassword(email, password);
                 if (user != null) {
-                    actiontarget.setFill(Color.GREEN);
-                    actiontarget.setText("Login successful!");
-
                     openMainAppWindow(user);
                 } else {
                     actiontarget.setFill(Color.RED);
@@ -130,6 +130,11 @@ public class LoginPage extends Application {
         } else if (user.getRole() == RoleEnum.CUSTOMER) {
             System.out.println("Customer login");
             CustomerModel customer = UserServices.findCustomerById(user.getId());
+            if (customer.isDeleted()) {
+                PopupMessage.showMessage("This account has been deleted", "error", () -> {
+                });
+                return;
+            }
             SessionUtil.setCustomerInSession(customer);
 
             CustomerViewModel customerViewModel = new CustomerViewModel();
@@ -141,6 +146,12 @@ public class LoginPage extends Application {
 
             customerStage.show();
         } else if (user.getRole() == RoleEnum.VENDOR) {
+            VendorModel vendor = UserServices.findVendorById(user.getId());
+            if (vendor.isDeleted()) {
+                PopupMessage.showMessage("This account has been deleted", "error", () -> {
+                });
+                return;
+            }
             SessionUtil.setVendorInSession(user);
 
             VendorViewModel vendorViewModel = new VendorViewModel();
@@ -152,6 +163,12 @@ public class LoginPage extends Application {
 
             customerStage.show();
         } else if (user.getRole() == RoleEnum.RUNNER) {
+            RunnerModel runner = UserServices.findRunnerById(user.getId());
+            if (runner.isDeleted()) {
+                PopupMessage.showMessage("This account has been deleted", "error", () -> {
+                });
+                return;
+            }
             SessionUtil.setRiderInSession(user);
 
             RunnerViewModel runnerViewModel = new RunnerViewModel();

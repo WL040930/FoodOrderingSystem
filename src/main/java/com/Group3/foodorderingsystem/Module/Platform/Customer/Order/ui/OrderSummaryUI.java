@@ -91,6 +91,7 @@ public class OrderSummaryUI extends VBox {
                     CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderDetailsUI());
                     SessionUtil.setOrderSummaryEntryInSession(null);
                 } else {
+                    CustomerViewModel.getCustomerMainFrame().handleNavigation(CustomerNavigationEnum.Home);
                     CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getHomeViewModel().getMenuSelectionUI());
                 }
             });
