@@ -6,11 +6,9 @@ public class VendorModel extends User {
 
     public VendorModel() {
         super(RoleEnum.VENDOR);
-        isDeleted = false;
     }
 
     private double revenue;
-    private boolean isDeleted; 
 
     // for shop
     private String shopName;
@@ -18,14 +16,6 @@ public class VendorModel extends User {
     private String shopPhoneNumber;
     private String shopImage;
     private String address;
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
 
     public double getRevenue() {
         return revenue;
