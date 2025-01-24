@@ -1,7 +1,6 @@
 package com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.ui;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Services.UserServices;
@@ -36,10 +35,8 @@ public class FinanceCustomerListUI extends BaseContentPanel {
     }
 
     private Node content() {
-        DynamicSearchBarUI<CustomerModel> searchBarUI = new DynamicSearchBarUI<>(
-            UserServices.getCustomers().stream().filter(c -> !c.isDeleted()).collect(Collectors.toList()), 
-            "email",
-            null, this::renderCustomerCard);
+        DynamicSearchBarUI<CustomerModel> searchBarUI = new DynamicSearchBarUI<>(UserServices.getCustomers(), "email",
+                null, this::renderCustomerCard);
         return searchBarUI;
     }
 
@@ -67,8 +64,7 @@ public class FinanceCustomerListUI extends BaseContentPanel {
 
         KButton orderButton = new KButton("Order History", () -> {
             AdminViewModel.getFinanceViewModel().setAdminOrderHistoryUI(new AdminOrderHistoryUI(customer));
-            AdminViewModel.getFinanceViewModel()
-                    .navigate(AdminViewModel.getFinanceViewModel().getAdminOrderHistoryUI());
+            AdminViewModel.getFinanceViewModel().navigate(AdminViewModel.getFinanceViewModel().getAdminOrderHistoryUI());
         });
 
         actionBox.getChildren().addAll(viewButton, orderButton);

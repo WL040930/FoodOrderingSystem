@@ -75,10 +75,6 @@ public class TopUpWithdrawServices {
                 topUpWithdrawModelTemp.setStatus(status);
 
                 if (status == Status.ALLOWED) {
-                    if (UserServices.findCustomerById(topUpWithdrawModelTemp.getUserId()).isDeleted()) {
-                        return null;
-                    }
-
                     NotificationServices.createNewNotification(topUpWithdrawModelTemp.getUserId(),
                             NotificationServices.Template.approveRequest(topUpWithdrawModelTemp.getAmount(),
                                     topUpWithdrawModelTemp.getTransactionType()));

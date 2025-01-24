@@ -85,8 +85,7 @@ public class UserServices {
     public static List<User> getBaseUsers() {
         List<User> returnList = new ArrayList<>();
 
-        for (CustomerModel customer : getCustomers().stream().filter(c -> !c.isDeleted())
-                .collect(Collectors.toList())) {
+        for (CustomerModel customer : getCustomers()) {
             User user = new User();
             user.setId(customer.getId());
             user.setName(customer.getName());
@@ -96,7 +95,7 @@ public class UserServices {
             returnList.add(user);
         }
 
-        for (RunnerModel runner : getRunners().stream().filter(r -> !r.isDeleted()).collect(Collectors.toList())) {
+        for (RunnerModel runner : getRunners()) {
             User user = new User();
             user.setId(runner.getId());
             user.setName(runner.getName());
@@ -106,7 +105,7 @@ public class UserServices {
             returnList.add(user);
         }
 
-        for (VendorModel vendor : getVendors().stream().filter(v -> !v.isDeleted()).collect(Collectors.toList())) {
+        for (VendorModel vendor : getVendors()) {
             User user = new User();
             user.setId(vendor.getId());
             user.setName(vendor.getName());
