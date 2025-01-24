@@ -24,8 +24,7 @@ public class HomeUI extends BaseContentPanel {
     }
 
     private Node content() {
-        List<VendorModel> vendor = UserServices.getVendors().stream().filter(v -> !v.isDeleted())
-                .collect(java.util.stream.Collectors.toList());
+        List<VendorModel> vendor = UserServices.getVendors();
 
         DynamicSearchBarUI.RenderTemplate<VendorModel> renderTemplate = item -> {
             return new VendorCard().render(item);
@@ -34,6 +33,6 @@ public class HomeUI extends BaseContentPanel {
         DynamicSearchBarUI<VendorModel> searchWidget = new DynamicSearchBarUI<>(
                 vendor, "shopName", CustomerViewModel.getHomeViewModel().getShopSelection(), renderTemplate);
 
-        return searchWidget;
+        return searchWidget; 
     }
 }
