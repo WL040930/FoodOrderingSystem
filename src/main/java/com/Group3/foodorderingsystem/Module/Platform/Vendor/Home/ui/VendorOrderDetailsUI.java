@@ -10,6 +10,7 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.ComplainStatusEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.Images;
@@ -17,9 +18,12 @@ import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
+import com.itextpdf.layout.element.Text;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Services.VendorOrderServices;
+import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
 import com.Group3.foodorderingsystem.Core.Services.NotificationServices;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ComplainModel;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -109,8 +113,9 @@ public class VendorOrderDetailsUI extends BorderPane {
         VBox customerUI = getCustomerDetails();
         VBox itemsUI = getItemsDetails();
         VBox paymentUI = getPaymentDetails();
+        VBox complainUI = getComplainDetails();
 
-        root.getChildren().addAll(buttonContainer, paymentUI, itemsUI, statusUI, customerUI);
+        root.getChildren().addAll(buttonContainer, paymentUI, itemsUI, statusUI, customerUI, complainUI);
     }
 
 
@@ -510,4 +515,58 @@ public class VendorOrderDetailsUI extends BorderPane {
         });
     }
 
+
+    private VBox getComplainDetails() {
+        VBox complainBox = new VBox(10);
+        complainBox.setPadding(new Insets(10, 0, 0, 0));
+        Separator separator = new Separator();
+
+        //add a title
+        Label detailsLabel = new Label("Complain Details");
+        detailsLabel.getStyleClass().add("detail-title-label");
+        detailsLabel.setStyle("-fx-text-fill: #ff0000;");
+
+        separator.getStyleClass().add("separator");
+        complainBox.getChildren().addAll(separator, detailsLabel);
+
+        ComplainModel complain = CustomerOrderServices.getComplain(selectedOrder.getOrderId());
+
+        if (complain == null) {
+            Label message = new Label("No complain has been made for this order.");
+            message.getStyleClass().add("status-label");
+
+            complainBox.getChildren().addAll(message);
+        } else {
+
+            TextArea complainDescription = new TextArea();
+            complainDescription.setText(complain.getComplainDescription());
+            complainDescription.setWrapText(true);
+            complainDescription.setEditable(false);
+
+            //Complain Status
+            HBox complainStatusBox = new HBox(10);
+            Label complainStatusLabel = new Label("Complain Status:");
+            complainStatusLabel.getStyleClass().add("status-label");
+            Label complainStatusValueLabel = new Label(complain.getComplainStatus().toString());
+            complainStatusValueLabel.getStyleClass().add("status-value-label");
+            complainStatusBox.getChildren().addAll(complainStatusLabel, complainStatusValueLabel);
+
+            //Complain Reply
+            VBox complainReplyBox = new VBox(10);
+            Label complainReplyLabel = new Label("Complain Reply:");
+            complainReplyLabel.getStyleClass().add("status-label");
+            Label complainReplyValueLabel = new Label(complain.getComplainReply());
+            complainReplyValueLabel.getStyleClass().add("delivery-address-label");
+            complainReplyBox.getChildren().addAll(complainReplyLabel, complainReplyValueLabel);
+
+            // if the complain status is pending, set default message
+            if (complain.getComplainStatus().equals(ComplainStatusEnum.PENDING)) {
+                complainReplyValueLabel.setText("Manager is working on the issue. Please wait for the reply.");
+            } 
+
+            complainBox.getChildren().addAll(complainDescription, complainStatusBox, complainReplyBox);
+        }
+
+        return complainBox;
+    }
 }

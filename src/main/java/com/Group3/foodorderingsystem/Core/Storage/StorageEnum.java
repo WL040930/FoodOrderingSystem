@@ -31,6 +31,9 @@ public enum StorageEnum {
     ), 
     NOTIFICATION(
         "notification.txt"
+    ),
+    COMPLAIN(
+        "complain.txt"
     );
 
     final String fileName;
