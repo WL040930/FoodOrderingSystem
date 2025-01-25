@@ -47,6 +47,7 @@ public class MenuSelectionUI extends BaseContentPanel {
             confirmationAlert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     CustomerViewModel.getHomeViewModel().navigate(CustomerViewModel.getHomeViewModel().getHomeUI());
+                    CustomerViewModel.initOrderViewModel();
                     SessionUtil.setItemsInSession(new ArrayList<>());
                 }
             });

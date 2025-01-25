@@ -92,7 +92,7 @@ public class OrderSummaryUI extends VBox {
                     SessionUtil.setOrderSummaryEntryInSession(null);
                 } else {
                     CustomerViewModel.getCustomerMainFrame().handleNavigation(CustomerNavigationEnum.Home);
-                    CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getHomeViewModel().getMenuSelectionUI());
+                    CustomerViewModel.initOrderViewModel();
                 }
             });
 
