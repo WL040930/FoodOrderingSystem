@@ -205,4 +205,13 @@ public class VendorOrderServices {
         }).collect(Collectors.toList());
     }
 
+    public static boolean didItemOrdered(String itemId) {
+        List<OrderModel> orderList = orderList();
+        for (OrderModel order : orderList) {
+            if (order.getItems().stream().anyMatch(item -> item.getItemId().equals(itemId))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
