@@ -405,15 +405,14 @@ public class UserServices {
     }
 
     public static boolean isUserEnableToDelete(User user) {
-        if (!TopUpWithdrawServices.isUserRequested(user)) {
-            return true;
+        if (TopUpWithdrawServices.isUserRequested(user)) {
+            return false; 
         }
-        switch (user.getRole()) {
-            case CUSTOMER:
-                return false;
 
-            default:
-                return false;
+        if (CustomerOrderServices.isUserRequestedOrder(user)) {
+            return false;
         }
+
+        return true;
     }
 }

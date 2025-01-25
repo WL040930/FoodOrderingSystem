@@ -60,7 +60,7 @@ public class VendorReviewCard {
 
         // Right Arrow (used to navigate)
         ImageView rightArrow = Images.getImageView("arrow-point-to-right.png", 20, 20);
-        rightArrow.setCursor(Cursor.HAND); // Set the arrow as clickable
+        rightArrow.setCursor(Cursor.HAND);
         rightArrow.setOnMouseClicked(e -> {
             onNavigate.run();
         });

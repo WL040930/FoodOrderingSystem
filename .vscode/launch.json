@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "VendorOrderServices",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.Core.Services.VendorOrderServices",
+            "projectName": "FoodOrderingSystem"
+        },
+        {
+            "type": "java",
             "name": "TopUpWithdrawServices",
             "request": "launch",
             "mainClass": "com.Group3.foodorderingsystem.Core.Services.TopUpWithdrawServices",
