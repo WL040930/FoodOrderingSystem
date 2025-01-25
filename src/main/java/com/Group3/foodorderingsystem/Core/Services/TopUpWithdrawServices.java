@@ -98,4 +98,9 @@ public class TopUpWithdrawServices {
         return topUpWithdrawModel;
     }
 
+    public static boolean isUserRequested(User user) {
+        return getTopUpWithdrawList().stream()
+                .anyMatch(topUpWithdrawModel -> topUpWithdrawModel.getUserId().equals(user.getId()));
+    }
+
 }

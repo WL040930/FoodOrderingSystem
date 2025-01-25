@@ -377,7 +377,6 @@ public class UserServices {
         List<CustomerModel> customers = getCustomers();
         List<RunnerModel> runners = getRunners();
         List<VendorModel> vendors = getVendors();
-        List<User> users = getAdmins();
 
         for (int i = 0; i < customers.size(); i++) {
             if (customers.get(i).getId().equals(Id)) {
@@ -400,16 +399,21 @@ public class UserServices {
             }
         }
 
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId().equals(Id)) {
-                users.remove(i);
-                break;
-            }
-        }
-
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.CUSTOMER), customers);
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.RUNNER), runners);
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.VENDOR), vendors);
-        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.USER), users);
+    }
+
+    public static boolean isUserEnableToDelete(User user) {
+        if (!TopUpWithdrawServices.isUserRequested(user)) {
+            return true;
+        }
+        switch (user.getRole()) {
+            case CUSTOMER:
+                return false;
+
+            default:
+                return false;
+        }
     }
 }
