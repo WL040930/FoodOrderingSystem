@@ -1,10 +1,14 @@
 package com.Group3.foodorderingsystem.Module.Platform.Customer.Order.ui;
 
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
+import com.Group3.foodorderingsystem.Core.Services.NotificationServices;
+import com.Group3.foodorderingsystem.Core.Services.TransactionServices;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
@@ -312,7 +316,9 @@ public class OrderSummaryUI extends VBox {
             state = areaComboBox.getValue() + ", " + stateComboBox.getValue();
             
         }
-    
+
+        String vendorId = SessionUtil.getItemsFromSession().get(0).getVendorModel().getId();
+
         // Check if the customer has enough balance to place the order
         if (balance < totalPrice) {
             showDialog("Insufficient Balance", "Unable to place order", "You do not have enough balance to complete this order.");
@@ -322,12 +328,24 @@ public class OrderSummaryUI extends VBox {
             if (confirmationResult) {
                 showDialog("Order Placed", null, "Your order has been successfully placed.");
                 // Clear session items after placing the order
-                CustomerOrderServices.placeOrder(orderMethod, deliveryAddress, state, discountRate);
-                SessionUtil.setItemsInSession(new ArrayList<>());
+                String orderId = CustomerOrderServices.placeOrder(orderMethod, deliveryAddress, state, discountRate);
+                TransactionServices.createTransaction(orderId, TransactionModel.TransactionType.PAYMENT, RoleEnum.CUSTOMER);
+                NotificationServices.createNewNotification(vendorId, NotificationServices.Template.orderPlacedVendor());
+
+
+                //refresh view models
                 CustomerViewModel.initHomeViewModel();
                 CustomerViewModel.initOrderViewModel();
-
+                CustomerViewModel.initNotificationViewModel();  
+                CustomerViewModel.initTransactionViewModel();  
+                
                 CustomerViewModel.getCustomerMainFrame().handleNavigation(CustomerNavigationEnum.Order);
+                
+                
+                // Clear session items after placing the order
+                SessionUtil.setItemsInSession(new ArrayList<>());  
+                
+
             }
         }
     }

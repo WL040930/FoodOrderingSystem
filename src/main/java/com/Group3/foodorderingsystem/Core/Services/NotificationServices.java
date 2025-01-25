@@ -96,5 +96,60 @@ public class NotificationServices {
             return "You have paid <b>RM " + String.format("%.2f", amount) + "</b> for order <b>" + orderId + "</b>.";
         }
 
+        public static String orderAcceptedCustomer(String orderId) {
+            return "Your order <b>" + orderId + "</b> has been accepted.";
+        }
+
+        public static String orderRejectedCustomer(String orderId) {
+            return "Your order <b>" + orderId + "</b> has been rejected. We have refunded the amount to your account.";
+        }
+
+        public static String orderReadyPickUpCustomer(String orderId) {
+            return "Your order <b>" + orderId + "</b> is ready for pick up.";
+        }
+
+        public static String orderDeliveringCustomer(String orderId) {
+            return "Your order <b>" + orderId + "</b> is on the way.";
+        }
+
+        public static String orderCompletedCustomer(String orderId) {
+            return "Your order <b>" + orderId + "</b> has been completed.";
+        }
+
+        public static String orderCancelledCustomer(String orderId) {
+            return "Your order <b>" + orderId + "</b> has been cancelled.";
+        }
+
+        public static String orderPlacedVendor() {
+            return "You have a new order.";
+        }
+
+        public static String orderRunnerPickUpVendor(String orderId) {
+            return orderId + ": Your order has been picked up by runner.";
+        }
+
+        public static String orderDeliveringVendor(String orderId) {
+            return orderId + ": Your order is on the way.";
+        }
+
+        public static String orderCompletedVendor(String orderId) {
+            return orderId + ": Your order has been completed.";
+        }
+
+        public static String orderCancelledVendor(String orderId) {
+            return orderId + ": Your order has been cancelled.";
+        }
+
+        public static String orderReceivedRunner(String orderId) {
+            return orderId + ": You have received a new order.";
+        }
+
+        public static String orderReadyPickUpRunner(String orderId) {
+            return orderId + ": Vendor has prepared the order.";
+        }
+
+        public static String orderCompletedRunner(String orderId) {
+            return orderId + ": Order has been completed.";
+        }
     }
 }

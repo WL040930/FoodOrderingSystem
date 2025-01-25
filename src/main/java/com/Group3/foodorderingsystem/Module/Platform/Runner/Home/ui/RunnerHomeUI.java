@@ -6,6 +6,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.management.Notification;
+
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
@@ -13,15 +15,18 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Enum.RunnerStatusEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
+import com.Group3.foodorderingsystem.Core.Services.NotificationServices;
 import com.Group3.foodorderingsystem.Core.Services.RunnerOrderServices;
+import com.Group3.foodorderingsystem.Core.Services.TransactionServices;
 import com.Group3.foodorderingsystem.Core.Services.VendorOrderServices;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
-import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
-import com.Group3.foodorderingsystem.Module.Platform.Customer.Order.ui.OrderDetailsUI;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
+
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -279,7 +284,12 @@ public class RunnerHomeUI extends VBox {
                 } else if (Reply.equals("Accept")) {
                     RunnerOrderServices.updateRunnerStatus(RunnerStatusEnum.DELIVERING);
                     RunnerOrderServices.saveRiderToOrder(selectedOrder);
+
+                    //create transaction to the runner
+                    TransactionServices.createTransaction(selectedOrder.getOrderId(), TransactionModel.TransactionType.PAYMENT, RoleEnum.RUNNER);
                     refreshContent();
+                    RunnerViewModel.initNotificationViewModel();
+                    RunnerViewModel.initTransactionViewModel();
                 }
             }
             
@@ -418,6 +428,15 @@ public class RunnerHomeUI extends VBox {
                         RunnerOrderServices.updateRunnerStatus(RunnerStatusEnum.AVAILABLE);
                         refreshContent();
                     }
+
+                    // Send notification to customer, vendor and runner
+                    NotificationServices.createNewNotification(assignedOrder.getCustomer(), NotificationServices.Template.orderCompletedCustomer(assignedOrder.getOrderId()));
+                    NotificationServices.createNewNotification(assignedOrder.getVendor(), NotificationServices.Template.orderCompletedVendor(assignedOrder.getOrderId()));
+                    NotificationServices.createNewNotification(runner.getId(), NotificationServices.Template.orderCompletedRunner(assignedOrder.getOrderId()));
+
+                    // Refresh notification view model
+                    RunnerViewModel.initNotificationViewModel();
+                    
                 });
             });
             buttonContainer.getChildren().addAll(message, doneButton);

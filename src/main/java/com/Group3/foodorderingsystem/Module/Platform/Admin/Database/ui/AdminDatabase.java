@@ -83,16 +83,20 @@ public class AdminDatabase extends BaseContentPanel {
                     .navigate(AdminViewModel.getDatabaseViewModel().getEditUserInformation());
         });
 
-        KButton deleteButton = new KButton("Delete", () -> {
-            UserServices.deleteUser(user.getId());
+        if (UserServices.isUserEnableToDelete(user)) {
+            KButton deleteButton = new KButton("Delete", () -> {
+                UserServices.deleteUser(user.getId());
 
-            PopupMessage.showMessage(user.getName() + " has been deleted.", "success", () -> {
-                AdminViewModel.initDatabaseViewModel();
-                AdminViewModel.getDatabaseViewModel().navigate(AdminViewModel.getDatabaseViewModel().getNode());
+                PopupMessage.showMessage(user.getName() + " has been deleted.", "success", () -> {
+                    AdminViewModel.initDatabaseViewModel();
+                    AdminViewModel.getDatabaseViewModel().navigate(AdminViewModel.getDatabaseViewModel().getNode());
+                });
             });
-        });
 
-        buttonBox.getChildren().addAll(deleteButton, editButton);
+            buttonBox.getChildren().add(deleteButton);
+        }
+
+        buttonBox.getChildren().addAll(editButton);
         mainPaneVBox.getChildren().add(buttonBox);
 
         // Create the card to hold the user panel
