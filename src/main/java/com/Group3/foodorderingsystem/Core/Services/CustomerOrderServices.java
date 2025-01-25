@@ -20,6 +20,7 @@ import com.itextpdf.layout.property.UnitValue;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.VoucherModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ComplainModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
@@ -28,6 +29,7 @@ import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.element.Paragraph;
+import com.Group3.foodorderingsystem.Core.Model.Enum.ComplainStatusEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
@@ -427,6 +429,38 @@ public class CustomerOrderServices {
             return 0;
         }
 
+    }
+
+    // retrieve complain by order id
+    public static ComplainModel getComplain(String orderId) {
+        List<ComplainModel> complaints = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.COMPLAIN), ComplainModel.class);
+
+        for (ComplainModel complaint : complaints) {
+            if (complaint.getOrderId().equals(orderId)) {
+                return complaint;
+            }
+        }
+
+
+        return null;
+    }
+
+
+
+
+    // submit complain
+    public static void submitComplain(String orderId, String complainDescription) {
+        ComplainModel complain = new ComplainModel();
+        complain.setComplainId(UUID.randomUUID().toString().substring(0, 8));
+        complain.setOrderId(orderId);
+        complain.setComplainDescription(complainDescription);
+        complain.setComplainStatus(ComplainStatusEnum.PENDING);
+
+        List<ComplainModel> complaints = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.COMPLAIN), ComplainModel.class);
+
+        complaints.add(complain);
+
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.COMPLAIN), complaints);
     }
 
 }

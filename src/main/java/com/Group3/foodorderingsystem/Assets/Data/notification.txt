@@ -146,3 +146,9 @@
 {"notificationId":"13a595d3-7be1-4ef0-a8e5-6a37cafd9f4e","userId":"3cdd6b7d-c333-405a-af83-2db6031abbe7","content":"Your top up request of <b>RM 100.00</b> is being processed.","date":1737600155209}
 {"notificationId":"f5349cce-3d4c-451a-897c-d584907e9807","userId":"1dd0b94a-27d5-4cff-bae1-2b962a4f06fe","content":"User <b>dd</b> has requested a top up of <b>RM 100.00</b>.<br>Request ID: <b>d599dc29-b37f-4803-8f3c-cb50acfdeaeb</b>","date":1737600155310}
 {"notificationId":"23959526-65ac-4948-b673-27c765376486","userId":"3cdd6b7d-c333-405a-af83-2db6031abbe7","content":"Your <b>TOPUP</b> request of <b>RM 100.00</b> has been rejected.","date":1737600174293}
+{"notificationId":"838065d5-055f-4835-8e63-23b1d0230e55","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"You have paid <b>RM 12.00</b> for order <b>e5cadbfb</b>.","date":1737815944832}
+{"notificationId":"eacf7b56-fa9a-49a8-861c-e8e12d98e11d","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"You have a new order.","date":1737815944938}
+{"notificationId":"7f933e82-23ea-405d-8fdd-972f87f960a0","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"You have received <b>RM 12.00</b> from order <b>e5cadbfb</b>.","date":1737815962512}
+{"notificationId":"77a9282d-998d-4a04-a674-234ae4097a08","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>e5cadbfb</b> has been accepted.","date":1737815962619}
+{"notificationId":"4b14b720-7edd-4bd5-aa66-e8e209d969d3","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"Your order <b>e5cadbfb</b> has been completed.","date":1737815967118}
+{"notificationId":"3011091a-746f-4a9e-b446-ccb3183dc48a","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"e5cadbfb: Your order has been completed.","date":1737815967176}
