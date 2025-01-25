@@ -117,7 +117,7 @@ public class VendorReview extends BaseContentPanel {
         contentBox.setPadding(new Insets(20));
         contentBox.setStyle("-fx-background-color: #ffffff; -fx-border-radius: 8; -fx-padding: 15;");
 
-        contentBox.getChildren().addAll(overallRating,ratingGrid, sortComboBox, dynamicContentBox);
+        contentBox.getChildren().addAll(overallRating, ratingGrid, sortComboBox, dynamicContentBox);
         return contentBox;
     }
 
