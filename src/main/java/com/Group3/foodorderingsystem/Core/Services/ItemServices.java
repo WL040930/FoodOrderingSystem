@@ -93,4 +93,8 @@ public class ItemServices {
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ITEM), items);
     }
 
+    public static boolean isEligibleForDeletion(ItemModel itemModel) {
+        return !VendorOrderServices.didItemOrdered(itemModel.getItemId());
+    }
+
 }

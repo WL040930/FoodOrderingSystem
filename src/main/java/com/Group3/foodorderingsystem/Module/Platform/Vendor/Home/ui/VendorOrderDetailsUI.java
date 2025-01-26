@@ -10,6 +10,7 @@ import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.ComplainStatusEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.Images;
@@ -17,8 +18,12 @@ import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
+import com.itextpdf.layout.element.Text;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Services.VendorOrderServices;
+import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
+import com.Group3.foodorderingsystem.Core.Services.NotificationServices;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ComplainModel;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -108,8 +113,9 @@ public class VendorOrderDetailsUI extends BorderPane {
         VBox customerUI = getCustomerDetails();
         VBox itemsUI = getItemsDetails();
         VBox paymentUI = getPaymentDetails();
+        VBox complainUI = getComplainDetails();
 
-        root.getChildren().addAll(buttonContainer, paymentUI, itemsUI, statusUI, customerUI);
+        root.getChildren().addAll(buttonContainer, paymentUI, itemsUI, statusUI, customerUI, complainUI);
     }
 
 
@@ -424,55 +430,143 @@ public class VendorOrderDetailsUI extends BorderPane {
         return firstcontainer;
     }
 
-    private void buttonAction(OrderModel selectedOrder, String Reply) {
+    private void buttonAction(OrderModel selectedOrder, String reply) {
 
         String message;
-        StatusEnum status;
+        StatusEnum status = null;
         boolean findRider = false;
-
-        if (Reply.equals("Reject")) {
-            message = "Are you sure you want to reject this order?";
-            status = StatusEnum.REJECTED;
-        } else if (Reply.equals("Accept")) {
-            message = "Are you sure you want to accept this order?";
-            status = StatusEnum.PREPARING;
-
-            if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
-                findRider = true;
-            }
-
-        } else if (Reply.equals("Ready")) {
-            message = "Is the order done?";
-            if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
-                status = StatusEnum.WAITING_FOR_RIDER;
-            } else if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DINE_IN)) {
-                status = StatusEnum.SERVED;
-            } else {
-                status = StatusEnum.READY_FOR_PICKUP;
-            }
-        } else {
-            message = "Has the order been picked up?";
-            status = StatusEnum.PICKED_UP;
+    
+        // Use final variables for notifications
+        final String notificationCustomer;
+        final String notificationVendor;
+        final String notificationRunner;
+    
+        switch (reply) {
+            case "Reject":
+                message = "Are you sure you want to reject this order?";
+                status = StatusEnum.REJECTED;
+                notificationCustomer = NotificationServices.Template.orderRejectedCustomer(selectedOrder.getOrderId());
+                notificationVendor = ""; 
+                notificationRunner = "";
+                break;
+            case "Accept":
+                message = "Are you sure you want to accept this order?";
+                status = StatusEnum.PREPARING;
+                notificationCustomer = NotificationServices.Template.orderAcceptedCustomer(selectedOrder.getOrderId());
+                findRider = selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY);
+                notificationVendor = ""; 
+                notificationRunner = "";
+                break;
+            case "Ready":
+                message = "Is the order done?";
+                if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DELIVERY)) {
+                    status = StatusEnum.WAITING_FOR_RIDER;
+                    notificationCustomer = "";
+                    notificationVendor = "";
+                    notificationRunner = NotificationServices.Template.orderReadyPickUpCustomer(selectedOrder.getOrderId());
+                } else if (selectedOrder.getOrderMethod().equals(OrderMethodEnum.DINE_IN)) {
+                    status = StatusEnum.SERVED;
+                    notificationCustomer = NotificationServices.Template.orderCompletedCustomer(selectedOrder.getOrderId());
+                    notificationVendor = NotificationServices.Template.orderCompletedVendor(selectedOrder.getOrderId());
+                    notificationRunner = "";
+                } else {
+                    status = StatusEnum.READY_FOR_PICKUP;
+                    notificationCustomer = NotificationServices.Template.orderReadyPickUpCustomer(selectedOrder.getOrderId());
+                    notificationVendor = "";
+                    notificationRunner = "";
+                }
+                break;
+            default:
+                message = "Has the order been picked up?";
+                status = StatusEnum.PICKED_UP;
+                notificationCustomer = NotificationServices.Template.orderCompletedCustomer(selectedOrder.getOrderId());
+                notificationVendor = NotificationServices.Template.orderCompletedVendor(selectedOrder.getOrderId());
+                notificationRunner = "";
+                break;
         }
-
-        boolean finalFindRider = findRider;
-
-
+    
+        final boolean finalFindRider = findRider;
+        final StatusEnum finalStatus = status;
+    
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.YES, ButtonType.NO);
-        
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
-                VendorOrderServices.updateOrderStatus(selectedOrder, status);
-
+                VendorOrderServices.updateOrderStatus(selectedOrder, finalStatus);
                 VendorViewModel.getHomeViewModel().setVendorOrderListUI(new VendorOrderListUI());
                 VendorViewModel.getHomeViewModel().navigate(VendorViewModel.getHomeViewModel().getVendorOrderListUI());
-            }
+    
+                if (!notificationCustomer.isEmpty()) {
+                    NotificationServices.createNewNotification(selectedOrder.getCustomer(), notificationCustomer);
+                }
+                if (!notificationVendor.isEmpty()) {
+                    NotificationServices.createNewNotification(selectedOrder.getVendor(), notificationVendor);
+                }
+                if (!notificationRunner.isEmpty()) {
+                    NotificationServices.createNewNotification(selectedOrder.getRider(), notificationRunner);
+                }
+    
+                if (finalFindRider) {
+                    VendorOrderServices.assignOrderToRunner(selectedOrder.getOrderId());
+                }
 
-            if (finalFindRider) {
-                VendorOrderServices.assignOrderToRunner(selectedOrder.getOrderId());
+                VendorViewModel.initNotificationViewModel();
+                VendorViewModel.initTransactionViewModel();
             }
-            
         });
     }
 
+
+    private VBox getComplainDetails() {
+        VBox complainBox = new VBox(10);
+        complainBox.setPadding(new Insets(10, 0, 0, 0));
+        Separator separator = new Separator();
+
+        //add a title
+        Label detailsLabel = new Label("Complain Details");
+        detailsLabel.getStyleClass().add("detail-title-label");
+        detailsLabel.setStyle("-fx-text-fill: #ff0000;");
+
+        separator.getStyleClass().add("separator");
+        complainBox.getChildren().addAll(separator, detailsLabel);
+
+        ComplainModel complain = CustomerOrderServices.getComplain(selectedOrder.getOrderId());
+
+        if (complain == null) {
+            Label message = new Label("No complain has been made for this order.");
+            message.getStyleClass().add("status-label");
+
+            complainBox.getChildren().addAll(message);
+        } else {
+
+            TextArea complainDescription = new TextArea();
+            complainDescription.setText(complain.getComplainDescription());
+            complainDescription.setWrapText(true);
+            complainDescription.setEditable(false);
+
+            //Complain Status
+            HBox complainStatusBox = new HBox(10);
+            Label complainStatusLabel = new Label("Complain Status:");
+            complainStatusLabel.getStyleClass().add("status-label");
+            Label complainStatusValueLabel = new Label(complain.getComplainStatus().toString());
+            complainStatusValueLabel.getStyleClass().add("status-value-label");
+            complainStatusBox.getChildren().addAll(complainStatusLabel, complainStatusValueLabel);
+
+            //Complain Reply
+            VBox complainReplyBox = new VBox(10);
+            Label complainReplyLabel = new Label("Complain Reply:");
+            complainReplyLabel.getStyleClass().add("status-label");
+            Label complainReplyValueLabel = new Label(complain.getComplainReply());
+            complainReplyValueLabel.getStyleClass().add("delivery-address-label");
+            complainReplyBox.getChildren().addAll(complainReplyLabel, complainReplyValueLabel);
+
+            // if the complain status is pending, set default message
+            if (complain.getComplainStatus().equals(ComplainStatusEnum.PENDING)) {
+                complainReplyValueLabel.setText("Manager is working on the issue. Please wait for the reply.");
+            } 
+
+            complainBox.getChildren().addAll(complainDescription, complainStatusBox, complainReplyBox);
+        }
+
+        return complainBox;
+    }
 }

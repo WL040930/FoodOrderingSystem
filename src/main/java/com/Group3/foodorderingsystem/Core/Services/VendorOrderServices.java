@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
@@ -20,6 +21,7 @@ import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Model.Enum.RunnerStatusEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 
 public class VendorOrderServices {
 
@@ -79,6 +81,13 @@ public class VendorOrderServices {
         }
 
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ORDER), orderList);
+
+        if (status == StatusEnum.REJECTED) {
+            CustomerOrderServices.setBalance(order.getCustomer(), order.getTotalPrice(), "customer");
+        } else if (status == StatusEnum.PREPARING) {
+            TransactionServices.createTransaction(order.getOrderId(), TransactionModel.TransactionType.PAYMENT,
+                    RoleEnum.VENDOR);
+        }
     }
 
     // retrieve overall rating of the vendor
@@ -112,45 +121,60 @@ public class VendorOrderServices {
         return null;
     }
 
-    //assign order to runner (change the status to assigning, then add the order id into the runner list)
+    // assign order to runner (change the status to assigning, then add the order id
+    // into the runner list)
     public static void assignOrderToRunner(String orderId) {
-        
-        //first find the first runner that is available and the assigned orderID is not equal to the current orderID
-        List<RunnerModel> runners = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.RUNNER), RunnerModel.class, runner -> runner.getStatus().equals(RunnerStatusEnum.AVAILABLE) && !runner.getOrderIDs().contains(orderId));
 
-        //update the order status to assigning
-        if (!runners.isEmpty())  {
+        // first find the first runner that is available and the assigned orderID is not
+        // equal to the current orderID
+        List<RunnerModel> runners = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.RUNNER),
+                RunnerModel.class, runner -> runner.getStatus().equals(RunnerStatusEnum.AVAILABLE)
+                        && !runner.getOrderIDs().contains(orderId));
+
+        // update the order status to assigning
+        if (!runners.isEmpty()) {
             RunnerModel availableRunner = runners.get(0);
-            List<RunnerModel> runnerList = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.RUNNER), RunnerModel.class);
+            List<RunnerModel> runnerList = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.RUNNER),
+                    RunnerModel.class);
 
             for (RunnerModel runner : runnerList) {
                 if (runner.getId().equals(availableRunner.getId())) {
                     runner.setStatus(RunnerStatusEnum.ASSIGNING);
                     List<String> orderList = runner.getOrderIDs();
-                    orderList.add(orderId); 
+                    orderList.add(orderId);
                     runner.setorderIDs(orderList);
                     break;
                 }
             }
 
+            NotificationServices.createNewNotification(availableRunner.getId(),
+                    NotificationServices.Template.orderReceivedRunner(orderId));
+
             FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.RUNNER), runnerList);
         } else {
-            //set the order status to cancelled
-            OrderModel order = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, o -> o.getOrderId().equals(orderId)).get(0);
+            // set the order status to cancelled
+            OrderModel order = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class,
+                    o -> o.getOrderId().equals(orderId)).get(0);
             updateOrderStatus(order, StatusEnum.CANCELLED);
 
-            //refund the customer
+            // refund the customer
             CustomerOrderServices.setBalance(order.getCustomer(), order.getTotalPrice(), "customer");
 
-            //deduct the vendor balance
+            // deduct the vendor balance
             CustomerOrderServices.setBalance(order.getVendor(), -1 * order.getSubTotalPrice(), "vendor");
 
-            //TODO: send notification to vendor and customer
+            // create a refund transaction
+            TransactionServices.createTransaction(order.getOrderId(), TransactionModel.TransactionType.REFUND,
+                    RoleEnum.CUSTOMER);
+            NotificationServices.createNewNotification(order.getCustomer(),
+                    NotificationServices.Template.orderCancelledCustomer(order.getOrderId()));
+            NotificationServices.createNewNotification(order.getVendor(),
+                    NotificationServices.Template.orderCancelledVendor(order.getOrderId()));
         }
 
     }
 
-    //get the orders grouped by rating
+    // get the orders grouped by rating
     public static Map<Integer, List<OrderModel>> getOrdersGroupedByRating(VendorModel vendor) {
         List<OrderModel> orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getVendor().equals(vendor.getId()) && order.getRating() != 0);
         Map<Integer, List<OrderModel>> ratingMap = new HashMap<>();
@@ -162,7 +186,6 @@ public class VendorOrderServices {
 
         return ratingMap;
     }
-
 
     public static List<OrderModel> filterOrders(List<OrderModel> orders, String filter) {
         LocalDate now = LocalDate.now();
@@ -182,6 +205,13 @@ public class VendorOrderServices {
         }).collect(Collectors.toList());
     }
 
-    
-
+    public static boolean didItemOrdered(String itemId) {
+        List<OrderModel> orderList = orderList();
+        for (OrderModel order : orderList) {
+            if (order.getItems().stream().anyMatch(item -> item.getItemId().equals(itemId))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

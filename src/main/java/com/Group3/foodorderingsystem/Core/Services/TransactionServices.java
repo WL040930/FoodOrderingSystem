@@ -1,7 +1,13 @@
 package com.Group3.foodorderingsystem.Core.Services;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel.TransactionType;
@@ -92,7 +98,7 @@ public class TransactionServices {
 
     public static TransactionModel createTransaction(String orderId, TransactionModel.TransactionType transactionType,
             RoleEnum role) {
-        if (transactionType != TransactionType.REFUND && transactionType != TransactionType.PAYMENT) {
+        if (transactionType != TransactionType.REFUND && transactionType != TransactionType.PAYMENT && transactionType != TransactionType.CANCEL) {
             return null;
         }
 
@@ -121,25 +127,29 @@ public class TransactionServices {
                         NotificationServices.createNewNotification(customerModel.getId(),
                                 NotificationServices.Template.payOrder(orderModel.getTotalPrice(),
                                         orderModel.getOrderId()));
+                        if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null) {
+                            return null;
+                        }
                         break;
                     case VENDOR:
                         vendorModel.setRevenue(vendorModel.getRevenue() + orderModel.getSubTotalPrice());
                         NotificationServices.createNewNotification(vendorModel.getId(), NotificationServices.Template
                                 .receiveOrderPayment(orderModel.getSubTotalPrice(), orderModel.getOrderId()));
+                        if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null) {
+                            return null;
+                        }
                         break;
                     case RUNNER:
                         runnerModel.setRevenue(runnerModel.getRevenue() + orderModel.getDeliveryFee());
                         NotificationServices.createNewNotification(runnerModel.getId(), NotificationServices.Template
                                 .receiveDeliveryPayment(orderModel.getDeliveryFee(), orderModel.getOrderId()));
-
+                        if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null
+                        || UserServices.saveUser(runnerModel) == null) {
+                            return null;
+                        }
                         break;
                     default:
                         break;
-                }
-
-                if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null
-                        || UserServices.saveUser(runnerModel) == null) {
-                    return null;
                 }
 
                 break;
@@ -148,19 +158,30 @@ public class TransactionServices {
                 VendorModel vendorModelRefund = UserServices.findVendorById(orderModel.getVendor());
                 CustomerModel customerModelRefund = UserServices.findCustomerById(orderModel.getCustomer());
 
-                vendorModelRefund.setRevenue(vendorModelRefund.getRevenue() - orderModel.getTotalPrice());
+                vendorModelRefund.setRevenue(vendorModelRefund.getRevenue() - orderModel.getSubTotalPrice());
                 customerModelRefund.setBalance(customerModelRefund.getBalance() + orderModel.getTotalPrice());
 
                 if (UserServices.saveUser(vendorModelRefund) == null
                         || UserServices.saveUser(customerModelRefund) == null) {
                     return null;
                 }
-
                 break;
+            case CANCEL:
+                CustomerModel customerModelCancel = UserServices.findCustomerById(orderModel.getCustomer());
+                customerModelCancel.setBalance(customerModelCancel.getBalance() + orderModel.getTotalPrice());
+
+                if (UserServices.saveUser(customerModelCancel) == null) {
+                    return null;
+                }
+                
+                break;
+
+            
             default:
                 break;
         }
 
+        System.out.println("TransactionModel: " + transactionModel);
         List<TransactionModel> transaction = getTransaction();
         transaction.add(transactionModel);
 
@@ -201,5 +222,49 @@ public class TransactionServices {
         transactionList.sort((t1, t2) -> t2.getTransactionDate().compareTo(t1.getTransactionDate()));
 
         return transactionList;
+    }
+
+    public static List<TransactionModel> getTransactions(String userId, LocalDate date, String month, Integer year) {
+        // Retrieve all transactions for the user
+        List<TransactionModel> transactions = getTransactionByUserId(userId);
+
+        transactions = transactions.stream()
+                .filter(transaction -> transaction.getTransactionType() != TransactionModel.TransactionType.WITHDRAWAL)
+                .collect(Collectors.toList());
+
+        // Filter by date
+        if (date != null) {
+            return transactions.stream()
+                    .filter(transaction -> {
+                        LocalDate transactionDate = convertToLocalDate(transaction.getTransactionDate());
+                        return transactionDate.isEqual(date);
+                    })
+                    .collect(Collectors.toList());
+        } else if (month != null && year != null) {
+            int monthValue = Month.valueOf(month.toUpperCase()).getValue();
+            return transactions.stream()
+                    .filter(transaction -> {
+                        LocalDate transactionDate = convertToLocalDate(transaction.getTransactionDate());
+                        return transactionDate.getMonthValue() == monthValue && transactionDate.getYear() == year;
+                    })
+                    .collect(Collectors.toList());
+        }
+        // Filter by year
+        else if (year != null) {
+            return transactions.stream()
+                    .filter(transaction -> {
+                        LocalDate transactionDate = convertToLocalDate(transaction.getTransactionDate());
+                        return transactionDate.getYear() == year;
+                    })
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
+    }
+
+    // Utility method to convert Date to LocalDate
+    private static LocalDate convertToLocalDate(Date date) {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
     }
 }

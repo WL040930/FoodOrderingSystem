@@ -8,13 +8,19 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ComplainModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Assets.CustomerNavigationEnum;
+import com.Group3.foodorderingsystem.Core.Model.Enum.ComplainStatusEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
+import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
 import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
+import com.Group3.foodorderingsystem.Core.Services.TransactionServices;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.Images;
@@ -148,9 +154,16 @@ public class OrderDetailsUI extends BorderPane {
                 Alert infoAlert = new Alert(Alert.AlertType.INFORMATION, "Order cancelled successfully.");
                 infoAlert.showAndWait();
                 CustomerOrderServices.cancelOrder(selectedOrder.getOrderId());
-                CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI());
-                CustomerViewModel.getOrderViewModel()
-                        .navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI());
+                TransactionServices.createTransaction(selectedOrder.getOrderId(), TransactionModel.TransactionType.CANCEL, RoleEnum.CUSTOMER);
+
+                
+                //refresh view model
+                CustomerViewModel.initTransactionViewModel();
+                CustomerViewModel.initNotificationViewModel();
+
+
+                CustomerViewModel.initOrderViewModel();
+                CustomerViewModel.getCustomerMainFrame().handleNavigation(CustomerNavigationEnum.Order);
             }
         });
     }
@@ -161,16 +174,28 @@ public class OrderDetailsUI extends BorderPane {
         VBox itemsUI = getItemsDetails();
         VBox paymentUI = getPaymentDetails();
 
-        root.getChildren().addAll(vendorUI, statusUI, itemsUI, paymentUI);
+        root.getChildren().add(vendorUI);
+
+        Boolean isCompleted = order.getStatus().equals(StatusEnum.DELIVERED) || order.getStatus().equals(StatusEnum.SERVED) || order.getStatus().equals(StatusEnum.PICKED_UP);
 
         //check if the order is delivered, served or picked up, if yes, show rating section
-        if (order.getStatus().equals(StatusEnum.DELIVERED) || order.getStatus().equals(StatusEnum.SERVED) || order.getStatus().equals(StatusEnum.PICKED_UP)) {
+        if (isCompleted)  {
             VBox ratingUI = getRatingUI();
             root.getChildren().add(ratingUI);
         }
+
+        
+        root.getChildren().addAll(statusUI, itemsUI, paymentUI);
+
+        if (isCompleted) {
+            VBox complainUI = getComplainUI();
+            root.getChildren().add(complainUI);
+        }
+        
+
     }
 
-    public VBox getVendorDetails() {
+    private VBox getVendorDetails() {
         VBox vendorBox = new VBox(10);
         vendorBox.setAlignment(Pos.CENTER);
 
@@ -199,7 +224,7 @@ public class OrderDetailsUI extends BorderPane {
         return new ImageView(image);
     }
 
-    public VBox getOrderDetails() {
+    private VBox getOrderDetails() {
         VBox orderBox = new VBox(10);
         orderBox.setPadding(new Insets(10, 0, 0, 0));
 
@@ -260,7 +285,7 @@ public class OrderDetailsUI extends BorderPane {
         return orderBox;
     }
 
-    public VBox getItemsDetails() {
+    private VBox getItemsDetails() {
         VBox itemsBox = new VBox(10);
         itemsBox.setPadding(new Insets(10, 0, 0, 0));
         Separator separator = new Separator();
@@ -295,7 +320,7 @@ public class OrderDetailsUI extends BorderPane {
         return itemsBox;
     }
 
-    public VBox getPaymentDetails() {
+    private VBox getPaymentDetails() {
 
 
         Separator separator1 = new Separator();
@@ -335,14 +360,17 @@ public class OrderDetailsUI extends BorderPane {
         totalPriceAmountLabel.getStyleClass().add("total-price-amount-label");
         totalPriceBox.getChildren().addAll(totalPriceLabel, totalPriceAmountLabel);
 
-        paymentBox.getChildren().addAll(separator1, subtotalBox, disocuntBox, deliveryFeeBox, totalPriceBox);
+        Separator separator2 = new Separator();
+        separator2.getStyleClass().add("separator");
+
+        paymentBox.getChildren().addAll(separator1, subtotalBox, disocuntBox, deliveryFeeBox, totalPriceBox, separator2);
 
         return paymentBox;
     }
 
     private int ratingStars = 0;
 
-    public VBox getRatingUI() {
+    private VBox getRatingUI() {
         VBox ratingBox = new VBox(10);
         ratingBox.setPadding(new Insets(0)); // Adjust padding as needed
 
@@ -399,7 +427,7 @@ public class OrderDetailsUI extends BorderPane {
         Separator separator = new Separator();
         separator.getStyleClass().add("separator");
 
-        ratingBox.getChildren().addAll(separator, ratingLabel, starsBox, feedbackArea, submitButton);
+        ratingBox.getChildren().addAll(ratingLabel, starsBox, feedbackArea, submitButton, separator);
         return ratingBox;
     }
 
@@ -422,4 +450,89 @@ public class OrderDetailsUI extends BorderPane {
         CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Past"));
         
     }
+
+    private VBox getComplainUI() {
+        VBox complainBox = new VBox(10);
+        complainBox.setPadding(new Insets(0)); // Adjust padding as needed
+
+        // Title
+        Label complainLabel = new Label("Complain");
+        complainLabel.getStyleClass().add("detail-title-label");
+        complainLabel.setStyle("-fx-text-fill: #ff0000;");
+
+        // Complain Description
+        TextArea complainDescription = new TextArea();
+        complainDescription.setPromptText("Write your complain here...");
+        complainDescription.setWrapText(true);
+
+        complainBox.getChildren().addAll(complainLabel, complainDescription);
+
+        ComplainModel complain = CustomerOrderServices.getComplain(selectedOrder.getOrderId());
+        
+        
+        if (complain != null) {
+            complainDescription.setText(complain.getComplainDescription());
+            complainDescription.setEditable(false);
+
+            // Complain Status
+            HBox complainStatusBox = new HBox(10);
+            Label complainStatusLabel = new Label("Complain Status:");
+            complainStatusLabel.getStyleClass().add("status-label");
+            Label complainStatusValueLabel = new Label(complain.getComplainStatus().toString());
+            complainStatusValueLabel.getStyleClass().add("status-value-label");
+            complainStatusBox.getChildren().addAll(complainStatusLabel, complainStatusValueLabel);
+
+            // Complain Reply
+            VBox complainReplyBox = new VBox(10);
+            Label complainReplyLabel = new Label("Complain Reply:");
+            complainReplyLabel.getStyleClass().add("status-label");
+            Label complainReplyValueLabel = new Label(complain.getComplainReply());
+            complainReplyValueLabel.getStyleClass().add("delivery-address-label"); 
+            complainReplyBox.getChildren().addAll(complainReplyLabel, complainReplyValueLabel);
+
+
+            //if reply is null, set default text
+            if (complain.getComplainStatus() == ComplainStatusEnum.PENDING) {
+                complainReplyValueLabel.setText("We are working on your complain. Please wait for our reply.");
+            }
+
+            complainBox.getChildren().addAll(complainStatusBox, complainReplyBox);
+
+
+
+        } else{
+            // Submit button
+            Button submitButton = new Button("Submit");
+            submitButton.getStyleClass().add("complain-button");
+            submitButton.setOnAction(event -> {
+                if (complainDescription.getText().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please provide complain description.");
+                    alert.showAndWait();
+                    return;
+                } else {
+                    submitComplain(complainDescription.getText());
+                }
+            });
+
+            complainBox.getChildren().add(submitButton);
+        }
+
+
+        Separator separator = new Separator();
+        separator.getStyleClass().add("separator");
+
+        complainBox.getChildren().addAll(separator);
+        return complainBox;
+    }
+
+    private void submitComplain(String complainDescription) {
+        // Show success message
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Complain submitted successfully.");
+        alert.showAndWait();
+
+        CustomerOrderServices.submitComplain(selectedOrder.getOrderId(), complainDescription);
+        CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI());
+        CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Past"));
+    }
+
 } 

@@ -16,8 +16,15 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.Titl
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextFieldEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.Menu.widgets.ComboBoxWidget;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Vouchers.ui.VoucherAddUI;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class EditItemUI extends BaseContentPanel {
@@ -40,9 +47,28 @@ public class EditItemUI extends BaseContentPanel {
     }
 
     private Node header() {
-        return new TitleBackButton("Edit Item", () -> {
+        HBox header = new HBox();
+        header.setAlignment(Pos.CENTER);
+
+        TitleBackButton backButton = new TitleBackButton("Edit Item", () -> {
             VendorViewModel.getMenuViewModel().navigate(VendorViewModel.getMenuViewModel().getMenuList());
         });
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        Button deleteButton = new Button("Delete Item");
+        deleteButton.setOnAction(event -> {
+        });
+
+        HBox.setMargin(deleteButton, new Insets(0, 10, 0, 0));
+
+        header.getChildren().addAll(backButton, spacer);
+        if (ItemServices.isEligibleForDeletion(itemModel)) {
+            header.getChildren().add(deleteButton);
+        }
+
+        return header;
     }
 
     private Node content() {
