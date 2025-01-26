@@ -1,24 +1,39 @@
 package com.Group3.foodorderingsystem.Module.Common.Transaction.ui;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel.TransactionType;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.User;
 import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Services.TransactionServices;
 import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
 import com.Group3.foodorderingsystem.Core.Widgets.Card;
 import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.Home.widgets.DynamicSearchBarUI;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
@@ -170,10 +185,102 @@ public class RevenueSummary extends BaseContentPanel {
         Double totalRevenue = calculateTotalRevenue(transactions);
 
         // Remove old cards and add new content
-        content.getChildren().removeIf(node -> node instanceof Card);
+        if (content.getChildren().size() > 1) {
+            content.getChildren().subList(2, content.getChildren().size()).clear();
+        }
+
         content.getChildren().add(buildSummaryCard(
                 period != null ? period : (month != null ? capitalizeFirstLetter(month) : year.toString()),
                 totalRevenue));
+
+        if (month != null) {
+            content.getChildren().add(buildMonthlyGraph(month, year, transactions));
+        } else if (year != null) {
+            content.getChildren().add(buildYearlyGraph(year, transactions));
+        }
+
+        content.getChildren().add(buildTransactionHistory(transactions));
+    }
+
+    private Node buildMonthlyGraph(String month, Integer year, List<TransactionModel> transactions) {
+        int daysInMonth = LocalDate.of(year, getMonthNumber(month), 1).lengthOfMonth();
+        double[] dailyTotals = new double[daysInMonth];
+
+        transactions.forEach(transaction -> {
+            LocalDate date = convertToLocalDate(transaction.getTransactionDate());
+            if (date.getMonthValue() == getMonthNumber(month)) {
+                dailyTotals[date.getDayOfMonth() - 1] += transaction.getAmount();
+            }
+        });
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Revenue");
+
+        for (int i = 0; i < daysInMonth; i++) {
+            series.getData().add(new XYChart.Data<>(String.valueOf(i + 1), dailyTotals[i]));
+        }
+
+        LineChart<String, Number> lineChart = createLineChart("Days", "Revenue (RM)",
+                "Daily Revenue for " + capitalizeFirstLetter(month) + " " + year, series);
+        return lineChart;
+    }
+
+    private LocalDate convertToLocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    private Node buildYearlyGraph(Integer year, List<TransactionModel> transactions) {
+        double[] monthlyTotals = new double[12];
+
+        transactions.forEach(transaction -> {
+            LocalDate date = convertToLocalDate(transaction.getTransactionDate());
+            if (date.getYear() == year) {
+                monthlyTotals[date.getMonthValue() - 1] += transaction.getAmount();
+            }
+        });
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Revenue");
+
+        for (int i = 0; i < 12; i++) {
+            series.getData()
+                    .add(new XYChart.Data<>(
+                            capitalizeFirstLetter(LocalDate.of(year, i + 1, 1).getMonth().toString().toLowerCase()),
+                            monthlyTotals[i]));
+        }
+
+        LineChart<String, Number> lineChart = createLineChart("Months", "Revenue (RM)", "Monthly Revenue for " + year,
+                series);
+        return lineChart;
+    }
+
+    private LineChart<String, Number> createLineChart(String xAxisLabel, String yAxisLabel, String title,
+            XYChart.Series<String, Number> series) {
+        CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel(xAxisLabel);
+
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel(yAxisLabel);
+
+        LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
+        lineChart.setTitle(title);
+        lineChart.getData().add(series);
+        lineChart.setLegendVisible(false);
+
+        // Set fixed height for the graph
+        lineChart.setPrefHeight(400); // Preferred height
+        lineChart.setMinHeight(400); // Minimum height
+        lineChart.setMaxHeight(400); // Maximum height
+
+        return lineChart;
+    }
+
+    private int getMonthNumber(String month) {
+        try {
+            return Month.valueOf(month.toUpperCase()).getValue();
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid month name: " + month);
+        }
     }
 
     private Node buildSummaryCard(String period, Double amount) {
@@ -189,19 +296,62 @@ public class RevenueSummary extends BaseContentPanel {
         return new Card(vbox, 300, 150, null);
     }
 
+    private Node buildTransactionHistory(List<TransactionModel> transactions) {
+        DynamicSearchBarUI<TransactionModel> transactionsSearchUI = new DynamicSearchBarUI<>(transactions,
+                "transactionId", null, this::transactionBox);
+        transactionsSearchUI.setSearchBarVisible(false);
+        return transactionsSearchUI;
+    }
+
     private Double calculateTotalRevenue(List<TransactionModel> transactions) {
         return transactions.stream()
                 .mapToDouble(TransactionModel::getAmount)
                 .sum();
     }
 
-    private String getMonthName(String month) {
-        int monthIndex = Integer.parseInt(month) - 1; // Convert "01" to 0-based index
-        return java.time.Month.of(monthIndex + 1).name(); // Convert to Month Enum and get name
-    }
-
     private String capitalizeFirstLetter(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }
 
+    private Node transactionBox(TransactionModel transaction) {
+        HBox box = new HBox();
+        box.setPadding(new Insets(5, 10, 5, 10));
+        box.setSpacing(10);
+        box.setAlignment(Pos.CENTER);
+
+        VBox left = new VBox();
+        Label transactionType = new Label();
+        if (transaction.getTransactionType() == TransactionType.PAYMENT
+                || transaction.getTransactionType() == TransactionType.REFUND) {
+            transactionType
+                    .setText(transaction.getTransactionType() + " - Order ID: "
+                            + transaction.getOrderModel().getOrderId());
+        } else {
+            transactionType.setText(transaction.getTransactionType().toString());
+        }
+
+        transactionType.setStyle("-fx-font-weight: bold;");
+        Label date = new Label(transaction.getTransactionDate().toString());
+        left.getChildren().addAll(transactionType, date);
+
+        VBox right = new VBox();
+        Label amount = new Label(
+                transaction.getAmount() > 0 ? "+ RM" + String.format("%.2f", transaction.getAmount())
+                        : "- RM" + String.format("%.2f", Math.abs(transaction.getAmount())));
+        amount.setStyle(transaction.getAmount() > 0 ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
+        right.setAlignment(Pos.CENTER_RIGHT);
+
+        right.getChildren().add(amount);
+
+        // Add a spacer to push the "right" VBox to the far right
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        box.getChildren().addAll(left, spacer, right);
+
+        HBox contentBox = new HBox(new Card(box, 470, 100, null));
+        contentBox.setPadding(new Insets(5, 0, 5, 0));
+        contentBox.setAlignment(Pos.CENTER);
+        return contentBox;
+    }
 }
