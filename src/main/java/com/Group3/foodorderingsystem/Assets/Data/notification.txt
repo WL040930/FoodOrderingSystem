@@ -151,3 +151,5 @@
 {"notificationId":"160535b7-df27-479f-aa9e-41b7a18e3eb5","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"You have a new order.","date":1737817788719}
 {"notificationId":"42193384-3855-4ff0-8835-e7d1dc7448a6","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"You have paid <b>RM 2.00</b> for order <b>af6b8514</b>.","date":1737817850123}
 {"notificationId":"ce56c455-a5a8-49f6-aa8e-fb664c3c42c2","userId":"f8d5b3ea-f377-41c1-b713-7a36e7346e8c","content":"You have a new order.","date":1737817850260}
+{"notificationId":"b4718bff-9852-4a04-af67-7329b3c17a2c","userId":"ab4cb8d2-a5cb-45a1-b2ab-f027253e3e36","content":"You have paid <b>RM 1222.00</b> for order <b>9054436a</b>.","date":1738220342691}
+{"notificationId":"cde92b77-5a4b-4f7f-8bfb-3155c658b2e0","userId":"de5ee8bc-6786-470d-86d0-976673e64c72","content":"You have a new order.","date":1738220342715}

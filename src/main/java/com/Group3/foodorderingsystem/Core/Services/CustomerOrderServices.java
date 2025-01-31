@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.itextpdf.layout.Document;
 import java.io.IOException;
@@ -278,19 +280,6 @@ public class CustomerOrderServices {
         return pastOrders;
     }
 
-    // change to static
-    public List<OrderModel> getOrderByCustomerId(String customerId) {
-        List<OrderModel> vendorOrders = new ArrayList<>();
-
-        vendorOrders.addAll(listPendingOrders());
-        vendorOrders.addAll(listActiveOrders());
-        vendorOrders.addAll(listPastOrders());
-
-        vendorOrders.sort((o1, o2) -> o2.getTime().compareTo(o1.getTime()));
-
-        return vendorOrders;
-    }
-
     // list a specific order details
     public OrderModel getOrderDetails(String orderId) {
         List<OrderModel> orders = FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
@@ -470,6 +459,13 @@ public class CustomerOrderServices {
                 .anyMatch(order -> order.getCustomer().equals(user.getId())
                         || order.getVendor().equals(user.getId())
                         || (order.getRider() != null && order.getRider().equals(user.getId())));
+    }
+
+    public static List<OrderModel> getOrderByCustomerId(String id) {
+        return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class)
+                .stream()
+                .filter(order -> order.getCustomer().equals(id)) // Use .equals() for string comparison
+                .collect(Collectors.toList());
     }
 
 }

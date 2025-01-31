@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CustomerOrderServices",
+            "request": "launch",
+            "mainClass": "com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices",
+            "projectName": "FoodOrderingSystem"
+        },
+        {
+            "type": "java",
             "name": "VendorOrderServices",
             "request": "launch",
             "mainClass": "com.Group3.foodorderingsystem.Core.Services.VendorOrderServices",
