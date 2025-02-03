@@ -59,6 +59,16 @@ public class EditItemUI extends BaseContentPanel {
 
         Button deleteButton = new Button("Delete Item");
         deleteButton.setOnAction(event -> {
+            if (ItemServices.deleteItem(itemModel)) {
+                PopupMessage.showMessage("Item deleted. ", "success", () -> {
+                    VendorViewModel.initMenuViewModel();
+                    VendorViewModel.getMenuViewModel().navigate(VendorViewModel.getMenuViewModel().getNode());
+                });
+                VendorViewModel.initMenuViewModel();
+            } else {
+                PopupMessage.showMessage("Failed to delete item. ", "error", () -> {
+                });
+            }
         });
 
         HBox.setMargin(deleteButton, new Insets(0, 10, 0, 0));

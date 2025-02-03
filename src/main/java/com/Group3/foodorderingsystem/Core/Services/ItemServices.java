@@ -97,4 +97,16 @@ public class ItemServices {
         return !VendorOrderServices.didItemOrdered(itemModel.getItemId());
     }
 
+    public static boolean deleteItem(ItemModel itemModel) {
+        if (!isEligibleForDeletion(itemModel)) {
+            return false;
+        }
+
+        List<ItemModel> items = getItems();
+        items.removeIf(item -> item.getItemId().equals(itemModel.getItemId()));
+
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.ITEM), items);
+        return true;
+    }
+
 }
