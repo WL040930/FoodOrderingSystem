@@ -19,6 +19,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -78,6 +79,7 @@ public class TopupWithdrawUI extends BaseContentPanel {
 
     private Node content() {
         VBox vBox = new VBox(10);
+        vBox.setPadding(new Insets(10)); // Padding for the entire content
         Label label = new Label(transactionType == TransactionType.TOPUP ? "Top Up" : "Withdraw");
         label.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 

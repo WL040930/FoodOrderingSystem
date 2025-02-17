@@ -3,7 +3,9 @@ package com.Group3.foodorderingsystem.Core.Services;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel.TransactionType;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.NotificationModel;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
@@ -35,6 +37,16 @@ public class NotificationServices {
 
         personalNotificationList.sort((n1, n2) -> n2.getDate().compareTo(n1.getDate()));
         return personalNotificationList;
+    }
+
+    public static void generateReceipt(TransactionModel transactionModel, CustomerModel customerModel) {
+        List<NotificationModel> notificationList = getNotificationList();
+        NotificationModel notificationModel = new NotificationModel();
+        notificationModel.setUserId(customerModel.getId());
+        notificationModel.setContent(Template.sendReceipt(transactionModel.getTransactionId()));
+        notificationModel.setTransactionId(transactionModel.getTransactionId());
+        notificationList.add(notificationModel);
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.NOTIFICATION), notificationList);
     }
 
     public static class Template {
@@ -150,6 +162,10 @@ public class NotificationServices {
 
         public static String orderCompletedRunner(String orderId) {
             return orderId + ": Order has been completed.";
+        }
+
+        public static String sendReceipt(String transactionId) {
+            return "Receipt for transaction <b>" + transactionId + "</b>.";
         }
     }
 }
