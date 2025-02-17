@@ -34,51 +34,60 @@ public class TitleTextField extends VBox {
     }
 
     private javafx.scene.Node createInputField() {
+        TextField textField;
+
         switch (fieldType) {
             case PasswordField:
                 PasswordField passwordField = new PasswordField();
                 passwordField.setPromptText(promptText);
+                passwordField.setStyle("-fx-min-height: 30px; -fx-font-size: 14px; -fx-padding: 4px;");
                 return passwordField;
+
             case TextArea:
                 TextArea textArea = new TextArea();
                 textArea.setPromptText(promptText);
                 return textArea;
+
             case IntegerField:
-                // Custom TextField for integers
-                TextField integerField = new TextField();
-                integerField.setPromptText(promptText);
-                integerField.textProperty().addListener((observable, oldValue, newValue) -> {
+                textField = new TextField();
+                textField.setPromptText(promptText);
+                textField.textProperty().addListener((observable, oldValue, newValue) -> {
                     if (!newValue.matches("\\d*")) {
-                        integerField.setText(newValue.replaceAll("[^\\d]", ""));
+                        textField.setText(newValue.replaceAll("[^\\d]", ""));
                     }
                 });
-                return integerField;
+                textField.setStyle("-fx-min-height: 30px; -fx-font-size: 14px; -fx-padding: 4px;");
+                return textField;
+
             case DecimalField:
-                // Custom TextField for decimal numbers
-                TextField decimalField = new TextField();
-                decimalField.setPromptText(promptText);
-                decimalField.textProperty().addListener((observable, oldValue, newValue) -> {
+                textField = new TextField();
+                textField.setPromptText(promptText);
+                textField.textProperty().addListener((observable, oldValue, newValue) -> {
                     if (!newValue.matches("\\d*(\\.\\d{0,2})?")) {
-                        decimalField.setText(oldValue); // Revert to the last valid input
+                        textField.setText(oldValue);
                     }
                 });
-                return decimalField;
+                textField.setStyle("-fx-min-height: 30px; -fx-font-size: 14px; -fx-padding: 4px;");
+                return textField;
 
             case EmailField:
-                TextField emailField = new TextField();
-                emailField.setPromptText(promptText);
-                emailField.textProperty().addListener((observable, oldValue, newValue) -> {
+                textField = new TextField();
+                textField.setPromptText(promptText);
+                textField.textProperty().addListener((observable, oldValue, newValue) -> {
                     if (!newValue.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
-                        emailField.setStyle("-fx-border-color: red;");
+                        textField.setStyle(
+                                "-fx-border-color: red; -fx-min-height: 30px; -fx-font-size: 14px; -fx-padding: 4px;");
                     } else {
-                        emailField.setStyle(null);
+                        textField.setStyle("-fx-min-height: 30px; -fx-font-size: 14px; -fx-padding: 4px;");
                     }
                 });
-                return emailField;
+                return textField;
+
             case TextField:
             default:
-                TextField textField = new TextField();
+                textField = new TextField();
                 textField.setPromptText(promptText);
+                textField.setStyle("-fx-min-height: 30px; -fx-font-size: 14px; -fx-padding: 4px;");
                 return textField;
         }
     }

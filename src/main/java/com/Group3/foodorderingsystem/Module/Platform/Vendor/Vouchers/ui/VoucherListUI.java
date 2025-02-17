@@ -44,8 +44,7 @@ public class VoucherListUI extends BaseContentPanel {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Button addNewItemButton = new Button("Add New Vouchers");
-        addNewItemButton.setOnAction(event -> {
+        Button addNewItemButton = new KButton("Add New Vouchers", () -> {
             VendorViewModel.getVoucherViewModel().setVoucherAddUI(new VoucherAddUI());
             VendorViewModel.getVoucherViewModel().navigate(VendorViewModel.getVoucherViewModel().getVoucherAddUI());
         });
@@ -117,6 +116,7 @@ public class VoucherListUI extends BaseContentPanel {
                 }
             });
         });
+        deleteButton.setBackgroundColor(KButton.red);
 
         buttonBox.getChildren().addAll(editButton, deleteButton);
         buttonBox.setPrefWidth(120);
