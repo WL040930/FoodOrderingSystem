@@ -11,6 +11,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Manager.ManagerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.RunnerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Vouchers.widgets.KButton;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -87,9 +88,7 @@ public class LoginPage extends Application {
         final Text actiontarget = new Text();
         actiontarget.setId("actiontarget");
 
-        Button btn = new Button("Sign in");
-
-        btn.setOnAction(e -> {
+        Button btn = new KButton("Sign in", () -> {
             String email = userTextField.getText();
             String password = pwBox.getText();
 
