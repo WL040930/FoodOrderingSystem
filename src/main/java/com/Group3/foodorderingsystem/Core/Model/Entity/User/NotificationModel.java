@@ -12,6 +12,7 @@ public class NotificationModel {
     private String userId; 
     private String content; 
     private Date date;
+    private String transactionId; 
 
     public NotificationModel() {
         this.date = new Date();
@@ -48,6 +49,14 @@ public class NotificationModel {
 
     public Date getDate() {
         return date;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
     }
     
 }
