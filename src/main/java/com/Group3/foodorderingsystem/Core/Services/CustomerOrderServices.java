@@ -172,9 +172,15 @@ public class CustomerOrderServices {
         // Save order to file
         saveOrderToFile(order);
 
+        //deduct the balance form customer
+        customer.setBalance(customer.getBalance() - order.getTotalPrice());
+        SessionUtil.setCustomerInSession(customer);
+
+        
         // Clear only item from session
         SessionUtil.setItemsInSession(null);
         return orderId;
+
 
     }
 
