@@ -10,6 +10,7 @@ import com.Group3.foodorderingsystem.Module.Common.Transaction.model.Transaction
 import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Manager.Assets.ManagerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Manager.Assets.ManagerTopNavigationEnum;
+import com.Group3.foodorderingsystem.Module.Platform.Manager.Complain.model.ComplainViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Assets.RunnerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Assets.RunnerTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Home.model.RunnerHomeViewModel;
@@ -20,6 +21,7 @@ import javafx.scene.Node;
 public class ManagerViewModel {
 
     private static ManagerViewModel instance;
+    private ComplainViewModel complainViewModel;
 
     public static ManagerViewModel setInstance(ManagerViewModel instance) {
         return ManagerViewModel.instance = instance;
@@ -34,6 +36,7 @@ public class ManagerViewModel {
         // instance.orderViewModel.init();
 
         init();
+        initComplainViewModel();
     }
 
     /**
@@ -153,4 +156,12 @@ public class ManagerViewModel {
         return instance.selectedTopNavigation.get(getSelectedNavigation());
     }
 
+    public static void initComplainViewModel() {
+        instance.complainViewModel = new ComplainViewModel();
+        instance.complainViewModel.init();
+    }
+
+    public static ComplainViewModel getComplainViewModel() {
+        return instance.complainViewModel;
+    }
 }

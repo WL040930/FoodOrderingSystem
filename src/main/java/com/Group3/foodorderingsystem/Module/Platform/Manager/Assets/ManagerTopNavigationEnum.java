@@ -1,15 +1,13 @@
 package com.Group3.foodorderingsystem.Module.Platform.Manager.Assets;
 
+import com.Group3.foodorderingsystem.Module.Platform.Manager.ManagerViewModel;
+
 public enum ManagerTopNavigationEnum {
 
-    Home(
-            "Home",
+    Complain(
+            "Complain",
             () -> {
-                // RunnerViewModel.navigate(CustomerViewModel.getHomeViewModel().getNode());
-            }),
-    CurrentOrder(
-            "Current Order",
-            () -> {
+                ManagerViewModel.navigate(ManagerViewModel.getComplainViewModel().getNode());
             }),
     Order(
             "Order",

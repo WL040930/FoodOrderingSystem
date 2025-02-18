@@ -102,7 +102,6 @@ public class VendorOrderDetailsUI extends BorderPane {
 
     private void displayOrderDetails(VBox root, OrderModel order) {
 
-        // Create a container for the back button and fixedVBox
         VBox buttonVBox = createButtonContainer(selectedOrder);
         VBox buttonContainer = new VBox(10);
         buttonContainer.getChildren().addAll(buttonVBox);
