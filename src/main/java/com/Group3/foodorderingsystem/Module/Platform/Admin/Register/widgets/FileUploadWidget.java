@@ -5,14 +5,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.util.function.Consumer;
 
 import com.Group3.foodorderingsystem.Core.Util.Images;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Vouchers.widgets.KButton;
 
-public class FileUploadWidget extends HBox {
+public class FileUploadWidget extends VBox {
 
     private final Label selectedFileLabel = new Label();
     private final ImageView avatarImageView = new ImageView();
@@ -32,8 +34,9 @@ public class FileUploadWidget extends HBox {
     }
 
     private void initButtonUpload() {
-        Button uploadButton = new Button("Choose File");
-        uploadButton.setOnAction(e -> handleFileUpload());
+        Button uploadButton = new KButton("Choose File", () -> {
+            handleFileUpload();
+        });
         selectedFileLabel.setStyle("-fx-font-size: 12px;");
 
         getChildren().addAll(uploadButton, selectedFileLabel);
@@ -48,8 +51,9 @@ public class FileUploadWidget extends HBox {
         // Set the default profile picture from ImageView
         avatarImageView.setImage(defaultAvatarImageView.getImage());
 
-        Button uploadButton = new Button("Upload Image");
-        uploadButton.setOnAction(e -> handleFileUpload());
+        Button uploadButton = new KButton("Upload Image", () -> {
+            handleFileUpload();
+        });
 
         getChildren().addAll(avatarImageView, uploadButton);
     }

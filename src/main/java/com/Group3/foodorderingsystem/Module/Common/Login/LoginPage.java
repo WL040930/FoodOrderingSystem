@@ -57,25 +57,34 @@ public class LoginPage extends Application {
     private Node _buildFormField() {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+        grid.setHgap(12); // Slightly increased horizontal gap for better spacing
+        grid.setVgap(8); // Adjusted vertical gap for improved alignment
+        grid.setPadding(new Insets(30, 35, 30, 35)); // More spacious padding
 
-        Text scenetitle = new Text("Welcome");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        // Title with enhanced styling
+        Text scenetitle = new Text("Welcome to Food Orbit");
+        scenetitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
         grid.add(scenetitle, 0, 0, 2, 1);
 
+        // Email label and field
         Label userName = new Label("Email:");
+        userName.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
         grid.add(userName, 0, 1);
 
         userTextField = new TextField();
-        grid.add(userTextField, 1, 1);
+        userTextField.setPrefWidth(280);
+        userTextField.setStyle("-fx-border-radius: 5px; -fx-padding: 5px;");
+        grid.add(userTextField, 0, 2);
 
+        // Password label and field
         Label pw = new Label("Password:");
-        grid.add(pw, 0, 2);
+        pw.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 14));
+        grid.add(pw, 0, 3);
 
         pwBox = new PasswordField();
-        grid.add(pwBox, 1, 2);
+        pwBox.setPrefWidth(280);
+        pwBox.setStyle("-fx-border-radius: 5px; -fx-padding: 5px;");
+        grid.add(pwBox, 0, 4);
 
         return grid;
     }

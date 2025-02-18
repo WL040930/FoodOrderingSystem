@@ -22,6 +22,7 @@ import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Separator;
 
@@ -78,6 +79,7 @@ public class SettingsProfileManagement extends BaseContentPanel {
         VBox content = new VBox(10);
         content.setStyle("-fx-padding: 10px;");
 
+        VBox fixedContent = new VBox(10);
         // Email Section
         Label title = new Label("Email");
         title.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
@@ -88,20 +90,23 @@ public class SettingsProfileManagement extends BaseContentPanel {
         role.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
         Label roleValue = new Label(user.getRole().toString());
 
-        // Add a separator after the role
-        Separator roleSeparator = new Separator();
-        roleSeparator.setStyle("-fx-padding: 10 0 10 0;");
+        fixedContent.getChildren().addAll(title, email, role, roleValue);
 
         // Profile Picture and Form Fields
         profilePicture = new FileUploadWidget(FileUploadType.CIRCLE_AVATAR, user.getProfilePicture());
         name = new TitleTextField("Name", user.getName(), TitleTextFieldEnum.TextField);
         password = new TitleTextField("Password", "******", TitleTextFieldEnum.PasswordField);
 
+        HBox profileContent = new HBox(30);
+        Separator separator = new Separator();
+        separator.setOrientation(javafx.geometry.Orientation.VERTICAL);
+
+        profileContent.getChildren().addAll(profilePicture, separator, fixedContent);
+
         // Add all elements to the VBox
         content.getChildren().addAll(
-                title, email,
-                role, roleValue, roleSeparator,
-                profilePicture, name, password);
+                profileContent,
+                name, password);
 
         switch (user.getRole()) {
             case CUSTOMER:

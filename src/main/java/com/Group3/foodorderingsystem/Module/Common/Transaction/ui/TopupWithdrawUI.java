@@ -79,7 +79,7 @@ public class TopupWithdrawUI extends BaseContentPanel {
 
     private Node content() {
         VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(10)); // Padding for the entire content
+        vBox.setPadding(new Insets(10));
         Label label = new Label(transactionType == TransactionType.TOPUP ? "Top Up" : "Withdraw");
         label.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
@@ -88,7 +88,7 @@ public class TopupWithdrawUI extends BaseContentPanel {
         instruction.setStyle("-fx-font-size: 14px; -fx-text-fill: #555;");
 
         amountField = new TextField();
-        amountField.setStyle("-fx-font-size: 14px;");
+        amountField.setStyle("-fx-min-height: 30px; -fx-font-size: 14px; -fx-padding: 4px;");
         configureDecimalInput(amountField);
 
         // Create buttons and add them to a list for state management

@@ -46,7 +46,7 @@ public class BasicInfoForm extends BaseContentPanel {
     }
 
     private Node content() {
-        VBox content = new VBox(10);
+        VBox content = new VBox(15);
         content.setStyle("-fx-padding: 10px;");
 
         // Initialize form fields

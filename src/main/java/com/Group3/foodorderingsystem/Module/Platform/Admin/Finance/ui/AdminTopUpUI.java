@@ -52,6 +52,7 @@ public class AdminTopUpUI extends BaseContentPanel {
         label.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
         amount = new TextField();
+        amount.setStyle("-fx-min-height: 30px; -fx-font-size: 14px; -fx-padding: 4px;");
         amount.setPromptText("Enter amount (e.g., 100.00)");
         configureDecimalInput(amount);
 
