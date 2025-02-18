@@ -46,8 +46,6 @@ public class OrderHistoryUI extends VBox {
     private List<OrderModel> pastOrders;
 
     
-
-
     public OrderHistoryUI(String selectedTab) {
 
         pendingOrders = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getCustomer().equals(customer.getId()) && order.getStatus().equals(StatusEnum.PENDING));

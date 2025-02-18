@@ -9,8 +9,7 @@ public enum ManagerNavigationEnum {
             "Home",
             "home.png",
             Arrays.asList(
-                    ManagerTopNavigationEnum.Home,
-                    ManagerTopNavigationEnum.CurrentOrder)),
+                    ManagerTopNavigationEnum.Complain)),
     Order(
             "Order",
             "logo.png",
