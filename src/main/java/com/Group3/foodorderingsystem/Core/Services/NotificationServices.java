@@ -167,5 +167,9 @@ public class NotificationServices {
         public static String sendReceipt(String transactionId) {
             return "Receipt for transaction <b>" + transactionId + "</b>.";
         }
+
+        public static String sendFine(Double amount) {
+            return "You have been fined <b>RM " + String.format("%.2f", amount) + "</b>.";
+        }
     }
 }

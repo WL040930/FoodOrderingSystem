@@ -53,6 +53,31 @@ public class TransactionServices {
         return null;
     }
 
+    public static TransactionModel createFine(Double amount, TransactionType transactionType, String vendorId) {
+        if (transactionType != TransactionType.FINE) {
+            return null;
+        }
+
+        VendorModel vendorModel = UserServices.findVendorById(vendorId);
+
+        vendorModel.setRevenue(vendorModel.getRevenue() - amount);
+        UserServices.saveUser(vendorModel);
+
+        TransactionModel transactionModel = new TransactionModel();
+        transactionModel.setTransactionId(Storage.generateNewId());
+        transactionModel.setAmount(-amount);
+        transactionModel.setTransactionType(transactionType);
+        transactionModel.setUserModel(vendorModel);
+
+        NotificationServices.createNewNotification(vendorId, NotificationServices.Template.sendFine(amount));
+
+        List<TransactionModel> transaction = getTransaction();
+        transaction.add(transactionModel);
+
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.TRANSACTION), transaction);
+        return transactionModel;   
+    }
+
     public static TransactionModel createTransaction(Double amount, TransactionModel.TransactionType transactionType,
             String userId) {
         if (transactionType != TransactionType.TOPUP && transactionType != TransactionType.WITHDRAWAL) {
