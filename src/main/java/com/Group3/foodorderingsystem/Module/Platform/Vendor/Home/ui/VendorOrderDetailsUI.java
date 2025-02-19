@@ -500,7 +500,7 @@ public class VendorOrderDetailsUI extends BorderPane {
                 if (!notificationVendor.isEmpty()) {
                     NotificationServices.createNewNotification(selectedOrder.getVendor(), notificationVendor);
                 }
-                if (!notificationRunner.isEmpty()) {
+                if (!notificationRunner.isEmpty() && selectedOrder.getRider() != null) {
                     NotificationServices.createNewNotification(selectedOrder.getRider(), notificationRunner);
                 }
     
