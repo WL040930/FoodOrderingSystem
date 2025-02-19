@@ -12,18 +12,18 @@ public enum ManagerTopNavigationEnum {
     Vendor(
             "Vendor",
             () -> {
-                // CustomerViewModel.navigate(CustomerViewModel.getOrderViewModel().getNode());
+                ManagerViewModel.navigate(ManagerViewModel.getVendorPerformanceViewModel().getNode());
             }),
-
     Runner(
             "Runner",
             () -> {
+                ManagerViewModel.navigate(ManagerViewModel.getRunnerPerformanceViewModel().getNode());
             }),
     Settings(
             "Settings",
             () -> {
                 ManagerViewModel.navigate(ManagerViewModel.getManagerSettingsViewModel().getNode());
-            }); 
+            });
 
     private String title;
     private Runnable action;
