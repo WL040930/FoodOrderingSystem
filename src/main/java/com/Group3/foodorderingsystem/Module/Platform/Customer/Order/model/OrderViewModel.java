@@ -21,7 +21,7 @@ public class OrderViewModel extends ViewModelConfig{
     }
 
     public void init() {
-        orderHistoryUI = new OrderHistoryUI();
+        orderHistoryUI = new OrderHistoryUI("Active");
 
         setNode(orderHistoryUI);
 

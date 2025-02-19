@@ -450,7 +450,7 @@ public class OrderDetailsUI extends BorderPane {
         alert.showAndWait();
 
         CustomerOrderServices.updateRatingAndFeedback(selectedOrder.getOrderId(), rating, feedback);
-        CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI());
+        CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI("Active"));
         CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Past"));
         
     }
@@ -535,7 +535,7 @@ public class OrderDetailsUI extends BorderPane {
         alert.showAndWait();
 
         CustomerOrderServices.submitComplain(selectedOrder.getOrderId(), complainDescription);
-        CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI());
+        CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI("Active"));
         CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Past"));
     }
 
