@@ -11,6 +11,9 @@ import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class RunnerOrderServices {
     
@@ -102,7 +105,28 @@ public class RunnerOrderServices {
 
     }
 
+    // Get runner orders group by rating
+    public static Map<Integer, List<OrderModel>> getRunnerOrdersGroupByRating(String runnerId) {
+        List<OrderModel> orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> runnerId.equals(order.getRider()) && order.getRating() != 0);
+        Map<Integer, List<OrderModel>> ratingMap = new HashMap<>();
 
+        for (OrderModel order : orderList) {
+            Integer rating = order.getRating();
+            ratingMap.computeIfAbsent(rating, k -> new ArrayList<>()).add(order);
+        }
 
+        return ratingMap;
+    }
+
+    //get overall rating of the runner
+    public static double getRunnerOverallRating(String runnerId) {
+        List<OrderModel> orderList = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> runnerId.equals(order.getRider()) && order.getRating() != 0);
+        double totalRating = 0;
+        for (OrderModel order : orderList) {
+            totalRating += order.getRating();
+        }
+
+        return totalRating / orderList.size();
+    }
 
 }
