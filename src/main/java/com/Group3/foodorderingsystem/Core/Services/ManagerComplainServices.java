@@ -71,9 +71,4 @@ public class ManagerComplainServices {
             FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.COMPLAIN), complains);
         }
     }
-
-    //fine vendor
-    public static void fineVendor(String orderId, double fine) {
-        //TODO: wait for transaction fine
-    }
 }

@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ComplainModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
@@ -14,6 +15,7 @@ import com.Group3.foodorderingsystem.Core.Model.Enum.ComplainStatusEnum;
 import com.Group3.foodorderingsystem.Core.Model.Enum.OrderMethodEnum;
 import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
 import com.Group3.foodorderingsystem.Core.Services.ManagerComplainServices;
+import com.Group3.foodorderingsystem.Core.Services.TransactionServices;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
@@ -131,9 +133,9 @@ public class ComplainDetailsUI extends BorderPane{
                             showAlert("Invalid Amount", "Fine amount must be greater than 0.");
                             return;
                         }
-            
-                        //TODO: Apply the fine to the vendor
-                        ManagerComplainServices.fineVendor(selectedOrder.getOrderId(), fineAmount);
+                        
+                        // Create a fine transaction and fine the vendor
+                        TransactionServices.createFine(fineAmount, TransactionModel.TransactionType.FINE, selectedOrder.getVendor());
             
                         // Show success message
                         showAlert("Fine Applied", "Vendor has been fined RM" + fineAmount);

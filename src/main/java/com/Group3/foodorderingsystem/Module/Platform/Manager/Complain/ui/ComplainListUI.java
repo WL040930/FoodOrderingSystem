@@ -185,7 +185,6 @@ public class ComplainListUI extends VBox {
 
 
         viewDetailsButton.setOnAction(e -> {
-            // TODO: logic to navigate to order details page
             SessionUtil.setSelectedOrderInSession(order);
             ManagerViewModel.getComplainViewModel().setComplainDetailsUI(new ComplainDetailsUI());
             ManagerViewModel.getComplainViewModel().navigate(ManagerViewModel.getComplainViewModel().getComplainDetailsUI());
