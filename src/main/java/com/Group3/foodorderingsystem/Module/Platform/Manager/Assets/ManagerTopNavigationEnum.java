@@ -9,26 +9,21 @@ public enum ManagerTopNavigationEnum {
             () -> {
                 ManagerViewModel.navigate(ManagerViewModel.getComplainViewModel().getNode());
             }),
-    Order(
-            "Order",
+    Vendor(
+            "Vendor",
             () -> {
                 // CustomerViewModel.navigate(CustomerViewModel.getOrderViewModel().getNode());
             }),
 
-    Notification(
-            "Notification",
+    Runner(
+            "Runner",
             () -> {
             }),
     Settings(
             "Settings",
             () -> {
-                // RunnerViewModel.navigate(RunnerViewModel.getSettingsViewModel().getNode());
-            }),
-    Finance(
-            "Finance",
-            () -> {
-                // RunnerViewModel.navigate(RunnerViewModel.getTransactionViewModel().getNode());
-            });
+                ManagerViewModel.navigate(ManagerViewModel.getManagerSettingsViewModel().getNode());
+            }); 
 
     private String title;
     private Runnable action;

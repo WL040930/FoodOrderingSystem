@@ -11,6 +11,8 @@ import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewMo
 import com.Group3.foodorderingsystem.Module.Platform.Manager.Assets.ManagerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Manager.Assets.ManagerTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Manager.Complain.model.ComplainViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Manager.Settings.model.ManagerSettingsViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Manager.Settings.ui.ManagerSettingsUI;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Assets.RunnerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Assets.RunnerTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Home.model.RunnerHomeViewModel;
@@ -37,6 +39,7 @@ public class ManagerViewModel {
 
         init();
         initComplainViewModel();
+        initSettingsViewModel();
     }
 
     /**
@@ -163,5 +166,19 @@ public class ManagerViewModel {
 
     public static ComplainViewModel getComplainViewModel() {
         return instance.complainViewModel;
+    }
+
+    private ManagerSettingsViewModel managerSettingsViewModel;
+
+    public static ManagerSettingsViewModel getManagerSettingsViewModel() {
+        return instance.managerSettingsViewModel;
+    }
+
+    public static void setManagerSettingsViewModel(ManagerSettingsViewModel managerSettingsViewModel) {
+        instance.managerSettingsViewModel = managerSettingsViewModel;
+    }
+
+    public static void initSettingsViewModel() {
+        instance.managerSettingsViewModel = new ManagerSettingsViewModel();
     }
 }
