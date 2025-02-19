@@ -93,7 +93,7 @@ public class AdminTransactionHistoryUI extends BaseContentPanel {
         VBox contentVBox = new VBox(box);
         contentVBox.setSpacing(10);
         KButton sendReceipt = new KButton("Send Receipt", () -> {
-            NotificationServices.generateReceipt(transaction, customerModel);
+            NotificationServices.sendReceipt(transaction, customerModel);
             PopupMessage.showMessage("Receipt Sent.", "Success", () -> {
             });
         });

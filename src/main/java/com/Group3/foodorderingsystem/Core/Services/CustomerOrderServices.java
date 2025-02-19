@@ -467,11 +467,4 @@ public class CustomerOrderServices {
                         || (order.getRider() != null && order.getRider().equals(user.getId())));
     }
 
-    public static List<OrderModel> getOrderByCustomerId(String id) {
-        return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class)
-                .stream()
-                .filter(order -> order.getCustomer().equals(id)) // Use .equals() for string comparison
-                .collect(Collectors.toList());
-    }
-
 }

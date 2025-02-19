@@ -39,7 +39,7 @@ public class NotificationServices {
         return personalNotificationList;
     }
 
-    public static void generateReceipt(TransactionModel transactionModel, CustomerModel customerModel) {
+    public static void sendReceipt(TransactionModel transactionModel, CustomerModel customerModel) {
         List<NotificationModel> notificationList = getNotificationList();
         NotificationModel notificationModel = new NotificationModel();
         notificationModel.setUserId(customerModel.getId());
