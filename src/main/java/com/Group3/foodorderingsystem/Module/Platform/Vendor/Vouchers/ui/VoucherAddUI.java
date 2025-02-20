@@ -10,6 +10,7 @@ import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.BottomButton;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.PopupMessage;
 import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.Vouchers.widgets.KButton;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -53,8 +54,7 @@ public class VoucherAddUI extends BaseContentPanel {
             }
         });
 
-        Button autoGenerateButton = new Button("Auto Generate");
-        autoGenerateButton.setOnAction(event -> {
+        Button autoGenerateButton = new KButton("Auto Generate", () -> {
             String code = Storage.generateNewId().substring(0, 8);
             codeTextField.setText(code);
         });
@@ -130,8 +130,9 @@ public class VoucherAddUI extends BaseContentPanel {
                     errorLabel.setText("Error: Voucher code already exists.");
                 } else {
                     PopupMessage.showMessage("Voucher has been created.", "success", () -> {
-                        VendorViewModel.initVoucherViewModel(); 
-                        VendorViewModel.getVoucherViewModel().navigate(VendorViewModel.getVoucherViewModel().getVoucherListUI());
+                        VendorViewModel.initVoucherViewModel();
+                        VendorViewModel.getVoucherViewModel()
+                                .navigate(VendorViewModel.getVoucherViewModel().getVoucherListUI());
                     });
                 }
             } catch (NumberFormatException e) {
