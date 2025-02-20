@@ -29,7 +29,7 @@ public class VendorOrderServices {
         return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class);
     }
 
-    // get pending order list
+    // get order list
     public static List<OrderModel> getOrderList(String type) {
 
         VendorModel vendor = (VendorModel) SessionUtil.getVendorFromSession();

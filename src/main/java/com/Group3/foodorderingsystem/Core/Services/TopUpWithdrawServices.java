@@ -48,13 +48,6 @@ public class TopUpWithdrawServices {
         FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.TOPUPWITHDRAW), topUpWithdrawList);
     }
 
-    public static void removeRequest(String topUpWithdrawModelId) {
-        List<TopUpWithdrawModel> topUpWithdrawList = getTopUpWithdrawList();
-        topUpWithdrawList.removeIf(
-                topUpWithdrawModel -> topUpWithdrawModel.getTopUpWithdrawModelId().equals(topUpWithdrawModelId));
-        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.TOPUPWITHDRAW), topUpWithdrawList);
-    }
-
     public static List<TopUpWithdrawModel> getTopUpWithdrawListByStatus(Status status) {
         return getTopUpWithdrawList().stream()
                 .filter(topUpWithdrawModel -> topUpWithdrawModel.getStatus() == status)

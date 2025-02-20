@@ -28,7 +28,8 @@ public class TransactionModel {
         TOPUP,
         REFUND,
         WITHDRAWAL,
-        CANCEL
+        CANCEL, 
+        FINE
     }
 
     public TransactionModel() {

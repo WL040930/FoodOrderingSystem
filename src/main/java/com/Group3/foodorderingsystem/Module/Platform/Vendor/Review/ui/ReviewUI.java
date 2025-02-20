@@ -110,6 +110,12 @@ public class ReviewUI extends BaseContentPanel {
 
         // ComboBox for sorting reviews by rating
         ComboBox<String> sortComboBox = new ComboBox<>();
+        sortComboBox.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-border-color: #cccccc;" +
+                        "-fx-border-radius: 5px;" +
+                        "-fx-padding: 5px;" +
+                        "-fx-font-size: 14px;");
         sortComboBox.getItems().addAll("1 Star", "2 Star", "3 Star", "4 Star", "5 Star");
         selectedRating = "5 Star";
         sortComboBox.getSelectionModel().select(selectedRating);

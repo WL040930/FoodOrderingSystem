@@ -14,10 +14,14 @@ import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.Popu
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextField;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Register.widgets.TitleTextFieldEnum;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.control.Separator;
 
 public class EditUserInformation extends BaseContentPanel {
@@ -63,15 +67,20 @@ public class EditUserInformation extends BaseContentPanel {
     }
 
     private Node createContent() {
-        VBox vbox = new VBox(10);
+        VBox vbox = new VBox(12);
+        vbox.setPadding(new javafx.geometry.Insets(25, 25, 25, 25));
+        vbox.setAlignment(Pos.CENTER);
 
-        ImageView image = Images.getImageView(user.getProfilePicture(), 70, 70);
+        ImageView image = Images.getImageView(user.getProfilePicture(), 80, 80);
         Label email = new Label(user.getEmail());
+        email.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        email.setPadding(new Insets(5, 0, 10, 0));
 
         nameField = new TitleTextField("Name", user.getName(), TitleTextFieldEnum.TextField);
         passwordField = new TitleTextField("Password", "******", TitleTextFieldEnum.PasswordField);
 
         javafx.scene.control.Separator divider = new Separator();
+        divider.setPadding(new Insets(10, 0, 10, 0));
 
         vbox.getChildren().addAll(image, email, nameField, passwordField, divider);
 
@@ -83,7 +92,7 @@ public class EditUserInformation extends BaseContentPanel {
                 vbox.getChildren().addAll(phoneNumber, address);
                 break;
             case VENDOR:
-                ImageView shopImage = Images.getImageView(vendorModel.getShopImage(), 70, 70);
+                ImageView shopImage = Images.getImageView(vendorModel.getShopImage(), 80, 80);
                 shopName = new TitleTextField("Shop Name", vendorModel.getShopName(), TitleTextFieldEnum.TextField);
                 shopDescription = new TitleTextField("Shop Description", vendorModel.getShopDescription(),
                         TitleTextFieldEnum.TextArea);
@@ -136,13 +145,15 @@ public class EditUserInformation extends BaseContentPanel {
                             : vendorModel.getPassword());
                     vendorModel.setShopName(
                             shopName.getInputValue() != "" ? shopName.getInputValue() : vendorModel.getShopName());
-                    vendorModel.setShopDescription(shopDescription.getInputValue() != "" ? shopDescription.getInputValue()
-                            : vendorModel.getShopDescription());
-                    vendorModel.setShopPhoneNumber(shopPhoneNumber.getInputValue() != "" ? shopPhoneNumber.getInputValue()
-                            : vendorModel.getShopPhoneNumber());
+                    vendorModel
+                            .setShopDescription(shopDescription.getInputValue() != "" ? shopDescription.getInputValue()
+                                    : vendorModel.getShopDescription());
+                    vendorModel
+                            .setShopPhoneNumber(shopPhoneNumber.getInputValue() != "" ? shopPhoneNumber.getInputValue()
+                                    : vendorModel.getShopPhoneNumber());
                     vendorModel.setAddress(
                             shopAddress.getInputValue() != "" ? shopAddress.getInputValue() : vendorModel.getAddress());
-                    
+
                     if (UserServices.saveUser(vendorModel) != null) {
                         PopupMessage.showMessage("Vendor Profile Updated Successfully!", "success",
                                 () -> {
@@ -154,7 +165,7 @@ public class EditUserInformation extends BaseContentPanel {
                         PopupMessage.showMessage("Failed to update vendor profile!", "error", () -> {
                         });
                     }
-                    break; 
+                    break;
                 case RUNNER:
                     runnerModel.setName(
                             nameField.getInputValue() != "" ? nameField.getInputValue() : runnerModel.getName());

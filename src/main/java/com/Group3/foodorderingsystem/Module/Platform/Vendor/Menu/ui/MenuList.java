@@ -48,8 +48,7 @@ public class MenuList extends BaseContentPanel {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Button addNewItemButton = new Button("Add New Item");
-        addNewItemButton.setOnAction(event -> {
+        Button addNewItemButton = new KButton("Add New Item", () -> {
             VendorViewModel.getMenuViewModel().setAddNewItem(new AddNewItem());
             VendorViewModel.getMenuViewModel().navigate(VendorViewModel.getMenuViewModel().getAddNewItem());
         });

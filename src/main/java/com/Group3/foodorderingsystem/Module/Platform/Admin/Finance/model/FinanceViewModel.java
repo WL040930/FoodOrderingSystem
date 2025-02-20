@@ -2,8 +2,8 @@ package com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.model;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Config.ViewModelConfig;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
-import com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.ui.AdminOrderHistoryUI;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.ui.AdminTopUpUI;
+import com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.ui.AdminTransactionHistoryUI;
 import com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.ui.FinanceCustomerListUI;
 
 import javafx.scene.Node;
@@ -44,13 +44,13 @@ public class FinanceViewModel extends ViewModelConfig {
         this.adminTopUpUI = adminTopUpUI;
     }
 
-    private AdminOrderHistoryUI adminOrderHistoryUI;
+    private AdminTransactionHistoryUI adminTransactionHistoryUI;
 
-    public AdminOrderHistoryUI getAdminOrderHistoryUI() {
-        return adminOrderHistoryUI;
+    public AdminTransactionHistoryUI getAdminTransactionHistoryUI() {
+        return adminTransactionHistoryUI;
     }
 
-    public void setAdminOrderHistoryUI(AdminOrderHistoryUI adminOrderHistoryUI) {
-        this.adminOrderHistoryUI = adminOrderHistoryUI;
+    public void setAdminTransactionHistoryUI(AdminTransactionHistoryUI adminTransactionHistoryUI) {
+        this.adminTransactionHistoryUI = adminTransactionHistoryUI;
     }
 }

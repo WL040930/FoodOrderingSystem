@@ -1,35 +1,28 @@
 package com.Group3.foodorderingsystem.Module.Platform.Manager.Assets;
 
+import com.Group3.foodorderingsystem.Module.Platform.Manager.ManagerViewModel;
+
 public enum ManagerTopNavigationEnum {
 
-    Home(
-            "Home",
+    Complain(
+            "Complain",
             () -> {
-                // RunnerViewModel.navigate(CustomerViewModel.getHomeViewModel().getNode());
+                ManagerViewModel.navigate(ManagerViewModel.getComplainViewModel().getNode());
             }),
-    CurrentOrder(
-            "Current Order",
+    Vendor(
+            "Vendor",
             () -> {
+                ManagerViewModel.navigate(ManagerViewModel.getVendorPerformanceViewModel().getNode());
             }),
-    Order(
-            "Order",
+    Runner(
+            "Runner",
             () -> {
-                // CustomerViewModel.navigate(CustomerViewModel.getOrderViewModel().getNode());
-            }),
-
-    Notification(
-            "Notification",
-            () -> {
+                ManagerViewModel.navigate(ManagerViewModel.getRunnerPerformanceViewModel().getNode());
             }),
     Settings(
             "Settings",
             () -> {
-                // RunnerViewModel.navigate(RunnerViewModel.getSettingsViewModel().getNode());
-            }),
-    Finance(
-            "Finance",
-            () -> {
-                // RunnerViewModel.navigate(RunnerViewModel.getTransactionViewModel().getNode());
+                ManagerViewModel.navigate(ManagerViewModel.getManagerSettingsViewModel().getNode());
             });
 
     private String title;

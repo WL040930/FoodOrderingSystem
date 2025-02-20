@@ -46,8 +46,6 @@ public class OrderHistoryUI extends VBox {
     private List<OrderModel> pastOrders;
 
     
-
-
     public OrderHistoryUI(String selectedTab) {
 
         pendingOrders = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getCustomer().equals(customer.getId()) && order.getStatus().equals(StatusEnum.PENDING));
@@ -259,14 +257,5 @@ public class OrderHistoryUI extends VBox {
                 label.getStyleClass().add("status-cancelled");
                 break;
         }
-    }
-
-    public OrderHistoryUI() {
-        this("  Active");
-        pendingOrders = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getCustomer().equals(customer.getId()) && order.getStatus().equals(StatusEnum.PENDING));
-        activeOrders = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getCustomer().equals(customer.getId()) && (order.getStatus().equals(StatusEnum.PREPARING) || order.getStatus().equals(StatusEnum.READY_FOR_PICKUP) || order.getStatus().equals(StatusEnum.DELIVERING) || order.getStatus().equals(StatusEnum.WAITING_FOR_RIDER)));
-        pastOrders = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class, order -> order.getCustomer().equals(customer.getId()) && (order.getStatus().equals(StatusEnum.DELIVERED) || order.getStatus().equals(StatusEnum.PICKED_UP) || order.getStatus().equals(StatusEnum.SERVED) || order.getStatus().equals(StatusEnum.CANCELLED) || order.getStatus().equals(StatusEnum.REJECTED)));
-
-        initUI();
     }
 }

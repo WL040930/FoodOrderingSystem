@@ -88,6 +88,12 @@ public class RevenueSummary extends BaseContentPanel {
 
     private ComboBox<String> createDisplayByComboBox() {
         ComboBox<String> displayByComboBox = new ComboBox<>();
+        displayByComboBox.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-border-color: #cccccc;" +
+                        "-fx-border-radius: 5px;" +
+                        "-fx-padding: 5px;" +
+                        "-fx-font-size: 14px;");
         displayByComboBox.getItems().addAll("Daily", "Monthly", "Yearly");
         displayByComboBox.getSelectionModel().select(displayBy.toString());
         displayByComboBox.setOnAction(e -> {
@@ -121,6 +127,12 @@ public class RevenueSummary extends BaseContentPanel {
 
     private void renderMonthlyContent() {
         ComboBox<String> monthComboBox = new ComboBox<>();
+        monthComboBox.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-border-color: #cccccc;" +
+                        "-fx-border-radius: 5px;" +
+                        "-fx-padding: 5px;" +
+                        "-fx-font-size: 14px;");
         monthComboBox.getItems().addAll(
                 "January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December");
@@ -137,6 +149,12 @@ public class RevenueSummary extends BaseContentPanel {
 
     private void renderYearlyContent() {
         ComboBox<Integer> yearComboBox = new ComboBox<>();
+        yearComboBox.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-border-color: #cccccc;" +
+                        "-fx-border-radius: 5px;" +
+                        "-fx-padding: 5px;" +
+                        "-fx-font-size: 14px;");
         int currentYear = LocalDate.now().getYear();
         IntStream.rangeClosed(currentYear - 10, currentYear)
                 .forEach(yearComboBox.getItems()::add);
@@ -151,6 +169,12 @@ public class RevenueSummary extends BaseContentPanel {
 
     private DatePicker createDatePicker() {
         DatePicker datePicker = new DatePicker();
+        datePicker.setStyle(
+                "-fx-background-color: #ffffff;" +
+                        "-fx-border-color: #cccccc;" +
+                        "-fx-border-radius: 5px;" +
+                        "-fx-padding: 5px;" +
+                        "-fx-font-size: 14px;");
         datePicker.setDayCellFactory(createDayCellFactory());
         datePicker.getEditor().setDisable(true);
 

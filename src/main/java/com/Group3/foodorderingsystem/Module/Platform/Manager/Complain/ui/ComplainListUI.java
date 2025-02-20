@@ -1,27 +1,28 @@
-package com.Group3.foodorderingsystem.Module.Platform.Admin.Finance.ui;
+package com.Group3.foodorderingsystem.Module.Platform.Manager.Complain.ui;
 
-import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
-import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.VendorModel;
-import com.Group3.foodorderingsystem.Core.Model.Enum.StatusEnum;
-import com.Group3.foodorderingsystem.Core.Services.CustomerOrderServices;
+import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ComplainModel;
+import com.Group3.foodorderingsystem.Core.Services.ManagerComplainServices;
 import com.Group3.foodorderingsystem.Core.Services.VendorOrderServices;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
 import com.Group3.foodorderingsystem.Core.Util.Images;
 import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
-import com.Group3.foodorderingsystem.Core.Widgets.BaseContentPanel;
-import com.Group3.foodorderingsystem.Core.Widgets.Card;
-import com.Group3.foodorderingsystem.Core.Widgets.TitleBackButton;
-import com.Group3.foodorderingsystem.Module.Platform.Admin.AdminViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Customer.CustomerViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Customer.Order.ui.OrderDetailsUI;
+import com.Group3.foodorderingsystem.Module.Platform.Manager.ManagerViewModel;
+import com.Group3.foodorderingsystem.Core.Model.Enum.ComplainStatusEnum;
+import com.Group3.foodorderingsystem.Module.Platform.Vendor.VendorViewModel;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,44 +31,57 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class AdminOrderHistoryUI extends BaseContentPanel {
+public class ComplainListUI extends VBox {
 
-    public AdminOrderHistoryUI(CustomerModel customer) {
-        super();
+    List<OrderModel> pendingOrders;
+    List<OrderModel> pastOrders;
 
-        // TODO: FIX THIS 
-        String cssPath = "/com/Group3/foodorderingsystem/Module/Platform/Customer/Order/ui/OrderDetailsUI.css";
-        URL cssURL = getClass().getResource(cssPath);
-
-        if (cssURL != null) {
-            this.getStylesheets().add(cssURL.toExternalForm());
-        } else {
-            System.out.println("CSS file not found: " + cssPath);
-        }
-
-        setHeader(header());
-        setContent(
-                createOrdersContent(CustomerOrderServices.getOrderByCustomerId(customer.getId()), "No order found."));
-
-        setContentHeight(570);
+    
+    public ComplainListUI() {
+        pendingOrders = ManagerComplainServices.getOrders(ComplainStatusEnum.PENDING);
+        pastOrders = ManagerComplainServices.getOrders(ComplainStatusEnum.RESOLVED);
+    
+        initUI();
     }
 
-    private Node header() {
-        return new TitleBackButton("Order History", () -> {
-            AdminViewModel.getFinanceViewModel()
-                    .navigate(AdminViewModel.getFinanceViewModel().getFinanceCustomerListUI());
-        });
+    private void initUI() {
+        this.setStyle("-fx-background-color: #f8fafc;");
+        this.setPadding(new Insets(10)); // Adjust padding as needed
+        addTabs(this);
+
+        //Load and apply css
+        this.getStylesheets().add(getClass().getResource("/com/Group3/foodorderingsystem/Module/Platform/Manager/Complain/ui/ComplainListUI.css").toExternalForm());
     }
+
+
+    private void addTabs(VBox root) {
+        TabPane tabPane = new TabPane();
+        tabPane.setId("tabPane");
+        Tab pendingTab = new Tab("Pending");
+        Tab pastTab = new Tab("Resolved");
+        pendingTab.setClosable(false);
+        pastTab.setClosable(false);
+
+        pendingTab.setContent(createOrdersContent(pendingOrders, "No pending orders"));
+        pastTab.setContent(createOrdersContent(pastOrders, "No past orders"));
+
+        tabPane.getTabs().addAll(pendingTab, pastTab);
+
+        root.getChildren().add(tabPane);
+    }
+
 
     private Node createOrdersContent(List<OrderModel> orders, String emptyMessage) {
         VBox allOrders = new VBox(15);
         allOrders.setPadding(new Insets(30, 0, 0, 15));
         allOrders.setStyle("-fx-background-color: #f8fafc;");
-
+    
         HBox filterBox = new HBox(10);
         ComboBox<String> filterComboBox = new ComboBox<>();
         filterBox.setAlignment(Pos.CENTER_RIGHT);
@@ -82,14 +96,14 @@ public class AdminOrderHistoryUI extends BaseContentPanel {
         scrollPane.setContent(allOrders);
         scrollPane.setFitToWidth(true);
         scrollPane.setStyle("-fx-background: #f8fafc; -fx-background-color: transparent;");
-
+    
         if (orders.isEmpty()) {
             Label noOrdersLabel = new Label(emptyMessage);
             noOrdersLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #666;");
             allOrders.getChildren().add(noOrdersLabel);
         } else {
             for (OrderModel order : orders) {
-                Node orderBox = createOrderBox(order);
+                HBox orderBox = createOrderBox(order);
                 allOrders.getChildren().add(orderBox);
             }
         }
@@ -99,69 +113,69 @@ public class AdminOrderHistoryUI extends BaseContentPanel {
             List<OrderModel> filteredOrders = VendorOrderServices.filterOrders(orders, filter);
             allOrders.getChildren().clear();
             allOrders.getChildren().add(filterBox);
-
+    
             if (filteredOrders.isEmpty()) {
                 Label noOrdersLabel = new Label(emptyMessage);
                 noOrdersLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #666;");
                 allOrders.getChildren().add(noOrdersLabel);
             } else {
                 for (OrderModel order : filteredOrders) {
-                    Node orderBox = createOrderBox(order);
+                    HBox orderBox = createOrderBox(order);
                     allOrders.getChildren().add(orderBox);
                 }
             }
         });
-
+    
         return scrollPane;
     }
 
-    private Node createOrderBox(OrderModel order) {
+    private HBox createOrderBox(OrderModel order) {
+        CustomerModel customer = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.CUSTOMER), CustomerModel.class, c -> c.getId().equals(order.getCustomer())).get(0);
+        ComplainModel complain = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.COMPLAIN), ComplainModel.class, c -> c.getOrderId().equals(order.getOrderId())).get(0);
+
         VBox orderContainer = new VBox(5); // Main container for each order
         orderContainer.setPadding(new Insets(10));
         orderContainer.getStyleClass().add("order-container");
-
-        // Order ID at the top of each order box
-        Label orderIdLabel = new Label("Order ID: " + order.getOrderId());
-        orderIdLabel.getStyleClass().add("order-id-label");
-        orderContainer.getChildren().add(orderIdLabel);
 
         // HBox to hold the image and details side by side
         HBox contentBox = new HBox(10);
         contentBox.setAlignment(Pos.CENTER_LEFT);
 
-        // Load and style the shop image
-        VendorModel vendors = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class,
-                v -> v.getId().equals(order.getVendor())).get(0);
+        //if the tab is pending, show the complain_pending.png icon
+        ImageView iconImage;
+        if (complain.getComplainStatus() == ComplainStatusEnum.PENDING) {
+            iconImage = Images.getImageView("complain_pending.png", 0, 0);
+        } else {
+            iconImage = Images.getImageView("available.png", 0, 0);
+        }
+        
+        
+        iconImage.setFitHeight(50); 
+        iconImage.setFitWidth(50);
+        iconImage.setPreserveRatio(true);
 
-        ImageView shopImageView = loadShopImage(vendors.getShopImage());
-        shopImageView.setFitHeight(50); // Adjust size as necessary
-        shopImageView.setFitWidth(50);
-        shopImageView.setPreserveRatio(true);
 
         // Convert Date to LocalDateTime
         LocalDateTime orderDateTime = Instant.ofEpochMilli(order.getTime().getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+                                     .atZone(ZoneId.systemDefault())
+                                     .toLocalDateTime();
 
         // Format LocalDateTime
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm");
         String formattedDate = orderDateTime.format(formatter);
 
+
         // VBox for the text details next to the image
         VBox detailsVBox = new VBox(1);
-        String shopName = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class,
-                vendor -> vendor.getId().equals(order.getVendor())).get(0).getShopName();
+        String shopName = FileUtil.getModelByField(StorageEnum.getFileName(StorageEnum.VENDOR), VendorModel.class, vendor -> vendor.getId().equals(order.getVendor())).get(0).getShopName();
         Label shopNameLabel = new Label(shopName);
         Label orderTimeLabel = new Label(formattedDate);
-        Label orderPriceLabel = new Label(String.format("RM%.2f", order.getTotalPrice()));
-        Label orderStatusLabel = new Label("Status: " + order.getStatus().toString());
-        applyStatusClass(orderStatusLabel, order.getStatus());
+        Label customerNameLabel = new Label(customer.getName());
 
         // Adding styles from CSS
         shopNameLabel.getStyleClass().add("shop-name-label");
         orderTimeLabel.getStyleClass().add("order-time-label");
-        orderPriceLabel.getStyleClass().add("order-price-label");
-        orderStatusLabel.getStyleClass().add("order-status-label");
+        customerNameLabel.getStyleClass().add("order-price-label");
 
         // 'View Details' button placed directly below the status label
         HBox buttonContainer = new HBox(5);
@@ -169,59 +183,25 @@ public class AdminOrderHistoryUI extends BaseContentPanel {
         Button viewDetailsButton = new Button("View Details");
         viewDetailsButton.getStyleClass().add("view-details-button");
 
+
         viewDetailsButton.setOnAction(e -> {
             SessionUtil.setSelectedOrderInSession(order);
-            // CustomerViewModel.getOrderViewModel().setOrderDetailsUI(new
-            // OrderDetailsUI());
-            // CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderDetailsUI());
+            ManagerViewModel.getComplainViewModel().setComplainDetailsUI(new ComplainDetailsUI());
+            ManagerViewModel.getComplainViewModel().navigate(ManagerViewModel.getComplainViewModel().getComplainDetailsUI());
         });
+
 
         buttonContainer.getChildren().addAll(viewDetailsButton);
 
         // Assemble details in the VBox
-        detailsVBox.getChildren().addAll(shopNameLabel, orderTimeLabel, orderStatusLabel, orderPriceLabel,
-                buttonContainer);
+        detailsVBox.getChildren().addAll(shopNameLabel, orderTimeLabel, customerNameLabel, buttonContainer);
 
         // Add the image and details to the content box
-        contentBox.getChildren().addAll(shopImageView, detailsVBox);
+        contentBox.getChildren().addAll(iconImage, detailsVBox);
 
         // Add the content box to the main container
         orderContainer.getChildren().add(contentBox);
 
         return new HBox(orderContainer); // Wrap in an HBox for alignment purposes in a larger list
     }
-
-    private ImageView loadShopImage(String path) {
-        ImageView imageView = Images.getImageView(path, 0, 0);
-        return imageView;
-    }
-
-    private void applyStatusClass(Label label, StatusEnum status) {
-        label.getStyleClass().add("order-status-label");
-
-        switch (status) {
-            case PENDING:
-                label.getStyleClass().add("status-pending");
-                break;
-            case REJECTED:
-                label.getStyleClass().add("status-rejected");
-                break;
-            case PREPARING:
-            case WAITING_FOR_RIDER:
-            case DELIVERING:
-                label.getStyleClass().add("status-group2");
-                break;
-            case READY_FOR_PICKUP:
-                label.getStyleClass().add("status-readyforpickup");
-            case DELIVERED:
-            case PICKED_UP:
-            case SERVED:
-                label.getStyleClass().add("status-group1");
-                break;
-            case CANCELLED:
-                label.getStyleClass().add("status-cancelled");
-                break;
-        }
-    }
-
 }

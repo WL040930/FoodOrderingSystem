@@ -172,9 +172,15 @@ public class CustomerOrderServices {
         // Save order to file
         saveOrderToFile(order);
 
+        //deduct the balance form customer
+        customer.setBalance(customer.getBalance() - order.getTotalPrice());
+        SessionUtil.setCustomerInSession(customer);
+
+        
         // Clear only item from session
         SessionUtil.setItemsInSession(null);
         return orderId;
+
 
     }
 
@@ -459,13 +465,6 @@ public class CustomerOrderServices {
                 .anyMatch(order -> order.getCustomer().equals(user.getId())
                         || order.getVendor().equals(user.getId())
                         || (order.getRider() != null && order.getRider().equals(user.getId())));
-    }
-
-    public static List<OrderModel> getOrderByCustomerId(String id) {
-        return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.ORDER), OrderModel.class)
-                .stream()
-                .filter(order -> order.getCustomer().equals(id)) // Use .equals() for string comparison
-                .collect(Collectors.toList());
     }
 
 }

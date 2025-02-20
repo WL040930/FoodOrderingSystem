@@ -42,7 +42,7 @@ public class CustomerRegistration extends VBox {
     }
 
     private Node buildContent() {
-        VBox content = new VBox(10);
+        VBox content = new VBox(15);
         content.setStyle("-fx-padding: 10px;");
 
         // Create the input fields

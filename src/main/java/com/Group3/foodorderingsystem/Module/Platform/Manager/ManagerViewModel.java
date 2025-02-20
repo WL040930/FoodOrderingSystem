@@ -10,6 +10,11 @@ import com.Group3.foodorderingsystem.Module.Common.Transaction.model.Transaction
 import com.Group3.foodorderingsystem.Module.Common.settings.model.SettingsViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Manager.Assets.ManagerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Manager.Assets.ManagerTopNavigationEnum;
+import com.Group3.foodorderingsystem.Module.Platform.Manager.Complain.model.ComplainViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Manager.Runner.model.RunnerPerformanceViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Manager.Settings.model.ManagerSettingsViewModel;
+import com.Group3.foodorderingsystem.Module.Platform.Manager.Settings.ui.ManagerSettingsUI;
+import com.Group3.foodorderingsystem.Module.Platform.Manager.Vendor.model.VendorPerformanceViewModel;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Assets.RunnerNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Assets.RunnerTopNavigationEnum;
 import com.Group3.foodorderingsystem.Module.Platform.Runner.Home.model.RunnerHomeViewModel;
@@ -20,6 +25,7 @@ import javafx.scene.Node;
 public class ManagerViewModel {
 
     private static ManagerViewModel instance;
+    private ComplainViewModel complainViewModel;
 
     public static ManagerViewModel setInstance(ManagerViewModel instance) {
         return ManagerViewModel.instance = instance;
@@ -34,6 +40,10 @@ public class ManagerViewModel {
         // instance.orderViewModel.init();
 
         init();
+        initComplainViewModel();
+        initSettingsViewModel();
+        initVendorPerformanceViewModel();
+        initRunnerPerformanceViewModel();
     }
 
     /**
@@ -153,4 +163,54 @@ public class ManagerViewModel {
         return instance.selectedTopNavigation.get(getSelectedNavigation());
     }
 
+    public static void initComplainViewModel() {
+        instance.complainViewModel = new ComplainViewModel();
+        instance.complainViewModel.init();
+    }
+
+    public static ComplainViewModel getComplainViewModel() {
+        return instance.complainViewModel;
+    }
+
+    private ManagerSettingsViewModel managerSettingsViewModel;
+
+    public static ManagerSettingsViewModel getManagerSettingsViewModel() {
+        return instance.managerSettingsViewModel;
+    }
+
+    public static void setManagerSettingsViewModel(ManagerSettingsViewModel managerSettingsViewModel) {
+        instance.managerSettingsViewModel = managerSettingsViewModel;
+    }
+
+    public static void initSettingsViewModel() {
+        instance.managerSettingsViewModel = new ManagerSettingsViewModel();
+    }
+
+    private VendorPerformanceViewModel vendorPerformanceViewModel;
+
+    public static VendorPerformanceViewModel getVendorPerformanceViewModel() {
+        return instance.vendorPerformanceViewModel;
+    }
+
+    public static void setVendorPerformanceViewModel(VendorPerformanceViewModel vendorPerformanceViewModel) {
+        instance.vendorPerformanceViewModel = vendorPerformanceViewModel;
+    }
+
+    public static void initVendorPerformanceViewModel() {
+        instance.vendorPerformanceViewModel = new VendorPerformanceViewModel();
+    }
+
+    private RunnerPerformanceViewModel runnerPerformanceViewModel;
+
+    public static RunnerPerformanceViewModel getRunnerPerformanceViewModel() {
+        return instance.runnerPerformanceViewModel;
+    }
+
+    public static void setRunnerPerformanceViewModel(RunnerPerformanceViewModel runnerPerformanceViewModel) {
+        instance.runnerPerformanceViewModel = runnerPerformanceViewModel;
+    }
+
+    public static void initRunnerPerformanceViewModel() {
+        instance.runnerPerformanceViewModel = new RunnerPerformanceViewModel();
+    }
 }

@@ -1,8 +1,11 @@
-/* BottomNavigation Bar Styles */
+/* Bottom Navigation Bar Styles */
 .bottom-navigation {
     -fx-padding: 5px;
-    -fx-background-color: #1E3A8A;
-    /* Blue background color */
+    -fx-background-color: #1C2951;
+    /* Darker blue for a modern look */
+    -fx-border-color: #0F1E47;
+    -fx-border-width: 1px 0 0 0;
+    /* Subtle top border */
 }
 
 /* Button Styles */
@@ -10,36 +13,41 @@
     -fx-padding: 5px;
     -fx-background-color: transparent;
     -fx-alignment: center;
-    -fx-hgrow: ALWAYS;  /* Ensure each button takes equal width */
+    -fx-border-radius: 5px;
+    -fx-border-color: transparent;
 }
 
 /* Hover effect for inactive buttons */
 .bottom-navigation .button-box:hover {
     -fx-cursor: hand;
-    -fx-background-color: #2563EB;
-    /* Hover background color in blue */
+    -fx-background-color: #3A4F9F;
+    /* Softer, deeper blue for a refined look */
+    -fx-border-color: #2A3D7A;
+    /* Slightly darker border for contrast */
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
 }
 
 /* Selected Button Style */
 .bottom-navigation .button-box.selected {
-    -fx-background-color: #1E40AF;
-    /* Selected button color */
+    -fx-background-color: #2643A3;
+    /* Rich blue for selected state */
+    -fx-border-color: #1A357E;
+    /* Darker blue border */
+    -fx-border-width: 2px;
 }
 
 /* Label Style */
 .bottom-navigation .button-box .label {
     -fx-font-family: "Arial";
     -fx-font-weight: bold;
-    /* Bold text for better visibility */
     -fx-font-size: 14px;
     -fx-text-fill: white;
-    /* White text for all buttons */
 }
 
 /* Icon Style */
 .bottom-navigation .button-box .icon {
     -fx-fit-height: 30px;
-    /* Reduced icon size */
     -fx-fit-width: 30px;
-    /* Reduced icon size */
+    -fx-opacity: 0.9;
 }

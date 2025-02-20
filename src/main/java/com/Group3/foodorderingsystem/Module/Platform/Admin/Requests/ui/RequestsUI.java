@@ -50,6 +50,12 @@ public class RequestsUI extends BaseContentPanel {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         ComboBox<Status> comboBox = new ComboBox<>();
+        comboBox.setStyle(
+                "-fx-background-color: #ffffff; " +
+                        "-fx-border-color: #cccccc; " +
+                        "-fx-border-radius: 5px; " +
+                        "-fx-padding: 5px; " +
+                        "-fx-font-size: 14px;");
         comboBox.getItems().addAll(Status.values());
         comboBox.setValue(selectedOption.get());
 
@@ -150,7 +156,7 @@ public class RequestsUI extends BaseContentPanel {
                                         Status.REJECTED);
                                 updateSearchBar(getSelectedOption());
                             });
-                } 
+                }
 
                 updateSearchBar(getSelectedOption());
             });

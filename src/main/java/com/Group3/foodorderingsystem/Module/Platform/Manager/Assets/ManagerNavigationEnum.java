@@ -9,24 +9,22 @@ public enum ManagerNavigationEnum {
             "Home",
             "home.png",
             Arrays.asList(
-                    ManagerTopNavigationEnum.Home,
-                    ManagerTopNavigationEnum.CurrentOrder)),
-    Order(
-            "Order",
-            "logo.png",
+                    ManagerTopNavigationEnum.Complain)),
+    Vendor(
+            "Vendor",
+            "vendor_icon.png",
             Arrays.asList(
-                    ManagerTopNavigationEnum.Order)),
-    Notification(
-            "Notification",
-            "logo.png",
+                    ManagerTopNavigationEnum.Vendor)),
+    Runner(
+            "Runner",
+            "runner_icon.png",
             Arrays.asList(
-                    ManagerTopNavigationEnum.Notification)),
+                    ManagerTopNavigationEnum.Runner)),
     Settings(
             "Settings",
             "settings.png",
             Arrays.asList(
-                    ManagerTopNavigationEnum.Settings,
-                    ManagerTopNavigationEnum.Finance));
+                    ManagerTopNavigationEnum.Settings));
 
     private final String title;
     private final String icon;

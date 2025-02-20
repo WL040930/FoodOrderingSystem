@@ -102,7 +102,6 @@ public class VendorOrderDetailsUI extends BorderPane {
 
     private void displayOrderDetails(VBox root, OrderModel order) {
 
-        // Create a container for the back button and fixedVBox
         VBox buttonVBox = createButtonContainer(selectedOrder);
         VBox buttonContainer = new VBox(10);
         buttonContainer.getChildren().addAll(buttonVBox);
@@ -501,7 +500,7 @@ public class VendorOrderDetailsUI extends BorderPane {
                 if (!notificationVendor.isEmpty()) {
                     NotificationServices.createNewNotification(selectedOrder.getVendor(), notificationVendor);
                 }
-                if (!notificationRunner.isEmpty()) {
+                if (!notificationRunner.isEmpty() && selectedOrder.getRider() != null) {
                     NotificationServices.createNewNotification(selectedOrder.getRider(), notificationRunner);
                 }
     

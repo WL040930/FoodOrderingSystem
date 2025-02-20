@@ -24,7 +24,7 @@ public class ManagerMainFrame extends BaseMainApplication {
 
     @Override
     protected Node defaultContent() {
-        return new HBox();
+        return ManagerViewModel.getComplainViewModel().getNode();
     }
 
     @Override

@@ -1,8 +1,15 @@
 package com.Group3.foodorderingsystem.Core.Services;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.awt.Desktop;
 import java.time.Month;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -11,6 +18,7 @@ import java.util.stream.Collectors;
 
 import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Finance.TransactionModel.TransactionType;
+import com.Group3.foodorderingsystem.Core.Model.Entity.Order.ItemModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.Order.OrderModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.CustomerModel;
 import com.Group3.foodorderingsystem.Core.Model.Entity.User.RunnerModel;
@@ -20,11 +28,54 @@ import com.Group3.foodorderingsystem.Core.Model.Enum.RoleEnum;
 import com.Group3.foodorderingsystem.Core.Storage.Storage;
 import com.Group3.foodorderingsystem.Core.Storage.StorageEnum;
 import com.Group3.foodorderingsystem.Core.Util.FileUtil;
+import com.Group3.foodorderingsystem.Core.Util.SessionUtil;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
 
 public class TransactionServices {
 
     private static List<TransactionModel> getTransaction() {
         return FileUtil.loadFile(StorageEnum.getFileName(StorageEnum.TRANSACTION), TransactionModel.class);
+    }
+
+    public static TransactionModel findTransactionById(String transactionId) {
+        List<TransactionModel> transactions = getTransaction();
+        for (TransactionModel transaction : transactions) {
+            if (transaction.getTransactionId().equals(transactionId)) {
+                return transaction;
+            }
+        }
+        return null;
+    }
+
+    public static TransactionModel createFine(Double amount, TransactionType transactionType, String vendorId) {
+        if (transactionType != TransactionType.FINE) {
+            return null;
+        }
+
+        VendorModel vendorModel = UserServices.findVendorById(vendorId);
+
+        vendorModel.setRevenue(vendorModel.getRevenue() - amount);
+        UserServices.saveUser(vendorModel);
+
+        TransactionModel transactionModel = new TransactionModel();
+        transactionModel.setTransactionId(Storage.generateNewId());
+        transactionModel.setAmount(-amount);
+        transactionModel.setTransactionType(transactionType);
+        transactionModel.setUserModel(vendorModel);
+
+        NotificationServices.createNewNotification(vendorId, NotificationServices.Template.sendFine(amount));
+
+        List<TransactionModel> transaction = getTransaction();
+        transaction.add(transactionModel);
+
+        FileUtil.saveFile(StorageEnum.getFileName(StorageEnum.TRANSACTION), transaction);
+        return transactionModel;   
     }
 
     public static TransactionModel createTransaction(Double amount, TransactionModel.TransactionType transactionType,
@@ -98,7 +149,8 @@ public class TransactionServices {
 
     public static TransactionModel createTransaction(String orderId, TransactionModel.TransactionType transactionType,
             RoleEnum role) {
-        if (transactionType != TransactionType.REFUND && transactionType != TransactionType.PAYMENT && transactionType != TransactionType.CANCEL) {
+        if (transactionType != TransactionType.REFUND && transactionType != TransactionType.PAYMENT
+                && transactionType != TransactionType.CANCEL) {
             return null;
         }
 
@@ -127,7 +179,8 @@ public class TransactionServices {
                         NotificationServices.createNewNotification(customerModel.getId(),
                                 NotificationServices.Template.payOrder(orderModel.getTotalPrice(),
                                         orderModel.getOrderId()));
-                        if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null) {
+                        if (UserServices.saveUser(vendorModel) == null
+                                || UserServices.saveUser(customerModel) == null) {
                             return null;
                         }
                         break;
@@ -135,7 +188,8 @@ public class TransactionServices {
                         vendorModel.setRevenue(vendorModel.getRevenue() + orderModel.getSubTotalPrice());
                         NotificationServices.createNewNotification(vendorModel.getId(), NotificationServices.Template
                                 .receiveOrderPayment(orderModel.getSubTotalPrice(), orderModel.getOrderId()));
-                        if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null) {
+                        if (UserServices.saveUser(vendorModel) == null
+                                || UserServices.saveUser(customerModel) == null) {
                             return null;
                         }
                         break;
@@ -144,7 +198,7 @@ public class TransactionServices {
                         NotificationServices.createNewNotification(runnerModel.getId(), NotificationServices.Template
                                 .receiveDeliveryPayment(orderModel.getDeliveryFee(), orderModel.getOrderId()));
                         if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null
-                        || UserServices.saveUser(runnerModel) == null) {
+                                || UserServices.saveUser(runnerModel) == null) {
                             return null;
                         }
                         break;
@@ -173,10 +227,9 @@ public class TransactionServices {
                 if (UserServices.saveUser(customerModelCancel) == null) {
                     return null;
                 }
-                
+
                 break;
 
-            
             default:
                 break;
         }
@@ -259,6 +312,150 @@ public class TransactionServices {
                     .collect(Collectors.toList());
         }
         return Collections.emptyList();
+    }
+
+    public static void generateTransactionReceipt(String transactionId) {
+        // Retrieve the transaction by ID
+        TransactionModel transaction = findTransactionById(transactionId);
+        User user;
+        String pdfPath = "src/main/resources/transactions/transaction_" + transaction.getTransactionId() + ".pdf";
+
+        if (transaction.getTransactionType() == TransactionType.TOPUP) {
+            // Handle TopUp transaction
+            user = UserServices.findUserById(transaction.getUserModel().getId());
+
+            try {
+                PdfWriter writer = new PdfWriter(pdfPath);
+                PdfDocument pdf = new PdfDocument(writer);
+                Document document = new Document(pdf);
+
+                // Company Name on the top right
+                Paragraph companyName = new Paragraph("Food Orbit")
+                        .setBold()
+                        .setTextAlignment(TextAlignment.RIGHT)
+                        .setFontSize(12);
+                document.add(companyName);
+
+                // Title
+                document.add(new Paragraph("Transaction Receipt")
+                        .setBold()
+                        .setTextAlignment(TextAlignment.CENTER)
+                        .setFontSize(24));
+
+                // Transaction Details Section
+                document.add(new Paragraph("Transaction ID: " + transaction.getTransactionId()).setFontSize(10));
+                document.add(new Paragraph("User Name: " + user.getName()).setFontSize(10));
+
+                // Convert Date to LocalDateTime
+                LocalDateTime transactionDateTime = Instant.ofEpochMilli(transaction.getTransactionDate().getTime())
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm");
+                String formattedDate = transactionDateTime.format(formatter);
+                document.add(new Paragraph("Transaction Date: " + formattedDate).setFontSize(10));
+
+                // Transaction Type and Amount
+                document.add(new Paragraph("Transaction Type: " + transaction.getTransactionType()).setFontSize(10));
+                document.add(new Paragraph("Amount: RM" + String.format("%.2f", transaction.getAmount()))
+                        .setFontSize(12).setBold().setTextAlignment(TextAlignment.RIGHT));
+
+                // Note for TopUp
+                document.add(new Paragraph("TopUp Transaction").setFontSize(10).setTextAlignment(TextAlignment.CENTER));
+
+                // Footer
+                document.add(new Paragraph("Thank you for using our service!").setTextAlignment(TextAlignment.CENTER));
+                document.add(
+                        new Paragraph("For any queries, please contact us.").setTextAlignment(TextAlignment.CENTER));
+
+                document.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            // Handle Order Payment transaction
+            OrderModel order = transaction.getOrderModel();
+            user = UserServices.findUserById(order.getCustomer());
+
+            try {
+                PdfWriter writer = new PdfWriter(pdfPath);
+                PdfDocument pdf = new PdfDocument(writer);
+                Document document = new Document(pdf);
+
+                // Company Name on the top right
+                Paragraph companyName = new Paragraph("Food Orbit")
+                        .setBold()
+                        .setTextAlignment(TextAlignment.RIGHT)
+                        .setFontSize(12);
+                document.add(companyName);
+
+                // Title
+                document.add(new Paragraph("Transaction Receipt")
+                        .setBold()
+                        .setTextAlignment(TextAlignment.CENTER)
+                        .setFontSize(24));
+
+                // Transaction Details Section
+                document.add(new Paragraph("Transaction ID: " + transaction.getTransactionId()).setFontSize(10));
+                document.add(new Paragraph("User Name: " + user.getName()).setFontSize(10));
+
+                // Convert Date to LocalDateTime
+                LocalDateTime transactionDateTime = Instant.ofEpochMilli(transaction.getTransactionDate().getTime())
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm");
+                String formattedDate = transactionDateTime.format(formatter);
+                document.add(new Paragraph("Transaction Date: " + formattedDate).setFontSize(10));
+
+                // Transaction Type and Amount
+                document.add(new Paragraph("Transaction Type: " + transaction.getTransactionType()).setFontSize(10));
+                document.add(new Paragraph("Amount: RM" + String.format("%.2f", transaction.getAmount()))
+                        .setFontSize(12).setBold().setTextAlignment(TextAlignment.RIGHT));
+
+                // Order Details for Payment transactions
+                document.add(new Paragraph("Order ID: " + order.getOrderId()).setFontSize(10));
+                document.add(new Paragraph("Customer Name: " + user.getName()).setFontSize(10));
+                document.add(new Paragraph("Delivery Address: " + order.getDeliveryAddress()).setFontSize(10));
+
+                // Add Items Purchased in a table
+                document.add(new Paragraph("Items Purchased:").setFontSize(12).setBold());
+                Table itemsTable = new Table(UnitValue.createPercentArray(new float[] { 3, 3, 2 }))
+                        .useAllAvailableWidth();
+                itemsTable.addHeaderCell("Item");
+                itemsTable.addHeaderCell("Quantity");
+                itemsTable.addHeaderCell("Price");
+
+                for (ItemModel item : order.getItems()) {
+                    itemsTable.addCell(item.getItemName());
+                    itemsTable.addCell(String.valueOf(item.getItemQuantity()));
+                    itemsTable.addCell(String.format("RM%.2f", item.getItemPrice()));
+                }
+                document.add(itemsTable);
+
+                // Add Total Price
+                document.add(new Paragraph("Total Price: RM" + String.format("%.2f", order.getTotalPrice()))
+                        .setFontSize(12).setBold().setTextAlignment(TextAlignment.RIGHT));
+
+                // Footer
+                document.add(new Paragraph("Thank you for using our service!").setTextAlignment(TextAlignment.CENTER));
+                document.add(
+                        new Paragraph("For any queries, please contact us.").setTextAlignment(TextAlignment.CENTER));
+
+                document.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Automatically open the PDF
+        File pdfFile = new File(pdfPath);
+        if (pdfFile.exists()) {
+            try {
+                Desktop.getDesktop().open(pdfFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // Utility method to convert Date to LocalDate

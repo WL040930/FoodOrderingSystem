@@ -420,9 +420,13 @@ public class OrderDetailsUI extends BorderPane {
             } else {
                 submitRatingFeedback(ratingStars, feedbackArea.getText());
             }
-            
-
         });
+
+        //if the order is already rated, disable the submit button
+        if (selectedOrder.getRating() > 0) {
+            submitButton.setDisable(true);
+            feedbackArea.setEditable(false);
+        }
 
         Separator separator = new Separator();
         separator.getStyleClass().add("separator");
@@ -446,7 +450,7 @@ public class OrderDetailsUI extends BorderPane {
         alert.showAndWait();
 
         CustomerOrderServices.updateRatingAndFeedback(selectedOrder.getOrderId(), rating, feedback);
-        CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI());
+        CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI("Active"));
         CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Past"));
         
     }
@@ -492,7 +496,7 @@ public class OrderDetailsUI extends BorderPane {
 
 
             //if reply is null, set default text
-            if (complain.getComplainStatus() == ComplainStatusEnum.PENDING) {
+            if (complain.getComplainReply() == null) {
                 complainReplyValueLabel.setText("We are working on your complain. Please wait for our reply.");
             }
 
@@ -531,7 +535,7 @@ public class OrderDetailsUI extends BorderPane {
         alert.showAndWait();
 
         CustomerOrderServices.submitComplain(selectedOrder.getOrderId(), complainDescription);
-        CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI());
+        CustomerViewModel.getOrderViewModel().setOrderHistoryUI(new OrderHistoryUI("Active"));
         CustomerViewModel.getOrderViewModel().navigate(CustomerViewModel.getOrderViewModel().getOrderHistoryUI("Past"));
     }
 
