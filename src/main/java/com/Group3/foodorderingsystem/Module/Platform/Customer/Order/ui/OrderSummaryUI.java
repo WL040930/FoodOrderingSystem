@@ -339,9 +339,9 @@ public class OrderSummaryUI extends VBox {
                 CustomerViewModel.initNotificationViewModel();  
                 CustomerViewModel.initTransactionViewModel();  
                 
-                CustomerViewModel.getCustomerMainFrame().handleNavigation(CustomerNavigationEnum.Order);
-                
-                
+
+                CustomerViewModel.getCustomerMainFrame().handleNavigation(CustomerNavigationEnum.Home);
+                                
                 // Clear session items after placing the order
                 SessionUtil.setItemsInSession(new ArrayList<>());  
                 

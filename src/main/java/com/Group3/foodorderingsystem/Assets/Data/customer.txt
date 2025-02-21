@@ -1,1 +1,1 @@
-{"id":"eaf02e59-04b5-4e05-9794-19c60acbd3e3","name":"Jack","email":"Jack@gmail.com","password":"customer","role":"CUSTOMER","profilePicture":"customer.png","balance":974.0,"phoneNumber":"0123456789","address":"10, Jalan Bunga 1, Taman Bunga"}
+{"id":"eaf02e59-04b5-4e05-9794-19c60acbd3e3","name":"Jack","email":"Jack@gmail.com","password":"customer","role":"CUSTOMER","profilePicture":"customer.png","balance":969.0,"phoneNumber":"0123456789","address":"10, Jalan Bunga 1, Taman Bunga"}
