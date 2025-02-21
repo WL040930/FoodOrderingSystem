@@ -62,7 +62,7 @@ public class AddNewItem extends BaseContentPanel {
                         .map(CategoryEnum::toString)
                         .toArray(String[]::new));
 
-        itemImage = new FileUploadWidget(FileUploadType.CIRCLE_AVATAR, "logo.png");
+        itemImage = new FileUploadWidget(FileUploadType.CIRCLE_AVATAR, "food.png");
 
         errorLabel = new Label();
         errorLabel.setStyle("-fx-text-fill: red;");

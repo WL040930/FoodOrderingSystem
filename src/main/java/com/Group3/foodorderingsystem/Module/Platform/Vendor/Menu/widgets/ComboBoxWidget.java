@@ -9,6 +9,11 @@ public class ComboBoxWidget extends ComboBox<String> {
         this.setPromptText(promptText);
         this.getItems().addAll(items);
         this.setPrefWidth(200); // Optional: Set a default width
+        this.setStyle("-fx-background-color: #ffffff; " +
+                "-fx-border-color: #cccccc; " +
+                "-fx-border-radius: 5px; " +
+                "-fx-padding: 5px; " +
+                "-fx-font-size: 14px;");
 
         // Automatically select the first item if available
         if (!this.getItems().isEmpty()) {
