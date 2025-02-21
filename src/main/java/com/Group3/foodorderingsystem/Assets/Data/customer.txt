@@ -1,2 +1,2 @@
 {"id":"eaf02e59-04b5-4e05-9794-19c60acbd3e3","name":"Customer1","email":"Jack@gmail.com","password":"","role":"CUSTOMER","profilePicture":"customer.png","balance":969.0,"phoneNumber":"","address":""}
-{"id":"95585c06-c529-4d77-b4f0-787d8970cd5f","name":"customer","email":"customer@gmail.com","password":"customer","role":"CUSTOMER","profilePicture":"customer.png","balance":1000.0,"phoneNumber":"0111-2345678","address":"28, Jalan USj 10"}
+{"id":"95585c06-c529-4d77-b4f0-787d8970cd5f","name":"customer","email":"customer@gmail.com","password":"customer","role":"CUSTOMER","profilePicture":"customer.png","balance":959.5,"phoneNumber":"0111-2345678","address":"28, Jalan USj 10"}

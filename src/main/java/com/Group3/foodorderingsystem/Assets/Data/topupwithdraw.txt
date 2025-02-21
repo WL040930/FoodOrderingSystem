@@ -1,0 +1,3 @@
+{"userId":"95585c06-c529-4d77-b4f0-787d8970cd5f","amount":50.0,"transactionType":"TOPUP","status":"UNDECIDED","topUpWithdrawModelId":"70294af1-3cce-44b3-854a-37a482a590f1"}
+{"userId":"95585c06-c529-4d77-b4f0-787d8970cd5f","amount":50.0,"transactionType":"TOPUP","status":"UNDECIDED","topUpWithdrawModelId":"ac8f04b5-09e8-4ad4-82f9-2da038de5340"}
+{"userId":"95585c06-c529-4d77-b4f0-787d8970cd5f","amount":100.0,"transactionType":"TOPUP","status":"UNDECIDED","topUpWithdrawModelId":"c11ff5eb-d5fc-415b-9819-e8305423523c"}
