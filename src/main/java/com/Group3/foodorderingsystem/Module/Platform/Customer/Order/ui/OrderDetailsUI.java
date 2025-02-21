@@ -478,13 +478,6 @@ public class OrderDetailsUI extends BorderPane {
             complainDescription.setText(complain.getComplainDescription());
             complainDescription.setEditable(false);
 
-            // Complain Status
-            HBox complainStatusBox = new HBox(10);
-            Label complainStatusLabel = new Label("Complain Status:");
-            complainStatusLabel.getStyleClass().add("status-label");
-            Label complainStatusValueLabel = new Label(complain.getComplainStatus().toString());
-            complainStatusValueLabel.getStyleClass().add("status-value-label");
-            complainStatusBox.getChildren().addAll(complainStatusLabel, complainStatusValueLabel);
 
             // Complain Reply
             VBox complainReplyBox = new VBox(10);
@@ -500,7 +493,7 @@ public class OrderDetailsUI extends BorderPane {
                 complainReplyValueLabel.setText("We are working on your complain. Please wait for our reply.");
             }
 
-            complainBox.getChildren().addAll(complainStatusBox, complainReplyBox);
+            complainBox.getChildren().addAll(complainReplyBox);
 
 
 

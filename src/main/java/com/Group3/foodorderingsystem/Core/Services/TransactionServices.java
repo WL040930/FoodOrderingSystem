@@ -186,6 +186,7 @@ public class TransactionServices {
                         break;
                     case VENDOR:
                         vendorModel.setRevenue(vendorModel.getRevenue() + orderModel.getSubTotalPrice());
+                        transactionModel.setAmount(orderModel.getSubTotalPrice());
                         NotificationServices.createNewNotification(vendorModel.getId(), NotificationServices.Template
                                 .receiveOrderPayment(orderModel.getSubTotalPrice(), orderModel.getOrderId()));
                         if (UserServices.saveUser(vendorModel) == null
@@ -195,6 +196,7 @@ public class TransactionServices {
                         break;
                     case RUNNER:
                         runnerModel.setRevenue(runnerModel.getRevenue() + orderModel.getDeliveryFee());
+                        transactionModel.setAmount(orderModel.getDeliveryFee());
                         NotificationServices.createNewNotification(runnerModel.getId(), NotificationServices.Template
                                 .receiveDeliveryPayment(orderModel.getDeliveryFee(), orderModel.getOrderId()));
                         if (UserServices.saveUser(vendorModel) == null || UserServices.saveUser(customerModel) == null
@@ -234,7 +236,7 @@ public class TransactionServices {
                 break;
         }
 
-        System.out.println("TransactionModel: " + transactionModel);
+
         List<TransactionModel> transaction = getTransaction();
         transaction.add(transactionModel);
 
@@ -265,6 +267,11 @@ public class TransactionServices {
                         transaction.setAmount(-transaction.getAmount());
                         transactionList.add(transaction);
                     } else if (transaction.getTransactionType() == TransactionType.PAYMENT) {
+                        transaction.setAmount(transaction.getAmount());
+                        transactionList.add(transaction);
+                    } 
+                } else if (transaction.getOrderModel().getRider() != null && transaction.getOrderModel().getRider().equals(userId)) {
+                    if (transaction.getTransactionType() == TransactionType.PAYMENT) {
                         transaction.setAmount(transaction.getAmount());
                         transactionList.add(transaction);
                     }
