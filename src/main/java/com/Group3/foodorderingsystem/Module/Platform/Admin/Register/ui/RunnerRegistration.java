@@ -60,6 +60,8 @@ public class RunnerRegistration extends BaseContentPanel {
             if (registerRunner != null) {
                 PopupMessage.showMessage("Runner Created Successful!", "success", () -> {
                     AdminViewModel.initRegisterViewModel();
+                    AdminViewModel.initDatabaseViewModel();
+                    AdminViewModel.initFinanceViewModel();
                     AdminViewModel.getRegisterViewModel().navigate(AdminViewModel.getRegisterViewModel().getNode());
                 });
             } else {
