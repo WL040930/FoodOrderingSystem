@@ -67,3 +67,7 @@
 {"notificationId":"29077410-ff20-43b0-89bf-e67209d97f0e","userId":"95585c06-c529-4d77-b4f0-787d8970cd5f","content":"Your order <b>54202c14</b> has been accepted.","date":1740116671630,"transactionId":null}
 {"notificationId":"2842c1b7-581d-4b62-b8a0-cc52f7cafab2","userId":"95585c06-c529-4d77-b4f0-787d8970cd5f","content":"Your order <b>54202c14</b> has been cancelled.","date":1740116671733,"transactionId":null}
 {"notificationId":"4a4d5ea4-3518-4fa2-9545-b5b51521e01b","userId":"176a2d82-32eb-47e3-b53b-cca9a0c6efea","content":"54202c14: Your order has been cancelled.","date":1740116671784,"transactionId":null}
+{"notificationId":"a0b18ee1-a53a-4ba6-bd02-047755829e93","userId":"7f9c76a2-608b-47d7-866e-529d4abe6d0d","content":"You have received <b>RM 5.50</b> from delivery of order <b>7d9b0255</b>.","date":1740118573726,"transactionId":null}
+{"notificationId":"10a1b4fb-011b-4c98-9696-798ee745da81","userId":"95585c06-c529-4d77-b4f0-787d8970cd5f","content":"Your order <b>7d9b0255</b> has been completed.","date":1740118593365,"transactionId":null}
+{"notificationId":"852d3ac3-6e10-4397-bf4a-62d9d570e999","userId":"176a2d82-32eb-47e3-b53b-cca9a0c6efea","content":"7d9b0255: Your order has been completed.","date":1740118593397,"transactionId":null}
+{"notificationId":"68ba532e-bf1a-4b92-b428-b480d1cff1f0","userId":"7f9c76a2-608b-47d7-866e-529d4abe6d0d","content":"7d9b0255: Order has been completed.","date":1740118593427,"transactionId":null}
