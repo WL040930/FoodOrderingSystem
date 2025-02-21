@@ -1,2 +1,0 @@
-{"complainId":"ed1d30e9","orderId":"99eff22e","complainDescription":"asdasdad","complainStatus":"RESOLVED","complainReply":null}
-{"complainId":"0ae7a33b","orderId":"e5cadbfb","complainDescription":"The food is raw","complainStatus":"PENDING","complainReply":null}
