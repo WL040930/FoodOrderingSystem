@@ -1,2 +1,2 @@
-{"id":"7f9c76a2-608b-47d7-866e-529d4abe6d0d","name":"Jackson","email":"runner1@gmail.com","password":"runner","role":"RUNNER","profilePicture":"runner.png","phoneNumber":"0122334455","revenue":9.5,"status":"UNAVAILABLE","orderIDs":[]}
-{"id":"a091ece1-7dbe-4823-996d-48ca42e256fd","name":"runner","email":"runner@gmail.com","password":"runner","role":"RUNNER","profilePicture":"runner.png","phoneNumber":"0124-567890","revenue":0.0,"status":"UNAVAILABLE","orderIDs":[]}
+{"id":"7f9c76a2-608b-47d7-866e-529d4abe6d0d","name":"Jackson","email":"runner1@gmail.com","password":"runner","role":"RUNNER","profilePicture":"runner.png","phoneNumber":"0122334455","revenue":9.5,"status":"AVAILABLE","orderIDs":[]}
+{"id":"a091ece1-7dbe-4823-996d-48ca42e256fd","name":"runner","email":"runner@gmail.com","password":"runner","role":"RUNNER","profilePicture":"runner.png","phoneNumber":"0124-567890","revenue":0.0,"status":"AVAILABLE","orderIDs":[]}
