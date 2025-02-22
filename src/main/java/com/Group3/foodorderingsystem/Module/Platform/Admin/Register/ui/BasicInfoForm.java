@@ -55,10 +55,10 @@ public class BasicInfoForm extends BaseContentPanel {
         profileImageField.setOnFileSelectedCallback(selectedFile -> {
             isImageUploaded = false;
         });
-        fullNameField = new TitleTextField("Full Name", "Enter your full name", null, TitleTextFieldEnum.TextField);
-        emailField = new TitleTextField("Email Address", "Enter your email", null, TitleTextFieldEnum.EmailField);
-        passwordField = new TitleTextField("Password", "Enter your password", null, TitleTextFieldEnum.PasswordField);
-        confirmPasswordField = new TitleTextField("Confirm Password", "Re-enter your password", null,
+        fullNameField = new TitleTextField("Full Name", "Enter your full name", "", TitleTextFieldEnum.TextField);
+        emailField = new TitleTextField("Email Address", "Enter your email", "", TitleTextFieldEnum.EmailField);
+        passwordField = new TitleTextField("Password", "Enter your password", "", TitleTextFieldEnum.PasswordField);
+        confirmPasswordField = new TitleTextField("Confirm Password", "Re-enter your password", "",
                 TitleTextFieldEnum.PasswordField);
 
         errorMessageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");

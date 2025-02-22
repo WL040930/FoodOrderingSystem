@@ -46,9 +46,9 @@ public class CustomerRegistration extends VBox {
         content.setStyle("-fx-padding: 10px;");
 
         // Create the input fields
-        phoneNumberField = new TitleTextField("Phone Number", "Enter your phone number", null,
+        phoneNumberField = new TitleTextField("Phone Number", "Enter your phone number", "",
                 TitleTextFieldEnum.TextField);
-        addressField = new TitleTextField("Address", "Enter your address", null, TitleTextFieldEnum.TextArea);
+        addressField = new TitleTextField("Address", "Enter your address", "", TitleTextFieldEnum.TextArea);
 
         errorMessageLabel = new Label();
         errorMessageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");

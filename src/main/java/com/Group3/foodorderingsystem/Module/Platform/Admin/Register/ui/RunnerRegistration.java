@@ -38,7 +38,7 @@ public class RunnerRegistration extends BaseContentPanel {
     private Node content() {
         VBox content = new VBox(10);
 
-        phoneNumberField = new TitleTextField("Phone Number", "Enter your phone number", null,
+        phoneNumberField = new TitleTextField("Phone Number", "Enter your phone number", "",
                 TitleTextFieldEnum.TextField);
 
         content.getChildren().addAll(

@@ -52,11 +52,11 @@ public class AddNewItem extends BaseContentPanel {
         VBox content = new VBox(10);
         content.setStyle("-fx-padding: 10px;");
 
-        itemName = new TitleTextField("Name of Food/Drinks", "Enter the name of food/drink", null,
+        itemName = new TitleTextField("Name of Food/Drinks", "Enter the name of food/drink", "",
                 TitleTextFieldEnum.TextField);
-        itemDescription = new TitleTextField("Description", "Enter the description of food/drink", null,
+        itemDescription = new TitleTextField("Description", "Enter the description of food/drink", "",
                 TitleTextFieldEnum.TextArea);
-        itemPrice = new TitleTextField("Price", "Enter the price of food/drink (RM)", null,
+        itemPrice = new TitleTextField("Price", "Enter the price of food/drink (RM)", "",
                 TitleTextFieldEnum.DecimalField);
         category = new ComboBoxWidget("Category",
                 Arrays.stream(CategoryEnum.values())

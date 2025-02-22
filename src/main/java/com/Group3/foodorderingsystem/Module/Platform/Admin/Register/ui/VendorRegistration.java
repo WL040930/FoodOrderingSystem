@@ -61,12 +61,12 @@ public class VendorRegistration extends BaseContentPanel {
 
         VBox formContainer = new VBox();
 
-        shopName = new TitleTextField("Shop Name", "Enter your shop name", null, TitleTextFieldEnum.TextField);
-        shopDescription = new TitleTextField("Shop Description", "Enter your shop description", null,
+        shopName = new TitleTextField("Shop Name", "Enter your shop name", "", TitleTextFieldEnum.TextField);
+        shopDescription = new TitleTextField("Shop Description", "Enter your shop description", "",
                 TitleTextFieldEnum.TextArea);
-        shopPhoneNumber = new TitleTextField("Shop Phone Number", "Enter your shop phone number", null,
+        shopPhoneNumber = new TitleTextField("Shop Phone Number", "Enter your shop phone number", "",
                 TitleTextFieldEnum.TextField);
-        shopAddress = new TitleTextField("Shop Address", "Enter your shop address", null, TitleTextFieldEnum.TextArea);
+        shopAddress = new TitleTextField("Shop Address", "Enter your shop address", "", TitleTextFieldEnum.TextArea);
         shopImage = new FileUploadWidget(FileUploadType.BUTTON, "admin.png");
 
         errorText = new Label();
