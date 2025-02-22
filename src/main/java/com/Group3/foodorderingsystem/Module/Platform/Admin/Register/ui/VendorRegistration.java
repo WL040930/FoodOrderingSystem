@@ -89,9 +89,11 @@ public class VendorRegistration extends BaseContentPanel {
 
     private Node footer() {
         return new BottomButton("Register", () -> {
-            if (shopName.getInputValue().isEmpty() || shopDescription.getInputValue().isEmpty()
-                    || shopPhoneNumber.getInputValue().isEmpty()
-                    || shopAddress.getInputValue().isEmpty()) {
+            if (shopName == null || shopDescription == null || shopPhoneNumber == null || shopAddress == null
+                    || shopName.getInputValue() == null || shopDescription.getInputValue() == null
+                    || shopPhoneNumber.getInputValue() == null || shopAddress.getInputValue() == null
+                    || shopName.getInputValue().isEmpty() || shopDescription.getInputValue().isEmpty()
+                    || shopPhoneNumber.getInputValue().isEmpty() || shopAddress.getInputValue().isEmpty()) {
                 errorText.setText("Please fill all the fields");
                 return;
             }

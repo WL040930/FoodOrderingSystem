@@ -85,7 +85,8 @@ public class BasicInfoForm extends BaseContentPanel {
         String password = ((TextField) passwordField.getChildren().get(1)).getText();
         String confirmPassword = ((TextField) confirmPasswordField.getChildren().get(1)).getText();
 
-        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        if (fullName == null || email == null || password == null || confirmPassword == null || fullName.isEmpty()
+                || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             errorMessageLabel.setText("All fields must be filled!");
             errorMessageLabel.setVisible(true);
             return;

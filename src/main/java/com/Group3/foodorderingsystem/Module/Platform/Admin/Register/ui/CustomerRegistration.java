@@ -46,8 +46,9 @@ public class CustomerRegistration extends VBox {
         content.setStyle("-fx-padding: 10px;");
 
         // Create the input fields
-        phoneNumberField = new TitleTextField("Phone Number", "Enter your phone number", null, TitleTextFieldEnum.TextField);
-        addressField = new TitleTextField("Address", "Enter your address",null, TitleTextFieldEnum.TextArea);
+        phoneNumberField = new TitleTextField("Phone Number", "Enter your phone number", null,
+                TitleTextFieldEnum.TextField);
+        addressField = new TitleTextField("Address", "Enter your address", null, TitleTextFieldEnum.TextArea);
 
         errorMessageLabel = new Label();
         errorMessageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
@@ -76,7 +77,7 @@ public class CustomerRegistration extends VBox {
         String address = addressField.getInputValue();
 
         // Validation checks
-        if (phoneNumber.isEmpty() || address.isEmpty()) {
+        if (phoneNumber == null || address == null || phoneNumber.isEmpty() || address.isEmpty()) {
             errorMessageLabel.setText("Please fill in all fields.");
             errorMessageLabel.setVisible(true);
             return;

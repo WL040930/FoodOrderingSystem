@@ -82,6 +82,11 @@ public class AddNewItem extends BaseContentPanel {
             String category = this.category.getSelectedValue();
             File image = itemImage.getSelectedFile();
 
+            if (name == null || description == null || price == null || category == null) {
+                errorLabel.setText("All fields are required");
+                return;
+            } 
+
             if (name == "") {
                 errorLabel.setText("Name is required");
             } else if (description == "") {

@@ -38,7 +38,8 @@ public class RunnerRegistration extends BaseContentPanel {
     private Node content() {
         VBox content = new VBox(10);
 
-        phoneNumberField = new TitleTextField("Phone Number", "Enter your phone number", null, TitleTextFieldEnum.TextField);
+        phoneNumberField = new TitleTextField("Phone Number", "Enter your phone number", null,
+                TitleTextFieldEnum.TextField);
 
         content.getChildren().addAll(
                 phoneNumberField);
@@ -47,6 +48,12 @@ public class RunnerRegistration extends BaseContentPanel {
 
     private Node footer() {
         return new BottomButton("Register", () -> {
+            if (phoneNumberField.getInputValue() == null || phoneNumberField.getInputValue().isEmpty()) {
+                PopupMessage.showMessage("Phone number is required", "error", () -> {
+                });
+                return;
+            }
+
             RunnerModel runner = new RunnerModel();
 
             runner.setName(user.getName());
