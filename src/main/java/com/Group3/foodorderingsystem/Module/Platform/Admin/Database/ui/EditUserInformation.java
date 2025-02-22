@@ -46,7 +46,7 @@ public class EditUserInformation extends BaseContentPanel {
 
     public EditUserInformation(User user) {
         super();
-        this.user = user;
+        this.user = UserServices.findUserById(user.getId());
 
         initUser();
         setHeader(createHeader());
@@ -76,8 +76,8 @@ public class EditUserInformation extends BaseContentPanel {
         email.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         email.setPadding(new Insets(5, 0, 10, 0));
 
-        nameField = new TitleTextField("Name", user.getName(), TitleTextFieldEnum.TextField);
-        passwordField = new TitleTextField("Password", "******", TitleTextFieldEnum.PasswordField);
+        nameField = new TitleTextField("Name", user.getName(), user.getName(), TitleTextFieldEnum.TextField);
+        passwordField = new TitleTextField("Password", "******", user.getPassword(), TitleTextFieldEnum.PasswordField);
 
         javafx.scene.control.Separator divider = new Separator();
         divider.setPadding(new Insets(10, 0, 10, 0));
@@ -87,22 +87,29 @@ public class EditUserInformation extends BaseContentPanel {
         switch (user.getRole()) {
             case CUSTOMER:
                 phoneNumber = new TitleTextField("Phone Number", customerModel.getPhoneNumber(),
+                        customerModel.getPhoneNumber(),
                         TitleTextFieldEnum.TextField);
-                address = new TitleTextField("Address", customerModel.getAddress(), TitleTextFieldEnum.TextArea);
+                address = new TitleTextField("Address", customerModel.getAddress(), customerModel.getAddress(),
+                        TitleTextFieldEnum.TextArea);
                 vbox.getChildren().addAll(phoneNumber, address);
                 break;
             case VENDOR:
                 ImageView shopImage = Images.getImageView(vendorModel.getShopImage(), 80, 80);
-                shopName = new TitleTextField("Shop Name", vendorModel.getShopName(), TitleTextFieldEnum.TextField);
+                shopName = new TitleTextField("Shop Name", vendorModel.getShopName(), vendorModel.getShopName(),
+                        TitleTextFieldEnum.TextField);
                 shopDescription = new TitleTextField("Shop Description", vendorModel.getShopDescription(),
+                        vendorModel.getShopDescription(),
                         TitleTextFieldEnum.TextArea);
                 shopPhoneNumber = new TitleTextField("Shop Phone Number", vendorModel.getShopPhoneNumber(),
+                        vendorModel.getShopPhoneNumber(),
                         TitleTextFieldEnum.TextField);
-                shopAddress = new TitleTextField("Shop Address", vendorModel.getAddress(), TitleTextFieldEnum.TextArea);
+                shopAddress = new TitleTextField("Shop Address", vendorModel.getAddress(), vendorModel.getAddress(),
+                        TitleTextFieldEnum.TextArea);
                 vbox.getChildren().addAll(shopImage, shopName, shopDescription, shopPhoneNumber, shopAddress);
                 break;
             case RUNNER:
                 phoneNumber = new TitleTextField("Phone Number", runnerModel.getPhoneNumber(),
+                        runnerModel.getPhoneNumber(),
                         TitleTextFieldEnum.TextField);
                 vbox.getChildren().addAll(phoneNumber);
                 break;

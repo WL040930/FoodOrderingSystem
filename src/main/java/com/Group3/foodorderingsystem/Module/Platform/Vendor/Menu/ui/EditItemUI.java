@@ -85,11 +85,13 @@ public class EditItemUI extends BaseContentPanel {
         VBox content = new VBox(10);
         content.setStyle("-fx-padding: 10px;");
 
-        itemName = new TitleTextField("Name of Food/Drinks", itemModel.getItemName(),
+        itemName = new TitleTextField("Name of Food/Drinks", itemModel.getItemName(), itemModel.getItemName(),
                 TitleTextFieldEnum.TextField);
         itemDescription = new TitleTextField("Description", itemModel.getItemDescription(),
+                itemModel.getItemDescription(),
                 TitleTextFieldEnum.TextArea);
         itemPrice = new TitleTextField("Price", String.valueOf(itemModel.getItemPrice()),
+                String.valueOf(itemModel.getItemPrice()),
                 TitleTextFieldEnum.DecimalField);
         category = new ComboBoxWidget("Category",
                 Arrays.stream(CategoryEnum.values())

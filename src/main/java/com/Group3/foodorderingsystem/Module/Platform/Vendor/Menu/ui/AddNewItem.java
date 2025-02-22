@@ -52,11 +52,12 @@ public class AddNewItem extends BaseContentPanel {
         VBox content = new VBox(10);
         content.setStyle("-fx-padding: 10px;");
 
-        itemName = new TitleTextField("Name of Food/Drinks", "Enter the name of food/drink",
+        itemName = new TitleTextField("Name of Food/Drinks", "Enter the name of food/drink", null,
                 TitleTextFieldEnum.TextField);
-        itemDescription = new TitleTextField("Description", "Enter the description of food/drink",
+        itemDescription = new TitleTextField("Description", "Enter the description of food/drink", null,
                 TitleTextFieldEnum.TextArea);
-        itemPrice = new TitleTextField("Price", "Enter the price of food/drink (RM)", TitleTextFieldEnum.DecimalField);
+        itemPrice = new TitleTextField("Price", "Enter the price of food/drink (RM)", null,
+                TitleTextFieldEnum.DecimalField);
         category = new ComboBoxWidget("Category",
                 Arrays.stream(CategoryEnum.values())
                         .map(CategoryEnum::toString)
@@ -87,7 +88,7 @@ public class AddNewItem extends BaseContentPanel {
                 errorLabel.setText("Description is required");
             } else if (price == "") {
                 errorLabel.setText("Price is required");
-            }  else {
+            } else {
                 errorLabel.setText("");
 
                 ItemModel item = new ItemModel();

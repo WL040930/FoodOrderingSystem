@@ -94,8 +94,8 @@ public class SettingsProfileManagement extends BaseContentPanel {
 
         // Profile Picture and Form Fields
         profilePicture = new FileUploadWidget(FileUploadType.CIRCLE_AVATAR, user.getProfilePicture());
-        name = new TitleTextField("Name", user.getName(), TitleTextFieldEnum.TextField);
-        password = new TitleTextField("Password", "******", TitleTextFieldEnum.PasswordField);
+        name = new TitleTextField("Name", user.getName(), user.getName(), TitleTextFieldEnum.TextField);
+        password = new TitleTextField("Password", "******", user.getPassword(), TitleTextFieldEnum.PasswordField);
 
         HBox profileContent = new HBox(30);
         Separator separator = new Separator();
@@ -112,8 +112,9 @@ public class SettingsProfileManagement extends BaseContentPanel {
             case CUSTOMER:
                 CustomerModel customer = UserServices.findCustomerById(user.getId());
 
-                address = new TitleTextField("Address", customer.getAddress(), TitleTextFieldEnum.TextArea);
-                phoneNumber = new TitleTextField("Phone Number", customer.getPhoneNumber(),
+                address = new TitleTextField("Address", customer.getAddress(), customer.getAddress(),
+                        TitleTextFieldEnum.TextArea);
+                phoneNumber = new TitleTextField("Phone Number", customer.getPhoneNumber(), customer.getPhoneNumber(),
                         TitleTextFieldEnum.TextField);
 
                 content.getChildren().addAll(address, phoneNumber);
@@ -122,7 +123,8 @@ public class SettingsProfileManagement extends BaseContentPanel {
             case RUNNER:
                 RunnerModel runner = UserServices.findRunnerById(user.getId());
 
-                phoneNumber = new TitleTextField("Phone Number", runner.getPhoneNumber(), TitleTextFieldEnum.TextField);
+                phoneNumber = new TitleTextField("Phone Number", runner.getPhoneNumber(), runner.getPhoneNumber(),
+                        TitleTextFieldEnum.TextField);
 
                 content.getChildren().addAll(phoneNumber);
             default:
